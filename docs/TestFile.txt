@@ -7,3 +7,5 @@ did this work? who knows. -Calvin Ho, clho, git calho.
 Calvin's a jerk for undoing my edit. -Tyler Mathieu, twmathie, git twmathie
 
 Edit by Reem Maarouf
+
+Testing slack integration
