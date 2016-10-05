@@ -9,3 +9,5 @@ Calvin's a jerk for undoing my edit. -Tyler Mathieu, twmathie, git twmathie
 Edit by Reem Maarouf
 
 Testing slack integration
+
+Tyler hasn't joined slack
