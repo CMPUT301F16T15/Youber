@@ -7,7 +7,7 @@ import org.junit.Test;
  */
 import static org.junit.Assert.*;
 public class DriverTest {
-
+    //Tests US 01.05.01
     @Test
     public void testCallDriver() {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
@@ -21,7 +21,7 @@ public class DriverTest {
         Driver driver = rider1.getRequest(request1.getUUID()).getDriver();
         assertTrue(rider1.call(driver));
     }
-
+    //Tests US 01.05.01
     @Test
     public void testEmailDriver() {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
@@ -35,7 +35,7 @@ public class DriverTest {
         Driver driver = rider1.getRequest(request1.getUUID()).getDriver();
         assertTrue(rider1.email(driver));
     }
-
+    //Tests US 05.01.01
     @Test
     public void testGetOfferPayment() {
         GeoLocation geoLocation1 = new GeoLocation(53.623236, -113.569712);
@@ -52,7 +52,7 @@ public class DriverTest {
         assertEquals(request1.getCost(), driver.getOfferPayment(request1.getUUID()));
     }
 
-
+    //Tests US 05.01.01
     @Test
     public void testMultipleAcceptance() {
         GeoLocation geoLocation1 = new GeoLocation(53.623236, -113.569712);
@@ -69,7 +69,7 @@ public class DriverTest {
         assertEquals(driver2.getAcceptedRequests().get(request1.getUUID()), request1);
     }
 
-
+    //Tests US 05.02.01
     @Test
     public void testDriverGetRequests() {
         GeoLocation geoLocation1 = new GeoLocation(53.623236, -113.569712);
@@ -86,7 +86,7 @@ public class DriverTest {
         assertTrue(driverRequests.containsKey(request1.getUUID()));
     }
 
-
+    //Tests US 04.01.01
     @Test
     public void testDriverSearchOpenRequestsByLocation() {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
@@ -98,7 +98,8 @@ public class DriverTest {
         assertTrue(totalRequests.getByGeolocation(new GeoLocation(90.0, 90.0)).
                 contains(driver.getRequest(request1.getUUID())));
     }
-
+    
+    //Tests US 04.02.01
     @Test
     public void testDriverSearchOpenRequestsByKeyword() {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
@@ -111,7 +112,7 @@ public class DriverTest {
                 contains(driver.getRequest(request1.getUUID())));
     }
 
-
+    //Tests US 05.04.01 
     @Test
     public void testDriverConfirmation() {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
@@ -122,7 +123,8 @@ public class DriverTest {
         request1.confirm(driver);
         assertTrue(request1.isConfirmed());
     }
-
+    
+    //Tests US 05.02.01
     @Test
     public void testDriverGetPendingRequests() {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
@@ -134,7 +136,8 @@ public class DriverTest {
         driver = request2.addDriver(driver);
         assertEquals(2, driver.getPendingRequests().size());
     }
-
+    
+    //Tests US 05.02.01
     @Test
     public void testDriverGetPendingRequestsDesciption() {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
@@ -146,7 +149,8 @@ public class DriverTest {
         driver = request2.addDriver(driver);
         assertEquals(driver.getPendingRequest(request1.getUUID()).getDescription(), "Search Term 1");
     }
-
+    
+    //Tests US 05.02.01
     @Test
     public void testDriverGetPendingRequestsStartLocation() {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
@@ -161,7 +165,7 @@ public class DriverTest {
 
     }
 
-
+    //Tests US 05.02.01
     @Test
     public void testDriverGetPendingRequestsEndLocation() {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
@@ -175,7 +179,7 @@ public class DriverTest {
         assertEquals(driver.getPendingRequest(request1.getUUID()).getEndLocation(), geoLocation2);
 
     }
-
+    //Tests US 05.03.01
     @Test
     public void testDriverCheckRiderAcceptance() {
 
@@ -189,7 +193,7 @@ public class DriverTest {
 
             assertEquals(ridersAcceptedRequestsForDrivers.get(request1.getUUID()), request1);
     }
-
+    //Tests US 08.04.01
     @Test (expected = NotaDriverException.class)
     public void testGetDriverLocalAcceptedRequests()
     {
