@@ -1,5 +1,6 @@
 package com.youber.cmput301f16t15.youber;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -43,7 +44,16 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_profile) {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+
+            return true;
+        }
+        else if (id == R.id.action_view_requests) {
+            Intent intent = new Intent(this, RequestViewActivity.class);
+            startActivity(intent);
+
             return true;
         }
 
