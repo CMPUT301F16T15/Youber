@@ -41,3 +41,5 @@ captures/
 
 # OS Files
 .DS_Store
+
+.idea/vcs.xml

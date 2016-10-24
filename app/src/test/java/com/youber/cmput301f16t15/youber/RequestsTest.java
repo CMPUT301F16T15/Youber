@@ -28,6 +28,7 @@ public class RequestsTest
 
         Request request = new Request(geoLocation1, geoLocation2);
         Rider rider = new Rider();
+        RequestController.addRequest(request,rider);
         rider = request.addRider(rider);
 
         assertEquals(geoLocation1, rider.getRequest(request.getUUID()).getStartLocation());
@@ -43,7 +44,7 @@ public class RequestsTest
 
         Request request = new Request(geoLocation1, geoLocation2);
         Rider rider = new Rider();
-        rider = request.addRider(rider);
+        RequestController.addRequest(request,rider);
 
         assertEquals(geoLocation2, rider.getRequest(request.getUUID()).getEndLocation());
 
@@ -57,10 +58,10 @@ public class RequestsTest
 
         Request request1 = new Request(geoLocation1, geoLocation2);
         Rider rider1 = new Rider();
-        rider1 = request1.addRider(rider1);
+        RequestController.addRequest(request1,rider1);
         Request request2 = new Request(geoLocation1, geoLocation2);
         Rider rider2 = new Rider();
-        rider2 = request2.addRider(rider2);
+        RequestController.addRequest(request2,rider2);
 
         boolean test = rider1.getRequest(request1.getUUID()).equals(rider2.getRequest(request2.getUUID()));
         assertFalse(test);
@@ -93,8 +94,12 @@ public class RequestsTest
 
 
         Rider rider1 = new Rider();
-        rider1 = request1.addRider(rider1);
+
+        RequestController.addRequest(request1,rider1);
+
         Rider rider2 = new Rider();
+
+        RequestController.addRequest(request1,rider2);
         rider2 = request1.addRider(rider2);
     }
 
@@ -109,9 +114,9 @@ public class RequestsTest
         Request request2 = new Request(geoLocation1, geoLocation2);
         Rider rider1 = new Rider();
 
-        rider1 = request1.addRider(rider1);
-        rider1 = request2.addRider(rider1);
-
+        RequestController.addRequest(request1,rider1);
+        RequestController.addRequest(request2,rider1);
+       
         boolean test = rider1.getRequest(request1.getUUID()).equals(rider1.getRequest(request2.getUUID()));
         assertFalse(test);
 
