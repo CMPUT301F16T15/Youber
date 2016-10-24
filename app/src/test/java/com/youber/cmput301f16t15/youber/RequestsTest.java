@@ -116,7 +116,7 @@ public class RequestsTest
 
         RequestController.addRequest(request1,rider1);
         RequestController.addRequest(request2,rider1);
-       
+
         boolean test = rider1.getRequest(request1.getUUID()).equals(rider1.getRequest(request2.getUUID()));
         assertFalse(test);
 
@@ -132,8 +132,10 @@ public class RequestsTest
         Request request2 = new Request(geoLocation1, geoLocation2);
         Rider rider1 = new Rider();
 
-        rider1 = request1.addRider(rider1);
-        rider1 = request2.addRider(rider1);
+        RequestController.addRequest(request1,rider1);
+        RequestController.addRequest(request2,rider1);
+
+
 
         assertEquals(2, rider1.getOpenRequests().size());
 
