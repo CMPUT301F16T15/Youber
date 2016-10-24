@@ -36,6 +36,13 @@ public class RiderTest
     }
 
     // RequestController stores request in file when addRequest is called.
+
+    // US 08.03.01
+    public void testGetSentRequestsFileOffile()
+    {
+        assertTrue(FileManager.loadFromfile().size()>0);
+    }
+
     // US 08.02.01
     public void testGetRequestsMadeOffline()
     {
@@ -45,17 +52,13 @@ public class RiderTest
         Request request1 = new Request(geoLocation1, geoLocation2);
         Rider rider1 = new Rider();
         RequestController.addRequest(request1, rider1);
-
-        assertTrue(FileManager.loadFromfile());
+        //upon reconnection
+        assertTrue(FileManager.loadFromfile().contains(request1));
 
     }
 
 
-    // US 08.03.01
-    public void testGetSentRequestsFileOffile()
-    {
-        assertTrue(FileManager.loadFromfile());
-    }
+
 
 
 

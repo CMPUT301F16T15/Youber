@@ -27,7 +27,7 @@ public class RequestCollection extends HashMap<UUID,Request>{
         return null;
     }
 
-    public boolean contains(RequestCollection request) {
+    public boolean contains(Request request) {
         return false;
     }
 

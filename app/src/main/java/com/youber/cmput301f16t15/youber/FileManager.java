@@ -5,8 +5,8 @@ package com.youber.cmput301f16t15.youber;
  */
 public class FileManager {
 
-    public static boolean loadFromfile() {
-        return false;
+    public static RequestCollection loadFromfile() {
+        return null;
     }
 
 }
