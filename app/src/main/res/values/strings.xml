@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Youber</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_view_requests">View Requests</string>
+    <string name="action_profile">Profile</string>
+    <string name="title_activity_request_view">RequestViewActivity</string>
+    <string name="title_activity_user_profile">UserProfileActivity</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 </resources>
