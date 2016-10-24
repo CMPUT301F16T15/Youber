@@ -29,4 +29,7 @@ public class Driver {
     public Request getPendingRequest(UUID uuid) {
         return null;
     }
+
+    public void confirm(Request request1) {
+    }
 }
