@@ -19,7 +19,7 @@ public class RequestCollection extends HashMap<UUID,Request>{
 
     }
 
-    public Request getByGeolocation(GeoLocation geoLocation) {
+    public RequestCollection getByGeolocation(GeoLocation geoLocation) {
         return null;
     }
 
