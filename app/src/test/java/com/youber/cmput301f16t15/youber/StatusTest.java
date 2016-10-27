@@ -35,7 +35,8 @@ public class StatusTest
         Driver driver1 = new Driver();
         RequestController.linkDriverWithRequest(request1, driver1);
 
-        driver1.getRequest(request1.getUUID()).driverAccept();
+        //driver1.getRequest(request1.getUUID()).driverAccept();
+        RequestController.confirmRequest(request1,driver1);
         assertEquals("is Accepted", driver1.getStatus(request1.getUUID()));
     }
 

@@ -6,7 +6,7 @@ import java.util.UUID;
  * Created by Reem on 2016-10-13.
  */
 public class Driver {
-    public RequestCollection getRequest(UUID uuid) {
+    public Request getRequest(UUID uuid) {
         return null;
     }
 
