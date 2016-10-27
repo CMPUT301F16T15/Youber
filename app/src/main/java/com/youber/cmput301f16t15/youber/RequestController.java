@@ -28,4 +28,10 @@ public class RequestController
     public static Driver getDriver(Request request1) {
         return null;
     }
+
+    public static void completeRequest(Request request1) {
+    }
+
+    public static void addDriver(Request request1, Driver driver2) {
+    }
 }

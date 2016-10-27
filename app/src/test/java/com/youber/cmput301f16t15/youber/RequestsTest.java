@@ -116,7 +116,7 @@ public class RequestsTest
 
         RequestController.addRequest(request1,rider1);
         RequestController.addRequest(request2,rider1);
-       
+
         boolean test = rider1.getRequest(request1.getUUID()).equals(rider1.getRequest(request2.getUUID()));
         assertFalse(test);
 
@@ -132,8 +132,10 @@ public class RequestsTest
         Request request2 = new Request(geoLocation1, geoLocation2);
         Rider rider1 = new Rider();
 
-        rider1 = request1.addRider(rider1);
-        rider1 = request2.addRider(rider1);
+        RequestController.addRequest(request1,rider1);
+        RequestController.addRequest(request2,rider1);
+
+
 
         assertEquals(2, rider1.getOpenRequests().size());
 
@@ -147,7 +149,8 @@ public class RequestsTest
 
         Request request1 = new Request(geoLocation1, geoLocation2);
 
-        request1.close();
+        //request1.close();
+        RequestController.deleteRequest(request1);
         assertTrue(request1.isClosed());
     }
 
@@ -163,6 +166,8 @@ public class RequestsTest
         rider1 = request1.addRider(rider1);
         rider1 = request2.addRider(rider1);
 
+        RequestController.addRequest(request1,rider1);
+        RequestController.deleteRequest(request1);
         rider1.getRequest(request1.getUUID()).close();
 
         assertEquals(1, rider1.getClosedRequests().size());
@@ -177,7 +182,7 @@ public class RequestsTest
 
         Request request1 = new Request(geoLocation1, geoLocation2);
 
-        request1.accept();
+        RequestController.acceptRequest(request1);
         assertTrue(request1.isAccepted());
     }
 
@@ -192,9 +197,8 @@ public class RequestsTest
         Request request1 = new Request(geoLocation1, geoLocation2);
 
         Rider rider1 = new Rider();
-        rider1 = request1.addRider(rider1);
-
-        rider1.getRequest(request1.getUUID()).accept();
+        RequestController.addRequest(request1,rider1);
+        RequestController.acceptRequest(request1);
         View view2 = Helper.getView();
         assertFalse(view.equals(view2));
     }
@@ -208,8 +212,8 @@ public class RequestsTest
         Request request1 = new Request(geoLocation1, geoLocation2);
 
         Rider rider1 = new Rider();
-        rider1 = request1.addRider(rider1);
-        rider1.getRequest(request1.getUUID()).cancel();
+        RequestController.addRequest(request1,rider1);
+        RequestController.deleteRequest(request1);
         assertEquals(0, rider1.getRequests().size());
 
     }
@@ -224,7 +228,7 @@ public class RequestsTest
 
         Double actualDistance = 0.933;
         // distance = 0.933
-        assertEquals(actualDistance, request1.getDistance());
+        assertEquals(actualDistance,request1.getDistance());
 
     }
 
@@ -249,8 +253,8 @@ public class RequestsTest
         Request request1 = new Request(geoLocation1, geoLocation2);
 
         Rider rider1 = new Rider();
-        rider1 = request1.addRider(rider1);
-        rider1.getRequest(request1.getUUID()).complete();
+        RequestController.addRequest(request1,rider1);
+        RequestController.completeRequest(request1);
         assertTrue(rider1.getRequest(request1.getUUID()).isComplete());
     }
 
@@ -264,9 +268,9 @@ public class RequestsTest
         Request request1 = new Request(geoLocation1, geoLocation2);
         Request request2 = new Request(geoLocation1, geoLocation2);
         Rider rider1 = new Rider();
-        rider1 = request1.addRider(rider1);
-        rider1 = request2.addRider(rider1);
-        rider1.getRequest(request1.getUUID()).complete();
+        RequestController.addRequest(request1,rider1);
+        RequestController.addRequest(request2,rider1);
+        RequestController.completeRequest(request1);
         assertEquals(1, rider1.getClosedRequests().size());
 
     }
@@ -282,8 +286,9 @@ public class RequestsTest
 
         driver2 = request1.addDriver(driver2);
         driver1 = request1.addDriver(driver1);
-
-        assertTrue(request1.accept(driver1));
+        RequestController.addDriver(request1,driver1);
+        RequestController.addDriver(request1,driver2);
+        assertTrue(request1.isAccepted());
 
     }
 
@@ -295,11 +300,11 @@ public class RequestsTest
         Request request1 = new Request(geoLocation1, geoLocation2);
         Rider currentRider = Helper.getCurrentRider();
         Driver driver = new Driver();
-        currentRider = request1.addRider(currentRider);
-        driver = request1.addDriver(driver);
-        RequestCollection localRequests = new RequestCollection();
-        localRequests.add(request1);
-        assertTrue(Helper.saveLocalRequests(localRequests));
+        RequestController.addRequest(request1,currentRider);
+        RequestController.addDriver(request1,driver);
+
+
+        assertTrue(FileManager.loadFromfile().contains(request1));
 
 
     }
