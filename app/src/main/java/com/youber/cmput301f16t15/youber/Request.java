@@ -11,7 +11,7 @@ public class Request {
     private UUID uuID;
     public Request(GeoLocation location1, GeoLocation location2)
     {
-
+        if(location1.equals(location2)) throw new RuntimeException(new InvalidRequestException());
     }
 
     public Request(){};

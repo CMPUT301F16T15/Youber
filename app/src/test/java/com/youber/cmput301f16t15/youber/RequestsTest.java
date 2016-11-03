@@ -10,7 +10,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 public class RequestsTest
 {
-    @Test (expected = InvalidRequestException.class)
+    @Test (expected = RuntimeException.class)
     public void testDifferentLocations()
     {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
