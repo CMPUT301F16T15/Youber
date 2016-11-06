@@ -81,7 +81,6 @@ public class RequestsTest
 
         boolean test = request1.equals(request2);
         assertFalse(test);
-
     }
 
     @Test (expected = SameRequestException.class)

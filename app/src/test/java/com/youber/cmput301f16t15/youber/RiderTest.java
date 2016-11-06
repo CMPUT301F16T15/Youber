@@ -56,11 +56,4 @@ public class RiderTest
         assertTrue(FileManager.loadFromfile().contains(request1));
 
     }
-
-
-
-
-
-
-
 }
