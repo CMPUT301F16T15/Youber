@@ -10,6 +10,12 @@ public class User {
     private String dateOfBirth;
     private String phoneNumber;
     private String email;
+
+    public User()
+    {
+
+    }
+
     public User(String username, String firstName, String lastName, String dateOfBirth, String phoneNumber, String email) {
     }
 
