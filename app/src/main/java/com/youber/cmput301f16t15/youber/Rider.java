@@ -40,6 +40,7 @@ public class Rider{
 
     public void addNewRequest(GeoLocation geoLocation1, GeoLocation geoLocation2) {
         // make a request object
+
     }
 
     public void addRequest(Request request1) {
