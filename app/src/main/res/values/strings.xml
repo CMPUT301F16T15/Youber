@@ -5,4 +5,7 @@
     <string name="title_activity_request_view">RequestViewActivity</string>
     <string name="title_activity_user_profile">UserProfileActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
+
+    <!--Request View-->
+    <string name="request_title">Requests</string>
 </resources>
