@@ -1,5 +1,7 @@
 package com.youber.cmput301f16t15.youber;
 
+import io.searchbox.annotations.JestId;
+
 /**
  * Created by Reem on 2016-10-13.
  */
@@ -10,6 +12,8 @@ public class User {
     private String dateOfBirth;
     private String phoneNumber;
     private String email;
+    @JestId
+    private String username;
     public User(String username, String firstName, String lastName, String dateOfBirth, String phoneNumber, String email) {
     }
 

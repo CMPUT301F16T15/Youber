@@ -1,22 +1,29 @@
 package com.youber.cmput301f16t15.youber;
 
+import java.util.Random;
 import java.util.UUID;
+
+import io.searchbox.annotations.JestId;
 
 /**
  * Created by Reem on 2016-10-13.
  */
 
 public class Request {
-
+    @JestId
     private UUID uuID;
     public Request(GeoLocation location1, GeoLocation location2)
     {
         if(location1.equals(location2)) throw new RuntimeException(new InvalidRequestException());
+        uuID= UUID.randomUUID();
     }
 
-    public Request(){};
+    public Request(){
+        uuID = UUID.randomUUID();
+    };
 
     public Request(GeoLocation geoLocation1, GeoLocation geoLocation2, String s) {
+        uuID = UUID.randomUUID();
     }
 
     public User addRider(User user) {

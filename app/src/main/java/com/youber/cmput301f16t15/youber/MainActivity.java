@@ -25,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                ElasticSearchUser.add userAdder = new ElasticSearchUser.add();
+                User user = new User("Shade","Aaron","Philips","feb21","780","@google");
+                userAdder.execute(user);
             }
         });
     }
