@@ -72,7 +72,6 @@ public class RequestsTest
     @Test
     public void testGetRequest()
     {
-
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
 
@@ -81,7 +80,6 @@ public class RequestsTest
 
         boolean test = request1.equals(request2);
         assertFalse(test);
-
     }
 
     @Test (expected = SameRequestException.class)

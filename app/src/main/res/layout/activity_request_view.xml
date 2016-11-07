@@ -31,4 +31,21 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
+    <TextView
+        android:id="@+id/requestTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/request_title"
+        android:textSize="30dp"
+        android:textAllCaps="true"
+        android:layout_marginTop="65dp"
+        android:layout_marginLeft="10dp"/>
+
+    <ListView
+        android:id="@+id/requestListView"
+        android:layout_width="fill_parent"
+        android:layout_height="375dp"
+        android:layout_marginTop="110dp">
+    </ListView>
+
 </android.support.design.widget.CoordinatorLayout>

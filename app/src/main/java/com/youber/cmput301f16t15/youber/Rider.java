@@ -5,25 +5,43 @@ import java.util.UUID;
 /**
  * Created by Reem on 2016-10-13.
  */
-public class Rider{
+public class Rider extends User {
+
+    private RequestCollection requestsCtrl;
+
+    // default constructor
+    public Rider() {
+        super();
+    }
+
+    // contructor for general user class
+    public Rider(String username, String firstName, String lastName, String dateOfBirth, String phoneNumber, String email) {
+        super(username, firstName, lastName, dateOfBirth, phoneNumber, email);
+    }
+
+
     public Request getRequest(UUID uuid) {
-        return new Request();
+        RequestCollection requests = requestsCtrl.getRequestsForRiders(this);
+        return requests.get(uuid);
     }
 
     public RequestCollection getOpenRequests() {
-        return null;
+        return requestsCtrl.getRequestsForRiders(this);
     }
 
     public RequestCollection getClosedRequests() {
-        return null;
+        RequestCollection requests = requestsCtrl.getRequestsForRiders(this);
+        return requests.getAcceptedAcceptedRequests();
     }
 
     public RequestCollection getRequests() {
-        return null;
+        return requestsCtrl.getRequestsForRiders(this);
     }
 
     public String getStatus(UUID uuid) {
-        return null;
+        RequestCollection requests = requestsCtrl.getRequestsForRiders(this);
+        Request request = requests.get(uuid);
+        return request.getDescription();
     }
 
     public boolean call(Driver driver) {
@@ -35,13 +53,18 @@ public class Rider{
     }
 
     public void makePayment(UUID uuid) {
-
+        RequestCollection acceptedRequests = requestsCtrl.getRequestsForRiders(this);
+        Request request =  acceptedRequests.get(uuid);
+//        request.getCost();
     }
 
     public void addNewRequest(GeoLocation geoLocation1, GeoLocation geoLocation2) {
         // make a request object
+        Request request = new Request(geoLocation1, geoLocation2);
+        requestsCtrl.add(request);
     }
 
     public void addRequest(Request request1) {
+        requestsCtrl.add(request1);
     }
 }

@@ -56,4 +56,13 @@ public class RiderTest
         assertTrue(FileManager.loadFromfile().contains(request1));
 
     }
+<<<<<<< HEAD
+=======
+
+
+
+
+    
+
+>>>>>>> login_profile
 }
