@@ -26,7 +26,7 @@ public class ElasticSearchUser extends ElasticSearch{
 
 
             for (User user : users) {
-                Index index = new Index.Builder(user).index("Youber").type("User").build();
+                Index index = new Index.Builder(user).index("youber").type("user").build();
 
                 try {
                     DocumentResult result = getClient().execute(index);
@@ -51,8 +51,8 @@ public class ElasticSearchUser extends ElasticSearch{
             ArrayList<User> users = new ArrayList<User>();
 
             Search search = new Search.Builder(search_parameters[0])
-                    .addIndex("Youber")
-                    .addType("User")
+                    .addIndex("youber")
+                    .addType("user")
                     .build();
 
             try {

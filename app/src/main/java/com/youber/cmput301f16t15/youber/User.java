@@ -14,7 +14,15 @@ public class User {
     private String email;
     @JestId
     private String username;
+
     public User(String username, String firstName, String lastName, String dateOfBirth, String phoneNumber, String email) {
+        this.username=username;
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.dateOfBirth=dateOfBirth;
+        this.phoneNumber=phoneNumber;
+        this.email=email;
+
     }
 
     public String getFirstName() {

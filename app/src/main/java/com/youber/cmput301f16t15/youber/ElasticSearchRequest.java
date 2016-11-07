@@ -29,7 +29,7 @@ public class ElasticSearchRequest extends ElasticSearch{
 
 
             for (Request request : requests) {
-                Index index = new Index.Builder(request).index("Youber").type("Request").build();
+                Index index = new Index.Builder(request).index("youber").type("request").build();
 
                 try {
                     DocumentResult result = getClient().execute(index);
@@ -54,8 +54,8 @@ public class ElasticSearchRequest extends ElasticSearch{
             ArrayList<Request> requests = new ArrayList<Request>();
 
             Search search = new Search.Builder(search_parameters[0])
-                    .addIndex("Youber")
-                    .addType("Request")
+                    .addIndex("youber")
+                    .addType("request")
                     .build();
 
             try {
