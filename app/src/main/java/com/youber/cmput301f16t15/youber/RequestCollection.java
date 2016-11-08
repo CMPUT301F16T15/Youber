@@ -19,6 +19,14 @@ public class RequestCollection extends HashMap<UUID,Request>{
 
     }
 
+    public Request getRequestByUUID(UUID uuid){
+        return requestCollection.get(uuid);
+    }
+
+    public boolean getRequestStatus(UUID uuid) {
+        return requestCollection.get(uuid).isClosed();
+    }
+
     public RequestCollection getByGeolocation(GeoLocation geoLocation) {
         return null;
     }

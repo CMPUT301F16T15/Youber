@@ -1,9 +1,14 @@
 package com.youber.cmput301f16t15.youber;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Reem on 2016-10-13.
  */
 public class User {
+
+    private String username;
 
     private String firstName;
     private String lastName;
@@ -11,16 +16,25 @@ public class User {
     private String phoneNumber;
     private String email;
 
+    private ArrayList<String> Profile;
+
     public User()
     {
 
     }
 
     public User(String username, String firstName, String lastName, String dateOfBirth, String phoneNumber, String email) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+
     }
 
     public String getFirstName() {
-        return null;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {

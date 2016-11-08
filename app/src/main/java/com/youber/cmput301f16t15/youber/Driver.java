@@ -5,13 +5,24 @@ import java.util.UUID;
 /**
  * Created by Reem on 2016-10-13.
  */
-public class Driver {
-    public Request getRequest(UUID uuid) {
-        return null;
+public class Driver extends User {
+
+    private RequestCollection requestsCtrl;
+
+    public Driver() {
+        super();
     }
 
-    public String getStatus(UUID uuid) {
-        return null;
+    public Driver(String username, String firstName, String lastName, String dateOfBirth, String phoneNumber, String email) {
+        super(username, firstName, lastName, dateOfBirth, phoneNumber, email);
+    }
+
+    public Request getRequest(UUID uuid) {
+        return requestsCtrl.getRequestByUUID(uuid);
+    }
+
+    public boolean getStatus(UUID uuid) {
+        return requestsCtrl.getRequestStatus(uuid);
     }
 
     public Double getOfferPayment(UUID uuid) {
@@ -19,7 +30,8 @@ public class Driver {
     }
 
     public RequestCollection getAcceptedRequests() {
-        return null;
+        RequestCollection requests = requestsCtrl.getAcceptedRequestsForDrivers(this);
+        return requests;
     }
 
     public RequestCollection getPendingRequests() {

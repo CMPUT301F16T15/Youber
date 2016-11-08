@@ -6,6 +6,15 @@ package com.youber.cmput301f16t15.youber;
 
 public class RequestController
 {
+
+    private Location location;
+    private Payment payment;
+
+    public RequestController(Location location, Payment payment) {
+        this.location = location;
+        this.payment = payment;
+    }
+
     public static void addRequest(Request request, Rider rider1)
     {
     }
@@ -33,5 +42,13 @@ public class RequestController
     }
 
     public static void addDriver(Request request1, Driver driver2) {
+    }
+
+    public Payment getPayment(){
+        return this.payment;
+    }
+
+    public Location getLocation() {
+        return this.location;
     }
 }

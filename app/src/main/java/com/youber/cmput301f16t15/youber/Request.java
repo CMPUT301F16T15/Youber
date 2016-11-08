@@ -9,6 +9,10 @@ import java.util.UUID;
 public class Request {
 
     private UUID uuID;
+
+    private boolean status; //open is true
+    private Location location;
+
     public Request(GeoLocation location1, GeoLocation location2)
     {
         if(location1.equals(location2)) throw new RuntimeException(new InvalidRequestException());
@@ -47,7 +51,12 @@ public class Request {
     }
 
     public boolean isClosed() {
-        return false;
+        if (status) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
     public void accept() {

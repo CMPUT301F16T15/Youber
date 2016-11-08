@@ -6,7 +6,7 @@ import org.junit.Test;
  * Created by Reem on 2016-10-13.
  */
 import static org.junit.Assert.*;
-public class DriverTest {
+public class  DriverTest {
     //Tests US 01.05.01
     @Test
     public void testCallDriver() {
