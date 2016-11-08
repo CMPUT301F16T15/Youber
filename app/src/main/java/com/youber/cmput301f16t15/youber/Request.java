@@ -10,17 +10,27 @@ public class Request {
 
     private UUID uuID;
 
-    private boolean status; //open is true
+    private boolean status = true; //open is true
     private Location location;
+    private String keyword;
+    private Payment payment;
+    private int confirmationStage = 0; //0 initial, 1 accepted by a driver, 2 confirmed by a rider, 3 finalized by driver
+    private Rider rider;
+    private Driver driver;
+    private boolean accepted = false;
 
-    public Request(GeoLocation location1, GeoLocation location2)
+    public Request(GeoLocation location1, GeoLocation location2, GeoLocation currLocation, Payment payment)
     {
         if(location1.equals(location2)) throw new RuntimeException(new InvalidRequestException());
+        this.location = new Location(location1, location2, currLocation);
     }
 
     public Request(){};
 
-    public Request(GeoLocation geoLocation1, GeoLocation geoLocation2, String s) {
+    public Request(GeoLocation geoLocation1, GeoLocation geoLocation2, GeoLocation currLocation, String s, Payment payment) {
+        this.location = new Location(geoLocation1, geoLocation2, currLocation );
+        this.keyword = s;
+        this.payment = payment;
     }
 
     public User addRider(User user) {
@@ -67,14 +77,14 @@ public class Request {
     }
 
     public boolean isAccepted() {
-        return false;
+        return this.accepted;
     }
 
     public void cancel() {
     }
 
     public Driver getDriver() {
-        return null;
+        return this.driver;
     }
 
     public Double getDistance() {
@@ -82,7 +92,7 @@ public class Request {
     }
 
     public Double getFare() {
-        return null;
+        return this.payment.getActualCost();
     }
 
     public void complete() {
@@ -93,7 +103,7 @@ public class Request {
     }
 
     public Double getCost() {
-        return null;
+        return this.payment.getActualCost();
     }
 
     public Driver addDriver(Driver driver) {
@@ -104,7 +114,12 @@ public class Request {
         return false;
     }
 
-    public void confirm(Driver driver) {
+    public void confirmByDriver(Driver driver) {
+        this.confirmationStage = 1;
+    }
+
+    public void finalizeByDriver() {
+        this.confirmationStage = 3;
     }
 
     public boolean isConfirmed() {
@@ -114,4 +129,5 @@ public class Request {
     public String getDescription() {
         return null;
     }
+
 }

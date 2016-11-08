@@ -7,7 +7,7 @@ package com.youber.cmput301f16t15.youber;
 public class Payment {
 
     private double actualCost;
-    private boolean paymentAbility; //true if enabled otherwise false
+    private boolean paymentAbility = false; //true if enabled otherwise false
 
     public Payment(double actualCost) {
         this.actualCost = actualCost;
@@ -24,8 +24,16 @@ public class Payment {
 
     }
 
+    public void enablePaymentOption() {
+        this.paymentAbility = true;
+    }
+
     public void setActualCostWithFairFare() {
         this.actualCost = fairFare();
+    }
+
+    public double getActualCost() {
+        return this.actualCost;
     }
 
 }

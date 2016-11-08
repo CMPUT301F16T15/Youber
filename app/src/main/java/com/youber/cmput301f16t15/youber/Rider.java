@@ -31,7 +31,7 @@ public class Rider extends User {
 
     public RequestCollection getClosedRequests() {
         RequestCollection requests = requestsCtrl.getRequestsForRiders(this);
-        return requests.getAcceptedAcceptedRequests();
+        return requests.getFinalizedRequestToDriver();
     }
 
     public RequestCollection getRequests() {
@@ -58,13 +58,17 @@ public class Rider extends User {
 //        request.getCost();
     }
 
-    public void addNewRequest(GeoLocation geoLocation1, GeoLocation geoLocation2) {
+    public void addNewRequest(GeoLocation geoLocation1, GeoLocation geoLocation2, GeoLocation currLocation, Payment payment) {
         // make a request object
-        Request request = new Request(geoLocation1, geoLocation2);
+        Request request = new Request(geoLocation1, geoLocation2, currLocation, payment);
         requestsCtrl.add(request);
     }
 
     public void addRequest(Request request1) {
         requestsCtrl.add(request1);
+    }
+
+    public void deleteRequest(Request request) {
+        requestsCtrl.remove(request.getUUID());
     }
 }

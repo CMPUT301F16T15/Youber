@@ -25,23 +25,39 @@ public class Driver extends User {
         return requestsCtrl.getRequestStatus(uuid);
     }
 
-    public Double getOfferPayment(UUID uuid) {
-        return null;
+    public Double getOfferPaymentFromRequest(UUID uuid)  //see how much is being offered
+    {
+        Request request = requestsCtrl.getRequestByUUID(uuid);
+        double offer = request.getFare(); //can be getCost instead
+        return offer;
     }
 
     public RequestCollection getAcceptedRequests() {
-        RequestCollection requests = requestsCtrl.getAcceptedRequestsForDrivers(this);
+        RequestCollection requests = requestsCtrl.getFinalizedRequestToDriver();
         return requests;
     }
 
     public RequestCollection getPendingRequests() {
-        return null;
+        RequestCollection pendingRequests = requestsCtrl.getPendingRequestsForDrivers(this);
+        return pendingRequests;
     }
 
     public Request getPendingRequest(UUID uuid) {
-        return null;
+        RequestCollection pendingRequestSet = requestsCtrl.getPendingRequestsForDrivers(this);
+        Request request = pendingRequestSet.getRequestByUUID(uuid);
+        return request;
     }
 
     public void confirm(Request request1) {
+        request1.confirmByDriver(this);
+    }
+
+    public void finalize(Request request) {
+        request.finalizeByDriver();
+    }
+
+    public void deleteRequest(Request request)
+    {
+        requestsCtrl.remove(request.getUUID());
     }
 }

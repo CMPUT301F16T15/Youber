@@ -39,7 +39,7 @@ public class RequestCollection extends HashMap<UUID,Request>{
         return false;
     }
 
-    public RequestCollection getAcceptedAcceptedRequests() {
+    public RequestCollection getFinalizedRequestToDriver() {
         return null;
     }
 
@@ -47,7 +47,7 @@ public class RequestCollection extends HashMap<UUID,Request>{
         return null;
     }
 
-    public RequestCollection getAcceptedRequestsForDrivers(Driver currentUser) {
+    public RequestCollection getPendingRequestsForDrivers(Driver currentUser) {
         return null;
     }
 

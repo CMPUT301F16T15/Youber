@@ -7,20 +7,20 @@ package com.youber.cmput301f16t15.youber;
 public class RequestController
 {
 
-    private Location location;
-    private Payment payment;
-
-    public RequestController(Location location, Payment payment) {
-        this.location = location;
-        this.payment = payment;
-    }
 
     public static void addRequest(Request request, Rider rider1)
     {
+        rider1.addRequest(request);
     }
 
-    public static void deleteRequest(Request request)
-    {}
+    public static void deleteRequest(Request request, Rider rider)
+    {
+        if (request.isAccepted()) {
+            Driver driver = request.getDriver();
+            driver.deleteRequest(request);
+        }
+        rider.deleteRequest(request);
+    }
 
     public static void confirmRequest(Request request, Driver driver1)
     {}
