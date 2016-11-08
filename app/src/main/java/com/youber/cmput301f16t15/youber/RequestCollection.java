@@ -1,5 +1,6 @@
 package com.youber.cmput301f16t15.youber;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -45,5 +46,13 @@ public class RequestCollection extends HashMap<UUID,Request>{
 
     public void add(Request request1) {
 
+    }
+
+    // add a bulk amount of requests, typically will be called when grabbing from elasticSearch
+    public void addAll(ArrayList<Request> requests) {
+        for(Request r : requests)
+        {
+            requestCollection.put(r.getUUID(), r);
+        }
     }
 }
