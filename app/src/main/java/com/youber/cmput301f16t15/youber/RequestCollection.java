@@ -32,20 +32,23 @@ public class RequestCollection extends HashMap<UUID,Request>{
         return false;
     }
 
+    // this is both, driver and rider accept
     public RequestCollection getAcceptedAcceptedRequests() {
         return null;
     }
 
+    // returning every single requests..
     public RequestCollection getRequestsForRiders(Rider currentUser) {
         return null;
     }
 
+    //
     public RequestCollection getAcceptedRequestsForDrivers(Driver currentUser) {
         return null;
     }
 
     public void add(Request request1) {
-
+        requestCollection.put(request1.getUUID(), request1);
     }
 
     // add a bulk amount of requests, typically will be called when grabbing from elasticSearch

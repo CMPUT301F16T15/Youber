@@ -11,7 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
-    private Rider user = new Rider("Shade","Aaron","Philips","feb21","780","@google");
+//    private Rider user = new Rider("Shade","Aaron","Philips","feb21","780","@google");
+//    UserCollection users = new UserCollection();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,15 +21,21 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        UserController.setContext(this);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                ElasticSearchUser.add userAdder = new ElasticSearchUser.add();
-//                User user = new User("Shade","Aaron","Philips","feb21","780","@google");
-                userAdder.execute(user);
+//                ElasticSearchUser.add userAdder = new ElasticSearchUser.add();
+                User user = new User("Shade","Aaron","Philips","feb21","780","@google");
+                UserController.saveUser(user);
+                UserController.setFirstName("Guy in front of us");
+//                userAdder.execute(user);
+//                UserCollection.getUsers().put(user.getUsername(), user);
+//                User user = new User("Shade", "Aaron", "Phillips", "")
             }
         });
     }
@@ -56,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (id == R.id.action_view_requests) {
             Intent intent = new Intent(this, RequestViewActivity.class);
+//            intent.putExtra("username", user.getUsername());
             startActivity(intent);
 
             return true;
@@ -77,8 +85,6 @@ public class MainActivity extends AppCompatActivity {
 
         ElasticSearchRequest.add addRequest = new ElasticSearchRequest.add();
         addRequest.execute(request);
-//        user.getRequests().add(request); // this should post to elastic search.. if not then local?
-
-
+//        user.addRequest(request); // this should post to elastic search.. if not then local?
     }
 }

@@ -16,6 +16,9 @@ public class User {
     @JestId
     private String username;
 
+//    public static User getUser() {
+//        static ;
+//    }
 
     public User()
     {
@@ -32,8 +35,13 @@ public class User {
 
     }
 
+    public String getUsername()
+    {
+        return username;
+    }
+
     public String getFirstName() {
-        return null;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {

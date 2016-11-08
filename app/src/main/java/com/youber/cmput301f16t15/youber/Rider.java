@@ -80,7 +80,7 @@ public class Rider extends User {
 //        requests.add(request);
 //    }
 //
-//    public void addRequest(Request request1) {
-//        requests.add(request1);
-//    }
+    public void addRequest(Request request1) {
+        requests.add(request1);
+    }
 }

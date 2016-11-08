@@ -23,9 +23,9 @@ public class Helper {
         return null;
     }
 
-    public static UserCollection getUsers() {
-        return null;
-    }
+//    public static UserCollection getUsers() {
+//        return null;
+//    }
 
     public static void addUser(User user1) {
     }

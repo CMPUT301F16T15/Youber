@@ -34,6 +34,12 @@ public class Request {
         uuID = UUID.randomUUID();
     }
 
+    @Override
+    public String toString()
+    {
+        return uuID.toString();
+    }
+
     public User addRider(User user) {
         return null;
     }
