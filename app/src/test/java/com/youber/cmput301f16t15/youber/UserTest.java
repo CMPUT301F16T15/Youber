@@ -9,15 +9,16 @@ import static org.junit.Assert.*;
 public class UserTest
 {
     @Test (expected = UniqueUserNameConstaintException.class)
-    public void testUniqueUsername()
+    public void testUniqueUsername() // would have to check through elastic search..
     {
-        UserCollection users = Helper.getUsers();
-
-        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email" );
-        User user2 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email" );
-
-        users.add(user1);
-        users.add(user2);
+        assertTrue(Boolean.FALSE);
+//        UserCollection users = Helper.getUsers();
+//
+//        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email" );
+//        User user2 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email" );
+//
+//        users.add(user1);
+//        users.add(user2);
     }
 
     @Test
@@ -100,12 +101,14 @@ public class UserTest
 
 
     @Test
-    public void testGetUserByUsername()
+    public void testGetUserByUsername() // not sure about this anymore
     {
-        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email" );
-        Helper.addUser(user1);
-        UserCollection users = Helper.getUsers();
-        assertEquals(users.get("username").getFirstName(), "First Name");
+        assertTrue(Boolean.FALSE);
+
+//        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email" );
+//        Helper.addUser(user1);
+//        UserCollection users = Helper.getUsers();
+//        assertEquals(users.get("username").getFirstName(), "First Name");
     }
 
 
