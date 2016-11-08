@@ -13,13 +13,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
-import java.util.Observable;
+import java.util.*;
 
 /**
  * Created by Jess on 2016-11-08.
  */
 
-public class UserController extends Observable {
+public class UserController {
 
     private final static String FILENAME = "user.sav";
     private static Context c;
@@ -79,6 +79,15 @@ public class UserController extends Observable {
         {
             throw new RuntimeException();
         }
+    }
+
+//    public static void notifyObservers() {
+//
+//    }
+//
+//    public static void addObserver()
+    public static void addObserver(Observer obs) {
+        user.addObserver(obs);
     }
 
     public static void setFirstName(String firstName) {

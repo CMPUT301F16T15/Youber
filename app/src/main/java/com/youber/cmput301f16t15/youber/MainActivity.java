@@ -10,9 +10,12 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+
 public class MainActivity extends AppCompatActivity {
 //    private Rider user = new Rider("Shade","Aaron","Philips","feb21","780","@google");
-//    UserCollection users = new UserCollection();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +33,11 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 //                ElasticSearchUser.add userAdder = new ElasticSearchUser.add();
-                User user = new User("Shade","Aaron","Philips","feb21","780","@google");
+                final User user = new User("Shade","Aaron","Philips","feb21","780","@google");
                 UserController.saveUser(user);
+                UserController.addObserver(new ElasticSearchUser());
                 UserController.setFirstName("Guy in front of us");
+
 //                userAdder.execute(user);
 //                UserCollection.getUsers().put(user.getUsername(), user);
 //                User user = new User("Shade", "Aaron", "Phillips", "")

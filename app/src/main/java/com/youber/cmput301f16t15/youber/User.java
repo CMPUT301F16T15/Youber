@@ -1,11 +1,13 @@
 package com.youber.cmput301f16t15.youber;
 
+import java.util.Observable;
+
 import io.searchbox.annotations.JestId;
 
 /**
  * Created by Reem on 2016-10-13.
  */
-public class User {
+public class User extends Observable {
 
     private String firstName;
     private String lastName;
@@ -46,6 +48,8 @@ public class User {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+        setChanged();
+        notifyObservers();
     }
 
     public String getDateOfBirth() {
@@ -54,6 +58,8 @@ public class User {
 
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+        setChanged();
+        notifyObservers();
     }
 
     public String getPhoneNumber() {
@@ -62,6 +68,8 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        setChanged();
+        notifyObservers();
     }
 
     public String getLastName() {
@@ -70,6 +78,8 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+        setChanged();
+        notifyObservers();
     }
 
     public String getEmail() {
@@ -78,5 +88,7 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+        setChanged();
+        notifyObservers();
     }
 }
