@@ -31,15 +31,16 @@
 
     <EditText
         android:inputType="textPersonName"
-        android:text="Username"
         android:ems="10"
         android:background="@color/white"
         android:id="@+id/editText"
-        android:textAlignment="center"
-        android:textColor="@color/lightgrey"
+        android:textColor="@color/black"
+        android:textAlignment="textStart"
         android:layout_height="50dp"
         android:layout_width="match_parent"
         android:layout_marginLeft="100dp"
+        android:hint="  Username"
+        android:textColorHint="@color/grey"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="198dp" />
