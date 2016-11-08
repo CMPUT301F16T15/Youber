@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/signupbutton"
         android:layout_below="@+id/loginbutton"
+        android:backgroundTint="#303030"
         android:layout_alignStart="@+id/loginbutton" />
 
     <Button
@@ -24,6 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/loginbutton"
+        android:backgroundTint="#303030"
         android:layout_below="@+id/editText"
         android:layout_alignEnd="@+id/editText" />
 
