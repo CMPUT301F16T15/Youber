@@ -27,8 +27,10 @@ public class RequestCollection extends HashMap<UUID,Request>{
         return requestCollection.get(uuid).isClosed();
     }
 
-    public RequestCollection getByGeolocation(GeoLocation geoLocation) {
-        return null;
+    public RequestCollection getByGeolocation(GeoLocation geoLocation, double radius) {
+        RequestCollection requestCollectionSearchedByGeoLocation = new RequestCollection();
+        // find by geolocation
+        return requestCollectionSearchedByGeoLocation;
     }
 
     public RequestCollection getByKeyword(String s) {

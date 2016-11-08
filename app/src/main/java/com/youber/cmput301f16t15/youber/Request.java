@@ -70,6 +70,7 @@ public class Request {
     }
 
     public void accept() {
+        this.accepted = true;
     }
 
     public boolean accept(Driver driver) {

@@ -60,4 +60,9 @@ public class Driver extends User {
     {
         requestsCtrl.remove(request.getUUID());
     }
+
+    public RequestCollection searchRequestByGeoLocation(GeoLocation location, double radius) {
+        return null;
+    }
+
 }
