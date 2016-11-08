@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
+    private Rider user = new Rider("Shade","Aaron","Philips","feb21","780","@google");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 ElasticSearchUser.add userAdder = new ElasticSearchUser.add();
-                User user = new User("Shade","Aaron","Philips","feb21","780","@google");
+//                User user = new User("Shade","Aaron","Philips","feb21","780","@google");
                 userAdder.execute(user);
             }
         });
@@ -61,5 +62,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //  Button Click Actions
+    public void onNewRequestBtnClick(View view) {
+        // prompt user for start date
+        // prompt user for end date
+        // confirm dialog
+
+        GeoLocation start = new GeoLocation(-113, 50);
+        GeoLocation end   = new GeoLocation(-113, 100);
+
+        Request request = new Request(start, end);
+
+        ElasticSearchRequest.add addRequest = new ElasticSearchRequest.add();
+        addRequest.execute(request);
+//        user.getRequests().add(request); // this should post to elastic search.. if not then local?
+
+
     }
 }

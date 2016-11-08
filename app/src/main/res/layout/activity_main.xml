@@ -32,4 +32,16 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
+    <Button
+        android:id="@+id/newRequestButton"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_margin="16dp"
+
+        android:text="@string/new_request_btn"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:onClick="onNewRequestBtnClick" />
+
 </android.support.design.widget.CoordinatorLayout>

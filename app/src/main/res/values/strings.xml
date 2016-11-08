@@ -6,6 +6,11 @@
     <string name="title_activity_user_profile">UserProfileActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
 
+    <!--Main Map View-->
+    <string name="new_request_btn">New Request</string>
+
     <!--Request View-->
     <string name="request_title">Requests</string>
+
+
 </resources>

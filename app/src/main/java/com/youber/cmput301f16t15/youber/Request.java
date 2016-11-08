@@ -12,9 +12,17 @@ import io.searchbox.annotations.JestId;
 public class Request {
     @JestId
     private UUID uuID;
+    GeoLocation startLocation;
+    GeoLocation endLocation;
+
+
     public Request(GeoLocation location1, GeoLocation location2)
     {
         if(location1.equals(location2)) throw new RuntimeException(new InvalidRequestException());
+
+        startLocation = location1;
+        endLocation = location2;
+
         uuID= UUID.randomUUID();
     }
 
