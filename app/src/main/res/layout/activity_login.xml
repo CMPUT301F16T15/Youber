@@ -8,6 +8,39 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#ADD4CE"
     tools:context="com.youber.cmput301f16t15.youber.LoginActivity">
+
+    <Button
+        android:text="SIGNUP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/signupbutton"
+        android:layout_below="@+id/loginbutton"
+        android:layout_alignStart="@+id/loginbutton" />
+
+    <Button
+        android:text="LOGIN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginbutton"
+        android:layout_below="@+id/editText"
+        android:layout_alignEnd="@+id/editText" />
+
+    <EditText
+        android:inputType="textPersonName"
+        android:text="Username"
+        android:ems="10"
+        android:background="@color/white"
+        android:id="@+id/editText"
+        android:textAlignment="center"
+        android:textColor="@color/lightgrey"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="198dp" />
+
 
 </RelativeLayout>
