@@ -8,4 +8,14 @@
 
     <!--Request View-->
     <string name="request_title">Requests</string>
+
+    <string name="message">message</string>
+    <string name="positiveInput">postiveInput</string>
+    <string name="negativeInput">negativeInput</string>
+
+
+    <string name="InvalidUsernameMessage">This username does not exist. Please try again.</string>
+    <string name="signup">Sign Up</string>
+    <string name="ok">OK</string>
+
 </resources>
