@@ -1,6 +1,9 @@
 package com.youber.cmput301f16t15.youber;
 
+import org.apache.http.protocol.RequestUserAgentHC4;
+
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Observable;
 
 import io.searchbox.annotations.JestId;
@@ -19,6 +22,15 @@ public class User extends Observable implements Serializable {
     private String phoneNumber;
     private String email;
 
+    public enum UserType {
+        rider, driver
+    }
+
+    private UserType userType; // to indicate whether the user is currently a rider or a driver
+
+    RequestCollection riderRequests = new RequestCollection(); // hold both rider and driver requests
+    RequestCollection driverRequests = new RequestCollection(); // depending on their userType
+
     public User()
     {
 
@@ -31,7 +43,6 @@ public class User extends Observable implements Serializable {
         this.dateOfBirth=dateOfBirth;
         this.phoneNumber=phoneNumber;
         this.email=email;
-
     }
 
     public String getUsername()
