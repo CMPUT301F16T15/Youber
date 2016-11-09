@@ -147,8 +147,8 @@ public class RequestsTest
 
         Request request1 = new Request(geoLocation1, geoLocation2);
 
-        //request1.close();
-        RequestController.deleteRequest(request1);
+        //request1.close(); //TODO this is werid... take a closer look
+        RequestController.deleteRequest(request1, new Rider());
         assertTrue(request1.isClosed());
     }
 
@@ -165,7 +165,7 @@ public class RequestsTest
         rider1 = request2.addRider(rider1);
 
         RequestController.addRequest(request1,rider1);
-        RequestController.deleteRequest(request1);
+        RequestController.deleteRequest(request1, rider1);
         rider1.getRequest(request1.getUUID()).close();
 
         assertEquals(1, rider1.getClosedRequests().size());
@@ -211,7 +211,7 @@ public class RequestsTest
 
         Rider rider1 = new Rider();
         RequestController.addRequest(request1,rider1);
-        RequestController.deleteRequest(request1);
+        RequestController.deleteRequest(request1, rider1);
         assertEquals(0, rider1.getRequests().size());
 
     }

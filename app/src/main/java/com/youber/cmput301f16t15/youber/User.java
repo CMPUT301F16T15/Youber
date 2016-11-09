@@ -1,26 +1,23 @@
 package com.youber.cmput301f16t15.youber;
 
 import java.util.Observable;
-
 import io.searchbox.annotations.JestId;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Reem on 2016-10-13.
  */
 public class User extends Observable {
 
+    @JestId
+    private String username;
+
     private String firstName;
     private String lastName;
     private String dateOfBirth;
     private String phoneNumber;
     private String email;
-
-    @JestId
-    private String username;
-
-//    public static User getUser() {
-//        static ;
-//    }
 
     public User()
     {

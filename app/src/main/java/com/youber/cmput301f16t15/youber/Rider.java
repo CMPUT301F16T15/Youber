@@ -43,8 +43,8 @@ public class Rider extends User {
 
     // TODO double check all of these requests bc the naming is so confusing
     public RequestCollection getClosedRequests() {
-        RequestCollection allRequests = requests.getRequestsForRiders(this);
-        return requests.getAcceptedAcceptedRequests();
+        RequestCollection riderRequests = requests.getRequestsForRiders(this);
+        return riderRequests.getFinalizedRequestToDriver();
     }
 
     public RequestCollection getRequests() {
@@ -71,6 +71,11 @@ public class Rider extends User {
 //        request.getCost();
     }
 
+    public void addNewRequest(GeoLocation geoLocation1, GeoLocation geoLocation2, GeoLocation currLocation, Payment payment) {
+        // make a request object
+        Request request = new Request(geoLocation1, geoLocation2, currLocation, payment);
+        requests.add(request);
+    }
 
 // should not be in this layer of Rider, you can add by first getting the collection and then adding (HOPEFULLY not needig to be static)
 //
@@ -82,5 +87,9 @@ public class Rider extends User {
 //
     public void addRequest(Request request1) {
         requests.add(request1);
+    }
+
+    public void deleteRequest(Request request) {
+        requests.remove(request.getUUID());
     }
 }

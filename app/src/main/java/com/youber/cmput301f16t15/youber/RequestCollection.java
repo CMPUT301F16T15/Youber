@@ -20,8 +20,18 @@ public class RequestCollection extends HashMap<UUID,Request>{
 
     }
 
-    public RequestCollection getByGeolocation(GeoLocation geoLocation) {
-        return null;
+    public Request getRequestByUUID(UUID uuid){
+        return requestCollection.get(uuid);
+    }
+
+    public boolean getRequestStatus(UUID uuid) {
+        return requestCollection.get(uuid).isClosed();
+    }
+
+    public RequestCollection getByGeolocation(GeoLocation geoLocation, double radius) {
+        RequestCollection requestCollectionSearchedByGeoLocation = new RequestCollection();
+        // find by geolocation
+        return requestCollectionSearchedByGeoLocation;
     }
 
     public RequestCollection getByKeyword(String s) {
@@ -32,8 +42,7 @@ public class RequestCollection extends HashMap<UUID,Request>{
         return false;
     }
 
-    // this is both, driver and rider accept
-    public RequestCollection getAcceptedAcceptedRequests() {
+    public RequestCollection getFinalizedRequestToDriver() {
         return null;
     }
 
@@ -42,8 +51,8 @@ public class RequestCollection extends HashMap<UUID,Request>{
         return null;
     }
 
-    //
-    public RequestCollection getAcceptedRequestsForDrivers(Driver currentUser) {
+
+    public RequestCollection getPendingRequestsForDrivers(Driver currentUser) {
         return null;
     }
 

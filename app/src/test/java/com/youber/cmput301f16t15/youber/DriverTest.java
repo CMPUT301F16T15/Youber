@@ -6,7 +6,7 @@ import org.junit.Test;
  * Created by Reem on 2016-10-13.
  */
 import static org.junit.Assert.*;
-public class DriverTest {
+public class  DriverTest {
     //Tests US 01.05.01
     @Test
     public void testCallDriver() {
@@ -55,7 +55,7 @@ public class DriverTest {
         RequestController.linkDriverWithRequest(request1, driver1);
 
         rider1.makePayment(request1.getUUID());
-        assertEquals(request1.getCost(), driver1.getOfferPayment(request1.getUUID()));
+        assertEquals(request1.getCost(), driver1.getOfferPaymentFromRequest(request1.getUUID()));
     }
 
     //Tests US 05.01.01
@@ -102,7 +102,7 @@ public class DriverTest {
         RequestCollection totalRequests = Helper.getTotalRequests();
         Driver driver1 = new Driver();
         RequestController.linkDriverWithRequest(request1, driver1);
-        assertTrue(totalRequests.getByGeolocation(new GeoLocation(90.0, 90.0)).
+        assertTrue(totalRequests.getByGeolocation(new GeoLocation(90.0, 90.0), 10).
                 contains(driver1.getRequest(request1.getUUID())));
     }
     
@@ -205,7 +205,7 @@ public class DriverTest {
 
             RequestController.linkDriverWithRequest(request1, driver1);
             RequestCollection totalRequests = Helper.getTotalRequests();
-            RequestCollection ridersAcceptedRequestsForDrivers = totalRequests.getAcceptedAcceptedRequests();
+            RequestCollection ridersAcceptedRequestsForDrivers = totalRequests.getFinalizedRequestToDriver();
 
             assertEquals(ridersAcceptedRequestsForDrivers.get(request1.getUUID()), request1);
     }
@@ -216,6 +216,6 @@ public class DriverTest {
         RequestCollection savedLocal = Helper.getLocalRequests();
         Driver currentUser = Helper.getCurrentDriver();
 
-        RequestCollection acceptedRequests = savedLocal.getAcceptedRequestsForDrivers(currentUser);
+        RequestCollection acceptedRequests = savedLocal.getPendingRequestsForDrivers(currentUser);
     }
 }
