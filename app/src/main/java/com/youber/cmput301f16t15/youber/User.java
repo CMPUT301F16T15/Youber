@@ -148,4 +148,9 @@ public class User implements Serializable {
     {
         listeners.add(listener);
     }
+
+    public ArrayList<Listener> getListeners()
+    {
+        return listeners;
+    }
 }

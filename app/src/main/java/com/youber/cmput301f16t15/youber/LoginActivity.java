@@ -42,12 +42,17 @@ public class LoginActivity extends AppCompatActivity implements NoticeDialogFrag
 
                    if (users.size()!=1)
                    {
-                       throw new Exception();
+                       //throw new Exception();
+                       Log.i("User count", Integer.toString(users.size()));
                    }
 
                    else
                    {
                        User user = users.get(0);
+                       user.addListener(new ElasticSearch());
+                       Log.i("Listeners", Integer.toString(user.getListeners().size()));
+                       user.notifyObservers();
+
                        Log.i ("Works", "Found user"+user.getUsername());
                        Intent intent = new Intent(LoginActivity.this, UserTypeActivity.class);
                        startActivity(intent);
