@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.support.v7.app.AlertDialog;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,9 +45,6 @@ public class MainActivity extends AppCompatActivity {
                 UserController.saveUser(user);
                 UserController.addObserver(new ElasticSearchUser());
                 UserController.setFirstName("Scrum Master");
-
-                ElasticSearchUser.add add = new ElasticSearchUser.add();
-                add.execute(user);
             }
         });
     }

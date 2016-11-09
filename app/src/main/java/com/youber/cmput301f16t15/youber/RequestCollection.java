@@ -1,5 +1,6 @@
 package com.youber.cmput301f16t15.youber;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -7,7 +8,7 @@ import java.util.UUID;
 /**
  * Created by Reem on 2016-10-13.
  */
-public class RequestCollection extends HashMap<UUID,Request>{
+public class RequestCollection extends HashMap<UUID,Request> implements Serializable {
 
 //    private HashMap<UUID, Request> requestCollection;
 

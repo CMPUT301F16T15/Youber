@@ -10,6 +10,9 @@ public class GeoLocation implements Serializable {
     private double lat;
     private double lon;
 
+    public GeoLocation() {
+
+    }
 
     public GeoLocation(double lat, double lon)
     {

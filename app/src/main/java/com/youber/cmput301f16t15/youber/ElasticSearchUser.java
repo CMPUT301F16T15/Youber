@@ -6,7 +6,9 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.searchbox.client.JestResult;
 import io.searchbox.core.DocumentResult;
+import io.searchbox.core.Get;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
@@ -16,7 +18,6 @@ import io.searchbox.core.SearchResult;
  */
 
 public class ElasticSearchUser extends ElasticSearch{
-
 
     public static class add extends AsyncTask<User, Void, Void> {
 
@@ -49,13 +50,10 @@ public class ElasticSearchUser extends ElasticSearch{
 
             ArrayList<User> users = new ArrayList<User>();
 
-            Search search = new Search.Builder(search_parameters[0])
-                    .addIndex("youber")
-                    .addType("user")
-                    .build();
+            Search search = new Search.Builder(search_parameters[0]).addIndex("youber").addType("user").build();
 
             try {
-                SearchResult result = getClient().execute(search);
+                JestResult result = getClient().execute(search);
                 if(result.isSucceeded()) {
                     List<User> foundUsers = result.getSourceAsObjectList(User.class);
                     users.addAll(foundUsers);
