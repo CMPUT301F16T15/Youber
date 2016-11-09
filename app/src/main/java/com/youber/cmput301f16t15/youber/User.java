@@ -1,5 +1,6 @@
 package com.youber.cmput301f16t15.youber;
 
+import java.io.Serializable;
 import java.util.Observable;
 
 import io.searchbox.annotations.JestId;
@@ -7,20 +8,16 @@ import io.searchbox.annotations.JestId;
 /**
  * Created by Reem on 2016-10-13.
  */
-public class User extends Observable {
+public class User extends Observable implements Serializable {
+
+    @JestId
+    private String username;
 
     private String firstName;
     private String lastName;
     private String dateOfBirth;
     private String phoneNumber;
     private String email;
-
-    @JestId
-    private String username;
-
-//    public static User getUser() {
-//        static ;
-//    }
 
     public User()
     {

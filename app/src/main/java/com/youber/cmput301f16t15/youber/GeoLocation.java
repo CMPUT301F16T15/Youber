@@ -1,11 +1,12 @@
 package com.youber.cmput301f16t15.youber;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Created by Reem on 2016-10-13.
  */
-public class GeoLocation {
+public class GeoLocation implements Serializable {
     private double lat;
     private double lon;
 

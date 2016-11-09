@@ -1,5 +1,6 @@
 package com.youber.cmput301f16t15.youber;
 
+import java.io.Serializable;
 import java.util.Random;
 import java.util.UUID;
 
@@ -9,7 +10,8 @@ import io.searchbox.annotations.JestId;
  * Created by Reem on 2016-10-13.
  */
 
-public class Request {
+public class Request implements Serializable {
+
     @JestId
     private UUID uuID;
     GeoLocation startLocation;
