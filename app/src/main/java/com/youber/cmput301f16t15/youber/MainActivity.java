@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import android.support.v7.app.AlertDialog;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -81,13 +82,31 @@ public class MainActivity extends AppCompatActivity {
 
     //  Button Click Actions
     public void onNewRequestBtnClick(View view) {
-        // prompt user for start location
-//        promptForUserInput();
-        // prompt user for end location
-        // confirm dialog
+        String startLatStr = ((EditText)findViewById(R.id.start_lat_edit)).getText().toString();
+        String startLonStr = ((EditText)findViewById(R.id.start_lon_edit)).getText().toString();
+        String endLatStr = ((EditText)findViewById(R.id.end_lat_edit)).getText().toString();
+        String endLonStr = ((EditText)findViewById(R.id.end_lon_edit)).getText().toString();
 
-        GeoLocation start = new GeoLocation(-113, 50);
-        GeoLocation end   = new GeoLocation(-113, 100);
+        if(startLatStr.isEmpty() || startLonStr.isEmpty() || endLatStr.isEmpty() || endLonStr.isEmpty()) // check for empty arguements
+        {
+            Snackbar.make(view, "Cannot have empty values for latitudes and longitudes", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            return;
+        }
+
+        Double startLat, startLon, endLat, endLon;
+        try {
+            startLat = Double.parseDouble(startLatStr);
+            startLon = Double.parseDouble(startLonStr);
+            endLat = Double.parseDouble(endLatStr);
+            endLon = Double.parseDouble(endLonStr);
+        }
+        catch(NumberFormatException e) {
+            Snackbar.make(view, "Invalid argument format. Please input doubles for latitudes and longitudes", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            return;
+        }
+
+        GeoLocation start = new GeoLocation(startLat, startLon);
+        GeoLocation end   = new GeoLocation(endLat, endLon);
 
         Request request = new Request(start, end);
         promptConfirmDialog(request, view);
