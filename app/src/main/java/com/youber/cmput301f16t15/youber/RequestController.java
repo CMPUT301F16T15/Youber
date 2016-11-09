@@ -53,10 +53,12 @@ public class RequestController
         }
     }
 
-    public static void completeRequest(Request request1) {
+    public static void completeRequest(Request request) {
+        request.complete();
     }
 
-    public static void addDriver(Request request1, Driver driver2) {
+    public static void addDriver(Request request, Driver driver) {
+        request.addDriver(driver);
     }
 
 }

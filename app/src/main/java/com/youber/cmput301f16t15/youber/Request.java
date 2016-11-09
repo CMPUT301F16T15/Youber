@@ -1,5 +1,6 @@
 package com.youber.cmput301f16t15.youber;
 
+import java.util.Collection;
 import java.util.UUID;
 
 /**
@@ -12,7 +13,7 @@ public class Request {
 
     private boolean status = true; //open is true
     private Location location;
-    private String keyword;
+    private Collection<String> keyword;
     private Payment payment;
     private int confirmationStage = 0; //0 initial, 1 accepted by a driver, 2 confirmed by a rider, 3 finalized by driver
     private Rider rider;
@@ -27,7 +28,7 @@ public class Request {
 
     public Request(){};
 
-    public Request(GeoLocation geoLocation1, GeoLocation geoLocation2, GeoLocation currLocation, String s, Payment payment) {
+    public Request(GeoLocation geoLocation1, GeoLocation geoLocation2, GeoLocation currLocation, Collection<String> s, Payment payment) {
         this.location = new Location(geoLocation1, geoLocation2, currLocation );
         this.keyword = s;
         this.payment = payment;
@@ -50,14 +51,15 @@ public class Request {
 
 
     public GeoLocation getStartLocation() {
-        return null;
+        return this.location.getStartLocation();
     }
 
     public GeoLocation getEndLocation() {
-        return null;
+        return this.location.getEndLocation();
     }
 
     public void close() {
+        this.status = false;
     }
 
     public boolean isClosed() {
@@ -88,6 +90,10 @@ public class Request {
         return this.driver;
     }
 
+    public Rider getRider() {
+        return this.rider;
+    }
+
     public Double getDistance() {
         return null;
     }
@@ -97,6 +103,7 @@ public class Request {
     }
 
     public void complete() {
+        this.status = false;
     }
 
     public boolean isComplete() {
@@ -107,8 +114,8 @@ public class Request {
         return this.payment.getActualCost();
     }
 
-    public Driver addDriver(Driver driver) {
-        return null;
+    public void addDriver(Driver driver) {
+        this.driver = driver;
     }
 
     public boolean contains(RequestCollection uuid) {
@@ -129,6 +136,14 @@ public class Request {
 
     public String getDescription() {
         return null;
+    }
+
+    public Collection<String> getKeywords() {
+        return this.keyword;
+    }
+
+    public int getConfirmationStage() {
+        return this.confirmationStage;
     }
 
 }

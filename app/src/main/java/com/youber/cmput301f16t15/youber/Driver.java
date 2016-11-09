@@ -65,4 +65,8 @@ public class Driver extends User {
         return null;
     }
 
+    public RequestCollection getRequests() {
+        return this.requestsCtrl;
+    }
+
 }

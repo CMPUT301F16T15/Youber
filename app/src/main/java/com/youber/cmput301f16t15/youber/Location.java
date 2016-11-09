@@ -20,4 +20,12 @@ public class Location {
         //do something to find distance
         this.rideDistance = 0;
     }
+
+    public GeoLocation getStartLocation() {
+        return this.startLocation;
+    }
+
+    public GeoLocation getEndLocation() {
+        return this.endLocation;
+    }
 }
