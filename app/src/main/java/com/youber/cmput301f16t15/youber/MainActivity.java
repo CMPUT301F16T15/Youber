@@ -119,6 +119,8 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
         promptConfirmDialog(view);
     }
 
+
+    // Code that implements the dialog window that will ensure if the user wants to create the request or not
     public void promptConfirmDialog(final View view) {
         Bundle bundle = new Bundle();
 

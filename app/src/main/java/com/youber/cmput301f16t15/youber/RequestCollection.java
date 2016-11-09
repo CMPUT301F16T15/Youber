@@ -8,7 +8,7 @@ import java.util.UUID;
 /**
  * Created by Reem on 2016-10-13.
  */
-public class RequestCollection extends HashMap<UUID,Request> implements Serializable {
+public class RequestCollection extends HashMap<UUID,Request> implements Serializable{
 
 //    private HashMap<UUID, Request> requestCollection;
 
