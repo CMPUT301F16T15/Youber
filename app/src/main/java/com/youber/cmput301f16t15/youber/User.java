@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Observable;
 import java.util.UUID;
-
 import io.searchbox.annotations.JestId;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Reem on 2016-10-13.

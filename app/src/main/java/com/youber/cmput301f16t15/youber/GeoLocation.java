@@ -39,4 +39,6 @@ public class GeoLocation implements Serializable {
         }
         return false;
     }
+
+
 }
