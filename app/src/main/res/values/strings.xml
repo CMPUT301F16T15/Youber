@@ -12,6 +12,8 @@
     <string name="start_lon_title">Start Longitude</string>
     <string name="end_lat_title">End Latitude</string>
     <string name="end_lon_title">End Longitude</string>
+    <string name="dlg_create">Create</string>
+    <string name="dlg_cancel">Cancel</string>
 
     <!--Request View-->
     <string name="request_title">Requests</string>

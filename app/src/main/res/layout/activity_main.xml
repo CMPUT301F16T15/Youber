@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:theme="@android:style/Theme.Holo"
-    tools:context="com.youber.cmput301f16t15.youber.MainActivity">
+    tools:context="com.youber.cmput301f16t15.youber.MainActivity"
+    android:id="@+id/map_activity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
