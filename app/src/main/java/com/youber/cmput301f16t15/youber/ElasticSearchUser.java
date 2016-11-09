@@ -6,7 +6,9 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.searchbox.client.JestResult;
 import io.searchbox.core.DocumentResult;
+import io.searchbox.core.Get;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
@@ -50,13 +52,11 @@ public class ElasticSearchUser extends ElasticSearch{
 
             ArrayList<User> users = new ArrayList<User>();
 
-            Search search = new Search.Builder(search_parameters[0])
-                    .addIndex("youber")
-                    .addType("user")
-                    .build();
+            Get search = new Get.Builder("youber", search_parameters[0]).type("user").build();
+
 
             try {
-                SearchResult result = getClient().execute(search);
+                JestResult result = getClient().execute(search);
                 if(result.isSucceeded()) {
                     List<User> foundUsers = result.getSourceAsObjectList(User.class);
                     users.addAll(foundUsers);
@@ -66,7 +66,7 @@ public class ElasticSearchUser extends ElasticSearch{
                 }
             }
             catch(Exception e) {
-                Log.i("Error", "Executing the get tweets method failed");
+                Log.i("Error", "Executing the get tweets method failed" + e.toString());
             }
 
             return users;

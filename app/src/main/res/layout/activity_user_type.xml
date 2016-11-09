@@ -11,17 +11,6 @@
     tools:context="com.youber.cmput301f16t15.youber.UserTypeActivity">
 
     <Button
-        android:text="DRIVER"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/driverButton"
-        android:layout_alignStart="@+id/riderButton"
-        android:layout_below="@+id/riderButton"
-        android:layout_alignEnd="@+id/riderButton"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/signup"/>
-
-    <Button
         android:text="RIDER"
         android:layout_height="wrap_content"
         android:layout_marginTop="191dp"
@@ -30,7 +19,7 @@
         android:layout_centerHorizontal="true"
         android:layout_width="175dp"
         android:textColor="@color/black"
-        android:backgroundTint="@color/signup"/>
+        android:background="@color/lightGreen"/>
 
     <TextView
         android:text="Please select user type"
@@ -42,4 +31,16 @@
         android:id="@+id/userType"
         android:layout_above="@+id/driverButton"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="DRIVER"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/driverButton"
+        android:textColor="@color/black"
+        android:background="@color/lightGreen"
+        android:layout_below="@+id/riderButton"
+        android:layout_alignStart="@+id/riderButton"
+        android:layout_marginTop="13dp"
+        android:layout_alignEnd="@+id/riderButton" />
 </RelativeLayout>
