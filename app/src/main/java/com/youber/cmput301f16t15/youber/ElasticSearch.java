@@ -1,19 +1,29 @@
 package com.youber.cmput301f16t15.youber;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Observable;
+import java.util.Observer;
 
 
 /**
  * Created by aphilips on 11/7/16.
  */
 
-public class ElasticSearch {
+public class ElasticSearch implements Observer {
     private static JestDroidClient jestDroidClient;
+
+    @Override
+    public void update(Observable observable, Object o) {
+        Log.i("Update", "Got a notification from a change");
+    }
+
     public static abstract class add<T> extends AsyncTask<T,Void,Void>{
         @Override
         protected abstract Void doInBackground(T...objects);

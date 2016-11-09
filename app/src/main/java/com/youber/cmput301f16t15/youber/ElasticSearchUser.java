@@ -26,7 +26,6 @@ public class ElasticSearchUser extends ElasticSearch{
         protected Void doInBackground(User... users) {
             verifySettings();
 
-
             for (User user : users) {
                 Index index = new Index.Builder(user).index("youber").type("user").build();
 

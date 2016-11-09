@@ -1,5 +1,6 @@
 package com.youber.cmput301f16t15.youber;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -8,19 +9,29 @@ import java.util.UUID;
  */
 public class RequestCollection extends HashMap<UUID,Request>{
 
-    private HashMap<UUID, Request> requestCollection;
+//    private HashMap<UUID, Request> requestCollection;
 
     public RequestCollection()
     {
-        this.requestCollection = new HashMap<UUID, Request>();
+//        this = new HashMap<UUID, Request>();
     }
 
     public void driverAccept() {
 
     }
 
-    public RequestCollection getByGeolocation(GeoLocation geoLocation) {
-        return null;
+    public Request getRequestByUUID(UUID uuid){
+        return this.get(uuid);
+    }
+
+    public boolean getRequestStatus(UUID uuid) {
+        return this.get(uuid).isClosed();
+    }
+
+    public RequestCollection getByGeolocation(GeoLocation geoLocation, double radius) {
+        RequestCollection requestCollectionSearchedByGeoLocation = new RequestCollection();
+        // find by geolocation
+        return requestCollectionSearchedByGeoLocation;
     }
 
     public RequestCollection getByKeyword(String s) {
@@ -31,19 +42,29 @@ public class RequestCollection extends HashMap<UUID,Request>{
         return false;
     }
 
-    public RequestCollection getAcceptedAcceptedRequests() {
+    public RequestCollection getFinalizedRequestToDriver() {
         return null;
     }
 
+    // returning every single requests..
     public RequestCollection getRequestsForRiders(Rider currentUser) {
         return null;
     }
 
-    public RequestCollection getAcceptedRequestsForDrivers(Driver currentUser) {
+
+    public RequestCollection getPendingRequestsForDrivers(Driver currentUser) {
         return null;
     }
 
     public void add(Request request1) {
+        this.put(request1.getUUID(), request1);
+    }
 
+    // add a bulk amount of requests, typically will be called when grabbing from elasticSearch
+    public void addAll(ArrayList<Request> requests) {
+        for(Request r : requests)
+        {
+            this.put(r.getUUID(), r);
+        }
     }
 }
