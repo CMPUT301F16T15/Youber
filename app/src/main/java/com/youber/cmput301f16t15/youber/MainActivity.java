@@ -1,5 +1,6 @@
 package com.youber.cmput301f16t15.youber;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,12 +11,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.support.v7.app.AlertDialog;
+
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 public class MainActivity extends AppCompatActivity {
-//    private Rider user = new Rider("Shade","Aaron","Philips","feb21","780","@google");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +32,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-//                ElasticSearchUser.add userAdder = new ElasticSearchUser.add();
-                final User user = new User("Shade","Aaron","Philips","feb21","780","@google");
+
+                User user = new User("Shade","Aaron","Philips","feb21","780","@google");
                 UserController.saveUser(user);
                 UserController.addObserver(new ElasticSearchUser());
-                UserController.setFirstName("Guy in front of us");
-
-//                userAdder.execute(user);
-//                UserCollection.getUsers().put(user.getUsername(), user);
-//                User user = new User("Shade", "Aaron", "Phillips", "")
+                UserController.setFirstName("Scrum Master");
             }
         });
     }
@@ -54,8 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
+        // Handle action bar item clicks here. The action bar will automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
@@ -79,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     //  Button Click Actions
     public void onNewRequestBtnClick(View view) {
         // prompt user for start location
+//        promptForUserInput();
         // prompt user for end location
         // confirm dialog
 
@@ -86,8 +82,44 @@ public class MainActivity extends AppCompatActivity {
         GeoLocation end   = new GeoLocation(-113, 100);
 
         Request request = new Request(start, end);
+        promptConfirmDialog(request, view);
+    }
 
+    public void promptConfirmDialog(final Request request, final View view) {
+        final ArrayList<Boolean> confirmed = new ArrayList<Boolean>(); // kind of a hacky way to set a boolean
+
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+
+        String start = request.getStartLocation().toString();
+        String end = request.getEndLocation().toString();
+        alertBuilder.setMessage("Please confirm new request.\nStart: " + start + "\nEnd: " + end);
+
+        alertBuilder.setCancelable(true);
+        alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int id)
+            {
+                dialog.cancel();
+                addNewRequest(view, request);
+            }
+        });
+
+        alertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int id)
+            {
+                dialog.cancel();
+                Snackbar.make(view, "New request action was cancelled", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            }
+        });
+
+        AlertDialog deleteAlert = alertBuilder.create();
+        deleteAlert.show();
+    }
+
+    public void addNewRequest(View view, Request request) {
         ElasticSearchRequest.add addRequest = new ElasticSearchRequest.add();
         addRequest.execute(request);
+        Snackbar.make(view, "Successfully added a new request", Snackbar.LENGTH_LONG).setAction("Action", null).show();
     }
 }

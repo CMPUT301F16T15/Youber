@@ -40,5 +40,8 @@ public class GeoLocation implements Serializable {
         return false;
     }
 
-
+    @Override
+    public String toString() {
+        return "Lat " + Double.toString(lat) + ", " + "Lon " + Double.toString(lon);
+    }
 }

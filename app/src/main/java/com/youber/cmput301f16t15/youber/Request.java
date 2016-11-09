@@ -77,11 +77,11 @@ public class Request implements Serializable {
 
 
     public GeoLocation getStartLocation() {
-        return null;
+        return startLocation;
     }
 
     public GeoLocation getEndLocation() {
-        return null;
+        return endLocation;
     }
 
     public void close() {
