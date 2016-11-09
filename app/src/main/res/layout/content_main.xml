@@ -14,7 +14,30 @@
     tools:showIn="@layout/activity_main">
 
     <TextView
+        android:id="@+id/startLatTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="@string/start_lat_title"
+        android:textSize="16dp"
+        android:layout_gravity="start" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    <Button
+        android:id="@+id/newRequestButton"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+
+        android:text="@string/new_request_btn"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:onClick="onNewRequestBtnClick" />
+
 </RelativeLayout>

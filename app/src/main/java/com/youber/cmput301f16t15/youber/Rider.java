@@ -17,8 +17,8 @@ public class Rider extends User {
     }
 
     // contructor for general user class
-    public Rider(String username, String firstName, String lastName, String dateOfBirth, String phoneNumber, String email) {
-        super(username, firstName, lastName, dateOfBirth, phoneNumber, email);
+    public Rider(String username, String firstName, String lastName, String dateOfBirth, String phoneNumber, String email, UserType userType) {
+        super(username, firstName, lastName, dateOfBirth, phoneNumber, email, userType);
 
         // do we create a new request collection here or grab from elastic search.. (what about offline)
         ElasticSearchRequest.getObjects getElasticRequest = new ElasticSearchRequest.getObjects();

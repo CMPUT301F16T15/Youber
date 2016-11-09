@@ -33,25 +33,29 @@ public class User extends Observable implements Serializable {
 
     private UserType currentUserType; // to indicate whether the user is currently a rider or a driver
 
-//    RequestCollection riderRequests = new RequestCollection(); // hold both rider and driver requests
-//    RequestCollection driverRequests = new RequestCollection(); // depending on their userType
+    RequestCollection riderRequests; // hold both rider and driver requests
+    RequestCollection driverRequests; // depending on their userType
 
     // is this suppose to be a list of uuids?
-    ArrayList<UUID> riderRequestUUIDs = new ArrayList<UUID>();
-    ArrayList<UUID> driverRequestUUIDs = new ArrayList<UUID>();
+//    ArrayList<UUID> riderRequestUUIDs = new ArrayList<UUID>();
+//    ArrayList<UUID> driverRequestUUIDs = new ArrayList<UUID>();
 
     public User()
     {
 
     }
 
-    public User(String username, String firstName, String lastName, String dateOfBirth, String phoneNumber, String email) {
+    public User(String username, String firstName, String lastName, String dateOfBirth, String phoneNumber, String email, UserType userType) {
         this.username=username;
         this.firstName=firstName;
         this.lastName=lastName;
         this.dateOfBirth=dateOfBirth;
         this.phoneNumber=phoneNumber;
         this.email=email;
+        this.currentUserType = userType;
+
+        riderRequests = new RequestCollection();
+        driverRequests = new RequestCollection();
     }
 
     public String getUsername()
@@ -109,10 +113,25 @@ public class User extends Observable implements Serializable {
         notifyObservers();
     }
 
-    public ArrayList<UUID> getRequestUUIDs() { // note this returns the relavant uuids respective to the current user type
-        if(currentUserType == UserType.rider)
-            return riderRequestUUIDs;
+//    public ArrayList<UUID> getRequestUUIDs() { // note this returns the relavant uuids respective to the current user type
+//        if(currentUserType == UserType.rider)
+//            return riderRequestUUIDs;
+//
+//        return driverRequestUUIDs;
+//    }
 
-        return driverRequestUUIDs;
+    public RequestCollection getRequests() {
+        if(currentUserType == UserType.rider)
+            return riderRequests;
+
+        return driverRequests;
+    }
+
+    public void add(Request r) {
+        if(currentUserType == UserType.rider)
+            riderRequests.add(r);
+
+        driverRequests.add(r);
+        int i = 0;
     }
 }

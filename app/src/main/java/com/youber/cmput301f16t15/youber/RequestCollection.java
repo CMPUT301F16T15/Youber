@@ -9,11 +9,11 @@ import java.util.UUID;
  */
 public class RequestCollection extends HashMap<UUID,Request>{
 
-    private HashMap<UUID, Request> requestCollection;
+//    private HashMap<UUID, Request> requestCollection;
 
     public RequestCollection()
     {
-        this.requestCollection = new HashMap<UUID, Request>();
+//        this = new HashMap<UUID, Request>();
     }
 
     public void driverAccept() {
@@ -21,11 +21,11 @@ public class RequestCollection extends HashMap<UUID,Request>{
     }
 
     public Request getRequestByUUID(UUID uuid){
-        return requestCollection.get(uuid);
+        return this.get(uuid);
     }
 
     public boolean getRequestStatus(UUID uuid) {
-        return requestCollection.get(uuid).isClosed();
+        return this.get(uuid).isClosed();
     }
 
     public RequestCollection getByGeolocation(GeoLocation geoLocation, double radius) {
@@ -57,14 +57,14 @@ public class RequestCollection extends HashMap<UUID,Request>{
     }
 
     public void add(Request request1) {
-        requestCollection.put(request1.getUUID(), request1);
+        this.put(request1.getUUID(), request1);
     }
 
     // add a bulk amount of requests, typically will be called when grabbing from elasticSearch
     public void addAll(ArrayList<Request> requests) {
         for(Request r : requests)
         {
-            requestCollection.put(r.getUUID(), r);
+            this.put(r.getUUID(), r);
         }
     }
 }

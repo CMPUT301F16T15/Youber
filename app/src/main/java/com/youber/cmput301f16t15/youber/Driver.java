@@ -13,8 +13,8 @@ public class Driver extends User {
         super();
     }
 
-    public Driver(String username, String firstName, String lastName, String dateOfBirth, String phoneNumber, String email) {
-        super(username, firstName, lastName, dateOfBirth, phoneNumber, email);
+    public Driver(String username, String firstName, String lastName, String dateOfBirth, String phoneNumber, String email, UserType userType) {
+        super(username, firstName, lastName, dateOfBirth, phoneNumber, email, userType);
     }
 
     public Request getRequest(UUID uuid) {

@@ -8,6 +8,10 @@
 
     <!--Main Map View-->
     <string name="new_request_btn">New Request</string>
+    <string name="start_lat_title">Start Latitude:</string>
+    <string name="start_lon_title">Start Longitude:</string>
+    <string name="end_lat_title">End Latitude:</string>
+    <string name="end_lon_title">End Longitude:</string>
 
     <!--Request View-->
     <string name="request_title">Requests</string>
