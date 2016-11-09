@@ -86,8 +86,9 @@ public class UserController {
 //    }
 //
 //    public static void addObserver()
-    public static void addObserver(Observer obs) {
-        user.addObserver(obs);
+    public static void addListener(Listener obs) {
+       // user.addObserver(obs);
+        user.addListener(obs);
     }
 
     public static void setFirstName(String firstName) {

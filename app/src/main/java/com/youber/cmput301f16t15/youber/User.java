@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by Reem on 2016-10-13.
  */
-public class User extends Observable implements Serializable {
+public class User implements Serializable {
 
     @JestId
     private String username;
@@ -26,6 +26,7 @@ public class User extends Observable implements Serializable {
     private String dateOfBirth;
     private String phoneNumber;
     private String email;
+    private ArrayList<Listener> listeners;
 
     public enum UserType {
         rider, driver
@@ -69,7 +70,7 @@ public class User extends Observable implements Serializable {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-        setChanged();
+
         notifyObservers();
     }
 
@@ -79,7 +80,7 @@ public class User extends Observable implements Serializable {
 
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-        setChanged();
+
         notifyObservers();
     }
 
@@ -89,7 +90,7 @@ public class User extends Observable implements Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-        setChanged();
+
         notifyObservers();
     }
 
@@ -99,7 +100,7 @@ public class User extends Observable implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-        setChanged();
+
         notifyObservers();
     }
 
@@ -109,7 +110,7 @@ public class User extends Observable implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-        setChanged();
+
         notifyObservers();
     }
 
@@ -133,5 +134,18 @@ public class User extends Observable implements Serializable {
 
         driverRequests.add(r);
         int i = 0;
+    }
+
+    public void notifyObservers()
+    {
+        for (Listener listener: listeners)
+        {
+            listener.update();
+        }
+    }
+
+    public void addListener(Listener listener)
+    {
+        listeners.add(listener);
     }
 }

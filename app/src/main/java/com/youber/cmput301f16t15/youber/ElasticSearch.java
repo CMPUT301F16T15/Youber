@@ -6,6 +6,7 @@ import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Observable;
@@ -16,11 +17,12 @@ import java.util.Observer;
  * Created by aphilips on 11/7/16.
  */
 
-public class ElasticSearch implements Observer {
+public class ElasticSearch implements Listener {
+
     private static JestDroidClient jestDroidClient;
 
     @Override
-    public void update(Observable observable, Object o) {
+    public void update() {
         Log.i("Update", "Got a notification from a change");
     }
 

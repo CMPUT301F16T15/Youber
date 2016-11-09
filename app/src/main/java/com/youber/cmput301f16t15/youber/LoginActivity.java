@@ -37,16 +37,18 @@ public class LoginActivity extends AppCompatActivity implements NoticeDialogFrag
                 searchUser.execute(username.getText().toString());
 
                try {
+
                    ArrayList<User> users = searchUser.get();
 
                    if (users.size()!=1)
                    {
                        throw new Exception();
                    }
+
                    else
                    {
                        User user = users.get(0);
-                       Log.i ("Works", "Found user");
+                       Log.i ("Works", "Found user"+user.getUsername());
                        Intent intent = new Intent(LoginActivity.this, UserTypeActivity.class);
                        startActivity(intent);
                        finish();

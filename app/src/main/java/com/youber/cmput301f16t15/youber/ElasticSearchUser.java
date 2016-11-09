@@ -57,8 +57,13 @@ public class ElasticSearchUser extends ElasticSearch{
             try {
                 JestResult result = getClient().execute(search);
                 if(result.isSucceeded()) {
+
+
+
+
                     List<User> foundUsers = result.getSourceAsObjectList(User.class);
                     users.addAll(foundUsers);
+
                 }
                 else {
                     Log.i("Error", "The search execited but it didnt work");

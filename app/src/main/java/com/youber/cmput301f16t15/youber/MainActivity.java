@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("Error", "null list");
 
                 UserController.saveUser(user);
-                UserController.addObserver(new ElasticSearchUser());
+                UserController.addListener(new ElasticSearchUser());
                 UserController.setFirstName("Scrum Master");
 
                 ElasticSearchUser.add add = new ElasticSearchUser.add();
