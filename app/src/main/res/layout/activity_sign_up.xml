@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_sign_up"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.youber.cmput301f16t15.youber.SignUpActivity">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:inputType="textPersonName"
+        android:text=" Username"
+        android:ems="10"
+        android:id="@+id/usernameInput"
+        android:background="@color/signup"
+        android:layout_height="35sp"
+        android:layout_marginTop="5dp"
+        android:textStyle="normal|italic"
+        android:layout_below="@+id/emailInput"
+        android:layout_alignStart="@+id/emailInput" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="35sp"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/dateofBirthInput"
+        android:text=" Date of Birth"
+        android:background="@color/signup"
+        android:layout_marginTop="5dp"
+        android:textStyle="normal|italic"
+        android:layout_below="@+id/lastNameInput"
+        android:layout_alignStart="@+id/lastNameInput" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/phoneInput"
+        android:text=" Phone number"
+        android:background="@color/signup"
+        android:layout_height="35sp"
+        android:layout_marginTop="5dp"
+        android:textStyle="normal|italic"
+        android:textAlignment="viewStart"
+        android:layout_below="@+id/dateofBirthInput"
+        android:layout_alignStart="@+id/dateofBirthInput" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="35sp"
+        android:inputType="textPersonName"
+        android:text=" Last Name"
+        android:ems="10"
+        android:id="@+id/lastNameInput"
+        android:background="@color/signup"
+        android:textStyle="normal|italic"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/firstnameInput"
+        android:layout_alignStart="@+id/usernameInput"
+        android:layout_marginTop="5dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="35sp"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/emailInput"
+        android:text=" Email"
+        android:background="@color/signup"
+        android:layout_marginTop="55dp"
+        android:textStyle="normal|italic"
+        android:textColor="@color/white"
+        android:layout_alignTop="@+id/userSignupText"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:inputType="textPersonName"
+        android:text=" First Name"
+        android:ems="10"
+        android:background="@color/signup"
+        android:id="@+id/firstnameInput"
+        android:layout_height="35sp"
+        android:textStyle="normal|italic"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/usernameInput"
+
+        android:layout_alignStart="@+id/usernameInput" />
+
+    <TextView
+        android:text="NEW USER SIGN UP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/userSignupText"
+        android:textSize="25sp"
+        android:textStyle="normal|bold"
+        android:textColor="@color/white"
+        android:layout_marginTop="34dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="CREATE ACCOUNT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="31dp"
+        android:backgroundTint="@color/grey"
+        android:textColor="@color/black"
+        android:id="@+id/button4"
+        android:layout_alignEnd="@+id/phoneInput"
+        android:layout_alignStart="@+id/phoneInput" />
+
+</RelativeLayout>
