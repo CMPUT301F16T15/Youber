@@ -24,9 +24,6 @@ public class RequestViewActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        Bundle bundle = getIntent().getExtras();
-//        String username = (String) bundle.get("username");
-//
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,20 +35,10 @@ public class RequestViewActivity extends AppCompatActivity {
 
         User user = UserController.getUser();
         Log.i("New Firstname", user.getFirstName());
-//        user = UserCollection.getUsers().get(username);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-//
-//        Rider rider = (Rider)user;
-//
-//        ArrayList<Request> request = new ArrayList<Request>();
-//        for(Request r : rider.getRequests().values())
-//            request.add(r);
-//
-//        ArrayAdapter<Request> adapter = new ArrayAdapter<Request>(this, R.layout.list_item, request);
-//        requestList.setAdapter(adapter);
     }
 }

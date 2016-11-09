@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (id == R.id.action_view_requests) {
             Intent intent = new Intent(this, RequestViewActivity.class);
-//            intent.putExtra("username", user.getUsername());
             startActivity(intent);
 
             return true;
@@ -79,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
 
     //  Button Click Actions
     public void onNewRequestBtnClick(View view) {
-        // prompt user for start date
-        // prompt user for end date
+        // prompt user for start location
+        // prompt user for end location
         // confirm dialog
 
         GeoLocation start = new GeoLocation(-113, 50);
@@ -90,6 +89,5 @@ public class MainActivity extends AppCompatActivity {
 
         ElasticSearchRequest.add addRequest = new ElasticSearchRequest.add();
         addRequest.execute(request);
-//        user.addRequest(request); // this should post to elastic search.. if not then local?
     }
 }

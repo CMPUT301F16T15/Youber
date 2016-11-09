@@ -1,10 +1,14 @@
 package com.youber.cmput301f16t15.youber;
 
+import android.widget.ArrayAdapter;
+
 import org.apache.http.protocol.RequestUserAgentHC4;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Observable;
+import java.util.UUID;
 
 import io.searchbox.annotations.JestId;
 
@@ -26,10 +30,14 @@ public class User extends Observable implements Serializable {
         rider, driver
     }
 
-    private UserType userType; // to indicate whether the user is currently a rider or a driver
+    private UserType currentUserType; // to indicate whether the user is currently a rider or a driver
 
-    RequestCollection riderRequests = new RequestCollection(); // hold both rider and driver requests
-    RequestCollection driverRequests = new RequestCollection(); // depending on their userType
+//    RequestCollection riderRequests = new RequestCollection(); // hold both rider and driver requests
+//    RequestCollection driverRequests = new RequestCollection(); // depending on their userType
+
+    // is this suppose to be a list of uuids?
+    ArrayList<UUID> riderRequestUUIDs = new ArrayList<UUID>();
+    ArrayList<UUID> driverRequestUUIDs = new ArrayList<UUID>();
 
     public User()
     {
@@ -98,5 +106,12 @@ public class User extends Observable implements Serializable {
         this.email = email;
         setChanged();
         notifyObservers();
+    }
+
+    public ArrayList<UUID> getRequestUUIDs() { // note this returns the relavant uuids respective to the current user type
+        if(currentUserType == UserType.rider)
+            return riderRequestUUIDs;
+
+        return driverRequestUUIDs;
     }
 }
