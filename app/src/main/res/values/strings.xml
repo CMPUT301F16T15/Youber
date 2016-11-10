@@ -30,6 +30,12 @@
     <string name="status_title">Status:</string>
     <string name="driver_title">Driver:</string>
     <string name="more_options">More Options</string>
+    <string name="cancel_request">Cancel Request</string>
+    <string name="fair_fare">Get Fair Fare</string>
+    <string name="view_request_map">View Request On Map</string>
+    <string name="promptCancelConfirm">Are you sure you want to cancel this request?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <string name="InvalidUsernameMessage">This username does not exist. Please try again.</string>
     <string name="signup">Sign Up</string>

@@ -113,7 +113,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:background="@color/lightGreen"
-        android:text="@string/ok" />
+        android:text="@string/ok"
+        android:onClick="onOKBtnClick" />
 
     <Button
         android:layout_width="wrap_content"
@@ -121,6 +122,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:background="@color/lightGreen"
-        android:text="@string/more_options"/>
+        android:text="@string/more_options"
+        android:onClick="onMoreOptionClick" />
 
 </RelativeLayout>
