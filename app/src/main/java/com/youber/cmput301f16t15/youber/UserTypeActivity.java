@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ * The type User type activity.
+ */
 public class UserTypeActivity extends AppCompatActivity {
 
     @Override

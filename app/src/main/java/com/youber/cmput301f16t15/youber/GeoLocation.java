@@ -10,17 +10,39 @@ public class GeoLocation implements Serializable {
     private double lat;
     private double lon;
 
+    /**
+     * Instantiates a new Geo location.
+     */
+    public GeoLocation() {
 
+    }
+
+    /**
+     * Instantiates a new Geo location.
+     *
+     * @param lat the lat
+     * @param lon the lon
+     */
     public GeoLocation(double lat, double lon)
     {
         this.lat=lat;
         this.lon=lon;
     }
 
+    /**
+     * Gets lat.
+     *
+     * @return the lat
+     */
     public double getLat() {
         return lat;
     }
 
+    /**
+     * Gets lon.
+     *
+     * @return the lon
+     */
     public double getLon() {
         return lon;
     }

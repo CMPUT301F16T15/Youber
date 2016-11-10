@@ -13,13 +13,15 @@ import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 
+
 /**
  * Created by aphilips on 11/7/16.
  */
-
 public class ElasticSearchUser extends ElasticSearch{
 
-
+    /**
+     * The type Add.
+     */
     public static class add extends AsyncTask<User, Void, Void> {
 
         @Override
@@ -43,6 +45,9 @@ public class ElasticSearchUser extends ElasticSearch{
         }
     }
 
+    /**
+     * The type Get objects.
+     */
     public static class getObjects extends AsyncTask<String, Void, ArrayList<User>> {
 
         @Override
@@ -52,7 +57,6 @@ public class ElasticSearchUser extends ElasticSearch{
             ArrayList<User> users = new ArrayList<User>();
 
             Get search = new Get.Builder("youber", search_parameters[0]).type("user").build();
-
 
             try {
                 JestResult result = getClient().execute(search);

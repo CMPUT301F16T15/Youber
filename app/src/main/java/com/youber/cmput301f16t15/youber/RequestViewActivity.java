@@ -13,9 +13,14 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * The type Request view activity.
+ */
 public class RequestViewActivity extends AppCompatActivity {
-    ListView requestList;
-    User user;
+    /**
+     * The Request list view.
+     */
+    ListView requestListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,21 +29,47 @@ public class RequestViewActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        requestListView = (ListView)findViewById(R.id.requestListView);
 
-        User user = UserController.getUser();
-        Log.i("New Firstname", user.getFirstName());
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+
+        // if this line works with new stuff we
+//        User user = UserController.getUser();
+//        Log.i("New Firstname", user.getFirstName());
+
+        // TODO CURRENTLY BORKEN BUT GONNA BE MOCKED OUT FOR NOW ^
+        // so it should grab form the user model and then grab from the request models
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
+        // TODO maybe in here we grab the list...?
+        RequestCollection requests = new RequestCollection();
+
+        GeoLocation start = new GeoLocation(-100, 100);
+        GeoLocation end = new GeoLocation(-100, 50);
+        Request request = new Request(start, end);
+        requests.add(request);
+
+        // this probably needs to be in request collection controller later as a function
+        ArrayList<Request> requestArray = new ArrayList<Request>();
+        requestArray.add(request);
+
+        ArrayAdapter<Request> adapter = new ArrayAdapter<Request>(this, R.layout.list_item, requestArray);
+        requestListView.setAdapter(adapter);
+    }
+
+    private void requestDialog() {
+
     }
 }
