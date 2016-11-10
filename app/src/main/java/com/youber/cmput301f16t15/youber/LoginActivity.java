@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity implements NoticeDialogFrag
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(intent);
-                finish();
+//                finish();
             }
         });
 
@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity implements NoticeDialogFrag
     public void onDialogPositiveClick(DialogFragment dialog) {
         Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
         startActivity(intent);
-        finish();
+//        finish();
     }
 
     @Override
