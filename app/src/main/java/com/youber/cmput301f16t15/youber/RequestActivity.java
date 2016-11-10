@@ -9,11 +9,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+
+import java.util.ArrayList;
 
 public class RequestActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
     RelativeLayout layout;
+    ListView driverListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +26,27 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
         setContentView(R.layout.activity_request);
 
         layout = (RelativeLayout)findViewById(R.id.activity_request);
+        driverListView = (ListView)findViewById(R.id.driverListView);
+    }
+
+    @Override
+    protected void onStart() { // update the info of the request!
+
+    }
+
+    @Override
+    protected void onResume() { // update the driver stuff
+        super.onResume();
+
+        ArrayList<Driver> driverArray = new ArrayList<Driver>();
+
+        Driver driver1 = new Driver("driver1", "Jess", "Huynh", "10", "780", "@", User.UserType.driver);
+        Driver driver2 = new Driver("driver2", "Caro", "Carlos", "10", "780", "@", User.UserType.driver);
+        driverArray.add(driver1);
+        driverArray.add(driver2);
+
+        ArrayAdapter<Driver> adapter = new ArrayAdapter<Driver>(this, R.layout.list_item, driverArray);
+        driverListView.setAdapter(adapter);
     }
 
     public void onOKBtnClick(View view) {
@@ -68,6 +94,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 //        ElasticSearchRequest.add addRequest = new ElasticSearchRequest.add();
 //        addRequest.execute(request);
         Snackbar.make(layout, "Successfully cancelled the request", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+        finish();
     }
 
     @Override

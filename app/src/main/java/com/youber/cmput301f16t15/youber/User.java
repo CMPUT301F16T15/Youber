@@ -87,6 +87,11 @@ public class User implements Serializable {
         driverRequests = new RequestCollection();
     }
 
+    @Override
+    public String toString() {
+        return username + ", " + firstName + " " + lastName;
+    }
+
     /**
      * Gets username.
      *
