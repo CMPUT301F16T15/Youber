@@ -26,7 +26,6 @@ public class User implements Serializable {
     private String dateOfBirth;
     private String phoneNumber;
     private String email;
-    private ArrayList<Listener> listeners;
 
     public enum UserType {
         rider, driver
@@ -57,6 +56,7 @@ public class User implements Serializable {
 
         riderRequests = new RequestCollection();
         driverRequests = new RequestCollection();
+
     }
 
     public String getUsername()
@@ -71,7 +71,7 @@ public class User implements Serializable {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
 
-        notifyObservers();
+        //notifyObservers();
     }
 
     public String getDateOfBirth() {
@@ -81,7 +81,7 @@ public class User implements Serializable {
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
 
-        notifyObservers();
+        //notifyObservers();
     }
 
     public String getPhoneNumber() {
@@ -91,7 +91,7 @@ public class User implements Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
 
-        notifyObservers();
+        //notifyObservers();
     }
 
     public String getLastName() {
@@ -101,7 +101,7 @@ public class User implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
 
-        notifyObservers();
+        //notifyObservers();
     }
 
     public String getEmail() {
@@ -111,7 +111,7 @@ public class User implements Serializable {
     public void setEmail(String email) {
         this.email = email;
 
-        notifyObservers();
+        //notifyObservers();
     }
 
 //    public ArrayList<UUID> getRequestUUIDs() { // note this returns the relavant uuids respective to the current user type
@@ -136,21 +136,4 @@ public class User implements Serializable {
         int i = 0;
     }
 
-    public void notifyObservers()
-    {
-        for (Listener listener: listeners)
-        {
-            listener.update();
-        }
-    }
-
-    public void addListener(Listener listener)
-    {
-        listeners.add(listener);
-    }
-
-    public ArrayList<Listener> getListeners()
-    {
-        return listeners;
-    }
 }

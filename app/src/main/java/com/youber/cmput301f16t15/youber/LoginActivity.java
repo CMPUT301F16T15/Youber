@@ -35,28 +35,37 @@ public class LoginActivity extends AppCompatActivity implements NoticeDialogFrag
 
                 ElasticSearchUser.getObjects searchUser = new ElasticSearchUser.getObjects();
                 searchUser.execute(username.getText().toString());
+                UserController.setContext(LoginActivity.this);
 
                try {
 
                    ArrayList<User> users = searchUser.get();
 
-                   if (users.size()!=1)
+                   if (users.size()==1)
                    {
-                       //throw new Exception();
-                       Log.i("User count", Integer.toString(users.size()));
+                       User user = users.get(0);
+
+                       UserController.addListener(new ElasticSearch());
+                       Log.i("Listeners", Integer.toString(UserController.getListeners().size()));
+                       UserController.notifyObservers();
+                       UserController.saveUser(user);
+                       Log.i ("Works", "Found user"+user.getUsername());
+                       Intent intent = new Intent(LoginActivity.this, UserTypeActivity.class);
+                       startActivity(intent);
+                       //finish();
                    }
 
                    else
                    {
-                       User user = users.get(0);
-                       user.addListener(new ElasticSearch());
-                       Log.i("Listeners", Integer.toString(user.getListeners().size()));
-                       user.notifyObservers();
+                       Log.i("Error", "The request for user has failed");
+                       Bundle bundle = new Bundle();
+                       bundle.putString(getResources().getString(R.string.message), getResources().getString(R.string.InvalidUsernameMessage));
+                       bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.signup));
+                       bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.ok));
 
-                       Log.i ("Works", "Found user"+user.getUsername());
-                       Intent intent = new Intent(LoginActivity.this, UserTypeActivity.class);
-                       startActivity(intent);
-                       finish();
+                       DialogFragment dialog = new NoticeDialogFragment();
+                       dialog.setArguments(bundle);
+                       dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
                    }
                }
                catch (Exception e)
