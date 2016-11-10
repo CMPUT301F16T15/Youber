@@ -17,7 +17,12 @@ import io.searchbox.core.SearchResult;
 /**
  * Created by aphilips on 11/7/16.
  */
-public class ElasticSearchUser extends ElasticSearch{
+public class ElasticSearchUser extends ElasticSearch {
+
+    @Override
+    public void update() {
+        Log.i("Update", "USER UDPATE");
+    }
 
     /**
      * The type Add.

@@ -11,8 +11,30 @@
     tools:context="com.youber.cmput301f16t15.youber.RequestActivity">
 
     <TextView
+        android:id="@+id/singleRequestTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TESTING"/>
+        android:text="@string/dummy_string"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/start_lat_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/singleRequestTitle"
+        android:layout_marginTop="10dp"
+        android:text="@string/start_location_title"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:id="@+id/start_lat_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/singleRequestTitle"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/start_lat_title"
+        android:layout_marginLeft="5dp"
+        android:text="@string/dummy_string"
+        android:textSize="16dp" />
 
 </RelativeLayout>

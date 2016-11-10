@@ -6,6 +6,8 @@
     <string name="title_activity_user_profile">UserProfileActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
 
+    <string name="dummy_string">Dummy Str (change me)</string>
+
     <!--Main Map View-->
     <string name="new_request_btn">New Request</string>
     <string name="start_lat_title">Start Latitude</string>
@@ -15,13 +17,16 @@
     <string name="dlg_create">Create</string>
     <string name="dlg_cancel">Cancel</string>
 
-    <!--Request View-->
+    <!--Requests List View-->
     <string name="request_title">Requests</string>
 
     <string name="message">message</string>
     <string name="positiveInput">postiveInput</string>
     <string name="negativeInput">negativeInput</string>
 
+    <!--Request View-->
+    <string name="start_location_title">Start Location:</string>
+    <string name="end_location_title">End Location</string>
 
     <string name="InvalidUsernameMessage">This username does not exist. Please try again.</string>
     <string name="signup">Sign Up</string>

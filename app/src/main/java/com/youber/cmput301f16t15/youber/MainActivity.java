@@ -56,7 +56,10 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
 
                 UserController.saveUser(user);
                 UserController.addListener(new ElasticSearchUser());
-                UserController.setFirstName("Scrum Master");
+                UserController.setFirstName("Scrum");
+
+                ElasticSearchUser.add adder = new ElasticSearchUser.add();
+                adder.execute(user);
             }
         });
     }

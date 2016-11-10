@@ -86,6 +86,8 @@ public class User implements Serializable {
 
         riderRequests = new RequestCollection();
         driverRequests = new RequestCollection();
+
+        listeners = new ArrayList<Listener>();
     }
 
     /**
