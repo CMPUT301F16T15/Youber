@@ -68,4 +68,8 @@ public class RequestViewActivity extends AppCompatActivity {
         ArrayAdapter<Request> adapter = new ArrayAdapter<Request>(this, R.layout.list_item, requestArray);
         requestListView.setAdapter(adapter);
     }
+
+    private void requestDialog() {
+
+    }
 }

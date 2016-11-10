@@ -13,8 +13,6 @@ import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 
-import static com.youber.cmput301f16t15.youber.ElasticSearch.ElasticSearch.getClient;
-import static com.youber.cmput301f16t15.youber.ElasticSearch.ElasticSearch.verifySettings;
 
 /**
  * Created by aphilips on 11/7/16.

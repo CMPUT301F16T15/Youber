@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:text="@string/new_request_btn"
-        android:background="@color/signup"
+        android:background="@color/lightGreen"
         android:textColor="@android:color/white"
         android:onClick="onNewRequestBtnClick" />
 
