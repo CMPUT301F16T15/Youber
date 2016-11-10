@@ -26,7 +26,6 @@ public class User implements Serializable {
     private String dateOfBirth;
     private String phoneNumber;
     private String email;
-//    private ArrayList<Listener> listeners;
 
     /**
      * The enum User type.
@@ -86,8 +85,6 @@ public class User implements Serializable {
 
         riderRequests = new RequestCollection();
         driverRequests = new RequestCollection();
-
-//        listeners = new ArrayList<Listener>();
     }
 
     /**
@@ -116,8 +113,6 @@ public class User implements Serializable {
      */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-
-//        notifyObservers();
     }
 
     /**
@@ -136,8 +131,6 @@ public class User implements Serializable {
      */
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-
-//        notifyObservers();
     }
 
     /**
@@ -156,8 +149,6 @@ public class User implements Serializable {
      */
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-
-//        notifyObservers();
     }
 
     /**
@@ -176,8 +167,6 @@ public class User implements Serializable {
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
-
-//        notifyObservers();
     }
 
     /**
@@ -196,8 +185,6 @@ public class User implements Serializable {
      */
     public void setEmail(String email) {
         this.email = email;
-
-//        notifyObservers();
     }
 
 //    public ArrayList<UUID> getRequestUUIDs() { // note this returns the relavant uuids respective to the current user type
@@ -232,21 +219,13 @@ public class User implements Serializable {
         int i = 0;
     }
 
-//    public void notifyObservers()
-//    {
-//        for (Listener listener: listeners)
-//        {
-//            listener.update();
-//        }
-//    }
-//
-//    public void addListener(Listener listener)
-//    {
-//        listeners.add(listener);
-//    }
-//
-//    public ArrayList<Listener> getListeners()
-//    {
-//        return listeners;
-//    }
+    public UserType getCurrentUserType()
+    {
+        return currentUserType;
+    }
+
+    public void setCurrentUserType(UserType userType)
+    {
+        currentUserType = userType;
+    }
 }

@@ -22,6 +22,7 @@ public class UserController {
 
     private final static String FILENAME = "user.sav";
     private static Context c;
+    private static ArrayList<Listener> listeners = new ArrayList<Listener>();
 
     private static User user = null;
 
@@ -109,10 +110,10 @@ public class UserController {
 //
 //    }
 //
-//    public static void addObserver()
-//    public static void addListener(Listener obs) {
-//        user.addListener(obs);
-//    }
+
+    //public static void addListener(Listener obs) {
+    //    user.addListener(obs);
+    //}
 
     /**
      * Sets first name.
@@ -122,6 +123,7 @@ public class UserController {
     public static void setFirstName(String firstName) {
         user.setFirstName(firstName);
         saveUser(user);
+        notifyObservers();
     }
 
     /**
@@ -132,6 +134,7 @@ public class UserController {
     public static void setDateOfBirth(String dateOfBirth) {
         user.setDateOfBirth(dateOfBirth);
         saveUser(user);
+        notifyObservers();
     }
 
     /**
@@ -142,6 +145,7 @@ public class UserController {
     public static void setPhoneNumber(String phoneNumber) {
         user.setPhoneNumber(phoneNumber);
         saveUser(user);
+        notifyObservers();
     }
 
     /**
@@ -152,6 +156,7 @@ public class UserController {
     public static void setLastName(String lastName) {
         user.setLastName(lastName);
         saveUser(user);
+        notifyObservers();
     }
 
     /**
@@ -162,5 +167,32 @@ public class UserController {
     public static void setEmail(String email) {
         user.setEmail(email);
         saveUser(user);
+        notifyObservers();
+    }
+
+    public static void setUserType(User.UserType userType)
+    {
+        user.setCurrentUserType(userType);
+        saveUser(user);
+        notifyObservers();
+    }
+
+
+    public static void notifyObservers()
+    {
+        for (Listener listener: listeners)
+        {
+            listener.update();
+        }
+    }
+
+    public static void addListener(Listener listener)
+    {
+        listeners.add(listener);
+    }
+
+    public static ArrayList<Listener> getListeners()
+    {
+        return listeners;
     }
 }
