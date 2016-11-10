@@ -28,7 +28,7 @@ public class Driver extends User {
      * @param userType    the user type
      */
     public Driver(String username, String firstName, String lastName, String dateOfBirth, String phoneNumber, String email, UserType userType) {
-        super(username, firstName, lastName, dateOfBirth, phoneNumber, email, userType);
+        super(username, firstName, lastName, dateOfBirth, phoneNumber, email);
     }
 
     /**

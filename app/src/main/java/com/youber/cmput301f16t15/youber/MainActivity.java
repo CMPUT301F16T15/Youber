@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                User user = new User("Shade","Aaron","Philips","feb21","780","@google", User.UserType.driver);
+                User user = new User("Shade","Aaron","Philips","feb21","780","@google");
 
                 Request r = new Request(new GeoLocation(-113, 50), new GeoLocation(-112, 50));
                 user.add(r);
