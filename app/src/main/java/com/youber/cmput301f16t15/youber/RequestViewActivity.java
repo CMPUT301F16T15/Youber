@@ -1,12 +1,17 @@
 package com.youber.cmput301f16t15.youber;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -46,6 +51,14 @@ public class RequestViewActivity extends AppCompatActivity {
 
         // TODO CURRENTLY BORKEN BUT GONNA BE MOCKED OUT FOR NOW ^
         // so it should grab form the user model and then grab from the request models
+        requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                requestDialog();
+            }
+        });
 
     }
 
@@ -69,7 +82,26 @@ public class RequestViewActivity extends AppCompatActivity {
         requestListView.setAdapter(adapter);
     }
 
-    private void requestDialog() {
+    private void requestDialog() { // this is different to the notify dialog which just takes a message
+        Log.i("Test", "hello");
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.content_main, null))
+        // Add action buttons
+            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    // sign in the user ...
+                }
+            })
+            .setNegativeButton("Cancel Request", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+//                    LoginDialogFragment.this.getDialog().cancel();
+                }
+            });
+
+        Dialog dlg = builder.create();
+        dlg.show();
     }
 }
