@@ -13,7 +13,13 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * The type Request view activity.
+ */
 public class RequestViewActivity extends AppCompatActivity {
+    /**
+     * The Request list view.
+     */
     ListView requestListView;
 
     @Override

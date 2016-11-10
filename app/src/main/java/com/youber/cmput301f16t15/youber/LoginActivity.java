@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ * The type Login activity.
+ */
 public class LoginActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener{
 
     @Override

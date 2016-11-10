@@ -16,9 +16,11 @@ import io.searchbox.core.SearchResult;
 /**
  * Created by aphilips on 11/7/16.
  */
-
 public class ElasticSearchUser extends ElasticSearch{
 
+    /**
+     * The type Add.
+     */
     public static class add extends AsyncTask<User, Void, Void> {
 
         @Override
@@ -42,6 +44,9 @@ public class ElasticSearchUser extends ElasticSearch{
         }
     }
 
+    /**
+     * The type Get objects.
+     */
     public static class getObjects extends AsyncTask<String, Void, ArrayList<User>> {
 
         @Override

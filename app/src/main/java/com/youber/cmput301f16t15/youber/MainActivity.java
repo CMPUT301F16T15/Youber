@@ -20,6 +20,9 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * The type map activity.
+ */
 public class MainActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
     //TODO use controller not global
@@ -88,7 +91,12 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
         return super.onOptionsItemSelected(item);
     }
 
-    //  Button Click Actions
+    /**
+     * On new request btn click.
+     *
+     * @param view the view
+     */
+//  Button Click Actions
     public void onNewRequestBtnClick(View view) {
         String startLatStr = ((EditText)findViewById(R.id.start_lat_edit)).getText().toString();
         String startLonStr = ((EditText)findViewById(R.id.start_lon_edit)).getText().toString();
@@ -120,7 +128,12 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
     }
 
 
-    // Code that implements the dialog window that will ensure if the user wants to create the request or not
+    /**
+     * Prompt confirm dialog.
+     *
+     * @param view the view
+     */
+// Code that implements the dialog window that will ensure if the user wants to create the request or not
     public void promptConfirmDialog(final View view) {
         Bundle bundle = new Bundle();
 

@@ -18,9 +18,11 @@ import static com.youber.cmput301f16t15.youber.ElasticSearch.verifySettings;
 /**
  * Created by aphilips on 11/7/16.
  */
-
 public class ElasticSearchRequest extends ElasticSearch{
 
+    /**
+     * The type Add.
+     */
     public static class add extends AsyncTask<Request, Void, Void> {
 
         @Override
@@ -45,6 +47,9 @@ public class ElasticSearchRequest extends ElasticSearch{
         }
     }
 
+    /**
+     * The type Get objects.
+     */
     public static class getObjects extends AsyncTask<String, Void, ArrayList<Request>> {
 
         @Override

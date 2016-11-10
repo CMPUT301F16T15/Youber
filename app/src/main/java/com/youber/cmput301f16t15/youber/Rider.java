@@ -11,12 +11,26 @@ public class Rider extends User {
 
     private RequestCollection requests = new RequestCollection();
 
-    // default constructor
+    /**
+     * Instantiates a new Rider.
+     */
+// default constructor
     public Rider() {
         super();
     }
 
-    // contructor for general user class
+    /**
+     * Instantiates a new Rider.
+     *
+     * @param username    the username
+     * @param firstName   the first name
+     * @param lastName    the last name
+     * @param dateOfBirth the date of birth
+     * @param phoneNumber the phone number
+     * @param email       the email
+     * @param userType    the user type
+     */
+// contructor for general user class
     public Rider(String username, String firstName, String lastName, String dateOfBirth, String phoneNumber, String email, UserType userType) {
         super(username, firstName, lastName, dateOfBirth, phoneNumber, email, userType);
 
@@ -32,16 +46,32 @@ public class Rider extends User {
         }
     }
 
+    /**
+     * Gets request.
+     *
+     * @param uuid the uuid
+     * @return the request
+     */
     public Request getRequest(UUID uuid) {
         RequestCollection allRequests = requests.getRequestsForRiders(this);
         return requests.get(uuid);
     }
 
+    /**
+     * Gets open requests.
+     *
+     * @return the open requests
+     */
     public RequestCollection getOpenRequests() {
         return requests.getRequestsForRiders(this);
     }
 
-    // TODO double check all of these requests bc the naming is so confusing
+    /**
+     * Gets closed requests.
+     *
+     * @return the closed requests
+     */
+// TODO double check all of these requests bc the naming is so confusing
     public RequestCollection getClosedRequests() {
         RequestCollection riderRequests = requests.getRequestsForRiders(this);
         return riderRequests.getFinalizedRequestToDriver();
@@ -51,32 +81,68 @@ public class Rider extends User {
         return requests.getRequestsForRiders(this);
     }
 
+    /**
+     * Gets status.
+     *
+     * @param uuid the uuid
+     * @return the status
+     */
     public String getStatus(UUID uuid) {
         RequestCollection allRequests = requests.getRequestsForRiders(this);
         Request request = allRequests.get(uuid);
         return request.getDescription();
     }
 
+    /**
+     * Call boolean.
+     *
+     * @param driver the driver
+     * @return the boolean
+     */
     public boolean call(Driver driver) {
         return false;
     }
 
+    /**
+     * Email boolean.
+     *
+     * @param driver the driver
+     * @return the boolean
+     */
     public boolean email(Driver driver) {
         return false;
     }
 
+    /**
+     * Make payment.
+     *
+     * @param uuid the uuid
+     */
     public void makePayment(UUID uuid) {
         RequestCollection allRequests = requests.getRequestsForRiders(this);
         Request request =  allRequests.get(uuid);
 //        request.getCost();
     }
 
+    /**
+     * Add new request.
+     *
+     * @param geoLocation1 the geo location 1
+     * @param geoLocation2 the geo location 2
+     * @param currLocation the curr location
+     * @param payment      the payment
+     */
     public void addNewRequest(GeoLocation geoLocation1, GeoLocation geoLocation2, GeoLocation currLocation, Payment payment) {
         // make a request object
         Request request = new Request(geoLocation1, geoLocation2, currLocation, payment);
         requests.add(request);
     }
 
+    /**
+     * Add request.
+     *
+     * @param request1 the request 1
+     */
 // should not be in this layer of Rider, you can add by first getting the collection and then adding (HOPEFULLY not needig to be static)
 //
 //    public void addNewRequest(GeoLocation geoLocation1, GeoLocation geoLocation2) {
@@ -89,6 +155,11 @@ public class Rider extends User {
         requests.add(request1);
     }
 
+    /**
+     * Delete request.
+     *
+     * @param request the request
+     */
     public void deleteRequest(Request request) {
         requests.remove(request.getUUID());
     }

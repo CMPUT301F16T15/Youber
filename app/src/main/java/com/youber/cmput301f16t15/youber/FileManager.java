@@ -5,6 +5,11 @@ package com.youber.cmput301f16t15.youber;
  */
 public class FileManager {
 
+    /**
+     * Load fromfile request collection.
+     *
+     * @return the request collection
+     */
     public static RequestCollection loadFromfile() {
         return null;
     }

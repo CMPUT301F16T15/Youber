@@ -10,16 +10,32 @@ import android.support.v7.app.AlertDialog;
 /**
  * Created by Reem on 2016-11-09.
  */
-
 public class NoticeDialogFragment extends DialogFragment {
 
-    // need to create a bundle with the arguments in order to use. Keys are stored in string.xml file
+    /**
+     * The interface Notice dialog listener.
+     */
+// need to create a bundle with the arguments in order to use. Keys are stored in string.xml file
     public interface NoticeDialogListener {
+        /**
+         * On dialog positive click.
+         *
+         * @param dialog the dialog
+         */
         public void onDialogPositiveClick(DialogFragment dialog);
+
+        /**
+         * On dialog negative click.
+         *
+         * @param dialog the dialog
+         */
         public void onDialogNegativeClick(DialogFragment dialog);
     }
 
-    // Use this instance of the interface to deliver action events
+    /**
+     * The M listener.
+     */
+// Use this instance of the interface to deliver action events
     NoticeDialogListener mListener;
 
 
