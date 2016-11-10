@@ -26,6 +26,12 @@ public class Request implements Serializable {
     private Driver driver;
     private boolean accepted = false;
 
+    public enum RequestStatus {
+        opened, acceptedByDrivers, confirmedByRider, finalizedByDriver, payed
+    }
+
+    private RequestStatus currentStatus;
+
     public Request(GeoLocation location1, GeoLocation location2) {
         if (location1.equals(location2)) throw new RuntimeException(new InvalidRequestException());
 
@@ -33,6 +39,7 @@ public class Request implements Serializable {
         endLocation = location2;
 
         uuID = UUID.randomUUID();
+        currentStatus = RequestStatus.opened;
     }
 
     public Request(GeoLocation location1, GeoLocation location2, GeoLocation currLocation, Payment payment)
@@ -51,7 +58,10 @@ public class Request implements Serializable {
 
     @Override
     public String toString() {
-        return uuID.toString();
+        String currentStat = currentStatus.toString(); // TODO FIX THIS
+        String start = startLocation.toString();
+        String end = endLocation.toString();
+        return currentStat + "\n" + start + "\n" + end;
     }
 
     public Request(GeoLocation geoLocation1, GeoLocation geoLocation2, GeoLocation currLocation, String s, Payment payment) {
@@ -144,10 +154,12 @@ public class Request implements Serializable {
 
     public void confirmByDriver(Driver driver) {
         this.confirmationStage = 1;
+        currentStatus = RequestStatus.acceptedByDrivers;
     }
 
     public void finalizeByDriver() {
         this.confirmationStage = 3;
+        currentStatus = RequestStatus.finalizedByDriver;
     }
 
     public boolean isConfirmed() {
