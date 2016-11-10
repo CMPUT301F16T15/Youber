@@ -20,15 +20,6 @@
         android:backgroundTint="#303030"
         android:layout_alignStart="@+id/loginbutton" />
 
-    <Button
-        android:text="LOGIN"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/loginbutton"
-        android:backgroundTint="#303030"
-        android:layout_below="@+id/editText"
-        android:layout_alignEnd="@+id/editText" />
-
     <EditText
         android:inputType="textPersonName"
         android:ems="10"
@@ -39,11 +30,20 @@
         android:layout_height="50dp"
         android:layout_width="match_parent"
         android:layout_marginLeft="100dp"
-        android:hint="  Username"
+        android:hint=" Username"
         android:textColorHint="@color/grey"
+        android:layout_marginTop="225dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="198dp" />
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="LOGIN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginbutton"
+        android:backgroundTint="#303030"
+        android:layout_below="@+id/editText"
+        android:layout_alignEnd="@+id/editText" />
 
 
 </RelativeLayout>
