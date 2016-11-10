@@ -32,7 +32,8 @@
             android:label="@string/title_activity_profile" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".UserTypeActivity" />
-        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".RequestActivity"></activity>
     </application>
 
 </manifest>

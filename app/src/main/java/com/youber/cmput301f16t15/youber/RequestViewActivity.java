@@ -2,6 +2,7 @@ package com.youber.cmput301f16t15.youber;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -56,7 +57,8 @@ public class RequestViewActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
-                requestDialog();
+                Intent intent = new Intent(RequestViewActivity.this, RequestActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -80,28 +82,5 @@ public class RequestViewActivity extends AppCompatActivity {
 
         ArrayAdapter<Request> adapter = new ArrayAdapter<Request>(this, R.layout.list_item, requestArray);
         requestListView.setAdapter(adapter);
-    }
-
-    private void requestDialog() { // this is different to the notify dialog which just takes a message
-        Log.i("Test", "hello");
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.content_main, null))
-        // Add action buttons
-            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    // sign in the user ...
-                }
-            })
-            .setNegativeButton("Cancel Request", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-//                    LoginDialogFragment.this.getDialog().cancel();
-                }
-            });
-
-        Dialog dlg = builder.create();
-        dlg.show();
     }
 }
