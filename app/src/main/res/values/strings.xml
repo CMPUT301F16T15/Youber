@@ -26,7 +26,10 @@
 
     <!--Request View-->
     <string name="start_location_title">Start Location:</string>
-    <string name="end_location_title">End Location</string>
+    <string name="end_location_title">End Location:</string>
+    <string name="status_title">Status:</string>
+    <string name="driver_title">Driver:</string>
+    <string name="more_options">More Options</string>
 
     <string name="InvalidUsernameMessage">This username does not exist. Please try again.</string>
     <string name="signup">Sign Up</string>

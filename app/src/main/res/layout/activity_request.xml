@@ -15,26 +15,112 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dummy_string"
-        android:textSize="20dp"/>
+        android:textSize="20dp"
+        android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/start_lat_title"
+        android:id="@+id/statusTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/singleRequestTitle"
+        android:layout_marginTop="10dp"
+        android:text="@string/status_title"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:id="@+id/status_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/singleRequestTitle"
+        android:layout_toRightOf="@+id/statusTitle"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="2dp"
+        android:text="@string/dummy_string"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/start_loc_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/status_info"
         android:layout_marginTop="10dp"
         android:text="@string/start_location_title"
         android:textSize="16dp"/>
 
     <TextView
-        android:id="@+id/start_lat_info"
+        android:id="@+id/start_loc_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/singleRequestTitle"
+        android:layout_below="@+id/status_info"
+        android:layout_toRightOf="@+id/start_loc_title"
+        android:layout_marginLeft="2dp"
         android:layout_marginTop="10dp"
-        android:layout_toRightOf="@+id/start_lat_title"
-        android:layout_marginLeft="5dp"
         android:text="@string/dummy_string"
         android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/end_loc_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/start_loc_info"
+        android:text="@string/end_location_title"
+        android:textSize="16dp" />
+    
+    <TextView
+        android:id="@+id/end_loc_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/start_loc_title"
+        android:layout_toRightOf="@+id/end_loc_title"
+        android:layout_marginLeft="2dp"
+        android:text="@string/dummy_string"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:id="@+id/driver_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/end_loc_info"
+        android:layout_marginTop="30dp"
+        android:text="@string/driver_title"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:id="@+id/driver_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/driver_title"
+        android:layout_below="@+id/end_loc_info"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="2dp"
+        android:textSize="16dp"
+        android:text="@string/dummy_string"/>
+
+    <ListView
+        android:id="@+id/driverListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/driver_title"
+        android:layout_above="@+id/requestOkayBtn"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp">
+    </ListView>
+
+    <Button
+        android:id="@+id/requestOkayBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/lightGreen"
+        android:text="@string/ok" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/lightGreen"
+        android:text="@string/more_options"/>
 
 </RelativeLayout>

@@ -26,7 +26,7 @@ public class User implements Serializable {
     private String dateOfBirth;
     private String phoneNumber;
     private String email;
-    private ArrayList<Listener> listeners;
+//    private ArrayList<Listener> listeners;
 
     /**
      * The enum User type.
@@ -87,7 +87,7 @@ public class User implements Serializable {
         riderRequests = new RequestCollection();
         driverRequests = new RequestCollection();
 
-        listeners = new ArrayList<Listener>();
+//        listeners = new ArrayList<Listener>();
     }
 
     /**
@@ -117,7 +117,7 @@ public class User implements Serializable {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
 
-        notifyObservers();
+//        notifyObservers();
     }
 
     /**
@@ -137,7 +137,7 @@ public class User implements Serializable {
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
 
-        notifyObservers();
+//        notifyObservers();
     }
 
     /**
@@ -157,7 +157,7 @@ public class User implements Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
 
-        notifyObservers();
+//        notifyObservers();
     }
 
     /**
@@ -177,7 +177,7 @@ public class User implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
 
-        notifyObservers();
+//        notifyObservers();
     }
 
     /**
@@ -197,7 +197,7 @@ public class User implements Serializable {
     public void setEmail(String email) {
         this.email = email;
 
-        notifyObservers();
+//        notifyObservers();
     }
 
 //    public ArrayList<UUID> getRequestUUIDs() { // note this returns the relavant uuids respective to the current user type
@@ -232,21 +232,21 @@ public class User implements Serializable {
         int i = 0;
     }
 
-    public void notifyObservers()
-    {
-        for (Listener listener: listeners)
-        {
-            listener.update();
-        }
-    }
-
-    public void addListener(Listener listener)
-    {
-        listeners.add(listener);
-    }
-
-    public ArrayList<Listener> getListeners()
-    {
-        return listeners;
-    }
+//    public void notifyObservers()
+//    {
+//        for (Listener listener: listeners)
+//        {
+//            listener.update();
+//        }
+//    }
+//
+//    public void addListener(Listener listener)
+//    {
+//        listeners.add(listener);
+//    }
+//
+//    public ArrayList<Listener> getListeners()
+//    {
+//        return listeners;
+//    }
 }

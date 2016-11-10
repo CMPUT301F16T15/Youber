@@ -53,13 +53,23 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
                 user.add(r);
                 if(user.getRequests() == null)
                     Log.i("Error", "null list");
-
-                UserController.saveUser(user);
-                UserController.addListener(new ElasticSearchUser());
-                UserController.setFirstName("Scrum");
-
+//
+//                UserController.saveUser(user);
+//                UserController.addListener(new ElasticSearchUser());
+//                UserController.setFirstName("Scrum");
+//
                 ElasticSearchUser.add adder = new ElasticSearchUser.add();
                 adder.execute(user);
+//                ElasticSearchUser.getObjects getter = new ElasticSearchUser.getObjects();
+//                getter.execute("Shade");
+//                try {
+//                    ArrayList<User> users = getter.get();
+//                    int i = 0;
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                } catch (ExecutionException e) {
+//                    e.printStackTrace();
+//                }
             }
         });
     }
