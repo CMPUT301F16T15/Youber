@@ -121,6 +121,12 @@ public class UserController {
         notifyObservers();
     }
 
+    public static void setUserType(User.UserType userType)
+    {
+        user.setCurrentUserType(userType);
+        saveUser(user);
+        notifyObservers();
+    }
 
 
     public static void notifyObservers()

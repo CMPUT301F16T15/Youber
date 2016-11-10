@@ -136,4 +136,15 @@ public class User implements Serializable {
         int i = 0;
     }
 
+
+    public UserType getCurrentUserType()
+    {
+        return currentUserType;
+    }
+
+    public void setCurrentUserType(UserType userType)
+    {
+        currentUserType = userType;
+    }
+
 }

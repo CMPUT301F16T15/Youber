@@ -1,5 +1,6 @@
 package com.youber.cmput301f16t15.youber;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,11 +17,17 @@ public class UserTypeActivity extends AppCompatActivity {
         Button riderOption = (Button) findViewById(R.id.riderButton);
         Button driverOption = (Button) findViewById(R.id.driverButton);
 
-        User user = UserController.getUser();
 
         driverOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                User user = UserController.getUser();
+                UserController.setUserType(User.UserType.driver);
+
+                Intent intent = new Intent(UserTypeActivity.this, MainActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -28,6 +35,11 @@ public class UserTypeActivity extends AppCompatActivity {
         riderOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                User user = UserController.getUser();
+                UserController.setUserType(User.UserType.rider);
+
+                Intent intent = new Intent(UserTypeActivity.this, MainActivity.class);
+                startActivity(intent);
 
             }
         });
