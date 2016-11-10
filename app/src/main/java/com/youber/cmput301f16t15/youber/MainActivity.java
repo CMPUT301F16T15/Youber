@@ -3,8 +3,10 @@ package com.youber.cmput301f16t15.youber;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -13,10 +15,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import android.support.v7.app.AlertDialog;
+import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * The type map activity.
+ */
+public class MainActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
+
+    //TODO use controller not global
+    private Request request;
+    private CoordinatorLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        layout = (CoordinatorLayout) findViewById(R.id.map_activity);
 
         UserController.setContext(this);
 
@@ -44,9 +57,6 @@ public class MainActivity extends AppCompatActivity {
                 UserController.saveUser(user);
                 UserController.addListener(new ElasticSearchUser());
                 UserController.setFirstName("Scrum Master");
-
-                ElasticSearchUser.add add = new ElasticSearchUser.add();
-                add.execute(user);
             }
         });
     }
@@ -81,55 +91,74 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //  Button Click Actions
+    /**
+     * On new request btn click.
+     *
+     * @param view the view
+     */
+//  Button Click Actions
     public void onNewRequestBtnClick(View view) {
-        // prompt user for start location
-//        promptForUserInput();
-        // prompt user for end location
-        // confirm dialog
+        String startLatStr = ((EditText)findViewById(R.id.start_lat_edit)).getText().toString();
+        String startLonStr = ((EditText)findViewById(R.id.start_lon_edit)).getText().toString();
+        String endLatStr = ((EditText)findViewById(R.id.end_lat_edit)).getText().toString();
+        String endLonStr = ((EditText)findViewById(R.id.end_lon_edit)).getText().toString();
 
-        GeoLocation start = new GeoLocation(-113, 50);
-        GeoLocation end   = new GeoLocation(-113, 100);
+        if(startLatStr.isEmpty() || startLonStr.isEmpty() || endLatStr.isEmpty() || endLonStr.isEmpty()) // check for empty arguements
+        {
+            Snackbar.make(view, "Cannot have empty values for latitudes and longitudes", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            return;
+        }
 
-        Request request = new Request(start, end);
-        promptConfirmDialog(request, view);
+        Double startLat, startLon, endLat, endLon;
+        try {
+            startLat = Double.parseDouble(startLatStr);
+            startLon = Double.parseDouble(startLonStr);
+            endLat = Double.parseDouble(endLatStr);
+            endLon = Double.parseDouble(endLonStr);
+        }
+        catch(NumberFormatException e) {
+            Snackbar.make(view, "Invalid argument format. Please input doubles for latitudes and longitudes", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            return;
+        }
+
+        GeoLocation start = new GeoLocation(startLat, startLon);
+        GeoLocation end   = new GeoLocation(endLat, endLon);
+        request = new Request(start, end);
+        promptConfirmDialog(view);
     }
 
-    public void promptConfirmDialog(final Request request, final View view) {
-        final ArrayList<Boolean> confirmed = new ArrayList<Boolean>(); // kind of a hacky way to set a boolean
 
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+    /**
+     * Prompt confirm dialog.
+     *
+     * @param view the view
+     */
+// Code that implements the dialog window that will ensure if the user wants to create the request or not
+    public void promptConfirmDialog(final View view) {
+        Bundle bundle = new Bundle();
 
         String start = request.getStartLocation().toString();
         String end = request.getEndLocation().toString();
-        alertBuilder.setMessage("Please confirm new request.\nStart: " + start + "\nEnd: " + end);
+        String msg = "Please confirm new request.\nStart: " + start + "\nEnd: " + end;
+        bundle.putString(getResources().getString(R.string.message), msg);
 
-        alertBuilder.setCancelable(true);
-        alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int id)
-            {
-                dialog.cancel();
-                addNewRequest(view, request);
-            }
-        });
+        bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.dlg_create));
+        bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.dlg_cancel));
 
-        alertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int id)
-            {
-                dialog.cancel();
-                Snackbar.make(view, "New request action was cancelled", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            }
-        });
-
-        AlertDialog deleteAlert = alertBuilder.create();
-        deleteAlert.show();
+        DialogFragment dialog = new NoticeDialogFragment();
+        dialog.setArguments(bundle);
+        dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
     }
 
-    public void addNewRequest(View view, Request request) {
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) { // add new request
         ElasticSearchRequest.add addRequest = new ElasticSearchRequest.add();
         addRequest.execute(request);
-        Snackbar.make(view, "Successfully added a new request", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+        Snackbar.make(layout, "Successfully added a new request", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        Snackbar.make(layout, "New request was not created", Snackbar.LENGTH_LONG).setAction("Action", null).show();
     }
 }

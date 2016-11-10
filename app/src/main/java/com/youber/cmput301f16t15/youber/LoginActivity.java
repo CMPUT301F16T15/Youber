@@ -11,6 +11,9 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
+/**
+ * The type Login activity.
+ */
 public class LoginActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener{
 
 

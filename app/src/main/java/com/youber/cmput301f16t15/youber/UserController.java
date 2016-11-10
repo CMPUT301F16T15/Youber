@@ -18,7 +18,6 @@ import java.util.*;
 /**
  * Created by Jess on 2016-11-08.
  */
-
 public class UserController {
 
     private final static String FILENAME = "user.sav";
@@ -26,6 +25,11 @@ public class UserController {
 
     private static User user = null;
 
+    /**
+     * Gets user.
+     *
+     * @return the user
+     */
     public static User getUser() {
         if(user == null) {
             user = loadUser();
@@ -34,10 +38,20 @@ public class UserController {
         return user;
     }
 
+    /**
+     * Sets context.
+     *
+     * @param context the context
+     */
     public static void setContext(Context context) {
         c = context;
     }
 
+    /**
+     * Load user user.
+     *
+     * @return the user
+     */
     public static User loadUser() {
         try
         {
@@ -58,6 +72,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Save user.
+     *
+     * @param u the u
+     */
     public static void saveUser(User u) {
         user = u;
 
@@ -81,6 +100,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Add observer.
+     *
+     * @param obs the obs
+     */
 //    public static void notifyObservers() {
 //
 //    }
@@ -90,26 +114,51 @@ public class UserController {
         user.addListener(obs);
     }
 
+    /**
+     * Sets first name.
+     *
+     * @param firstName the first name
+     */
     public static void setFirstName(String firstName) {
         user.setFirstName(firstName);
         saveUser(user);
     }
 
+    /**
+     * Sets date of birth.
+     *
+     * @param dateOfBirth the date of birth
+     */
     public static void setDateOfBirth(String dateOfBirth) {
         user.setDateOfBirth(dateOfBirth);
         saveUser(user);
     }
 
+    /**
+     * Sets phone number.
+     *
+     * @param phoneNumber the phone number
+     */
     public static void setPhoneNumber(String phoneNumber) {
         user.setPhoneNumber(phoneNumber);
         saveUser(user);
     }
 
+    /**
+     * Sets last name.
+     *
+     * @param lastName the last name
+     */
     public static void setLastName(String lastName) {
         user.setLastName(lastName);
         saveUser(user);
     }
 
+    /**
+     * Sets email.
+     *
+     * @param email the email
+     */
     public static void setEmail(String email) {
         user.setEmail(email);
         saveUser(user);
