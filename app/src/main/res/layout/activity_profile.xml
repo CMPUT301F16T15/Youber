@@ -1,99 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:fitsSystemWindows="true"
+    android:theme="@android:style/Theme.Holo"
     tools:context="com.youber.cmput301f16t15.youber.ProfileActivity">
 
-    <TextView
-        android:text="CONTACT INFO"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="65dp"
-        android:id="@+id/contactInfoText"
-        android:textStyle="normal|bold"
-        android:textColor="@color/white"
-        android:textSize="25sp" />
-
     <EditText
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:inputType="phone"
-        android:ems="10"
-        android:background="@color/lightGreen"
-        android:id="@+id/phoneNumberInfo"
-        android:text="Phone Number"
-        android:layout_below="@+id/DateofBirthInfo"
-        android:layout_alignStart="@+id/DateofBirthInfo"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/black" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:background="@color/lightGreen"
-        android:id="@+id/EmailInfo"
-        android:text="Email"
-        android:layout_marginTop="5dp"
-        android:layout_below="@+id/phoneNumberInfo"
-        android:layout_alignStart="@+id/phoneNumberInfo"
-        android:textColor="@color/black" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
         android:inputType="textPersonName"
-        android:text="First Name"
-        android:ems="10"
-        android:background="@color/lightGreen"
-        android:layout_marginTop="23dp"
-        android:id="@+id/firstnameInfo"
-        android:layout_below="@+id/contactInfoText"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:inputType="textPersonName"
-        android:text="Last Name"
-        android:background="@color/lightGreen"
         android:ems="10"
-        android:id="@+id/lastNameInfo"
+        android:id="@+id/contactUsername"
+        android:background="@color/lightGreen"
+        android:layout_height="35sp"
         android:layout_marginTop="5dp"
-        android:layout_below="@+id/firstnameInfo"
-        android:layout_alignStart="@+id/firstnameInfo"
-        android:textColor="@color/black" />
+        android:layout_below="@+id/contactEmail"
+        android:layout_alignStart="@+id/contactEmail" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="35sp"
         android:inputType="date"
         android:ems="10"
-        android:background="@color/lightGreen"
-        android:id="@+id/DateofBirthInfo"
+        android:id="@+id/contactDateOfBirth"
         android:textColor="@color/black"
-        android:text="Date of Birth"
+        android:background="@color/lightGreen"
         android:layout_marginTop="5dp"
-        android:layout_below="@+id/lastNameInfo"
-        android:layout_alignStart="@+id/lastNameInfo" />
+        android:layout_below="@+id/contactLastName"
+        android:layout_alignStart="@+id/contactLastName" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/contactPhone"
+        android:textColor="@color/black"
+        android:background="@color/lightGreen"
+        android:layout_height="35sp"
+        android:layout_marginTop="5dp"
+        android:textAlignment="viewStart"
+        android:layout_below="@+id/contactDateOfBirth"
+        android:layout_alignStart="@+id/contactDateOfBirth" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="35sp"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:ems="10"
+        android:id="@+id/contactLastName"
+        android:background="@color/lightGreen"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/contactFirstname"
+        android:layout_alignStart="@+id/contactUsername"
+        android:layout_marginTop="5dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:ems="10"
+        android:background="@color/lightGreen"
+        android:id="@+id/contactFirstname"
+        android:layout_height="35sp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/contactUsername"
+
+        android:layout_alignStart="@+id/contactUsername" />
 
     <Button
-        android:text="SAVE INFO"
+        android:text="SAVE CONTACT INFO"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="39dp"
-        android:id="@+id/saveInfoButton"
-        android:layout_alignEnd="@+id/EmailInfo"
-        android:layout_alignStart="@+id/EmailInfo" />
+        android:layout_marginBottom="31dp"
+        android:backgroundTint="@color/grey"
+        android:textColor="@color/black"
+        android:id="@+id/saveInfo"
+        android:layout_alignEnd="@+id/contactPhone"
+        android:layout_alignStart="@+id/textView13" />
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:layout_alignTop="@+id/userSignupText"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp">
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/lightGreen"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="35sp"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/contactEmail"
+        android:background="@color/lightGreen"
+        android:layout_marginTop="47dp"
+        android:textColor="@color/black"
+        android:layout_below="@+id/contactInfoText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView13"
+        android:text="Date of Birth:"
+        android:textSize="18sp"
+        android:layout_above="@+id/contactPhone"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp" />
+
+    <TextView
+        android:text="Last Name:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView12"
+        android:textSize="18sp"
+        android:layout_above="@+id/contactDateOfBirth"
+        android:layout_alignStart="@+id/textView13" />
+
+    <TextView
+        android:text="First Name:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView10"
+        android:textSize="18sp"
+        android:layout_above="@+id/contactLastName"
+        android:layout_alignEnd="@+id/textView12" />
+
+    <TextView
+        android:text="Username:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView11"
+        android:textSize="18sp"
+        android:layout_above="@+id/contactFirstname"
+        android:layout_alignStart="@+id/textView10" />
+
+    <TextView
+        android:text="Email:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:textSize="18sp"
+        android:layout_above="@+id/contactUsername"
+        android:layout_alignStart="@+id/textView11" />
+
+    <TextView
+        android:text="Phone #:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView6"
+        android:textSize="18sp"
+        android:layout_alignBottom="@+id/contactPhone"
+        android:layout_alignStart="@+id/textView10" />
+
+    <TextView
+        android:text="CONTACT INFO"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/contactInfoText"
+        android:textSize="25sp"
+        android:textStyle="normal|bold"
+        android:textColor="@color/white"
+        android:layout_marginTop="48dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

@@ -76,14 +76,14 @@ public class User implements Serializable {
      * @param email       the email
      * @param userType    the user type
      */
-    public User(String username, String firstName, String lastName, String dateOfBirth, String phoneNumber, String email, UserType userType) {
+    public User(String username, String firstName, String lastName, String dateOfBirth, String phoneNumber, String email) {
         this.username=username;
         this.firstName=firstName;
         this.lastName=lastName;
         this.dateOfBirth=dateOfBirth;
         this.phoneNumber=phoneNumber;
         this.email=email;
-        this.currentUserType = userType;
+        this.currentUserType = UserType.rider;
 
         riderUUIDs = new HashSet<UUID>();
         driverUUIDs = new HashSet<UUID>();

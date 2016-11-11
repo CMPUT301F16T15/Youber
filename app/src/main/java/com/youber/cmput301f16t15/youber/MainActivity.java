@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 User user=UserController.getUser();
 
                RequestCollection requestCollection= ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
                 GeoLocation g2 = new GeoLocation(20.0, 30.0);
                 Request request =new Request(g1,g2);
                 RequestCollectionsController.addRequest(request);
+
             }
         });
     }
