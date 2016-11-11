@@ -221,16 +221,16 @@ public class User implements Serializable {
 
 
     public void addRequesttUUID(UUID uuid){
-        if(currentUserType == UserType.rider){
+        if(currentUserType == UserType.rider)
             riderUUIDs.add(uuid);
-        }
-        driverUUIDs.add(uuid);
+        else
+            driverUUIDs.add(uuid);
     }
     public void removeRequestUUID(UUID uuid){
-        if(currentUserType == UserType.rider){
+        if(currentUserType == UserType.rider)
             riderUUIDs.add(uuid);
-        }
-        driverUUIDs.remove(uuid);
+        else
+            driverUUIDs.remove(uuid);
     }
 
     public UserType getCurrentUserType()
