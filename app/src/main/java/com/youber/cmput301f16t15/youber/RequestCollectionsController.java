@@ -101,6 +101,7 @@ public class RequestCollectionsController {
         RequestCollection requestCollection = (u_type== User.UserType.rider)? riderRequestCollection:driverRequestCollection;
         requestCollection.add(request);
         saveRequestCollections(requestCollection);
+        UserController.observable.notifyListeners();
         observable.notifyListeners();
     }
 
@@ -111,6 +112,7 @@ public class RequestCollectionsController {
         RequestCollection requestCollection = (u_type== User.UserType.rider)? riderRequestCollection:driverRequestCollection;
         requestCollection.remove(request);
         saveRequestCollections(requestCollection);
+        UserController.observable.notifyListeners();
         observable.notifyListeners();
     }
 }

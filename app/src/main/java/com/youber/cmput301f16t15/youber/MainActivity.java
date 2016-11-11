@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
         UserController.setContext(this);
         RequestCollectionsController.setContext(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        RequestCollectionsController.observable.addListener(new ElasticSearchRequest());
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
                 GeoLocation g2 = new GeoLocation(20.0, 30.0);
                 Request request =new Request(g1,g2);
                 RequestCollectionsController.addRequest(request);
+                RequestCollection requestCollection2 =RequestCollectionsController.getRequestCollection();
+                int a=2+1;
 
             }
         });

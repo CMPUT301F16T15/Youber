@@ -213,8 +213,7 @@ public class User implements Serializable {
      * @return the requests
      */
     public HashSet<UUID> getRequestUUIDs() {
-        if(currentUserType == UserType.rider)
-            return riderUUIDs;
+        if(currentUserType == UserType.rider){return riderUUIDs;}
 
         return driverUUIDs;
     }

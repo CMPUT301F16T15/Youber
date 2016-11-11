@@ -58,7 +58,7 @@ public class ProfileActivity extends Activity {
                 String lastNameText = lastName.getText().toString();
 
                 UserController.setContext(ProfileActivity.this);
-                UserController.addListener(new ElasticSearchUser());
+                UserController.observable.addListener(new ElasticSearchUser());
 
                 UserController.setDateOfBirth(dateOfBirthText);
                 UserController.setEmail(emailText);

@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements NoticeDialogFrag
                    {
                        User user = users.get(0);
 
-                       UserController.observable.addListener(new ElasticSearch());
+                       UserController.observable.addListener(new ElasticSearchUser());
                        //Log.i("Listeners", Integer.toString(UserController.getListeners().size()));
                        UserController.observable.notifyListeners();
                        UserController.saveUser(user);
