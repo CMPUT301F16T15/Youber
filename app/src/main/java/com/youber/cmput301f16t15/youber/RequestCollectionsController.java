@@ -95,11 +95,13 @@ public class RequestCollectionsController {
     }
 
     public static void addRequest (Request request){
-        User user =UserController.getUser();
+        User user = UserController.getUser();
         User.UserType u_type=user.getCurrentUserType();
+
         user.addRequesttUUID(request.getUUID());
         RequestCollection requestCollection = (u_type== User.UserType.rider)? riderRequestCollection:driverRequestCollection;
         requestCollection.add(request);
+
         saveRequestCollections(requestCollection);
         UserController.observable.notifyListeners();
         observable.notifyListeners();

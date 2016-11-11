@@ -41,15 +41,15 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User user=UserController.getUser();
-                RequestCollection requestCollection= ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
+                User user = UserController.getUser();
+                RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
                 RequestCollectionsController.saveRequestCollections(requestCollection);
                 RequestCollection requestCollection1 = RequestCollectionsController.getRequestCollection();
                 GeoLocation g1 = new GeoLocation(10.0,10.0);
                 GeoLocation g2 = new GeoLocation(20.0, 30.0);
                 Request request =new Request(g1,g2);
                 RequestCollectionsController.addRequest(request);
-                RequestCollection requestCollection2 =RequestCollectionsController.getRequestCollection();
+                RequestCollection requestCollection2 = RequestCollectionsController.getRequestCollection();
                 int a=2+1;
             }
         });
@@ -146,9 +146,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) { // add new request
-        ElasticSearchRequest.add addRequest = new ElasticSearchRequest.add();
-
-        addRequest.execute(request);
+        RequestCollectionsController.addRequest(request);
         Snackbar.make(layout, "Successfully added a new request", Snackbar.LENGTH_LONG).setAction("Action", null).show();
     }
 
