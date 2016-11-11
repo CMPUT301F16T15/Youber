@@ -24,10 +24,9 @@ public class UserTypeActivity extends AppCompatActivity {
         driverOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 User user = UserController.getUser();
                 UserController.setUserType(User.UserType.driver);
+                RequestCollectionsController.loadRequestsFromElasticSearch();
 
                 Intent intent = new Intent(UserTypeActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -40,19 +39,12 @@ public class UserTypeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 User user = UserController.getUser();
                 UserController.setUserType(User.UserType.rider);
+                RequestCollectionsController.loadRequestsFromElasticSearch();
 
                 Intent intent = new Intent(UserTypeActivity.this, MainActivity.class);
                 startActivity(intent);
 
             }
         });
-
-
-
     }
-
-
-
-
-
 }
