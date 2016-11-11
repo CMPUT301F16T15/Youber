@@ -1,16 +1,21 @@
 package com.youber.cmput301f16t15.youber;
 
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
 /**
  * The type Sign up activity.
  */
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener{
 
     EditText username;
     EditText email;
@@ -45,20 +50,62 @@ public class SignUpActivity extends AppCompatActivity {
                 String firstNameText = firstName.getText().toString();
                 String lastNameText = lastName.getText().toString();
 
-                User user = new User(usernameText, firstNameText, lastNameText, dateOfBirthText, phoneNumText, emailText);
-                UserController.setContext(SignUpActivity.this);
-                UserController.saveUser(user);
-                ElasticSearchUser.add adder = new ElasticSearchUser.add();
-                adder.execute(user);
 
-                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                try
+                {
+
+                    ElasticSearchUser.getObjects getter = new ElasticSearchUser.getObjects();
+                    getter.execute(usernameText);
+                    ArrayList<User> users = getter.get();
+
+                    if (users.size()==0)
+                    {
+                        User user = new User(usernameText, firstNameText, lastNameText, dateOfBirthText, phoneNumText, emailText);
+
+                        UserController.setContext(SignUpActivity.this);
+                        UserController.saveUser(user);
+
+                        ElasticSearchUser.add adder = new ElasticSearchUser.add();
+                        adder.execute(user);
+                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+
+                    }
+                    else
+                    {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(getResources().getString(R.string.message), getResources().getString(R.string.usernameExitsMessage));
+                        bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.ok));
+                        bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.login));
+
+                        DialogFragment dialog = new NoticeDialogFragment();
+                        dialog.setArguments(bundle);
+                        dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
 
 
             }
         });
 
 
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
