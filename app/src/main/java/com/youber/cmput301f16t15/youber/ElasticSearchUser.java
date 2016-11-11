@@ -20,10 +20,12 @@ import io.searchbox.core.SearchResult;
 public class ElasticSearchUser extends ElasticSearch {
 
     @Override
-    public void update() {
-        Log.i("Update", "USER UDPATE");
+    public void update()
+    {
+        User user = UserController.getUser();
+        ElasticSearchUser.add adder = new ElasticSearchUser.add();
+        adder.execute(user);
     }
-
     /**
      * The type Add.
      */
