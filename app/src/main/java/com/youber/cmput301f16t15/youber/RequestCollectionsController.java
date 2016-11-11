@@ -146,9 +146,14 @@ public class RequestCollectionsController {
         User user = UserController.getUser();
         User.UserType u_type=user.getCurrentUserType();
         user.removeRequestUUID(request.getUUID());
+
         RequestCollection requestCollection = (u_type== User.UserType.rider)? riderRequestCollection:driverRequestCollection;
-        requestCollection.remove(request);
+        requestCollection.remove(request.getUUID());
         saveRequestCollections(requestCollection);
+
+        ElasticSearchRequest.delete deleteRequest = new ElasticSearchRequest.delete();
+        deleteRequest.execute(request);
+
         UserController.observable.notifyListeners();
         observable.notifyListeners();
     }

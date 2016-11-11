@@ -24,6 +24,9 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
     RelativeLayout layout;
     ListView driverListView;
+    ArrayList<Driver> driverArray;
+    int driverSelected;
+    Request selectedRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
                 Dialog dlg = promptDialog(R.layout.dlg_user_info); //test
+                driverSelected = i;
                 dlg.show();
             }
         });
@@ -49,7 +53,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
         super.onStart();
 
         UUID selectedRequestUUID = (UUID)getIntent().getExtras().getSerializable("uuid");
-        Request selectedRequest = RequestCollectionsController.getRequestCollection().getRequestByUUID(selectedRequestUUID);
+        selectedRequest = RequestCollectionsController.getRequestCollection().getRequestByUUID(selectedRequestUUID);
 
         TextView status = (TextView)findViewById(R.id.status_info);
         status.setText(selectedRequest.getCurrentStatus().toString());
@@ -65,9 +69,9 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     protected void onResume() { // update the driver stuff
         super.onResume();
 
-        ArrayList<Driver> driverArray = new ArrayList<Driver>();
+        driverArray = new ArrayList<Driver>();
 
-        Driver driver1 = new Driver("driver1", "Jess", "Huynh", "10", "780", "@", User.UserType.driver);
+        Driver driver1 = new Driver("driver1", "Jess", "Huynh", "10", "911", "@", User.UserType.driver);
         Driver driver2 = new Driver("driver2", "Caro", "Carlos", "10", "780", "@", User.UserType.driver);
         driverArray.add(driver1);
         driverArray.add(driver2);
@@ -107,7 +111,6 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
         Bundle bundle = new Bundle();
 
         bundle.putString(getResources().getString(R.string.message), getResources().getString(R.string.promptCancelConfirm));
-
         bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.yes));
         bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.no));
 
@@ -118,8 +121,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) { // add new request
-//        ElasticSearchRequest.add addRequest = new ElasticSearchRequest.add();
-//        addRequest.execute(request);
+        RequestCollectionsController.deleteRequest(selectedRequest);
         Snackbar.make(layout, "Successfully cancelled the request", Snackbar.LENGTH_LONG).setAction("Action", null).show();
         finish();
     }
@@ -135,8 +137,10 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     }
 
     public void onPhoneNumberClick(View view) {
+        Driver driver = driverArray.get(driverSelected);
+
         Intent intent = new Intent(Intent.ACTION_CALL);
-        intent.setData(Uri.parse("tel:" + "7804568660"));
+        intent.setData(Uri.parse("tel:" + driver.getPhoneNumber()));
         startActivity(intent);
     }
 
