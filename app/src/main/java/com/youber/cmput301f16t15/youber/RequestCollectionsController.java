@@ -31,7 +31,7 @@ public class RequestCollectionsController {
     public static RequestCollection getRequestCollection() {
         User.UserType u_type=UserController.getUser().getCurrentUserType();
         RequestCollection requestCollection = (u_type== User.UserType.rider)? riderRequestCollection:driverRequestCollection;
-        if(requestCollection == null) {
+        if(requestCollection == null || requestCollection.size() == 0) {
             requestCollection = loadRequestCollection();
         }
 
