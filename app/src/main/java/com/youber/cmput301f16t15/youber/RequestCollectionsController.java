@@ -29,10 +29,15 @@ public class RequestCollectionsController {
     public static Observable observable = new Observable();
 
     public static RequestCollection getRequestCollection() {
-        User.UserType u_type=UserController.getUser().getCurrentUserType();
-        RequestCollection requestCollection = (u_type== User.UserType.rider)? riderRequestCollection:driverRequestCollection;
+        User.UserType u_type = UserController.getUser().getCurrentUserType();
+        RequestCollection requestCollection = (u_type == User.UserType.rider)? riderRequestCollection:driverRequestCollection;
         if(requestCollection == null || requestCollection.size() == 0) {
             requestCollection = loadRequestCollection();
+
+            if(u_type == User.UserType.rider)
+                riderRequestCollection = requestCollection;
+            else
+                driverRequestCollection = requestCollection;
         }
 
         return requestCollection;
@@ -66,7 +71,7 @@ public class RequestCollectionsController {
 
     public static void saveRequestCollections( RequestCollection newRequestCollection) {
         RequestCollection requestCollection = newRequestCollection;
-        User.UserType u_type=UserController.getUser().getCurrentUserType();
+        User.UserType u_type = UserController.getUser().getCurrentUserType();
         if(u_type== User.UserType.rider){
             riderRequestCollection=newRequestCollection;
         }else{
@@ -108,7 +113,7 @@ public class RequestCollectionsController {
     }
 
     public static void deleteRequest(Request request){
-        User user =UserController.getUser();
+        User user = UserController.getUser();
         User.UserType u_type=user.getCurrentUserType();
         user.removeRequestUUID(request.getUUID());
         RequestCollection requestCollection = (u_type== User.UserType.rider)? riderRequestCollection:driverRequestCollection;

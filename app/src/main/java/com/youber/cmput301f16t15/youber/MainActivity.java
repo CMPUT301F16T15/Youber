@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) { // add new request
+        RequestCollectionsController.getRequestCollection();
         RequestCollectionsController.addRequest(request);
         Snackbar.make(layout, "Successfully added a new request", Snackbar.LENGTH_LONG).setAction("Action", null).show();
     }
