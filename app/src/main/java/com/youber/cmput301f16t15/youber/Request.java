@@ -343,4 +343,8 @@ public class Request implements Serializable {
         return null;
     }
 
+    public RequestStatus getCurrentStatus() {
+        return currentStatus;
+    }
+
 }

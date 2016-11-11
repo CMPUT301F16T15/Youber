@@ -27,6 +27,7 @@ public class RequestViewActivity extends AppCompatActivity {
      * The Request list view.
      */
     ListView requestListView;
+    ArrayList<Request> requestArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class RequestViewActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
                 Intent intent = new Intent(RequestViewActivity.this, RequestActivity.class);
+                intent.putExtra("uuid", requestArray.get(i).getUUID());
                 startActivity(intent);
             }
         });
@@ -54,7 +56,7 @@ public class RequestViewActivity extends AppCompatActivity {
 
         // grab the requests!
         RequestCollection requests = RequestCollectionsController.getRequestCollection();
-        ArrayList<Request> requestArray = new ArrayList<Request>();
+        requestArray = new ArrayList<Request>();
         requestArray.addAll(requests.values());
 
         ArrayAdapter<Request> adapter = new ArrayAdapter<Request>(this, R.layout.list_item, requestArray);

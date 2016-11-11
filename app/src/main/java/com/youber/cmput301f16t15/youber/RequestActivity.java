@@ -15,8 +15,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class RequestActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
@@ -40,6 +42,23 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
                 dlg.show();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        UUID selectedRequestUUID = (UUID)getIntent().getExtras().getSerializable("uuid");
+        Request selectedRequest = RequestCollectionsController.getRequestCollection().getRequestByUUID(selectedRequestUUID);
+
+        TextView status = (TextView)findViewById(R.id.status_info);
+        status.setText(selectedRequest.getCurrentStatus().toString());
+
+        TextView startLoc = (TextView)findViewById(R.id.start_loc_info);
+        startLoc.setText(selectedRequest.getStartLocation().toString());
+
+        TextView endLoc = (TextView)findViewById(R.id.end_loc_info);
+        endLoc.setText(selectedRequest.getEndLocation().toString());
     }
 
     @Override
