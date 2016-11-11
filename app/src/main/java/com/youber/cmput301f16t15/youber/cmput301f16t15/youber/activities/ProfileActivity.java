@@ -1,4 +1,4 @@
-package com.youber.cmput301f16t15.youber;
+package com.youber.cmput301f16t15.youber.cmput301f16t15.youber.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,11 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
+import com.youber.cmput301f16t15.youber.R;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.user.User;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.controllers.UserController;
 
 /**
  * The type Profile activity.

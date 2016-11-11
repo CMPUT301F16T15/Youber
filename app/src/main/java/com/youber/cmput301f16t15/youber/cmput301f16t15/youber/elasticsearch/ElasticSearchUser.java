@@ -1,7 +1,10 @@
-package com.youber.cmput301f16t15.youber;
+package com.youber.cmput301f16t15.youber.cmput301f16t15.youber.elasticsearch;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.user.User;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.controllers.UserController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,14 +13,12 @@ import io.searchbox.client.JestResult;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Get;
 import io.searchbox.core.Index;
-import io.searchbox.core.Search;
-import io.searchbox.core.SearchResult;
 
 
 /**
  * Created by aphilips on 11/7/16.
  */
-public class ElasticSearchUser extends ElasticSearch{
+public class ElasticSearchUser extends ElasticSearch {
 
 
     @Override

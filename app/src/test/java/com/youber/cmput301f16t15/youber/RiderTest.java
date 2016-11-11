@@ -1,5 +1,12 @@
 package com.youber.cmput301f16t15.youber;
 
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.collections.RequestCollection;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.controllers.RequestController;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.exceptions.NotaRiderException;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.requests.GeoLocation;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.requests.Request;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.user.Rider;
+
 import org.junit.Test;
 
 /**

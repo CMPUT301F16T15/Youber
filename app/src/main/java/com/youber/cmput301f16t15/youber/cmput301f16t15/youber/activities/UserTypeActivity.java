@@ -1,10 +1,14 @@
-package com.youber.cmput301f16t15.youber;
+package com.youber.cmput301f16t15.youber.cmput301f16t15.youber.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.youber.cmput301f16t15.youber.R;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.user.User;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.controllers.UserController;
 
 /**
  * The type User type activity.

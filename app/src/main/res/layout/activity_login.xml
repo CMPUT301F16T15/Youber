@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/lightGreen"
-    tools:context="com.youber.cmput301f16t15.youber.LoginActivity">
+    tools:context="com.youber.cmput301f16t15.youber.cmput301f16t15.youber.activities.LoginActivity">
 
     <Button
         android:text="SIGNUP"

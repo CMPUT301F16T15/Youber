@@ -1,4 +1,4 @@
-package com.youber.cmput301f16t15.youber;
+package com.youber.cmput301f16t15.youber.cmput301f16t15.youber.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+
+import com.youber.cmput301f16t15.youber.R;
 
 /**
  * Created by Reem on 2016-11-09.

@@ -1,5 +1,8 @@
 package com.youber.cmput301f16t15.youber;
 
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.exceptions.UniqueUserNameConstaintException;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.user.User;
+
 import org.junit.Test;
 
 /**

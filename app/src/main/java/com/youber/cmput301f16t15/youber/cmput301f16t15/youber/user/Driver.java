@@ -1,4 +1,8 @@
-package com.youber.cmput301f16t15.youber;
+package com.youber.cmput301f16t15.youber.cmput301f16t15.youber.user;
+
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.requests.GeoLocation;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.requests.Request;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.collections.RequestCollection;
 
 import java.util.UUID;
 

@@ -1,6 +1,12 @@
-package com.youber.cmput301f16t15.youber;
+package com.youber.cmput301f16t15.youber.cmput301f16t15.youber.user;
 
 import android.util.Log;
+
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.requests.GeoLocation;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.requests.Payment;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.requests.Request;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.collections.RequestCollection;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 
 import java.util.UUID;
 

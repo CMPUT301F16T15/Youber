@@ -1,4 +1,4 @@
-package com.youber.cmput301f16t15.youber;
+package com.youber.cmput301f16t15.youber.cmput301f16t15.youber.requests;
 
 /**
  * Created by Calvi on 2016-11-07.

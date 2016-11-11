@@ -1,4 +1,4 @@
-package com.youber.cmput301f16t15.youber;
+package com.youber.cmput301f16t15.youber.cmput301f16t15.youber.elasticsearch;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -6,11 +6,7 @@ import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Observable;
-import java.util.Observer;
 
 
 /**

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".cmput301f16t15.youber.activities.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -24,18 +24,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RequestViewActivity"
+            android:name=".cmput301f16t15.youber.activities.RequestViewActivity"
             android:label="@string/title_activity_request_view"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".cmput301f16t15.youber.activities.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".MainActivity"
+        <activity android:name=".cmput301f16t15.youber.activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".UserTypeActivity"
+        <activity android:name=".cmput301f16t15.youber.activities.UserTypeActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".SignUpActivity"
+        <activity android:name=".cmput301f16t15.youber.activities.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>

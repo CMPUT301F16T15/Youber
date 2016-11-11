@@ -1,9 +1,11 @@
-package com.youber.cmput301f16t15.youber;
+package com.youber.cmput301f16t15.youber.cmput301f16t15.youber.controllers;
 
 import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.elasticsearch.Listener;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.user.User;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

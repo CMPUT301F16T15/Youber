@@ -1,7 +1,6 @@
-package com.youber.cmput301f16t15.youber;
+package com.youber.cmput301f16t15.youber.cmput301f16t15.youber.requests;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * Created by Reem on 2016-10-13.

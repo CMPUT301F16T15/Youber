@@ -1,4 +1,4 @@
-package com.youber.cmput301f16t15.youber;
+package com.youber.cmput301f16t15.youber.cmput301f16t15.youber.exceptions;
 
 /**
  * Created by Reem on 2016-10-13.

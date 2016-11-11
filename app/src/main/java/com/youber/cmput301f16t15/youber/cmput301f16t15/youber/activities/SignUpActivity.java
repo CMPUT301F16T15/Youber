@@ -1,4 +1,4 @@
-package com.youber.cmput301f16t15.youber;
+package com.youber.cmput301f16t15.youber.cmput301f16t15.youber.activities;
 
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
@@ -8,14 +8,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.lang.reflect.Array;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.dialog.NoticeDialogFragment;
+import com.youber.cmput301f16t15.youber.R;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.user.User;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.controllers.UserController;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 /**
  * The type Sign up activity.
  */
-public class SignUpActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener{
+public class SignUpActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
     EditText username;
     EditText email;

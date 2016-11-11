@@ -1,17 +1,17 @@
-package com.youber.cmput301f16t15.youber;
+package com.youber.cmput301f16t15.youber.cmput301f16t15.youber.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.requests.GeoLocation;
+import com.youber.cmput301f16t15.youber.R;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.requests.Request;
+import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.collections.RequestCollection;
+
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * The type Request view activity.

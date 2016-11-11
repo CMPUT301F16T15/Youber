@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.youber.cmput301f16t15.youber.RequestViewActivity">
+    tools:context="com.youber.cmput301f16t15.youber.cmput301f16t15.youber.activities.RequestViewActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
