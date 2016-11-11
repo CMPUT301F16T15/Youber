@@ -4,6 +4,7 @@ import android.app.DownloadManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import io.searchbox.client.JestResult;
+import io.searchbox.core.Delete;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Get;
 import io.searchbox.core.Index;
@@ -48,15 +50,11 @@ public class ElasticSearchRequest extends ElasticSearch{
         protected Void doInBackground(Request... requests) {
             verifySettings();
 
-
             for (Request request : requests) {
                 Index index = new Index.Builder(request).index("youber").type("request").build();
 
                 try {
                     DocumentResult result = getClient().execute(index);
-//                    if(result.isSucceeded()) {
-//                        tweet.setId(result.getId());
-//                    }
                 } catch (Exception e) {
                     Log.i("Error", "The app failed to build and sent the tweets");
                 }
@@ -77,17 +75,10 @@ public class ElasticSearchRequest extends ElasticSearch{
 
             ArrayList<Request> requests = new ArrayList<Request>();
             Get search = new Get.Builder("youber", search_parameters[0]).type("request").build();
-//            Search search = new Search.Builder(search_parameters[0])
-//                    .addIndex("youber")
-//                    .addType("request")
-//                    .build();
+
             try {
                 JestResult result = getClient().execute(search);
                 if(result.isSucceeded()) {
-
-
-
-
                     List<Request> foundRequests = result.getSourceAsObjectList(Request.class);
                     requests.addAll(foundRequests);
 
@@ -101,6 +92,25 @@ public class ElasticSearchRequest extends ElasticSearch{
             }
 
             return requests;
+        }
+    }
+
+    public static class delete extends AsyncTask<Request, Void, Void> {
+        @Override
+        protected Void doInBackground(Request... requests) {
+            verifySettings();
+
+            for(Request r : requests) {
+                Delete delete = new Delete.Builder(r.getUUID().toString()).index("youber").type("request").build();
+
+                try {
+                    DocumentResult result = getClient().execute(delete);
+                } catch (Exception e) {
+                    Log.i("Error", "Deleting request failed " + e.toString());
+                }
+            }
+
+            return null;
         }
     }
 
@@ -126,7 +136,7 @@ public class ElasticSearchRequest extends ElasticSearch{
 
             }
         }
-        return requestCollection;
 
+        return requestCollection;
     }
 }

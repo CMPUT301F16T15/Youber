@@ -28,7 +28,6 @@ public class UserTypeActivity extends AppCompatActivity {
 
                 UserController.setUserType(User.UserType.driver);
                 saveUserTypeRequests(user);
-
                 Intent intent = new Intent(UserTypeActivity.this, MainActivity.class);
                 startActivity(intent);
 
@@ -42,19 +41,12 @@ public class UserTypeActivity extends AppCompatActivity {
 
                 UserController.setUserType(User.UserType.rider);
                 saveUserTypeRequests(user);
-
                 Intent intent = new Intent(UserTypeActivity.this, MainActivity.class);
                 startActivity(intent);
 
             }
         });
-
-
-
     }
-
-
-
 
     private void saveUserTypeRequests(User user)
     {
@@ -62,7 +54,4 @@ public class UserTypeActivity extends AppCompatActivity {
         RequestCollectionsController.setContext(UserTypeActivity.this);
         RequestCollectionsController.saveRequestCollections(requestCollection);
     }
-
-
-
 }
