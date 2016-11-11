@@ -1,6 +1,5 @@
 package com.youber.cmput301f16t15.youber;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -14,11 +13,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import android.support.v7.app.AlertDialog;
 import android.widget.EditText;
-
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 /**
  * The type map activity.
@@ -31,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -39,37 +35,22 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
         layout = (CoordinatorLayout) findViewById(R.id.map_activity);
 
         UserController.setContext(this);
-
+        RequestCollectionsController.setContext(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        RequestCollectionsController.observable.addListener(new ElasticSearchRequest());
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-                User user = new User("Shade","Aaron","Philips","feb21","780","@google");
-
-                Request r = new Request(new GeoLocation(-113, 50), new GeoLocation(-112, 50));
-                user.add(r);
-                if(user.getRequests() == null)
-                    Log.i("Error", "null list");
-//
-//                UserController.saveUser(user);
-//                UserController.addListener(new ElasticSearchUser());
-//                UserController.setFirstName("Scrum");
-//
-                ElasticSearchUser.add adder = new ElasticSearchUser.add();
-                adder.execute(user);
-//                ElasticSearchUser.getObjects getter = new ElasticSearchUser.getObjects();
-//                getter.execute("Shade");
-//                try {
-//                    ArrayList<User> users = getter.get();
-//                    int i = 0;
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                } catch (ExecutionException e) {
-//                    e.printStackTrace();
-//                }
+                User user=UserController.getUser();
+                RequestCollection requestCollection= ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
+                RequestCollectionsController.saveRequestCollections(requestCollection);
+                RequestCollection requestCollection1 = RequestCollectionsController.getRequestCollection();
+                GeoLocation g1 = new GeoLocation(10.0,10.0);
+                GeoLocation g2 = new GeoLocation(20.0, 30.0);
+                Request request =new Request(g1,g2);
+                RequestCollectionsController.addRequest(request);
+                RequestCollection requestCollection2 =RequestCollectionsController.getRequestCollection();
+                int a=2+1;
             }
         });
     }
@@ -166,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) { // add new request
         ElasticSearchRequest.add addRequest = new ElasticSearchRequest.add();
+
         addRequest.execute(request);
         Snackbar.make(layout, "Successfully added a new request", Snackbar.LENGTH_LONG).setAction("Action", null).show();
     }

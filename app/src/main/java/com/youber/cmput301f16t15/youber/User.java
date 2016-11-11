@@ -7,6 +7,7 @@ import org.apache.http.protocol.RequestUserAgentHC4;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Observable;
 import java.util.UUID;
 import io.searchbox.annotations.JestId;
@@ -45,11 +46,12 @@ public class User implements Serializable {
     /**
      * The Rider requests.
      */
-    RequestCollection riderRequests; // hold both rider and driver requests
+    // hold both rider and driver requests
     /**
      * The Driver requests.
      */
-    RequestCollection driverRequests; // depending on their userType
+    private HashSet<UUID> driverUUIDs;
+    private HashSet<UUID> riderUUIDs;// depending on their userType
 
     // is this suppose to be a list of uuids?
 //    ArrayList<UUID> riderRequestUUIDs = new ArrayList<UUID>();
@@ -58,8 +60,7 @@ public class User implements Serializable {
     /**
      * Instantiates a new User.
      */
-    public User()
-    {
+    public User() {
 
     }
 
@@ -72,19 +73,18 @@ public class User implements Serializable {
      * @param dateOfBirth the date of birth
      * @param phoneNumber the phone number
      * @param email       the email
-     * @param userType    the user type
      */
     public User(String username, String firstName, String lastName, String dateOfBirth, String phoneNumber, String email) {
-        this.username=username;
-        this.firstName=firstName;
-        this.lastName=lastName;
-        this.dateOfBirth=dateOfBirth;
-        this.phoneNumber=phoneNumber;
-        this.email=email;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
         this.currentUserType = UserType.rider;
 
-        riderRequests = new RequestCollection();
-        driverRequests = new RequestCollection();
+        riderUUIDs=new HashSet<UUID>();
+        driverUUIDs=new HashSet<UUID>();
     }
 
     @Override
@@ -204,24 +204,24 @@ public class User implements Serializable {
      *
      * @return the requests
      */
-    public RequestCollection getRequests() {
-        if(currentUserType == UserType.rider)
-            return riderRequests;
+    public HashSet<UUID> getRequestUUIDs() {
+        if(currentUserType == UserType.rider){return riderUUIDs;}
 
-        return driverRequests;
+        return driverUUIDs;
     }
 
-    /**
-     * Add.
-     *
-     * @param r the r
-     */
-    public void add(Request r) {
+    public void addRequesttUUID(UUID uuid){
         if(currentUserType == UserType.rider)
-            riderRequests.add(r);
+            riderUUIDs.add(uuid);
+        else
+            driverUUIDs.add(uuid);
+    }
 
-        driverRequests.add(r);
-        int i = 0;
+    public void removeRequestUUID(UUID uuid){
+        if(currentUserType == UserType.rider)
+            riderUUIDs.add(uuid);
+        else
+            driverUUIDs.remove(uuid);
     }
 
     public UserType getCurrentUserType()

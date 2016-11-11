@@ -77,9 +77,9 @@ public class Rider extends User {
         return riderRequests.getFinalizedRequestToDriver();
     }
 
-    public RequestCollection getRequests() {
-        return requests.getRequestsForRiders(this);
-    }
+//    public RequestCollection getRequestUUIDs() {
+//        return requests.getRequestsForRiders(this);
+//    }
 
     /**
      * Gets status.

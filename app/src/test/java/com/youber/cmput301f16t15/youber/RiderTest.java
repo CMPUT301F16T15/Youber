@@ -17,7 +17,8 @@ public class RiderTest
         Request request1 = new Request(geoLocation1, geoLocation2);
 
         Rider rider1 = new Rider();
-        RequestController.addRequest(request1, rider1);
+//        TODO
+//        RequestController.addRequest(request1, rider1);
 
         rider1.makePayment(request1.getUUID());
         // actual cost will be 9.87 ($2 per km and $8 base fee)
@@ -51,7 +52,8 @@ public class RiderTest
 
         Request request1 = new Request(geoLocation1, geoLocation2);
         Rider rider1 = new Rider();
-        RequestController.addRequest(request1, rider1);
+        //TODO
+//        RequestController.addRequest(request1, rider1);
         //upon reconnection
         assertTrue(FileManager.loadFromfile().contains(request1));
 

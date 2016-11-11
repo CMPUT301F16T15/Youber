@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
-import java.util.*;
 
 /**
  * Created by Jess on 2016-11-08.
@@ -22,10 +21,10 @@ public class UserController {
 
     private final static String FILENAME = "user.sav";
     private static Context c;
-    private static ArrayList<Listener> listeners = new ArrayList<Listener>();
+    //private static ArrayList<Listener> listeners = new ArrayList<Listener>();
 
     private static User user = null;
-
+    static Observable observable = new Observable();
     /**
      * Gets user.
      *
@@ -102,20 +101,6 @@ public class UserController {
     }
 
     /**
-     * Add observer.
-     *
-     * @param obs the obs
-     */
-//    public static void notifyObservers() {
-//
-//    }
-//
-
-    //public static void addListener(Listener obs) {
-    //    user.addListener(obs);
-    //}
-
-    /**
      * Sets first name.
      *
      * @param firstName the first name
@@ -123,7 +108,8 @@ public class UserController {
     public static void setFirstName(String firstName) {
         user.setFirstName(firstName);
         saveUser(user);
-        notifyObservers();
+        observable.notifyListeners();
+        //notifyObservers();
     }
 
     /**
@@ -134,7 +120,8 @@ public class UserController {
     public static void setDateOfBirth(String dateOfBirth) {
         user.setDateOfBirth(dateOfBirth);
         saveUser(user);
-        notifyObservers();
+        observable.notifyListeners();
+        //notifyObservers();
     }
 
     /**
@@ -145,7 +132,8 @@ public class UserController {
     public static void setPhoneNumber(String phoneNumber) {
         user.setPhoneNumber(phoneNumber);
         saveUser(user);
-        notifyObservers();
+        observable.notifyListeners();
+        //notifyObservers();
     }
 
     /**
@@ -156,7 +144,8 @@ public class UserController {
     public static void setLastName(String lastName) {
         user.setLastName(lastName);
         saveUser(user);
-        notifyObservers();
+        observable.notifyListeners();
+        //notifyObservers();
     }
 
     /**
@@ -166,33 +155,15 @@ public class UserController {
      */
     public static void setEmail(String email) {
         user.setEmail(email);
-        saveUser(user);
-        notifyObservers();
+        observable.notifyListeners();
+        //notifyObservers();
     }
 
     public static void setUserType(User.UserType userType)
     {
         user.setCurrentUserType(userType);
         saveUser(user);
-        notifyObservers();
-    }
-
-
-    public static void notifyObservers()
-    {
-        for (Listener listener: listeners)
-        {
-            listener.update();
-        }
-    }
-
-    public static void addListener(Listener listener)
-    {
-        listeners.add(listener);
-    }
-
-    public static ArrayList<Listener> getListeners()
-    {
-        return listeners;
+        observable.notifyListeners();
+        //notifyObservers();
     }
 }

@@ -18,7 +18,8 @@ public class StatusTest
         Request request1 = new Request(geoLocation1, geoLocation2);
 
         Rider rider1 = new Rider();
-        RequestController.addRequest(request1, rider1);
+        //TODO
+//        RequestController.addRequest(request1, rider1);
 
         rider1.getRequest(request1.getUUID()).accept();
         assertEquals("is Accepted", rider1.getStatus(request1.getUUID()));
