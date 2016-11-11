@@ -11,6 +11,7 @@ import android.widget.Button;
  */
 public class UserTypeActivity extends AppCompatActivity {
 
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,14 +21,13 @@ public class UserTypeActivity extends AppCompatActivity {
         Button riderOption = (Button) findViewById(R.id.riderButton);
         Button driverOption = (Button) findViewById(R.id.driverButton);
 
-
+        user = UserController.getUser();
         driverOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
-                User user = UserController.getUser();
                 UserController.setUserType(User.UserType.driver);
+                saveUserTypeRequests(user);
 
                 Intent intent = new Intent(UserTypeActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -38,8 +38,10 @@ public class UserTypeActivity extends AppCompatActivity {
         riderOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User user = UserController.getUser();
+
+
                 UserController.setUserType(User.UserType.rider);
+                saveUserTypeRequests(user);
 
                 Intent intent = new Intent(UserTypeActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -52,6 +54,14 @@ public class UserTypeActivity extends AppCompatActivity {
     }
 
 
+
+
+    private void saveUserTypeRequests(User user)
+    {
+        RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
+        RequestCollectionsController.setContext(UserTypeActivity.this);
+        RequestCollectionsController.saveRequestCollections(requestCollection);
+    }
 
 
 
