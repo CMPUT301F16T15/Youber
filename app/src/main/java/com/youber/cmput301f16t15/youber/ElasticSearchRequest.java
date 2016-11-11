@@ -5,7 +5,10 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
@@ -81,4 +84,29 @@ public class ElasticSearchRequest extends ElasticSearch{
         }
     }
 
+    public static RequestCollection getRequestCollection(HashSet<UUID> hashSet){
+        RequestCollection requestCollection= new RequestCollection();
+
+        if(hashSet==null){return requestCollection;}
+
+        for (UUID uuid:hashSet) {
+            getObjects searchRequest= new getObjects();
+            searchRequest.execute(uuid.toString());
+            try{
+                ArrayList<Request> requests=searchRequest.get();
+                if(requests.size()==1){
+                    Log.i("Request",requests.get(0).toString());
+                }
+                requestCollection.add(requests.get(0));
+            }
+            catch (ExecutionException e){
+
+            }
+            catch (InterruptedException e){
+
+            }
+        }
+        return requestCollection;
+
+    }
 }

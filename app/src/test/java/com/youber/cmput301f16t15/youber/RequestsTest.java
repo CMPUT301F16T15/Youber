@@ -212,7 +212,7 @@ public class RequestsTest
         Rider rider1 = new Rider();
         RequestController.addRequest(request1,rider1);
         RequestController.deleteRequest(request1, rider1);
-        assertEquals(0, rider1.getRequests().size());
+        assertEquals(0, rider1.getRequestUUIDs().size());
 
     }
 

@@ -8,32 +8,6 @@ public class RequestController
 
 
     /**
-     * Add request.
-     *
-     * @param request the request
-     * @param rider1  the rider 1
-     */
-    public static void addRequest(Request request, Rider rider1)
-    {
-        rider1.addRequest(request);
-    }
-
-    /**
-     * Delete request.
-     *
-     * @param request the request
-     * @param rider   the rider
-     */
-    public static void deleteRequest(Request request, Rider rider)
-    {
-        if (request.isAccepted()) {
-            Driver driver = request.getDriver();
-            driver.deleteRequest(request);
-        }
-        rider.deleteRequest(request);
-    }
-
-    /**
      * Confirm request.
      *
      * @param request the request
