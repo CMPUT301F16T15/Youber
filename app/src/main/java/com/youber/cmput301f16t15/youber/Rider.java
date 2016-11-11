@@ -124,33 +124,6 @@ public class Rider extends User {
 //        request.getCost();
     }
 
-    /**
-     * Add new request.
-     *
-     * @param geoLocation1 the geo location 1
-     * @param geoLocation2 the geo location 2
-     * @param currLocation the curr location
-     * @param payment      the payment
-     */
-    public void addNewRequest(GeoLocation geoLocation1, GeoLocation geoLocation2, GeoLocation currLocation, Payment payment) {
-        // make a request object
-        Request request = new Request(geoLocation1, geoLocation2, currLocation, payment);
-        requests.add(request);
-    }
-
-    /**
-     * Add request.
-     *
-     * @param request1 the request 1
-     */
-// should not be in this layer of Rider, you can add by first getting the collection and then adding (HOPEFULLY not needig to be static)
-//
-//    public void addNewRequest(GeoLocation geoLocation1, GeoLocation geoLocation2) {
-//        // make a request object
-//        Request request = new Request(geoLocation1, geoLocation2);
-//        requests.add(request);
-//    }
-//
     public void addRequest(Request request1) {
         requests.add(request1);
     }

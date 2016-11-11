@@ -144,7 +144,7 @@ public class RequestCollectionsController {
 
     public static void deleteRequest(Request request){
         User user = UserController.getUser();
-        User.UserType u_type=user.getCurrentUserType();
+        User.UserType u_type = user.getCurrentUserType();
         user.removeRequestUUID(request.getUUID());
 
         RequestCollection requestCollection = (u_type== User.UserType.rider)? riderRequestCollection:driverRequestCollection;

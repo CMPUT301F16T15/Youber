@@ -233,9 +233,8 @@ public class RequestsTest
 
         Request request1 = new Request(geoLocation1, geoLocation2);
 
-        Double actualDistance = 0.933;
-        // distance = 0.933
-        assertEquals(actualDistance,request1.getDistance());
+        Double actualDistance = 0.9358; // using http://www.movable-type.co.uk/scripts/latlong.html
+        assertEquals(actualDistance, RequestController.getDistanceOfRequest(request1));
 
     }
 
@@ -248,7 +247,7 @@ public class RequestsTest
         Request request1 = new Request(geoLocation1, geoLocation2);
         Double actualFair = 9.87;
         // $2 per km _ $8 base fee
-        assertEquals(actualFair,request1.getFare());
+        assertEquals(actualFair, request1.getFare());
     }
 
     @Test

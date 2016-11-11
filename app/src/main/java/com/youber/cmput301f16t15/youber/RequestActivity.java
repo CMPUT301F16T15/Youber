@@ -131,6 +131,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     }
 
     public void onFairFareBtnClick(View view) {
+//        selectedRequest.getDistance();
     }
 
     public void onViewRequestOnMapBtnClick(View view) {
