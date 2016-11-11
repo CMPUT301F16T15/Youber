@@ -39,6 +39,7 @@
 
     <!--User Info View-->
     <string name="phone_number_title">Phone Number:</string>
+    <string name="email_title">Email:</string>
 
     <string name="InvalidUsernameMessage">This username does not exist. Please try again.</string>
     <string name="usernameExitsMessage">This username already exits. Please try again.</string>

@@ -3,6 +3,7 @@ package com.youber.cmput301f16t15.youber;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -112,5 +113,14 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     }
 
     public void onViewRequestOnMapBtnClick(View view) {
+    }
+
+    public void onPhoneNumberClick(View view) {
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:" + "7804568660"));
+        startActivity(intent);
+    }
+
+    public void onEmailClick(View view) {
     }
 }
