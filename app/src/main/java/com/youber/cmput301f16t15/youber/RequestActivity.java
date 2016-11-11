@@ -2,6 +2,7 @@ package com.youber.cmput301f16t15.youber;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -27,11 +29,16 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
         layout = (RelativeLayout)findViewById(R.id.activity_request);
         driverListView = (ListView)findViewById(R.id.driverListView);
-    }
 
-    @Override
-    protected void onStart() { // update the info of the request!
-
+        driverListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                Dialog dlg = promptDialog(R.layout.dlg_user_info); //test
+                dlg.show();
+            }
+        });
     }
 
     @Override
@@ -54,18 +61,18 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     }
 
     public void onMoreOptionClick(View view) {
-        Dialog dialog = promptMoreOptionsDialog();
+        Dialog dialog = promptDialog(R.layout.request_more_options);
         dialog.show();
     }
 
-    public Dialog promptMoreOptionsDialog() {
+    public Dialog promptDialog(int resource) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // Get the layout inflater
         LayoutInflater inflater = this.getLayoutInflater();
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(R.layout.request_more_options, null))
+        builder.setView(inflater.inflate(resource, null))
                 // Add action buttons
                 .setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

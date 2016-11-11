@@ -37,6 +37,9 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
+    <!--User Info View-->
+    <string name="phone_number_title">Phone Number:</string>
+
     <string name="InvalidUsernameMessage">This username does not exist. Please try again.</string>
     <string name="signup">Sign Up</string>
     <string name="ok">OK</string>
