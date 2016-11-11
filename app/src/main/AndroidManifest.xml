@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
         android:allowBackup="true"
@@ -14,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".cmput301f16t15.youber.activities.LoginActivity"
+            android:name=".LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -24,20 +25,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".cmput301f16t15.youber.activities.RequestViewActivity"
+            android:name=".RequestViewActivity"
             android:label="@string/title_activity_request_view"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".cmput301f16t15.youber.activities.ProfileActivity"
+            android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".cmput301f16t15.youber.activities.MainActivity"
+        <activity android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".cmput301f16t15.youber.activities.UserTypeActivity"
+        <activity android:name=".RequestActivity"/>
+        <activity android:name=".UserTypeActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".cmput301f16t15.youber.activities.SignUpActivity"
+        <activity android:name=".SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-
     </application>
 
 </manifest>

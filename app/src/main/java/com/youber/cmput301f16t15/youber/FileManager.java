@@ -1,7 +1,5 @@
 package com.youber.cmput301f16t15.youber;
 
-import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.collections.RequestCollection;
-
 /**
  * Created by Reem on 2016-10-24.
  */

@@ -2,13 +2,6 @@ package com.youber.cmput301f16t15.youber;
 
 import android.view.View;
 
-import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.collections.RequestCollection;
-import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.requests.GeoLocation;
-import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.requests.Request;
-import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.user.Driver;
-import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.user.Rider;
-import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.user.User;
-
 /**
  * Created by Reem on 2016-10-13.
  */

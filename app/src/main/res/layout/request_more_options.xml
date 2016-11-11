@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:id="@+id/request_more_options">
+
+    <Button
+        android:id="@+id/cancel_request"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="@string/cancel_request"
+        android:background="@color/lightGreen"
+        android:onClick="onCancelRequestBnClick" />
+
+    <Button
+        android:id="@+id/get_fair_fare"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/cancel_request"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/fair_fare"
+        android:background="@color/lightGreen"
+        android:onClick="onFairFareBtnClick" />
+
+    <Button
+        android:id="@+id/view_request_on_map"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/get_fair_fare"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/view_request_map"
+        android:background="@color/lightGreen"
+        android:onClick="onViewRequestOnMapBtnClick" />
+
+</RelativeLayout>

@@ -1,11 +1,5 @@
 package com.youber.cmput301f16t15.youber;
 
-import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.controllers.RequestController;
-import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.requests.GeoLocation;
-import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.requests.Request;
-import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.user.Driver;
-import com.youber.cmput301f16t15.youber.cmput301f16t15.youber.user.Rider;
-
 import org.junit.Test;
 import static org.junit.Assert.*;
 /**
@@ -24,7 +18,8 @@ public class StatusTest
         Request request1 = new Request(geoLocation1, geoLocation2);
 
         Rider rider1 = new Rider();
-        RequestController.addRequest(request1, rider1);
+        //TODO
+//        RequestController.addRequest(request1, rider1);
 
         rider1.getRequest(request1.getUUID()).accept();
         assertEquals("is Accepted", rider1.getStatus(request1.getUUID()));
