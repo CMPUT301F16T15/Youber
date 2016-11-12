@@ -3,6 +3,8 @@ package com.youber.cmput301f16t15.youber;
 import android.location.Location;
 
 import java.text.DecimalFormat;
+import java.util.HashSet;
+import java.util.UUID;
 
 /**
  * Created by Reem on 2016-10-24.
@@ -54,6 +56,7 @@ public class RequestController
 
 
     }
+
 
     /**
      * Gets driver.

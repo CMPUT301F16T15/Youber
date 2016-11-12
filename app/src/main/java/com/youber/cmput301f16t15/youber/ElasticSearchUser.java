@@ -62,15 +62,21 @@ public class ElasticSearchUser extends ElasticSearch {
             verifySettings();
 
             ArrayList<User> users = new ArrayList<User>();
+            try{
+                JestResult result = null;
+                if (search_parameters.length==0)
+                {
+                    Search search = new Search.Builder("").addIndex("youber").addType("user").build();
+                    result = getClient().execute(search);
+                }
+                else
+                {
+                    Get search = new Get.Builder("youber", search_parameters[0]).type("user").build();
+                    result = getClient().execute(search);
 
-            Get search = new Get.Builder("youber", search_parameters[0]).type("user").build();
+                }
 
-            try {
-                JestResult result = getClient().execute(search);
                 if(result.isSucceeded()) {
-
-
-
 
                     List<User> foundUsers = result.getSourceAsObjectList(User.class);
                     users.addAll(foundUsers);

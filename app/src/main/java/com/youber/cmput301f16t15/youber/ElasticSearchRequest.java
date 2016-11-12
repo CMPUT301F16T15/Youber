@@ -125,7 +125,7 @@ public class ElasticSearchRequest extends ElasticSearch{
             try{
                 ArrayList<Request> requests=searchRequest.get();
                 if(requests.size()==1){
-                    Log.i("Request",requests.get(0).toString());
+                    Log.i("Request!",requests.get(0).toString());
                 }
                 requestCollection.add(requests.get(0));
             }
