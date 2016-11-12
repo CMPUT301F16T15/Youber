@@ -74,10 +74,20 @@ public class ElasticSearchRequest extends ElasticSearch{
             verifySettings();
 
             ArrayList<Request> requests = new ArrayList<Request>();
-            Get search = new Get.Builder("youber", search_parameters[0]).type("request").build();
+            JestResult result = null;
+            try
+            {
+                if (search_parameters.length==0)
+                {
+                    Search search = new Search.Builder("").addIndex("youber").addType("request").build();
+                    result = getClient().execute(search);
+                }
+                else
+                {
+                    Get search = new Get.Builder("youber", search_parameters[0]).type("request").build();
+                    result = getClient().execute(search);
+                }
 
-            try {
-                JestResult result = getClient().execute(search);
                 if(result.isSucceeded()) {
                     List<Request> foundRequests = result.getSourceAsObjectList(Request.class);
                     requests.addAll(foundRequests);
@@ -125,7 +135,7 @@ public class ElasticSearchRequest extends ElasticSearch{
             try{
                 ArrayList<Request> requests=searchRequest.get();
                 if(requests.size()==1){
-                    Log.i("Request",requests.get(0).toString());
+                    Log.i("Request!",requests.get(0).toString());
                 }
                 requestCollection.add(requests.get(0));
             }

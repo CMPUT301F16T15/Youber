@@ -210,6 +210,11 @@ public class User implements Serializable {
         return driverUUIDs;
     }
 
+    public HashSet<UUID> getDriverUUIDs()
+    {
+        return driverUUIDs;
+    }
+
     public void addRequesttUUID(UUID uuid){
         if(currentUserType == UserType.rider)
             riderUUIDs.add(uuid);

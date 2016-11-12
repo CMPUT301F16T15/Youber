@@ -140,6 +140,9 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
                 RequestCollectionsController.addRequest(request);
                 RequestCollection requestCollection2 = RequestCollectionsController.getRequestCollection();
                 int a=2+1;
+
+
+                ElasticSearchController.getAcceptedDrivers(request);
             }
         });
     }

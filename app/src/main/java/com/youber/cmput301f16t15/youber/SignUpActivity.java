@@ -1,14 +1,15 @@
 package com.youber.cmput301f16t15.youber;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -37,6 +38,7 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
         lastName = (EditText) findViewById(R.id.lastNameInput);
 
         Button createNewUser = (Button) findViewById(R.id.createNewUser);
+
 
         createNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +99,14 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
 
     }
 
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+    }
+
+
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
 
@@ -108,4 +118,5 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
         startActivity(intent);
         finish();
     }
+
 }

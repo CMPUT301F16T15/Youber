@@ -94,6 +94,9 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
         driverArray.add(driver1);
         driverArray.add(driver2);
 
+        // Eventually the stuff on the top will be removed. Uncomment the ElasticSearch
+        //driverArray= ElasticSearchController.getAcceptedDrivers(selectedRequest);
+
         ArrayAdapter<Driver> adapter = new ArrayAdapter<Driver>(this, R.layout.list_item, driverArray);
         driverListView.setAdapter(adapter);
     }
@@ -131,6 +134,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
         bundle.putString(getResources().getString(R.string.message), getResources().getString(R.string.promptCancelConfirm));
         bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.yes));
         bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.no));
+
 
         DialogFragment dialog = new NoticeDialogFragment();
         dialog.setArguments(bundle);
