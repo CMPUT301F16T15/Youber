@@ -11,9 +11,37 @@ import java.util.concurrent.ExecutionException;
  * Created by Reem on 2016-11-11.
  */
 
+
+
+// NOT SURE IT WORKS YET BUT I NEED TO 
 public class ElasticSearchController {
 
     public static Observable observable = new Observable();
+
+
+    public static ArrayList<Request> getAllRequests()
+    {
+        ElasticSearchRequest.getObjects getter = new ElasticSearchRequest.getObjects();
+        getter.execute();
+
+
+        ArrayList<Request> requests = null;
+        try {
+           requests = getter.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+
+        return requests;
+    }
+
+
+
+
+
 
 
     public static ArrayList<Driver> getAcceptedDrivers(Request request)
