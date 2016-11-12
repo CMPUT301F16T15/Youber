@@ -40,9 +40,6 @@ public class ElasticSearchUser extends ElasticSearch {
 
                 try {
                     DocumentResult result = getClient().execute(index);
-//                    if(result.isSucceeded()) {
-//                        //user.setId(result.getId());
-//                    }
                 } catch (Exception e) {
                     Log.i("Error", "The app failed to build and sent the tweets"+e.toString());
                 }
@@ -68,10 +65,6 @@ public class ElasticSearchUser extends ElasticSearch {
             try {
                 JestResult result = getClient().execute(search);
                 if(result.isSucceeded()) {
-
-
-
-
                     List<User> foundUsers = result.getSourceAsObjectList(User.class);
                     users.addAll(foundUsers);
 

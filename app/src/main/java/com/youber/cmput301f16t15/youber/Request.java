@@ -23,34 +23,26 @@ public class Request implements Serializable {
     GeoLocation endLocation;
 
     private boolean status = true; //open is true
-    private Location location;
     private String keyword;
     private Payment payment;
     private int confirmationStage = 0; //0 initial, 1 accepted by a driver, 2 confirmed by a rider, 3 finalized by driver
-    private Rider rider;
-    private Driver driver;
     private boolean accepted = false;
+    private Driver driver;
+
+    public Driver getDriver() {
+        return driver;
+    }
 
     /**
      * The enum Request status.
+     * Opened request status
+     * Accepted by driver(s) status
+     * Confirmed by rider status
+     * Finalized by driver status
+     * Payed/Completed
      */
     public enum RequestStatus {
-        /**
-         * Opened request status.
-         */
-        opened, /**
-         * Accepted by drivers request status.
-         */
-        acceptedByDrivers, /**
-         * Confirmed by rider request status.
-         */
-        confirmedByRider, /**
-         * Finalized by driver request status.
-         */
-        finalizedByDriver, /**
-         * Payed request status.
-         */
-        payed
+        opened, acceptedByDrivers, confirmedByRider, finalizedByDriver, payed
     }
 
     private RequestStatus currentStatus;
@@ -74,30 +66,9 @@ public class Request implements Serializable {
     /**
      * Instantiates a new Request.
      *
-     * @param location1    the location 1
-     * @param location2    the location 2
-     * @param currLocation the curr location
-     * @param payment      the payment
-     */
-    public Request(GeoLocation location1, GeoLocation location2, GeoLocation currLocation, Payment payment)
-    {
-        if(location1.equals(location2)) throw new RuntimeException(new InvalidRequestException());
-        this.location = new Location(location1, location2, currLocation);
-    }
-
-    /**
-     * Instantiates a new Request.
-     */
-    public Request(){
-        uuID = UUID.randomUUID();
-    };
-
-    /**
-     * Instantiates a new Request.
-     *
      * @param geoLocation1 the geo location 1
      * @param geoLocation2 the geo location 2
-     * @param s            the s
+     * @param s            the string of keywords
      */
     public Request(GeoLocation geoLocation1, GeoLocation geoLocation2, String s) {
         uuID = UUID.randomUUID();
@@ -111,64 +82,16 @@ public class Request implements Serializable {
         return currentStat + "\n" + start + "\n" + end;
     }
 
-    /**
-     * Instantiates a new Request.
-     *
-     * @param geoLocation1 the geo location 1
-     * @param geoLocation2 the geo location 2
-     * @param currLocation the curr location
-     * @param s            the s
-     * @param payment      the payment
-     */
-    public Request(GeoLocation geoLocation1, GeoLocation geoLocation2, GeoLocation currLocation, String s, Payment payment) {
-        this.location = new Location(geoLocation1, geoLocation2, currLocation );
-        this.keyword = s;
-        this.payment = payment;
-    }
-
-    /**
-     * Add rider user.
-     *
-     * @param user the user
-     * @return the user
-     */
-    public User addRider(User user) {
-        return null;
-    }
-
-    /**
-     * Add rider rider.
-     *
-     * @param rider the rider
-     * @return the rider
-     */
     public Rider addRider(Rider rider) {
         return null;
     }
 
-    /**
-     * Add rider driver.
-     *
-     * @param driver the driver
-     * @return the driver
-     */
-    public Driver addRider(Driver driver) {
-        return null;
-    }
-
-    /**
-     * Gets uuid.
-     *
-     * @return the uuid
-     */
     public UUID getUUID() {
         return this.uuID;
     }
 
-
     /**
      * Gets start location.
-     *
      * @return the start location
      */
     public GeoLocation getStartLocation() {
@@ -177,7 +100,6 @@ public class Request implements Serializable {
 
     /**
      * Gets end location.
-     *
      * @return the end location
      */
     public GeoLocation getEndLocation() {
@@ -212,55 +134,11 @@ public class Request implements Serializable {
     }
 
     /**
-     * Accept boolean.
-     *
-     * @param driver the driver
-     * @return the boolean
-     */
-    public boolean accept(Driver driver) {
-        return false;
-    }
-
-    /**
      * Is accepted boolean.
-     *
      * @return the boolean
      */
     public boolean isAccepted() {
         return this.accepted;
-    }
-
-    /**
-     * Cancel.
-     */
-    public void cancel() {
-    }
-
-    /**
-     * Gets driver.
-     *
-     * @return the driver
-     */
-    public Driver getDriver() {
-        return this.driver;
-    }
-
-    /**
-     * Gets distance.
-     *
-     * @return the distance
-     */
-    public Double getDistance() {
-        return null;
-    }
-
-    /**
-     * Gets fare.
-     *
-     * @return the fare
-     */
-    public Double getFare() {
-        return this.payment.getActualCost();
     }
 
     /**
@@ -271,7 +149,6 @@ public class Request implements Serializable {
 
     /**
      * Is complete boolean.
-     *
      * @return the boolean
      */
     public boolean isComplete() {
@@ -279,8 +156,7 @@ public class Request implements Serializable {
     }
 
     /**
-     * Gets cost.
-     *
+     * Gets cost settles upon by the rider and driver.
      * @return the cost
      */
     public Double getCost() {
@@ -298,18 +174,7 @@ public class Request implements Serializable {
     }
 
     /**
-     * Contains boolean.
-     *
-     * @param uuid the uuid
-     * @return the boolean
-     */
-    public boolean contains(RequestCollection uuid) {
-        return false;
-    }
-
-    /**
      * Confirm by driver.
-     *
      * @param driver the driver
      */
     public void confirmByDriver(Driver driver) {

@@ -13,6 +13,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by aphilips on 11/10/16.
@@ -31,13 +35,8 @@ public class RequestCollectionsController {
     public static RequestCollection getRequestCollection() {
         User.UserType u_type = UserController.getUser().getCurrentUserType();
         RequestCollection requestCollection = (u_type == User.UserType.rider)? riderRequestCollection:driverRequestCollection;
-        if(requestCollection == null || requestCollection.size() == 0) {
+        if(requestCollection == null) {
             requestCollection = loadRequestCollection();
-
-            if(u_type == User.UserType.rider)
-                riderRequestCollection = requestCollection;
-            else
-                driverRequestCollection = requestCollection;
         }
 
         return requestCollection;
@@ -66,6 +65,37 @@ public class RequestCollectionsController {
         catch (IOException e)
         {
             throw new RuntimeException();
+        }
+    }
+
+    public static void loadRequestsFromElasticSearch() {
+
+        HashSet<UUID> requestUUIDs = UserController.getUser().getRequestUUIDs();
+        for(UUID u : requestUUIDs)
+        {
+            ElasticSearchRequest.getObjects getRequest = new ElasticSearchRequest.getObjects();
+            getRequest.execute(u.toString());
+            ArrayList<Request> requests = new ArrayList<Request>();
+
+            try {
+               requests  = getRequest.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
+            if(requests.size() == 1) { // found the one!
+                if(UserController.getUser().getCurrentUserType() == User.UserType.driver) {
+                    driverRequestCollection.add(requests.get(0));
+                }
+                else {
+                    riderRequestCollection.add(requests.get(0));
+                }
+            }
+            else {
+                throw new RuntimeException();
+            }
         }
     }
 
@@ -114,11 +144,16 @@ public class RequestCollectionsController {
 
     public static void deleteRequest(Request request){
         User user = UserController.getUser();
-        User.UserType u_type=user.getCurrentUserType();
+        User.UserType u_type = user.getCurrentUserType();
         user.removeRequestUUID(request.getUUID());
+
         RequestCollection requestCollection = (u_type== User.UserType.rider)? riderRequestCollection:driverRequestCollection;
-        requestCollection.remove(request);
+        requestCollection.remove(request.getUUID());
         saveRequestCollections(requestCollection);
+
+        ElasticSearchRequest.delete deleteRequest = new ElasticSearchRequest.delete();
+        deleteRequest.execute(request);
+
         UserController.observable.notifyListeners();
         observable.notifyListeners();
     }

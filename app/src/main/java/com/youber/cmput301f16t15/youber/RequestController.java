@@ -1,5 +1,9 @@
 package com.youber.cmput301f16t15.youber;
 
+import android.location.Location;
+
+import java.text.DecimalFormat;
+
 /**
  * Created by Reem on 2016-10-24.
  */
@@ -84,4 +88,34 @@ public class RequestController
     public static void addDriver(Request request1, Driver driver2) {
     }
 
+    public static Double getDistanceOfRequest(Request request) {
+        double lat1 = request.getStartLocation().getLat();
+        double lat2 = request.getEndLocation().getLat();
+        double lon1 = request.getStartLocation().getLon();
+        double lon2 = request.getEndLocation().getLon();
+
+        final int R = 6371; // Radius of the earth
+
+        Double latDistance = Math.toRadians(lat2 - lat1);
+        Double lonDistance = Math.toRadians(lon2 - lon1);
+        Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = R * c * 1000; // convert to meters
+        distance = Math.pow(distance, 2);
+
+        distance = Math.sqrt(distance)/1000; //convert to km
+        DecimalFormat df = new DecimalFormat("#.####"); // round it off to 4 decimal places
+        return Double.parseDouble(df.format(distance));
+    }
+
+    public static Double getEstimatedFare(Request request) { // this is $8 base pay and $2/km
+        Double estFare = 8.00;
+        double dist = getDistanceOfRequest(request);
+        estFare += (2)*dist;
+
+        DecimalFormat df = new DecimalFormat("#.##"); // round it off to 4 decimal places
+        return Double.parseDouble(df.format(estFare));
+    }
 }

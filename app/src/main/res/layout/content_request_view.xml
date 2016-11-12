@@ -13,19 +13,11 @@
     tools:context="com.youber.cmput301f16t15.youber.RequestViewActivity"
     tools:showIn="@layout/activity_request_view">
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--android:layout_margin="@dimen/fab_margin"-->
-        <!--app:srcCompat="@android:drawable/ic_dialog_email" />-->
-
     <TextView
         android:id="@+id/requestTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/request_title"
+        android:text="@string/requests_title"
         android:textSize="30dp"
         android:textAllCaps="true"
         android:layout_alignParentStart="true"/>

@@ -161,9 +161,12 @@ public class UserController {
 
     public static void setUserType(User.UserType userType)
     {
+
         user.setCurrentUserType(userType);
         saveUser(user);
         observable.notifyListeners();
         //notifyObservers();
+
+
     }
 }

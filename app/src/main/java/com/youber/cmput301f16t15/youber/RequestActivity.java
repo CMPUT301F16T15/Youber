@@ -9,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,6 +25,10 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
     RelativeLayout layout;
     ListView driverListView;
+    ArrayList<Driver> driverArray = new ArrayList<Driver>();
+    int driverSelected;
+    Request selectedRequest;
+    User.UserType userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +36,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
         setContentView(R.layout.activity_request);
 
         layout = (RelativeLayout)findViewById(R.id.activity_request);
-        driverListView = (ListView)findViewById(R.id.driverListView);
+        driverListView = (ListView)findViewById(R.id.requestUsersListView);
 
         driverListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -39,7 +44,17 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
                 Dialog dlg = promptDialog(R.layout.dlg_user_info); //test
+                driverSelected = i;
+
                 dlg.show();
+
+                TextView email = (TextView)dlg.findViewById(R.id.emailLink);
+                email.setText(driverArray.get(i).getEmail());
+
+                TextView phone = (TextView) dlg.findViewById(R.id.phoneNumberLink);
+                phone.setText(driverArray.get(i).getPhoneNumber());
+
+                userType =(UserController.getUser().getCurrentUserType());
             }
         });
     }
@@ -49,7 +64,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
         super.onStart();
 
         UUID selectedRequestUUID = (UUID)getIntent().getExtras().getSerializable("uuid");
-        Request selectedRequest = RequestCollectionsController.getRequestCollection().getRequestByUUID(selectedRequestUUID);
+        selectedRequest = RequestCollectionsController.getRequestCollection().getRequestByUUID(selectedRequestUUID);
 
         TextView status = (TextView)findViewById(R.id.status_info);
         status.setText(selectedRequest.getCurrentStatus().toString());
@@ -59,16 +74,23 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
         TextView endLoc = (TextView)findViewById(R.id.end_loc_info);
         endLoc.setText(selectedRequest.getEndLocation().toString());
+
+        TextView estFare = (TextView)findViewById(R.id.est_fare_info);
+        Double estFair = RequestController.getEstimatedFare(selectedRequest);
+        estFare.setText("$" + Double.toString(estFair));
+
+        TextView userTitle = (TextView)findViewById(R.id.user_request_title);
+        userTitle.setText((userType == User.UserType.driver)? "Rider":"Driver");
     }
 
     @Override
     protected void onResume() { // update the driver stuff
         super.onResume();
 
-        ArrayList<Driver> driverArray = new ArrayList<Driver>();
+        driverArray = new ArrayList<Driver>();
 
-        Driver driver1 = new Driver("driver1", "Jess", "Huynh", "10", "780", "@", User.UserType.driver);
-        Driver driver2 = new Driver("driver2", "Caro", "Carlos", "10", "780", "@", User.UserType.driver);
+        Driver driver1 = new Driver("driver1", "Jess", "Huynh", "10", "7801234567", "test@gmail.com", User.UserType.driver);
+        Driver driver2 = new Driver("driver2", "Caro", "Carlos", "10", "7801112222", "test2@gmail.com", User.UserType.driver);
         driverArray.add(driver1);
         driverArray.add(driver2);
 
@@ -107,7 +129,6 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
         Bundle bundle = new Bundle();
 
         bundle.putString(getResources().getString(R.string.message), getResources().getString(R.string.promptCancelConfirm));
-
         bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.yes));
         bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.no));
 
@@ -118,9 +139,8 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) { // add new request
-//        ElasticSearchRequest.add addRequest = new ElasticSearchRequest.add();
-//        addRequest.execute(request);
-        Snackbar.make(layout, "Successfully cancelled the request", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+        RequestCollectionsController.deleteRequest(selectedRequest);
+
         finish();
     }
 
@@ -128,18 +148,26 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     public void onDialogNegativeClick(DialogFragment dialog) {
     }
 
-    public void onFairFareBtnClick(View view) {
-    }
-
     public void onViewRequestOnMapBtnClick(View view) {
     }
 
     public void onPhoneNumberClick(View view) {
+        Driver driver = driverArray.get(driverSelected);
+
         Intent intent = new Intent(Intent.ACTION_CALL);
-        intent.setData(Uri.parse("tel:" + "7804568660"));
+        intent.setData(Uri.parse("tel:" + driver.getPhoneNumber()));
         startActivity(intent);
     }
 
     public void onEmailClick(View view) {
+        Driver driver = driverArray.get(driverSelected);
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("plain/text");
+        intent.putExtra(Intent.EXTRA_EMAIL, driver.getEmail());
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.youber_email_subject));
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.email_body));
+
+        startActivity(Intent.createChooser(intent, "Send mail..."));
     }
 }
