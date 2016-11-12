@@ -247,7 +247,7 @@ public class RequestsTest
         Request request1 = new Request(geoLocation1, geoLocation2);
         Double actualFair = 9.87;
         // $2 per km _ $8 base fee
-        assertEquals(actualFair, request1.getFare());
+        assertEquals(actualFair, RequestController.getEstimatedFare(request1));
     }
 
     @Test

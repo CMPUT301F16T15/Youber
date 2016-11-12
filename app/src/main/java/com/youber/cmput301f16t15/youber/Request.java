@@ -142,37 +142,23 @@ public class Request implements Serializable {
     }
 
     /**
-     * Gets distance in Kilometers.
-     * @return the distance in kilometers
-     */
-    public Double getDistance() {
-        float distanceFloat[] = new float[1];
-
-        // this returns the approximate amount in meters
-        android.location.Location.distanceBetween(getStartLocation().getLat(), getStartLocation().getLon(),
-                getEndLocation().getLat(), getEndLocation().getLon(), distanceFloat);
-
-        Double distance = (double)(distanceFloat[0]/1000);
-        return distance;
-    }
-
-    /**
      * Gets estimated fare.
      * @return the fare
      */
     public Double getFare() {
-        Double estFare = 0.00;
-        Double dist = getDistance();
-
-        if(dist > 5000) {
-            estFare += (0.54)*5000;
-            dist = dist - 5000;
-            estFare += (0.48)*dist;
-        }
-        else
-            estFare += (0.54)*dist;
-
-        return estFare;
+//        Double estFare = 0.00;
+////        Double dist = getDistance();
+//
+//        if(dist > 5000) {
+//            estFare += (0.54)*5000;
+//            dist = dist - 5000;
+//            estFare += (0.48)*dist;
+//        }
+//        else
+//            estFare += (0.54)*dist;
+//
+//        return estFare;
+        return 0.0;
     }
 
     /**

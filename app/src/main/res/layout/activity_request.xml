@@ -77,10 +77,30 @@
         android:textSize="16dp"/>
 
     <TextView
+        android:id="@+id/est_fare_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/end_loc_title"
+        android:layout_marginTop="10dp"
+        android:text="@string/fair_fare"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:id="@+id/est_fare_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/end_loc_title"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="2dp"
+        android:layout_toRightOf="@+id/est_fare_title"
+        android:text="@string/dummy_string"
+        android:textSize="16dp"/>
+
+    <TextView
         android:id="@+id/driver_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/end_loc_info"
+        android:layout_below="@id/est_fare_title"
         android:layout_marginTop="30dp"
         android:text="@string/driver_title"
         android:textSize="16dp"/>
@@ -90,7 +110,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/driver_title"
-        android:layout_below="@+id/end_loc_info"
+        android:layout_below="@+id/est_fare_title"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="2dp"
         android:textSize="16dp"

@@ -94,7 +94,6 @@ public class RequestController
         double lon1 = request.getStartLocation().getLon();
         double lon2 = request.getEndLocation().getLon();
 
-
         final int R = 6371; // Radius of the earth
 
         Double latDistance = Math.toRadians(lat2 - lat1);
@@ -109,5 +108,14 @@ public class RequestController
         distance = Math.sqrt(distance)/1000; //convert to km
         DecimalFormat df = new DecimalFormat("#.####"); // round it off to 4 decimal places
         return Double.parseDouble(df.format(distance));
+    }
+
+    public static Double getEstimatedFare(Request request) { // this is $8 base pay and $2/km
+        Double estFare = 8.00;
+        double dist = getDistanceOfRequest(request);
+        estFare += (2)*dist;
+
+        DecimalFormat df = new DecimalFormat("#.##"); // round it off to 4 decimal places
+        return Double.parseDouble(df.format(estFare));
     }
 }

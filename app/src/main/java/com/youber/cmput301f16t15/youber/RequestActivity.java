@@ -63,6 +63,10 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
         TextView endLoc = (TextView)findViewById(R.id.end_loc_info);
         endLoc.setText(selectedRequest.getEndLocation().toString());
+
+        TextView estFare = (TextView)findViewById(R.id.est_fare_info);
+        Double estFair = RequestController.getEstimatedFare(selectedRequest);
+        estFare.setText("$" + Double.toString(estFair));
     }
 
     @Override
@@ -128,10 +132,6 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
-    }
-
-    public void onFairFareBtnClick(View view) {
-//        selectedRequest.getDistance();
     }
 
     public void onViewRequestOnMapBtnClick(View view) {
