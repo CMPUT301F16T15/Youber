@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
                 RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
                 RequestCollectionsController.saveRequestCollections(requestCollection);
                 RequestCollection requestCollection1 = RequestCollectionsController.getRequestCollection();
-                GeoLocation g1 = new GeoLocation(10.0,10.0);
+                GeoLocation g1 = new GeoLocation(50,50);
                 GeoLocation g2 = new GeoLocation(20.0, 30.0);
                 Request request =new Request(g1,g2);
                 RequestCollectionsController.addRequest(request);
