@@ -84,9 +84,11 @@ public class Request implements Serializable {
     @Override
     public String toString() {
         String currentStat = currentStatus.toString(); // TODO FIX THIS
-        String start = startLocation.toString();
-        String end = endLocation.toString();
-        return currentStat + "\n" + start + "\n" + end;
+        GeoLocation start = new GeoLocation(startLocation[0], startLocation[1]);
+        String startStr = start.toString();
+        GeoLocation end = new GeoLocation(endLocation[0], endLocation[1]);
+        String endStr = end.toString();
+        return currentStat + "\nStart: " + startStr + "\nEnd: " + endStr;
     }
 
     public Rider addRider(Rider rider) {
