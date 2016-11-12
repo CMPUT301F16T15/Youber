@@ -14,7 +14,8 @@
         android:id="@+id/singleRequestTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dummy_string"
+        android:text="@string/request_title"
+        android:textAllCaps="true"
         android:textSize="20dp"
         android:textStyle="bold"/>
 
@@ -97,30 +98,19 @@
         android:textSize="16dp"/>
 
     <TextView
-        android:id="@+id/driver_title"
+        android:id="@+id/user_request_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/est_fare_title"
         android:layout_marginTop="30dp"
-        android:text="@string/driver_title"
+        android:text="@string/dummy_string"
         android:textSize="16dp"/>
 
-    <TextView
-        android:id="@+id/driver_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/driver_title"
-        android:layout_below="@+id/est_fare_title"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="2dp"
-        android:textSize="16dp"
-        android:text="@string/dummy_string"/>
-
     <ListView
-        android:id="@+id/driverListView"
+        android:id="@+id/requestUsersListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/driver_title"
+        android:layout_below="@+id/user_request_title"
         android:layout_above="@+id/requestOkayBtn"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="30dp">

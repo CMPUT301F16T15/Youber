@@ -25,9 +25,10 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
     RelativeLayout layout;
     ListView driverListView;
-    ArrayList<Driver> driverArray;
+    ArrayList<Driver> driverArray = new ArrayList<Driver>();
     int driverSelected;
     Request selectedRequest;
+    User.UserType userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
         setContentView(R.layout.activity_request);
 
         layout = (RelativeLayout)findViewById(R.id.activity_request);
-        driverListView = (ListView)findViewById(R.id.driverListView);
+        driverListView = (ListView)findViewById(R.id.requestUsersListView);
 
         driverListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -52,6 +53,8 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
                 TextView phone = (TextView) dlg.findViewById(R.id.phoneNumberLink);
                 phone.setText(driverArray.get(i).getPhoneNumber());
+
+                userType =(UserController.getUser().getCurrentUserType());
             }
         });
     }
@@ -75,6 +78,9 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
         TextView estFare = (TextView)findViewById(R.id.est_fare_info);
         Double estFair = RequestController.getEstimatedFare(selectedRequest);
         estFare.setText("$" + Double.toString(estFair));
+
+        TextView userTitle = (TextView)findViewById(R.id.user_request_title);
+        userTitle.setText((userType == User.UserType.driver)? "Rider":"Driver");
     }
 
     @Override

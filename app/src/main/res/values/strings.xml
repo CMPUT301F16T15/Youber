@@ -23,13 +23,14 @@
     <string name="dlg_cancel">Cancel</string>
 
     <!--Requests List View-->
-    <string name="request_title">Requests</string>
+    <string name="requests_title">Requests</string>
 
     <string name="message">message</string>
     <string name="positiveInput">postiveInput</string>
     <string name="negativeInput">negativeInput</string>
 
     <!--Request View-->
+    <string name="request_title">Request</string>
     <string name="start_location_title">Start Location:</string>
     <string name="end_location_title">End Location:</string>
     <string name="status_title">Status:</string>
