@@ -263,9 +263,9 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
             if (stop - start > 1000) {
                 Geocoder geocoder = new Geocoder(getBaseContext(), Locale.getDefault());
                 try {
-                    List<Address> address = geocoder.getFromLocation(touchedPoint.getLatitudeE6() / 1E6, touchedPoint.getLongitudeE6() / 1E6, 1);
+                    List<Address> address = geocoder.getFromLocation(touchedPoint.getLatitude(), touchedPoint.getLongitude(), 1);
                     if (address.size() > 0) {
-                        String display = "Latitude: " + touchedPoint.getLatitudeE6() / 1E6 + "\n" + "Longitude: " + touchedPoint.getLongitudeE6() / 1E6 + "\n";
+                        String display = "Latitude: " + touchedPoint.getLatitude() + "\n" + "Longitude: " + touchedPoint.getLongitude() + "\n";
                         for (int i = 0; i < address.get(0).getMaxAddressLineIndex(); i++) {
                             display += address.get(0).getAddressLine(i) + "\n";
                         }
@@ -273,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
                         t.show();
 
                         if (startPoint == null) {
-                            startPoint = new GeoPoint(touchedPoint.getLatitudeE6() / 1E6, touchedPoint.getLongitudeE6() / 1E6);
+                            startPoint = new GeoPoint(touchedPoint.getLatitude(), touchedPoint.getLongitude());
                             String startLat = String.valueOf(startPoint.getLatitude());
                             String startLon = String.valueOf(startPoint.getLongitude());
                             ((EditText)findViewById(R.id.start_lat_edit)).setText(startLat);
@@ -286,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
                             map.invalidate();
                             Toast.makeText(getBaseContext(), "start location is set", Toast.LENGTH_LONG);
                         } else if (endPoint == null) {
-                            endPoint = new GeoPoint(touchedPoint.getLatitudeE6() / 1E6, touchedPoint.getLongitudeE6() / 1E6);
+                            endPoint = new GeoPoint(touchedPoint.getLatitude(), touchedPoint.getLongitude());
                             String endLat = String.valueOf(endPoint.getLatitude());
                             String endLon = String.valueOf(endPoint.getLongitude());
                             ((EditText)findViewById(R.id.end_lat_edit)).setText(endLat);
