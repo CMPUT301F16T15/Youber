@@ -41,6 +41,8 @@
     <string name="promptCancelConfirm">Are you sure you want to cancel this request?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="youber_email_subject">Youber App:</string>
+    <string name="email_body">Please write your email body here.</string>
 
     <!--User Info View-->
     <string name="phone_number_title">Phone Number:</string>

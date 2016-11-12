@@ -9,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -43,7 +44,14 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
             {
                 Dialog dlg = promptDialog(R.layout.dlg_user_info); //test
                 driverSelected = i;
+
                 dlg.show();
+
+                TextView email = (TextView)dlg.findViewById(R.id.emailLink);
+                email.setText(driverArray.get(i).getEmail());
+
+                TextView phone = (TextView) dlg.findViewById(R.id.phoneNumberLink);
+                phone.setText(driverArray.get(i).getPhoneNumber());
             }
         });
     }
@@ -75,8 +83,8 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
         driverArray = new ArrayList<Driver>();
 
-        Driver driver1 = new Driver("driver1", "Jess", "Huynh", "10", "911", "@", User.UserType.driver);
-        Driver driver2 = new Driver("driver2", "Caro", "Carlos", "10", "780", "@", User.UserType.driver);
+        Driver driver1 = new Driver("driver1", "Jess", "Huynh", "10", "7801234567", "test@gmail.com", User.UserType.driver);
+        Driver driver2 = new Driver("driver2", "Caro", "Carlos", "10", "7801112222", "test2@gmail.com", User.UserType.driver);
         driverArray.add(driver1);
         driverArray.add(driver2);
 
@@ -126,7 +134,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) { // add new request
         RequestCollectionsController.deleteRequest(selectedRequest);
-        Snackbar.make(layout, "Successfully cancelled the request", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
         finish();
     }
 
@@ -146,5 +154,14 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     }
 
     public void onEmailClick(View view) {
+        Driver driver = driverArray.get(driverSelected);
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("plain/text");
+        intent.putExtra(Intent.EXTRA_EMAIL, driver.getEmail());
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.youber_email_subject));
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.email_body));
+
+        startActivity(Intent.createChooser(intent, "Send mail..."));
     }
 }
