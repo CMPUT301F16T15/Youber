@@ -60,8 +60,7 @@ public class Driver extends User {
     public Double getOfferPaymentFromRequest(UUID uuid)  //see how much is being offered
     {
         Request request = requestsCtrl.getRequestByUUID(uuid);
-        double offer = request.getFare(); //can be getCost instead
-        return offer;
+        return request.getCost();
     }
 
     /**

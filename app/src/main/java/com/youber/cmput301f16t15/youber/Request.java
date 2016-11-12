@@ -142,26 +142,6 @@ public class Request implements Serializable {
     }
 
     /**
-     * Gets estimated fare.
-     * @return the fare
-     */
-    public Double getFare() {
-//        Double estFare = 0.00;
-////        Double dist = getDistance();
-//
-//        if(dist > 5000) {
-//            estFare += (0.54)*5000;
-//            dist = dist - 5000;
-//            estFare += (0.48)*dist;
-//        }
-//        else
-//            estFare += (0.54)*dist;
-//
-//        return estFare;
-        return 0.0;
-    }
-
-    /**
      * Complete.
      */
     public void complete() {
