@@ -18,6 +18,7 @@ import io.searchbox.core.Get;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
+import io.searchbox.indices.mapping.PutMapping;
 
 import static com.youber.cmput301f16t15.youber.ElasticSearch.getClient;
 import static com.youber.cmput301f16t15.youber.ElasticSearch.verifySettings;
@@ -56,7 +57,7 @@ public class ElasticSearchRequest extends ElasticSearch{
                 try {
                     DocumentResult result = getClient().execute(index);
                 } catch (Exception e) {
-                    Log.i("Error", "The app failed to build and sent the tweets");
+                    Log.i("Error", "The app failed to build and sent the tweets " +e.toString());
                 }
             }
 
@@ -139,4 +140,26 @@ public class ElasticSearchRequest extends ElasticSearch{
 
         return requestCollection;
     }
+//    public static RequestCollection getRequestCollectionFrom(GeoLocation g1){
+//        RequestCollection requestCollection = new RequestCollection();
+//        if(g1==null){return requestCollection;}
+//        String query= "";
+//
+//        Search search = new Search.TemplateBuilder(query)
+//
+//        return  requestCollection;
+//    }
+    public static void putmappingsetup(){
+        verifySettings();
+        PutMapping putMapping =new PutMapping.Builder(
+                    "youber",
+                    "request",
+                "{\"request\" : { \"properties\" : { \"startLocation\" : {\"type\" : \"geo_point\"}}}}"
+        ).build();
+        try{
+           JestResult jr= getClient().execute(putMapping);
+        }catch(Exception e){Log.i("put map","failed cause :" + jr.toString());}
+
+    }
+
 }

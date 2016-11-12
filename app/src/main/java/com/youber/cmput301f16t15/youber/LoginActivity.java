@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity implements NoticeDialogFrag
 
                    else
                    {
-                       Log.i("Error", "The request for user has failed");
+                       Log.i("Error", "The request for user has failed"+Integer.toBinaryString(users.size()));
                        Bundle bundle = new Bundle();
                        bundle.putString(getResources().getString(R.string.message), getResources().getString(R.string.InvalidUsernameMessage));
                        bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.signup));

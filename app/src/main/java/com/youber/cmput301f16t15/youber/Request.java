@@ -13,15 +13,16 @@ public class Request implements Serializable {
 
     @JestId
     private UUID uuID;
-    /**
-     * The Start location.
-     */
-    GeoLocation startLocation;
-    /**
-     * The End location.
-     */
-    GeoLocation endLocation;
-
+//    /**
+//     * The Start location.
+//     */
+//    GeoLocation startLocation;
+//    /**
+//     * The End location.
+//     */
+//    GeoLocation endLocation;
+    private double [] startLocation;
+    private double [] endLocation;
     private boolean status = true; //open is true
     private String keyword;
     private Payment payment;
@@ -55,9 +56,12 @@ public class Request implements Serializable {
      */
     public Request(GeoLocation location1, GeoLocation location2) {
         if (location1.equals(location2)) throw new RuntimeException(new InvalidRequestException());
-
-        startLocation = location1;
-        endLocation = location2;
+        startLocation = new double[2];
+        endLocation =new double[2];
+        startLocation[0] = location1.getLat();
+        startLocation[1] =location1.getLon();
+        endLocation[0] = location2.getLat();
+        endLocation[1]= location2.getLon();
 
         uuID = UUID.randomUUID();
         currentStatus = RequestStatus.opened;
@@ -95,7 +99,7 @@ public class Request implements Serializable {
      * @return the start location
      */
     public GeoLocation getStartLocation() {
-        return startLocation;
+        return new GeoLocation(startLocation[0],startLocation[1]);
     }
 
     /**
@@ -103,7 +107,7 @@ public class Request implements Serializable {
      * @return the end location
      */
     public GeoLocation getEndLocation() {
-        return endLocation;
+        return new GeoLocation(endLocation[0],endLocation[1]);
     }
 
     /**

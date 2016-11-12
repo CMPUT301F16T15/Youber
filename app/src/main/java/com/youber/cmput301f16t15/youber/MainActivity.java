@@ -38,15 +38,17 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
         RequestCollectionsController.setContext(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         RequestCollectionsController.observable.addListener(new ElasticSearchRequest());
+        ElasticSearchRequest.putmappingsetup();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 User user = UserController.getUser();
                 RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
                 RequestCollectionsController.saveRequestCollections(requestCollection);
                 RequestCollection requestCollection1 = RequestCollectionsController.getRequestCollection();
-                GeoLocation g1 = new GeoLocation(10.0,10.0);
-                GeoLocation g2 = new GeoLocation(20.0, 30.0);
+                GeoLocation g1 = new GeoLocation(10.1,10.1);
+                GeoLocation g2 = new GeoLocation(20.1, 30.1);
                 Request request =new Request(g1,g2);
                 RequestCollectionsController.addRequest(request);
                 RequestCollection requestCollection2 = RequestCollectionsController.getRequestCollection();
