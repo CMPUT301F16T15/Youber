@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
@@ -85,6 +86,31 @@ public class ElasticSearchController extends ElasticSearch{
                 "            \"distance\" : \""+Double.toString(radiusInKm)+"km\",\n" +
                 "            \"startLocation\" :[ "+Double.toString(start.getLat())+",\n" +
                 "            "+Double.toString(start.getLon())+"]\n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
+
+        ElasticSearchRequest.getObjectsByGeolocation getter = new ElasticSearchRequest.getObjectsByGeolocation();
+        getter.execute(query);
+        try {
+            ArrayList<Request> requests = getter.get();
+            requestCollection.addAll(requests);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return requestCollection;
+    }
+
+    public static RequestCollection getRequestsbyKeyWord(String keyword){
+        RequestCollection requestCollection =new RequestCollection();
+        String query =
+                "{\n" +
+                "    \"query\" : {\n" +
+                "        \"match\" : {\n" +
+                "            \"description\" : \""+keyword+"\"\n" +
                 "        }\n" +
                 "    }\n" +
                 "}";

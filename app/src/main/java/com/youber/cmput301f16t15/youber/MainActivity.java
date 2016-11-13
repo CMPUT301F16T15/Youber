@@ -11,6 +11,7 @@ import android.graphics.Canvas;
 import android.location.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -132,30 +133,33 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
             @Override
             public void onClick(View view) {
 
-                GeoLocation geoLocation = new GeoLocation(53.507, -113.507);
-                Double radius = 200.0;
-                Intent intent = new Intent(MainActivity.this,DriverSearchListActivity.class);
-                intent.putExtra("GeoLocation",geoLocation);
-                intent.putExtra("Radius",radius);
-                startActivity(intent);
-
+//                GeoLocation geoLocation = new GeoLocation(53.507, -113.507);
+//                Double radius = 200.0;
+//                Intent intent = new Intent(MainActivity.this,DriverSearchListActivity.class);
+//                intent.putExtra("GeoLocation", (Parcelable) geoLocation);
+//                intent.putExtra("Radius",radius);
+//                startActivity(intent);
 //
+
+                    Intent intent = new Intent(MainActivity.this, DriverSearchListActivity.class);
+                    intent.putExtra("Keyword","Another");
+                    startActivity(intent);
+
+
 //                User user = UserController.getUser();
 //                RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
 //                RequestCollectionsController.saveRequestCollections(requestCollection);
-//                RequestCollection requestCollection1 = RequestCollectionsController.getRequestCollection();
+//                //RequestCollection requestCollection1 = RequestCollectionsController.getRequestCollection();
 //
 //                GeoLocation g1 = new GeoLocation(startPoint.getLatitude(),startPoint.getLongitude());
 //                GeoLocation g2 = new GeoLocation(endPoint.getLatitude(), endPoint.getLongitude());
 //
-//                RequestCollection requestCollection2 =ElasticSearchController.getRequestsbyGeoLocation(g1,200.0);
-//                Log.i("size before",Integer.toString(requestCollection2.size()));
+//
 //                Request request =new Request(g1,g2);
 //                RequestCollectionsController.addRequest(request);
-//                //RequestCollection requestCollection2 = RequestCollectionsController.getRequestCollection();
-//                RequestCollection requestCollection3 =ElasticSearchController.getRequestsbyGeoLocation(g1,200.0);
-//                Log.i("size after",Integer.toString(requestCollection3.size()));
-//                int a=2+1;
+
+
+                int a=2+1;
 //
 //                ElasticSearchController.getAcceptedDrivers(request);
             }

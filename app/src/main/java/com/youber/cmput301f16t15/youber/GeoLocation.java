@@ -10,7 +10,7 @@ import java.util.Objects;
  * Used http://stackoverflow.com/questions/2139134/how-to-send-an-object-from-one-android-activity-to-another-using-intents
  * Created by Reem on 2016-10-13.
  */
-public class GeoLocation implements  Parcelable {
+public class GeoLocation implements Serializable, Parcelable {
     private double lat;
     private double lon;
 

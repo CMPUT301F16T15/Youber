@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class DriverSearchListActivity extends AppCompatActivity {
 
@@ -27,16 +28,7 @@ public class DriverSearchListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Need this when Calvin is able to send a geolocation and double
 
-        Intent intent = getIntent();
-        geoLocation=(GeoLocation) intent.getParcelableExtra("GeoLocation");
-        radius=intent.getDoubleExtra("Radius",10.0);
-
-        //dummy stuff
-
-//        geoLocation = new GeoLocation(53.507, -113.507);
-//        radius = 200.0;
 
         requestListView = (ListView)findViewById(R.id.requestListView);
         requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -54,8 +46,27 @@ public class DriverSearchListActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        Intent intent = getIntent();
+        RequestCollection requests=null;
+        try{
+            //Need this when Calvin is able to send a geolocation and double
 
-        RequestCollection requests =ElasticSearchController.getRequestsbyGeoLocation(geoLocation,radius);
+
+            geoLocation=(GeoLocation) intent.getParcelableExtra("GeoLocation");
+            if(geoLocation==null)throw new NullPointerException();
+            radius=intent.getDoubleExtra("Radius",10.0);
+
+            //dummy stuff
+
+            //geoLocation = new GeoLocation(53.507, -113.507);
+            //radius = 200.0;
+
+           requests =ElasticSearchController.getRequestsbyGeoLocation(geoLocation,radius);
+        } catch (Exception e){
+            String keyword=intent.getStringExtra("Keyword");
+            requests=ElasticSearchController.getRequestsbyKeyWord(keyword);
+        }
+
 
         requestArray = new ArrayList<Request>();
         requestArray.addAll(requests.values());
