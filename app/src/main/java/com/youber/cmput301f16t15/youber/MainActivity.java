@@ -2,7 +2,9 @@ package com.youber.cmput301f16t15.youber;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
@@ -14,9 +16,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
@@ -50,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
 
     //TODO use controller not global
     private Request request;
-    private CoordinatorLayout layout;
 
     Activity ourActivity = this;
     MapView map;
@@ -77,8 +82,6 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        layout = (CoordinatorLayout) findViewById(R.id.map);
-//
         map = (MapView) findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setBuiltInZoomControls(true);
@@ -240,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
         String msg = "Please confirm new request.\nStart: " + start + "\nEnd: " + end;
         bundle.putString(getResources().getString(R.string.message), msg);
 
-        bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.dlg_create));
+        bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.next));
         bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.dlg_cancel));
 
         DialogFragment dialog = new NoticeDialogFragment();
@@ -250,14 +253,55 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) { // add new request
-        RequestCollectionsController.getRequestCollection();
-        RequestCollectionsController.addRequest(request);
-        Snackbar.make(layout, "Successfully added a new request", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+        Dialog dlg = promptToAddDescription();
+        dlg.show();
+
+        final EditText description = (EditText)dlg.findViewById(R.id.description_edit_text);
+        description.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String descStr = description.getText().toString();
+                request.setDescription(descStr);
+            }
+        });
+    }
+
+    public Dialog promptToAddDescription() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater(); // Get the layout inflater
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder.setView(inflater.inflate(R.layout.dlg_request_description, null))
+                .setPositiveButton(R.string.dlg_create, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        RequestCollectionsController.getRequestCollection();
+                        RequestCollectionsController.addRequest(request);
+                    }
+                })
+                // Add action buttons
+                .setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+
+        return builder.create();
     }
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
-        Snackbar.make(layout, "New request was not created", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
     }
 
     public class Touch extends Overlay {

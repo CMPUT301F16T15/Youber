@@ -25,7 +25,7 @@ public class Request implements Serializable {
 
 
     private boolean status = true; //open is true
-    private String keyword;
+    private String description;
     private Payment payment;
     private int confirmationStage = 0; //0 initial, 1 accepted by a driver, 2 confirmed by a rider, 3 finalized by driver
     private boolean accepted = false;
@@ -78,14 +78,17 @@ public class Request implements Serializable {
      */
     public Request(GeoLocation geoLocation1, GeoLocation geoLocation2, String s) {
         uuID = UUID.randomUUID();
+        description = s;
     }
 
     @Override
     public String toString() {
         String currentStat = currentStatus.toString(); // TODO FIX THIS
-        String start = startLocation.toString();
-        String end = endLocation.toString();
-        return currentStat + "\n" + start + "\n" + end;
+        GeoLocation start = new GeoLocation(startLocation[0], startLocation[1]);
+        String startStr = start.toString();
+        GeoLocation end = new GeoLocation(endLocation[0], endLocation[1]);
+        String endStr = end.toString();
+        return currentStat + "\nStart: " + startStr + "\nEnd: " + endStr;
     }
 
     public Rider addRider(Rider rider) {
@@ -212,7 +215,11 @@ public class Request implements Serializable {
      * @return the description
      */
     public String getDescription() {
-        return null;
+        return description;
+    }
+
+    public void setDescription(String s) {
+        description = s;
     }
 
     public RequestStatus getCurrentStatus() {
