@@ -10,6 +10,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Parcelable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -70,7 +71,7 @@ public class DriverMainActivity extends AppCompatActivity {
 
     static double radius = 1;
 
-    static String Keyword;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +102,12 @@ public class DriverMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Keyword = ((EditText)findViewById(R.id.keyword_search)).getText().toString();
-//                Intent intent = new Intent(UserTypeActivity.this, DriverMainActivity.class);
-//                startActivity(intent);
+                String keyword = ((EditText)findViewById(R.id.keyword_search)).getText().toString();
+
+
+                Intent intent = new Intent(DriverMainActivity.this, DriverSearchListActivity.class);
+                intent.putExtra("Keyword",keyword);
+                startActivity(intent);
 
             }
         });
@@ -114,8 +118,12 @@ public class DriverMainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 GeoLocation geoLocation = new GeoLocation(searchPoint.getLatitude(), searchPoint.getLongitude());
-//                Intent intent = new Intent(UserTypeActivity.this, DriverMainActivity.class);
-//                startActivity(intent);
+
+                Intent intent = new Intent(DriverMainActivity.this,DriverSearchListActivity.class);
+                intent.putExtra("GeoLocation", (Parcelable) geoLocation);
+                intent.putExtra("Radius",radius);
+                startActivity(intent);
+
 
             }
         });

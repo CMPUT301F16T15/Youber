@@ -141,9 +141,9 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
 //                startActivity(intent);
 //
 
-                    Intent intent = new Intent(MainActivity.this, DriverSearchListActivity.class);
-                    intent.putExtra("Keyword","Another");
-                    startActivity(intent);
+                    //Intent intent = new Intent(MainActivity.this, DriverSearchListActivity.class);
+                    //intent.putExtra("Keyword","Another");
+                    //startActivity(intent);
 
 
 //                User user = UserController.getUser();
