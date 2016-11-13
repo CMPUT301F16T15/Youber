@@ -81,6 +81,11 @@ public class RequestController
     public static void completeRequest(Request request1) {
     }
 
+
+    public static void closeRequest(Request request1) {
+        request1.close();
+    }
+
     /**
      * Add driver.
      *

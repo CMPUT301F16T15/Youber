@@ -10,11 +10,12 @@ import com.youber.cmput301f16t15.youber.users.Driver;
 import com.youber.cmput301f16t15.youber.users.Rider;
 
 import org.junit.Test;
+import static org.junit.Assert.*;
+
 
 /**
  * Created by Reem on 2016-10-13.
  */
-import static org.junit.Assert.*;
 public class RequestsTest
 {
     @Test (expected = RuntimeException.class)
@@ -29,34 +30,21 @@ public class RequestsTest
     @Test
     public void testStartLocation()
     {
-
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
 
         Request request = new Request(geoLocation1, geoLocation2);
-        Rider rider = new Rider();
-        //TODO
-//        RequestController.addRequest(request,rider);
-        rider = request.addRider(rider);
-
-        assertEquals(geoLocation1, rider.getRequest(request.getUUID()).getStartLocation());
-
+        assertEquals(geoLocation1, request.getStartLocation());
     }
 
     @Test
     public void testEndLocation()
     {
-
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
 
         Request request = new Request(geoLocation1, geoLocation2);
-        Rider rider = new Rider();
-        //TODO
-//        RequestController.addRequest(request,rider);
-
-        assertEquals(geoLocation2, rider.getRequest(request.getUUID()).getEndLocation());
-
+        assertEquals(geoLocation2, request.getEndLocation());
     }
 
     @Test
@@ -67,20 +55,19 @@ public class RequestsTest
 
         Request request1 = new Request(geoLocation1, geoLocation2);
         Rider rider1 = new Rider();
-        //TODO
-//        RequestController.addRequest(request1,rider1);
+        rider1.addRequest(request1);
+
         Request request2 = new Request(geoLocation1, geoLocation2);
         Rider rider2 = new Rider();
-//        RequestController.addRequest(request2,rider2);
+        rider2.addRequest(request2);
 
         boolean test = rider1.getRequest(request1.getUUID()).equals(rider2.getRequest(request2.getUUID()));
         assertFalse(test);
-
     }
 
 
     @Test
-    public void testGetRequest()
+    public void testUniqueRequestUUIDs()
     {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
@@ -92,25 +79,20 @@ public class RequestsTest
         assertFalse(test);
     }
 
-    @Test (expected = SameRequestException.class)
+    @Test
     public void testSameRequestDifferentRiders()
     {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
 
         Request request1 = new Request(geoLocation1, geoLocation2);
-
-
         Rider rider1 = new Rider();
-
-        //TODO
-//        RequestController.addRequest(request1,rider1);
+        rider1.addRequest(request1);
 
         Rider rider2 = new Rider();
+        rider2.addRequest(request1);
 
-        //TODO
-//        RequestController.addRequest(request1,rider2);
-        rider2 = request1.addRider(rider2);
+        assertTrue(rider1.getRequest(request1.getUUID()) == rider2.getRequest(request1.getUUID()));
     }
 
     @Test
@@ -123,32 +105,24 @@ public class RequestsTest
         Request request1 = new Request(geoLocation1, geoLocation2);
         Request request2 = new Request(geoLocation1, geoLocation2);
         Rider rider1 = new Rider();
+        rider1.addRequest(request1);
+        rider1.addRequest(request2);
 
-        //TODO
-//        RequestController.addRequest(request1,rider1);
-//        RequestController.addRequest(request2,rider1);
-
-        boolean test = rider1.getRequest(request1.getUUID()).equals(rider1.getRequest(request2.getUUID()));
-        assertFalse(test);
-
+        assertTrue(rider1.getRequest(request1.getUUID()) == request1);
+        assertTrue(rider1.getRequest(request2.getUUID()) == request2);
     }
 
     @Test
-    public void testGetOpenRequests()
+    public void testGetOpenRequest()
     {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
 
         Request request1 = new Request(geoLocation1, geoLocation2);
-        Request request2 = new Request(geoLocation1, geoLocation2);
         Rider rider1 = new Rider();
+        rider1.addRequest(request1);
 
-        //TODO
-//        RequestController.addRequest(request1,rider1);
-//        RequestController.addRequest(request2,rider1);
-
-        assertEquals(2, rider1.getOpenRequests().size());
-
+        assertEquals(rider1.getRequest(request1.getUUID()).getCurrentStatus(), Request.RequestStatus.opened);
     }
 
     @Test
@@ -158,10 +132,8 @@ public class RequestsTest
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
 
         Request request1 = new Request(geoLocation1, geoLocation2);
-
-        //request1.close(); //TODO this is werid... take a closer look
-//        RequestController.deleteRequest(request1, new Rider());
-        assertTrue(request1.isClosed());
+        RequestController.closeRequest(request1);
+        assertTrue("Expected to fail until Project Part 5", request1.isClosed());
     }
 
     @Test
@@ -171,17 +143,11 @@ public class RequestsTest
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
 
         Request request1 = new Request(geoLocation1, geoLocation2);
-        Request request2 = new Request(geoLocation1, geoLocation2);
         Rider rider1 = new Rider();
-        rider1 = request1.addRider(rider1);
-        rider1 = request2.addRider(rider1);
-
-        //TODO
-//        RequestController.addRequest(request1,rider1);
-//        RequestController.deleteRequest(request1, rider1);
+        rider1.addRequest(request1);
         rider1.getRequest(request1.getUUID()).close();
 
-        assertEquals(1, rider1.getClosedRequests().size());
+        assertEquals("Expected to fail until Project Part 5", 1, rider1.getClosedRequests().size());
     }
 
 
@@ -192,8 +158,8 @@ public class RequestsTest
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
 
         Request request1 = new Request(geoLocation1, geoLocation2);
-
         RequestController.acceptRequest(request1);
+
         assertTrue(request1.isAccepted());
     }
 
@@ -221,7 +187,6 @@ public class RequestsTest
     {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-
         Request request1 = new Request(geoLocation1, geoLocation2);
 
         Rider rider1 = new Rider();
@@ -264,11 +229,8 @@ public class RequestsTest
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
 
         Request request1 = new Request(geoLocation1, geoLocation2);
-
         Rider rider1 = new Rider();
-
-        //TODO
-//        RequestController.addRequest(request1,rider1);
+        rider1.addRequest(request1);
         RequestController.completeRequest(request1);
         assertTrue(rider1.getRequest(request1.getUUID()).isComplete());
     }
@@ -284,9 +246,6 @@ public class RequestsTest
         Request request2 = new Request(geoLocation1, geoLocation2);
         Rider rider1 = new Rider();
 
-        //TODO
-//        RequestController.addRequest(request1,rider1);
-//        RequestController.addRequest(request2,rider1);
         RequestController.completeRequest(request1);
         assertEquals(1, rider1.getClosedRequests().size());
 
@@ -314,18 +273,9 @@ public class RequestsTest
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
         Request request1 = new Request(geoLocation1, geoLocation2);
-//        Rider currentRider = Helper.getCurrentRider();
+
         Driver driver = new Driver();
-
-        //TODO
-//        RequestController.addRequest(request1,currentRider);
-
         RequestController.addDriver(request1,driver);
-
-
-//        assertTrue(FileManager.loadFromfile().contains(request1));
-
-
     }
 
 
