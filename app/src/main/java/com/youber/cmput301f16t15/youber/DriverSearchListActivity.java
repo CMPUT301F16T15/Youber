@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -54,8 +55,8 @@ public class DriverSearchListActivity extends AppCompatActivity {
 
             geoLocation=(GeoLocation) intent.getParcelableExtra("GeoLocation");
             if(geoLocation==null)throw new NullPointerException();
-            radius=intent.getDoubleExtra("Radius",10.0);
-
+            radius=intent.getDoubleExtra("Radius",2.0);
+            Log.i("radius: ", Double.toString(radius));
             //dummy stuff
 
             //geoLocation = new GeoLocation(53.507, -113.507);

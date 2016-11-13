@@ -45,7 +45,9 @@
             android:name=".SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".DriverMainActivity"></activity>
+        <activity android:name=".DriverMainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
 
         <activity android:name=".DriverSearchListActivity"
             android:theme="@style/AppTheme.NoActionBar"/>

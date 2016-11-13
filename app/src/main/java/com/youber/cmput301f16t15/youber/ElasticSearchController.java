@@ -83,7 +83,7 @@ public class ElasticSearchController extends ElasticSearch{
         String query ="{\n" +
                 "    \"filter\" : {\n" +
                 "        \"geo_distance\" : {\n" +
-                "            \"distance\" : \""+Double.toString(radiusInKm)+"km\",\n" +
+                "            \"distance\" : \""+Double.toString(radiusInKm)+"m\",\n" +
                 "            \"startLocation\" :[ "+Double.toString(start.getLat())+",\n" +
                 "            "+Double.toString(start.getLon())+"]\n" +
                 "        }\n" +

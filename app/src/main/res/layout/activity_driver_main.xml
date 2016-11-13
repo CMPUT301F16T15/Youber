@@ -6,34 +6,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@android:style/Theme.Holo"
     tools:context="com.youber.cmput301f16t15.youber.DriverMainActivity">
 
 
-    <EditText
-        android:layout_width="wrap_content"
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/lightGreen"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight = "1"
         android:inputType="textImeMultiLine|textPersonName"
-        android:text="keyword"
         android:ems="10"
-        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dip"
         android:layout_alignParentStart="true"
         android:id="@+id/keyword_search"
-        android:layout_alignParentEnd="true"
-        android:hint="keyword" />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Search by keyword"
-        android:layout_below="@+id/keyword_search"
-        android:layout_alignParentStart="true"
-        android:id="@+id/search_keyword_button"
-        android:background="@color/lightGreen"
-
-        />
+        android:hint="keyword"
+        android:layout_toStartOf="@+id/search_keyword_button" />
 
     <Button
         android:layout_width="fill_parent"
@@ -45,6 +47,17 @@
         android:background="@color/lightGreen"
 
         />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:id="@+id/search_keyword_button"
+        android:background="@color/lightGreen"
+
+        android:layout_alignTop="@+id/keyword_search"
+        android:layout_alignBottom="@+id/keyword_search"
+        android:layout_alignParentEnd="true" />
 
 
     <org.osmdroid.views.MapView android:id="@+id/map"
