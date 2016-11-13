@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_driver_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:theme="@android:style/Theme.Holo"
+    tools:context="com.youber.cmput301f16t15.youber.DriverMainActivity">
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textImeMultiLine|textPersonName"
+        android:text="keyword"
+        android:ems="10"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/keyword_search"
+        android:layout_alignParentEnd="true"
+        android:hint="keyword" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Search by keyword"
+        android:layout_below="@+id/keyword_search"
+        android:layout_alignParentStart="true"
+        android:id="@+id/search_keyword_button"
+        android:background="@color/lightGreen"
+
+        />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Search by Geolocation"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/search_geolocation_button"
+        android:background="@color/lightGreen"
+
+        />
+
+
+    <org.osmdroid.views.MapView android:id="@+id/map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dip"
+        android:layout_marginBottom="50dip"
+        android:enabled= "true"
+        android:clickable = "true"
+        />
+
+</RelativeLayout>

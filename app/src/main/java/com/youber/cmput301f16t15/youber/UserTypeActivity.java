@@ -28,7 +28,7 @@ public class UserTypeActivity extends AppCompatActivity {
 
                 UserController.setUserType(User.UserType.driver);
                 saveUserTypeRequests(user);
-                Intent intent = new Intent(UserTypeActivity.this, MainActivity.class);
+                Intent intent = new Intent(UserTypeActivity.this, DriverMainActivity.class);
                 startActivity(intent);
 
             }
