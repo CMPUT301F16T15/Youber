@@ -64,6 +64,38 @@ public class ElasticSearchRequest extends ElasticSearch{
         }
     }
 
+
+
+
+
+    public static class getObjectsByGeolocation extends AsyncTask<String, Void, ArrayList<Request>> {
+
+
+        @Override
+        protected ArrayList<Request> doInBackground(String... search_parameters) {
+            verifySettings();
+            Search search = new Search.Builder(search_parameters[0]).addIndex("youber").addIndex("request").build();
+            JestResult result = null;
+            ArrayList<Request> requests = new ArrayList<Request>();
+            try {
+                result = getClient().execute(search);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (result.isSucceeded()) {
+                List<Request> foundRequests = result.getSourceAsObjectList(Request.class);
+                requests.addAll(foundRequests);
+
+
+            } else {
+                Log.i("Error", "The search execited but it didnt work");
+                Log.i("jest error",result.toString());
+            }
+
+            return requests;
+        }
+    }
     /**
      * The type Get objects.
      */
@@ -123,6 +155,10 @@ public class ElasticSearchRequest extends ElasticSearch{
             return null;
         }
     }
+
+
+
+
 
     public static RequestCollection getRequestCollection(HashSet<UUID> hashSet){
         RequestCollection requestCollection= new RequestCollection();

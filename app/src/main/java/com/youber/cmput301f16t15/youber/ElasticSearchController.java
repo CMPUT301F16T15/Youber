@@ -2,10 +2,16 @@ package com.youber.cmput301f16t15.youber;
 
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
+
+import io.searchbox.client.JestResult;
+import io.searchbox.client.JestResultHandler;
+import io.searchbox.core.Search;
 
 /**
  * Created by Reem on 2016-11-11.
@@ -14,7 +20,7 @@ import java.util.concurrent.ExecutionException;
 
 
 // NOT SURE IT WORKS YET BUT I NEED TO 
-public class ElasticSearchController {
+public class ElasticSearchController extends ElasticSearch{
 
     public static Observable observable = new Observable();
 
@@ -54,8 +60,7 @@ public class ElasticSearchController {
 
             for (User user: users)
             {
-                // this may not work because java is not pass by value
-                // if it doesn't then just change it to string.
+
                 if (user.getDriverUUIDs().contains(request.getUUID()))
                 {
                     drivers.add((Driver)user);
@@ -72,6 +77,30 @@ public class ElasticSearchController {
         return drivers;
     }
 
+    public static RequestCollection getRequestsbyGeoLocation(GeoLocation start,Double radiusInKm){
+        RequestCollection requestCollection =new RequestCollection();
+        String query ="{\n" +
+                "    \"filter\" : {\n" +
+                "        \"geo_distance\" : {\n" +
+                "            \"distance\" : \""+Double.toString(radiusInKm)+"km\",\n" +
+                "            \"startLocation\" :[ "+Double.toString(start.getLat())+",\n" +
+                "            "+Double.toString(start.getLon())+"]\n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
 
+        ElasticSearchRequest.getObjectsByGeolocation getter = new ElasticSearchRequest.getObjectsByGeolocation();
+        getter.execute(query);
+        try {
+            ArrayList<Request> requests = getter.get();
+            requestCollection.addAll(requests);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return requestCollection;
+    }
 
 }

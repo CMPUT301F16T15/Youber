@@ -1,12 +1,16 @@
 package com.youber.cmput301f16t15.youber;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
+ * Used http://stackoverflow.com/questions/2139134/how-to-send-an-object-from-one-android-activity-to-another-using-intents
  * Created by Reem on 2016-10-13.
  */
-public class GeoLocation implements Serializable {
+public class GeoLocation implements  Parcelable {
     private double lat;
     private double lon;
 
@@ -65,5 +69,34 @@ public class GeoLocation implements Serializable {
     @Override
     public String toString() {
         return "Lat " + Double.toString(lat) + ", " + "Lon " + Double.toString(lon);
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeDouble(lat);
+        parcel.writeDouble(lon);
+    }
+
+
+    // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
+    public static final Parcelable.Creator<GeoLocation> CREATOR = new Parcelable.Creator<GeoLocation>() {
+        public GeoLocation createFromParcel(Parcel in) {
+            return new GeoLocation(in);
+        }
+
+        public GeoLocation[] newArray(int size) {
+            return new GeoLocation[size];
+        }
+    };
+
+    private GeoLocation(Parcel in){
+        lat=in.readDouble();
+        lon=in.readDouble();
     }
 }

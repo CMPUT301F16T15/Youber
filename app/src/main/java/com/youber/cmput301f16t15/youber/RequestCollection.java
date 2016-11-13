@@ -3,6 +3,7 @@ package com.youber.cmput301f16t15.youber;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -126,7 +127,7 @@ public class RequestCollection extends HashMap<UUID,Request> implements Serializ
      * @param requests the requests
      */
 // add a bulk amount of requests, typically will be called when grabbing from elasticSearch
-    public void addAll(ArrayList<Request> requests) {
+    public void addAll(List<Request> requests) {
         for(Request r : requests)
         {
             this.put(r.getUUID(), r);
