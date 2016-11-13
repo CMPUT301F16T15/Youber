@@ -22,7 +22,7 @@ public class RequestsTest
     {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(90.0, 90.0);
-
+        // we expect this line to throw since the locations are the same
         Request request = new Request(geoLocation1, geoLocation2);
     }
 
@@ -306,7 +306,6 @@ public class RequestsTest
         RequestController.addDriver(request1,driver1);
         RequestController.addDriver(request1,driver2);
         assertTrue(request1.isAccepted());
-
     }
 
     @Test
@@ -355,7 +354,6 @@ public class RequestsTest
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
         Request request1 = new Request(geoLocation1, geoLocation2);
 //        assertEquals(Helper.viewStartLocationOnMap(request1.getStartLocation()),geoLocation1);
-
     }
 
 
@@ -368,8 +366,4 @@ public class RequestsTest
 //        assertEquals(Helper.viewStartLocationOnMap(request1.getEndLocation()),geoLocation2);
 
     }
-
-
-
-
 }

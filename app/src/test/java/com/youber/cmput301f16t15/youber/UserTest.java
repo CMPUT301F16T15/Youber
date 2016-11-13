@@ -1,29 +1,24 @@
 package com.youber.cmput301f16t15.youber;
 
+import android.util.Log;
+
+import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
 import com.youber.cmput301f16t15.youber.exceptions.UniqueUserNameConstaintException;
+import com.youber.cmput301f16t15.youber.gui.LoginActivity;
 import com.youber.cmput301f16t15.youber.users.User;
+import com.youber.cmput301f16t15.youber.users.UserController;
 
 import org.junit.Test;
 
 /**
  * Created by Reem on 2016-10-13.
  */
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
 import static org.junit.Assert.*;
 public class UserTest
 {
-    @Test (expected = UniqueUserNameConstaintException.class)
-    public void testUniqueUsername() // would have to check through elastic search..
-    {
-        assertTrue(Boolean.FALSE);
-//        UserCollection users = Helper.getUsers();
-//
-//        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email" );
-//        User user2 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email" );
-//
-//        users.add(user1);
-//        users.add(user2);
-    }
-
     @Test
     public void testGetFirstName()
     {
@@ -101,20 +96,4 @@ public class UserTest
         user1.setPhoneNumber("another number Lol");
         assertEquals("another number Lol", user1.getPhoneNumber());
     }
-
-
-    @Test
-    public void testGetUserByUsername() // not sure about this anymore
-    {
-        assertTrue(Boolean.FALSE);
-
-//        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email" );
-//        Helper.addUser(user1);
-//        UserCollection users = Helper.getUsers();
-//        assertEquals(users.get("username").getFirstName(), "First Name");
-    }
-
-
-
-
 }
