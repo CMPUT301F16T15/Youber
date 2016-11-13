@@ -64,6 +64,38 @@ public class ElasticSearchRequest extends ElasticSearch{
         }
     }
 
+
+
+
+
+    public static class getObjectsByGeolocation extends AsyncTask<String, Void, ArrayList<Request>> {
+
+
+        @Override
+        protected ArrayList<Request> doInBackground(String... search_parameters) {
+            verifySettings();
+            Search search = new Search.Builder(search_parameters[0]).addIndex("youber").addIndex("request").build();
+            JestResult result = null;
+            ArrayList<Request> requests = new ArrayList<Request>();
+            try {
+                result = getClient().execute(search);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (result.isSucceeded()) {
+                List<Request> foundRequests = result.getSourceAsObjectList(Request.class);
+                requests.addAll(foundRequests);
+
+
+            } else {
+                Log.i("Error", "The search execited but it didnt work");
+                Log.i("jest error",result.toString());
+            }
+
+            return requests;
+        }
+    }
     /**
      * The type Get objects.
      */
@@ -74,10 +106,20 @@ public class ElasticSearchRequest extends ElasticSearch{
             verifySettings();
 
             ArrayList<Request> requests = new ArrayList<Request>();
-            Get search = new Get.Builder("youber", search_parameters[0]).type("request").build();
+            JestResult result = null;
+            try
+            {
+                if (search_parameters.length==0)
+                {
+                    Search search = new Search.Builder("").addIndex("youber").addType("request").build();
+                    result = getClient().execute(search);
+                }
+                else
+                {
+                    Get search = new Get.Builder("youber", search_parameters[0]).type("request").build();
+                    result = getClient().execute(search);
+                }
 
-            try {
-                JestResult result = getClient().execute(search);
                 if(result.isSucceeded()) {
                     List<Request> foundRequests = result.getSourceAsObjectList(Request.class);
                     requests.addAll(foundRequests);
@@ -114,6 +156,10 @@ public class ElasticSearchRequest extends ElasticSearch{
         }
     }
 
+
+
+
+
     public static RequestCollection getRequestCollection(HashSet<UUID> hashSet){
         RequestCollection requestCollection= new RequestCollection();
 
@@ -125,7 +171,7 @@ public class ElasticSearchRequest extends ElasticSearch{
             try{
                 ArrayList<Request> requests=searchRequest.get();
                 if(requests.size()==1){
-                    Log.i("Request",requests.get(0).toString());
+                    Log.i("Request!",requests.get(0).toString());
                 }
                 requestCollection.add(requests.get(0));
             }

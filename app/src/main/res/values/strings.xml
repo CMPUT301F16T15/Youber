@@ -28,6 +28,10 @@
     <string name="message">message</string>
     <string name="positiveInput">postiveInput</string>
     <string name="negativeInput">negativeInput</string>
+    <string name="next">Next</string>
+
+    <!--Request Description Dlg-->
+    <string name="request_desc_title">Please enter a description for the request</string>
 
     <!--Request View-->
     <string name="request_title">Request</string>
