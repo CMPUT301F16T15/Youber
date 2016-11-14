@@ -135,9 +135,9 @@ public class Driver extends User {
      *
      * @see #confirm(Request)
      */
-    public void finalize(Request request) {
-        request.finalizeByDriver();
-    }
+//    public void finalize(Request request) {
+//        request.finalizeByDriver();
+//    }
 
     /**
      * Delete a single request.

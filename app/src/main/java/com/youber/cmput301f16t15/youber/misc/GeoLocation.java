@@ -79,11 +79,6 @@ public class GeoLocation implements Serializable, Parcelable {
         return "Lat " + Double.toString(lat) + ", " + "Lon " + Double.toString(lon);
     }
 
-
-    /**
-     * @see Parcelable
-     *
-     */
     @Override
     public int describeContents() {
         return 0;

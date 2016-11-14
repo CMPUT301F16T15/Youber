@@ -34,11 +34,10 @@ public class ElasticSearchController extends ElasticSearch{
 
     /**
      * Do a search for a list of requests
-     * @return ArrayList<Request>
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    public static ArrayList<Request> getAllRequests()
+    public static ArrayList<Request> getAllRequests() throws Exception
     {
         ElasticSearchRequest.getObjects getter = new ElasticSearchRequest.getObjects();
         getter.execute();
@@ -64,12 +63,11 @@ public class ElasticSearchController extends ElasticSearch{
 
     /**
      * Do a search for a list accepted Drivers
-     * @param request
-     * @return ArrayList<Request>
+     * @param request Request
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    public static ArrayList<Driver> getAcceptedDrivers(Request request)
+    public static ArrayList<Driver> getAcceptedDrivers(Request request) throws Exception
     {
         ElasticSearchUser.getObjects getter = new ElasticSearchUser.getObjects();
         getter.execute();
@@ -104,7 +102,7 @@ public class ElasticSearchController extends ElasticSearch{
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    public static RequestCollection getRequestsbyGeoLocation(GeoLocation start, Double radiusInKm){
+    public static RequestCollection getRequestsbyGeoLocation(GeoLocation start, Double radiusInKm) throws Exception {
         RequestCollection requestCollection =new RequestCollection();
         String query ="{\n" +
                 "    \"filter\" : {\n" +
@@ -137,7 +135,7 @@ public class ElasticSearchController extends ElasticSearch{
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    public static RequestCollection getRequestsbyKeyWord(String keyword){
+    public static RequestCollection getRequestsbyKeyWord(String keyword) throws Exception {
         RequestCollection requestCollection =new RequestCollection();
         String query =
                 "{\n" +
