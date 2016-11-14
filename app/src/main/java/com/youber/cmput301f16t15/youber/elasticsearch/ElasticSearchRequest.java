@@ -66,7 +66,7 @@ public class ElasticSearchRequest extends ElasticSearch{
                 try {
                     DocumentResult result = getClient().execute(index);
                 } catch (Exception e) {
-                    Log.i("Error", "The app failed to build and sent the tweets");
+                    Log.i("Error", "The app failed to build and and add request");
                 }
             }
 
@@ -100,7 +100,7 @@ public class ElasticSearchRequest extends ElasticSearch{
 
 
             } else {
-                Log.i("Error", "The search execited but it didnt work");
+                Log.i("Error", "The search executed but it didnt work");
                 Log.i("jest error",result.toString());
             }
 
@@ -138,11 +138,11 @@ public class ElasticSearchRequest extends ElasticSearch{
 
                 }
                 else {
-                    Log.i("Error", "The search execited but it didnt work");
+                    Log.i("Error", "The search executed but it didnt work");
                 }
             }
             catch(Exception e) {
-                Log.i("Error", "Executing the get tweets method failed" + e.toString());
+                Log.i("Error", "Executing the get requests method failed" + e.toString());
             }
 
             return requests;

@@ -70,7 +70,11 @@ public class DriverSearchListActivity extends AppCompatActivity {
            requests = ElasticSearchController.getRequestsbyGeoLocation(geoLocation,radius);
         } catch (Exception e){
             String keyword=intent.getStringExtra("Keyword");
-            requests=ElasticSearchController.getRequestsbyKeyWord(keyword);
+            try {
+                requests = ElasticSearchController.getRequestsbyKeyWord(keyword);
+            } catch (Exception e1) {
+                Log.i("Error", "Elastic search failed");
+            }
         }
 
 

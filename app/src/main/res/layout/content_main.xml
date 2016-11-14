@@ -54,14 +54,6 @@
         android:textSize="12dp"
         android:hint="@string/end_lon_title" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
-
     <Button
         android:id="@+id/newRequestButton"
         android:layout_width="110dp"

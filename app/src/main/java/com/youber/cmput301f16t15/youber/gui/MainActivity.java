@@ -102,46 +102,8 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
         List<Overlay> overlayList = map.getOverlays();
         overlayList.add(t);
 
-
         UserController.setContext(this);
         RequestCollectionsController.setContext(this);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        RequestCollectionsController.observable.addListener(new ElasticSearchRequest());
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-//                GeoLocation geoLocation = new GeoLocation(53.507, -113.507);
-//                Double radius = 200.0;
-//                Intent intent = new Intent(MainActivity.this,DriverSearchListActivity.class);
-//                intent.putExtra("GeoLocation", (Parcelable) geoLocation);
-//                intent.putExtra("Radius",radius);
-//                startActivity(intent);
-//
-
-                    //Intent intent = new Intent(MainActivity.this, DriverSearchListActivity.class);
-                    //intent.putExtra("Keyword","Another");
-                    //startActivity(intent);
-
-
-//                User user = UserController.getUser();
-//                RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
-//                RequestCollectionsController.saveRequestCollections(requestCollection);
-//                //RequestCollection requestCollection1 = RequestCollectionsController.getRequestCollection();
-//
-//                GeoLocation g1 = new GeoLocation(startPoint.getLatitude(),startPoint.getLongitude());
-//                GeoLocation g2 = new GeoLocation(endPoint.getLatitude(), endPoint.getLongitude());
-//
-//
-//                Request request =new Request(g1,g2);
-//                RequestCollectionsController.addRequest(request);
-
-
-                int a=2+1;
-//
-//                ElasticSearchController.getAcceptedDrivers(request);
-            }
-        });
     }
 
     @Override
