@@ -140,4 +140,18 @@ public class RequestsTest
         Driver driver = new Driver();
         RequestController.addDriver(request1,driver);
     }
+
+
+    @Test
+    public void testRequestAcceptedByDrivers() // project part 5
+    {
+        //this should really be in the other file
+        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
+        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
+
+        Request request1 = new Request(geoLocation1, geoLocation2);
+        RequestController.acceptRequest(request1);//would happen on other app
+
+        assertEquals(request1.getCurrentStatus(), Request.RequestStatus.acceptedByDrivers);
+    }
 }

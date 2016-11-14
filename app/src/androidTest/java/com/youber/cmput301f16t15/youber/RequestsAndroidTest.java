@@ -38,6 +38,7 @@ public class RequestsAndroidTest { // mainly using the controller
 
     private void init2() {
         User user = new User("louise","Louise", "Belcher", "2013","7801110000", "ughh2@gmail.com");
+        user.setCurrentUserType(User.UserType.driver);
         UserController.saveUser(user);
         RequestCollectionsController.saveRequestCollections(new RequestCollection());
     }
@@ -236,31 +237,6 @@ public class RequestsAndroidTest { // mainly using the controller
         assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request.getUUID()).getCurrentStatus());
         assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request2.getUUID()).getCurrentStatus());
         assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request3.getUUID()).getCurrentStatus());
-    }
-
-    @Test
-    public void testRequestAcceptedByDrivers() // project part 5
-    {
-//        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
-//        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-//        Request request1 = new Request(geoLocation1, geoLocation2);
-//        Driver driver1 = new Driver();
-//        Driver driver2 = new Driver();
-//
-//        driver2 = request1.addDriver(driver2);
-//        driver1 = request1.addDriver(driver1);
-//        RequestController.addDriver(request1,driver1);
-//        RequestController.addDriver(request1,driver2);
-//        assertTrue(request1.isAccepted());
-
-        //this should really be in the other file
-        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
-        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-
-        Request request1 = new Request(geoLocation1, geoLocation2);
-        RequestController.acceptRequest(request1);//would happen on other app
-
-        assertEquals(request1.getCurrentStatus(), Request.RequestStatus.acceptedByDrivers);
     }
 
     @Test
