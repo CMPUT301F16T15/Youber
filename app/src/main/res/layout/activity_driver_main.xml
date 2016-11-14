@@ -31,7 +31,7 @@
         android:layout_weight = "1"
         android:inputType="textImeMultiLine|textPersonName"
         android:ems="10"
-        android:layout_marginTop="50dip"
+        android:layout_marginTop="60dip"
         android:layout_alignParentStart="true"
         android:id="@+id/keyword_search"
         android:hint="keyword"
@@ -45,7 +45,6 @@
         android:layout_alignParentBottom="true"
         android:id="@+id/search_geolocation_button"
         android:background="@color/lightGreen"
-
         />
 
     <Button
@@ -54,16 +53,16 @@
         android:text="Search"
         android:id="@+id/search_keyword_button"
         android:background="@color/lightGreen"
-
         android:layout_alignTop="@+id/keyword_search"
         android:layout_alignBottom="@+id/keyword_search"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        />
 
 
     <org.osmdroid.views.MapView android:id="@+id/map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dip"
+        android:layout_marginTop="110dip"
         android:layout_marginBottom="50dip"
         android:enabled= "true"
         android:clickable = "true"
