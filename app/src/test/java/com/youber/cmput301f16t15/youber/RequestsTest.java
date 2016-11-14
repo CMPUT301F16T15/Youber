@@ -90,7 +90,7 @@ public class RequestsTest
         Request request1 = new Request(geoLocation1, geoLocation2);
         RequestController.acceptRequest(request1);
 
-        assertTrue(request1.isAccepted());
+        assertEquals(request1.getCurrentStatus(), Request.RequestStatus.acceptedByDrivers);
     }
 
     @Test

@@ -164,6 +164,7 @@ public class RequestCollectionsController {
         observable.notifyListeners();
     }
 
+    //this is a little weird DRY?? maybe getRequestsByStatus(RequestStatus status) is better
     public static RequestCollection getOpenRequests() {
         RequestCollection requestsHash = getRequestCollection();
         RequestCollection openRequests = new RequestCollection();
@@ -175,5 +176,44 @@ public class RequestCollectionsController {
         }
 
         return openRequests;
+    }
+
+    public static RequestCollection getClosedRequests(){
+        RequestCollection requestsHash = getRequestCollection();
+        RequestCollection closedRequests = new RequestCollection();
+
+        Collection<Request> requests = requestsHash.values();
+        for(Request r: requests) {
+            if(r.getCurrentStatus() == Request.RequestStatus.closed)
+                closedRequests.add(r);
+        }
+
+        return closedRequests;
+    }
+
+    public static RequestCollection getAcceptedRequests(){
+        RequestCollection requestsHash = getRequestCollection();
+        RequestCollection acceptedRequests = new RequestCollection();
+
+        Collection<Request> requests = requestsHash.values();
+        for(Request r: requests) {
+            if(r.getCurrentStatus() == Request.RequestStatus.acceptedByDrivers)
+                acceptedRequests.add(r);
+        }
+
+        return acceptedRequests;
+    }
+
+    public static RequestCollection getPaidRequests(){
+        RequestCollection requestsHash = getRequestCollection();
+        RequestCollection acceptedRequests = new RequestCollection();
+
+        Collection<Request> requests = requestsHash.values();
+        for(Request r: requests) {
+            if(r.getCurrentStatus() == Request.RequestStatus.paid)
+                acceptedRequests.add(r);
+        }
+
+        return acceptedRequests;
     }
 }

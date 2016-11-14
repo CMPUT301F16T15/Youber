@@ -28,10 +28,10 @@ public class RequestController
      *
      * @param request the request
      */
-    public static void acceptRequest(Request request)
-    {
-        request.accept();
-    }
+//    public static void acceptRequest(Request request)
+//    {
+//        request.accept();
+//    }
 
     /**
      * Search request request.
@@ -63,9 +63,10 @@ public class RequestController
      * @param request1 the request 1
      * @return the driver
      */
+    //NEEDS TO CHANGE
     public static Driver getDriver(Request request1) {
-        if (request1.isAccepted()) {
-            return request1.getDriver();
+        if (request1.getCurrentStatus()== Request.RequestStatus.riderSelectedDriver) {
+            return request1.getDriver();//has to be elastic search controller
         }
         else
         {
@@ -79,12 +80,11 @@ public class RequestController
      * @param request1 the request 1
      */
     public static void completeRequest(Request request1) {
+
     }
 
 
-    public static void closeRequest(Request request1) {
-        request1.close();
-    }
+
 
     /**
      * Add driver.
@@ -95,6 +95,15 @@ public class RequestController
     public static void addDriver(Request request1, Driver driver2) {
     }
 
+    public static  void acceptRequest(Request request){
+        request.setAcceptedByDrivers();
+    }
+    public static  void closeRequest(Request request){
+        request.setClosed();
+    }
+    public static  void payRequest(Request request){
+        request.setPaid();
+    }
     public static Double getDistanceOfRequest(Request request) {
         double lat1 = request.getStartLocation().getLat();
         double lat2 = request.getEndLocation().getLat();

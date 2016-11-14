@@ -2,6 +2,7 @@ package com.youber.cmput301f16t15.youber;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.core.deps.guava.primitives.Booleans;
 
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.requests.Request;
@@ -13,6 +14,7 @@ import com.youber.cmput301f16t15.youber.users.Rider;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
+import org.junit.Assert;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -31,6 +33,12 @@ public class RequestsAndroidTest { // mainly using the controller
         UserController.saveUser(user);
 
         RequestCollectionsController.setContext(appContext);
+        RequestCollectionsController.saveRequestCollections(new RequestCollection());
+    }
+
+    private void init2() {
+        User user = new User("louise","Louise", "Belcher", "2013","7801110000", "ughh2@gmail.com");
+        UserController.saveUser(user);
         RequestCollectionsController.saveRequestCollections(new RequestCollection());
     }
 
@@ -130,42 +138,105 @@ public class RequestsAndroidTest { // mainly using the controller
     @Test
     public void testGetClosedRequests() // AARON HERE AND DOWN, project part 5
     {
-//        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
-//        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-//
-//        Request request1 = new Request(geoLocation1, geoLocation2);
-//        Rider rider1 = new Rider();
-//        rider1.addRequest(request1);
-//        rider1.getRequest(request1.getUUID()).close();
-//
-//        assertEquals("Expected to fail until Project Part 5", 1, rider1.getClosedRequests().size());
+        init();
+
+        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
+        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
+        Request request = new Request(geoLocation1, geoLocation2);
+        Request request2 = new Request(geoLocation1, geoLocation2);
+        Request request3 = new Request(geoLocation1, geoLocation2);
+
+        RequestCollectionsController.addRequest(request);
+        RequestCollectionsController.addRequest(request2);
+        RequestCollectionsController.addRequest(request3);
+
+
+
+        RequestController.closeRequest(request);
+        RequestController.closeRequest(request2);// could happen on other app
+        RequestController.closeRequest(request3);
+
+        init2();
+
+        RequestCollectionsController.addRequest(request);
+        RequestCollectionsController.addRequest(request2);
+        RequestCollectionsController.addRequest(request3);
+
+        RequestCollection closedRequests = RequestCollectionsController.getClosedRequests();
+
+        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, closedRequests.get(request.getUUID()).getCurrentStatus());
+        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, closedRequests.get(request2.getUUID()).getCurrentStatus());
+        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, closedRequests.get(request3.getUUID()).getCurrentStatus());
+
+
     }
 
     @Test
-    public void testGetAcceptRequest() // project part 5
+    public void testGetAcceptedRequest() // project part 5
     {
-//        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
-//        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-//
-//        Request request1 = new Request(geoLocation1, geoLocation2);
-//        RequestController.acceptRequest(request1);
-//
-//        assertTrue(request1.isAccepted());
+        init();
+
+        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
+        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
+        Request request = new Request(geoLocation1, geoLocation2);
+        Request request2 = new Request(geoLocation1, geoLocation2);
+        Request request3 = new Request(geoLocation1, geoLocation2);
+
+        RequestCollectionsController.addRequest(request);
+        RequestCollectionsController.addRequest(request2);
+        RequestCollectionsController.addRequest(request3);
+
+        RequestController.acceptRequest(request);//
+        RequestController.acceptRequest(request2);// these same function calls would happen on another users app
+        RequestController.acceptRequest(request3);//
+
+        init2();
+
+        RequestCollectionsController.addRequest(request);
+        RequestCollectionsController.addRequest(request2);
+        RequestCollectionsController.addRequest(request3);
+
+
+
+        RequestCollection acceptedRequests = RequestCollectionsController.getAcceptedRequests();
+
+        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, acceptedRequests.get(request.getUUID()).getCurrentStatus());
+        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, acceptedRequests.get(request2.getUUID()).getCurrentStatus());
+        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, acceptedRequests.get(request3.getUUID()).getCurrentStatus());
     }
 
     @Test
-    public void testGetCompletedRequests() // project part 5
+    public void testGetPaidRequests() // project part 5
     {
-//        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
-//        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-//
-//        Request request1 = new Request(geoLocation1, geoLocation2);
-//        Request request2 = new Request(geoLocation1, geoLocation2);
-//        Rider rider1 = new Rider();
-//
-//        RequestController.completeRequest(request1);
-//        assertEquals(1, rider1.getClosedRequests().size());
+        init();
 
+        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
+        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
+        Request request = new Request(geoLocation1, geoLocation2);
+        Request request2 = new Request(geoLocation1, geoLocation2);
+        Request request3 = new Request(geoLocation1, geoLocation2);
+
+        RequestCollectionsController.addRequest(request);
+        RequestCollectionsController.addRequest(request2);
+        RequestCollectionsController.addRequest(request3);
+
+        RequestController.payRequest(request);//
+        RequestController.payRequest(request2);// these same function calls would happen on another users app
+        RequestController.payRequest(request3);//
+
+        init2();
+
+        RequestCollectionsController.addRequest(request);
+        RequestCollectionsController.addRequest(request2);
+        RequestCollectionsController.addRequest(request3);
+
+
+
+        RequestCollection paidRequests = RequestCollectionsController.getPaidRequests();
+
+        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request.getUUID()).getCurrentStatus());
+        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request2.getUUID()).getCurrentStatus());
+        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request3.getUUID()).getCurrentStatus());
     }
 
     @Test
@@ -182,23 +253,22 @@ public class RequestsAndroidTest { // mainly using the controller
 //        RequestController.addDriver(request1,driver1);
 //        RequestController.addDriver(request1,driver2);
 //        assertTrue(request1.isAccepted());
+
+        //this should really be in the other file
+        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
+        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
+
+        Request request1 = new Request(geoLocation1, geoLocation2);
+        RequestController.acceptRequest(request1);//would happen on other app
+
+        assertEquals(request1.getCurrentStatus(), Request.RequestStatus.acceptedByDrivers);
     }
 
     @Test
     public void testNotifyAcceptedRequest() // project part 5
     {
-////        View view = Helper.getView();
-//        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
-//        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-//
-//        Request request1 = new Request(geoLocation1, geoLocation2);
-//
-//        Rider rider1 = new Rider();
-//
-//        //TODO
-////        RequestController.addRequest(request1,rider1);
-//        RequestController.acceptRequest(request1);
-////        View view2 = Helper.getView();
-////        assertFalse(view.equals(view2));
+        //okay don't know how to test notifications yet, will happen
+        Boolean notificationCheck =false;// replace with code that actually checks if notification activity is run
+        assertTrue("expected to fail",notificationCheck);
     }
 }
