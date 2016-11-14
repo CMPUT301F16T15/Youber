@@ -18,11 +18,19 @@ import java.util.ArrayList;
 
 /**
  * The type Login activity.
+ * <p>
+ *     This is the first activity shown when the app is opened. It contains two buttons and a textbox
+ * </p>
+ *
+ * @see SignUpActivity
  */
 public class LoginActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
 
-
+    /**
+     * Username used to identify an app's user
+     * @see User
+     */
     private EditText username;
 
     @Override

@@ -1,7 +1,16 @@
 package com.youber.cmput301f16t15.youber.misc;
 
 /**
- * Created by Calvi on 2016-11-07.
+ * Created by Calvin on 2016-11-07.
+ *
+ * <p>
+ *     This class handles the request payment from the rider to the driver.
+ *     Deals with both actual payment and a fair fare based on the request's distance.
+ *     Will be updated later on if necessary
+ * </p>
+ *
+ * @see com.youber.cmput301f16t15.youber.requests.Request
+ * @see GeoLocation
  */
 public class Payment {
 
@@ -20,7 +29,7 @@ public class Payment {
     /**
      * Fair fare double.
      *
-     * @return the double
+     * @return the fair Fare
      */
     public double fairFare() {
         return 0;

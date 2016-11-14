@@ -17,6 +17,13 @@ import java.lang.reflect.Type;
 
 /**
  * Created by Jess on 2016-11-08.
+ *
+ * <p>
+ *     Handles user manipulation
+ * </p>
+ *
+ * @see User
+ * @see com.youber.cmput301f16t15.youber.users.User.UserType
  */
 public class UserController {
 
@@ -76,7 +83,7 @@ public class UserController {
     /**
      * Save user.
      *
-     * @param u the u
+     * @param u the user
      */
     public static void saveUser(User u) {
         user = u;

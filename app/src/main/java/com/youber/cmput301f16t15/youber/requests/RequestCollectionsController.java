@@ -24,6 +24,13 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Created by aphilips on 11/10/16.
+ *
+ * <p>
+ *     Handles manipulation of request collections including loading and saving for both
+ *     riders and drivers
+ * </p>
+ *
+ * @see RequestCollection
  */
 
 public class RequestCollectionsController {
@@ -50,6 +57,10 @@ public class RequestCollectionsController {
         c = context;
     }
 
+    /**
+     * This method loads a specific request collection based on the user.
+     * @return
+     */
     public static RequestCollection loadRequestCollection() {
         User.UserType u_type=UserController.getUser().getCurrentUserType();
         String FILENAME=(u_type== User.UserType.rider)? FILENAME_rider:FILENAME_driver;
@@ -72,6 +83,11 @@ public class RequestCollectionsController {
         }
     }
 
+
+    /**
+     * This method loads a specific request collection based on the elastic search results.
+     * @return
+     */
     public static void loadRequestsFromElasticSearch() {
 
         HashSet<UUID> requestUUIDs = UserController.getUser().getRequestUUIDs();
@@ -103,6 +119,10 @@ public class RequestCollectionsController {
         }
     }
 
+    /**
+     * This method saves a specific request collection based on the user.
+     * @return
+     */
     public static void saveRequestCollections( RequestCollection newRequestCollection) {
         RequestCollection requestCollection = newRequestCollection;
         User.UserType u_type = UserController.getUser().getCurrentUserType();

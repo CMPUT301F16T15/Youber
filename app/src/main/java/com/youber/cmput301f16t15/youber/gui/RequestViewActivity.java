@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 /**
  * The type Request view activity.
+ * @see Request
  */
 public class
 RequestViewActivity extends AppCompatActivity {

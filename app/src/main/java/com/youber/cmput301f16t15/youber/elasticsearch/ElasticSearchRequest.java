@@ -24,11 +24,18 @@ import io.searchbox.core.Search;
 
 /**
  * Created by aphilips on 11/7/16.
+ * <p>
+ *     Subclass of elastic search that checks the webserver for matching requests
+ * </p>
+ *
+ * @see ElasticSearch
+ * @see ElasticSearchController
  */
 public class ElasticSearchRequest extends ElasticSearch{
 
     /**
-     * The type Add.
+     * Update the request ID's if there has been a change (addition/removal)
+     * @see add
      */
     @Override
     public void update(){
@@ -44,6 +51,9 @@ public class ElasticSearchRequest extends ElasticSearch{
 
     }
 
+    /**
+     * Add a request to the server.
+     */
     public static class add extends AsyncTask<Request, Void, Void> {
 
         @Override
@@ -65,9 +75,10 @@ public class ElasticSearchRequest extends ElasticSearch{
     }
 
 
-
-
-
+    /**
+     * Search parameters for our query
+     * @see ElasticSearchController
+     */
     public static class getObjectsByGeolocation extends AsyncTask<String, Void, ArrayList<Request>> {
 
 
@@ -97,7 +108,8 @@ public class ElasticSearchRequest extends ElasticSearch{
         }
     }
     /**
-     * The type Get objects.
+     * Running the search
+     * @see getObjectsByGeolocation
      */
     public static class getObjects extends AsyncTask<String, Void, ArrayList<Request>> {
 
@@ -137,6 +149,9 @@ public class ElasticSearchRequest extends ElasticSearch{
         }
     }
 
+    /**
+     * Delete a request from the server.
+     */
     public static class delete extends AsyncTask<Request, Void, Void> {
         @Override
         protected Void doInBackground(Request... requests) {
@@ -159,7 +174,12 @@ public class ElasticSearchRequest extends ElasticSearch{
 
 
 
-
+    /**
+     * Get request collection
+     *
+     * @param hashSet the hash set
+     * @return the request collection
+     */
     public static RequestCollection getRequestCollection(HashSet<UUID> hashSet){
         RequestCollection requestCollection= new RequestCollection();
 

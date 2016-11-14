@@ -12,7 +12,19 @@ import java.util.ArrayList;
 
 /**
  * Created by aphilips on 11/7/16.
+ *
+ * <p>
+ *     This is the method we use to store users and requests on a specified web server as shown
+ *     in class.
+ * </p>
+ *
+ * @see com.youber.cmput301f16t15.youber.requests.Request
+ * @see com.youber.cmput301f16t15.youber.users.User
+ * @see ElasticSearchUser
+ * @see ElasticSearchRequest
+ * @see ElasticSearchController
  */
+
 public class ElasticSearch implements Listener {
 
     private static JestDroidClient jestDroidClient;

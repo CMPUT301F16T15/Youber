@@ -8,6 +8,11 @@ import java.io.Serializable;
 /**
  * Used http://stackoverflow.com/questions/2139134/how-to-send-an-object-from-one-android-activity-to-another-using-intents
  * Created by Reem on 2016-10-13.
+ *
+ * <p>
+ *     This class specifies locations in coordinate form for requests
+ * </p>
+ * @see com.youber.cmput301f16t15.youber.gui.MainActivity
  */
 public class GeoLocation implements Serializable, Parcelable {
     private double lat;
@@ -65,12 +70,20 @@ public class GeoLocation implements Serializable, Parcelable {
         return false;
     }
 
+    /**
+     * Display the coordinates as strings
+     *
+     */
     @Override
     public String toString() {
         return "Lat " + Double.toString(lat) + ", " + "Lon " + Double.toString(lon);
     }
 
 
+    /**
+     * @see Parcelable
+     *
+     */
     @Override
     public int describeContents() {
         return 0;

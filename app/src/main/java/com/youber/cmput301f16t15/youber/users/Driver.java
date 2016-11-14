@@ -8,6 +8,14 @@ import java.util.UUID;
 
 /**
  * Created by Reem on 2016-10-13.
+ *
+ * <p>
+ *     Subclass of User and one of the two types of users that Youber has.
+ *     A driver gets a request from a rider and accepts it, much like a taxi driver would.
+ * </p>
+ *
+ * @see User
+ * @see com.youber.cmput301f16t15.youber.users.User.UserType
  */
 public class Driver extends User {
 
@@ -36,20 +44,24 @@ public class Driver extends User {
     }
 
     /**
-     * Gets request.
+     * Gets request from rider via a unique ID
      *
      * @param uuid the uuid
      * @return the request
+     *
+     * @see UUID
      */
     public Request getRequest(UUID uuid) {
         return requestsCtrl.getRequestByUUID(uuid);
     }
 
     /**
-     * Gets status.
+     * Gets status of a request
      *
      * @param uuid the uuid
      * @return the status
+     *
+     * @see com.youber.cmput301f16t15.youber.requests.Request.RequestStatus
      */
     public boolean getStatus(UUID uuid) {
         return requestsCtrl.getRequestStatus(uuid);
@@ -60,6 +72,8 @@ public class Driver extends User {
      *
      * @param uuid the uuid
      * @return the offer payment from request
+     *
+     * @see com.youber.cmput301f16t15.youber.misc.Payment
      */
     public Double getOfferPaymentFromRequest(UUID uuid)  //see how much is being offered
     {
@@ -68,9 +82,11 @@ public class Driver extends User {
     }
 
     /**
-     * Gets accepted requests.
+     * Gets a collection of already accepted requests.
      *
      * @return the accepted requests
+     *
+     * @see RequestCollection
      */
     public RequestCollection getAcceptedRequests() {
         RequestCollection requests = requestsCtrl.getFinalizedRequestToDriver();
@@ -78,9 +94,11 @@ public class Driver extends User {
     }
 
     /**
-     * Gets pending requests.
+     * Gets a collection of pending requests.
      *
      * @return the pending requests
+     *
+     * @see RequestCollection
      */
     public RequestCollection getPendingRequests() {
         RequestCollection pendingRequests = requestsCtrl.getPendingRequestsForDrivers(this);
@@ -88,9 +106,9 @@ public class Driver extends User {
     }
 
     /**
-     * Gets pending request.
+     * Gets a single pending request based on its uuid.
      *
-     * @param uuid the uuid
+     * @param uuid the unique identifier of a request
      * @return the pending request
      */
     public Request getPendingRequest(UUID uuid) {
@@ -100,27 +118,31 @@ public class Driver extends User {
     }
 
     /**
-     * Confirm.
+     * Confirm a single request.
      *
-     * @param request1 the request 1
+     * @param request1 a specific request
+     *
+     * @see #getPendingRequest(UUID)
      */
     public void confirm(Request request1) {
         request1.confirmByDriver(this);
     }
 
     /**
-     * Finalize.
+     * Finalize a single request.
      *
-     * @param request the request
+     * @param request finalizing an accepted request
+     *
+     * @see #confirm(Request)
      */
     public void finalize(Request request) {
         request.finalizeByDriver();
     }
 
     /**
-     * Delete request.
+     * Delete a single request.
      *
-     * @param request the request
+     * @param request the request to delete
      */
     public void deleteRequest(Request request)
     {
@@ -128,11 +150,13 @@ public class Driver extends User {
     }
 
     /**
-     * Search request by geo location request collection.
+     * Search request by geo location and return a request collection matching the parameters.
      *
      * @param location the location
      * @param radius   the radius
      * @return the request collection
+     *
+     * @see GeoLocation
      */
     public RequestCollection searchRequestByGeoLocation(GeoLocation location, double radius) {
         return null;

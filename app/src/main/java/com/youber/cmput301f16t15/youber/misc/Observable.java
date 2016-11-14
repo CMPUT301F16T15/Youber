@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 /**
  * Created by aphilips on 11/10/16.
+ *
+ * Observable class that works with the listener for elastic search
+ * @see com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearch
+ * @see Listener
  */
 
 public class Observable {

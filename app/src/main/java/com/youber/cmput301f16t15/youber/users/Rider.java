@@ -10,6 +10,15 @@ import java.util.UUID;
 
 /**
  * Created by Reem on 2016-10-13.
+ *
+ * <p>
+ *     Subclass of User and one of the two types of users that Youber has.
+ *     A rider creates a request for a driver and confirms it. He will also pay the driver when
+ *     the request is complete
+ * </p>
+ *
+ * @see User
+ * @see com.youber.cmput301f16t15.youber.users.User.UserType
  */
 public class Rider extends User {
 
@@ -51,7 +60,7 @@ public class Rider extends User {
     }
 
     /**
-     * Gets request.
+     * Gets request based on unique identifier.
      *
      * @param uuid the uuid
      * @return the request
@@ -88,7 +97,7 @@ public class Rider extends User {
     /**
      * Gets status.
      *
-     * @param uuid the uuid
+     * @param uuid the unique identifier
      * @return the status
      */
     public String getStatus(UUID uuid) {
@@ -98,7 +107,7 @@ public class Rider extends User {
     }
 
     /**
-     * Call boolean.
+     * Call a driver using their contact info.
      *
      * @param driver the driver
      * @return the boolean
@@ -108,7 +117,7 @@ public class Rider extends User {
     }
 
     /**
-     * Email boolean.
+     * Email a driver using their contact info.
      *
      * @param driver the driver
      * @return the boolean

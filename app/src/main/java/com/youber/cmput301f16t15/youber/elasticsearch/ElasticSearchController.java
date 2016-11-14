@@ -12,16 +12,32 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Reem on 2016-11-11.
+ * <p>
+ *     This is the controller class for our elastic search.
+ * </p>
+ *
+ * @see ElasticSearch
  */
+
 
 
 
 // NOT SURE IT WORKS YET BUT I NEED TO 
 public class ElasticSearchController extends ElasticSearch{
 
+    /**
+     * This observable is used to get around the need for multiple inheritance.
+     * @see Observable
+     */
     public static Observable observable = new Observable();
 
 
+    /**
+     * Do a search for a list of requests
+     * @return ArrayList<Request>
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
     public static ArrayList<Request> getAllRequests()
     {
         ElasticSearchRequest.getObjects getter = new ElasticSearchRequest.getObjects();
@@ -46,7 +62,13 @@ public class ElasticSearchController extends ElasticSearch{
 
 
 
-
+    /**
+     * Do a search for a list accepted Drivers
+     * @param request
+     * @return ArrayList<Request>
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
     public static ArrayList<Driver> getAcceptedDrivers(Request request)
     {
         ElasticSearchUser.getObjects getter = new ElasticSearchUser.getObjects();
@@ -74,6 +96,14 @@ public class ElasticSearchController extends ElasticSearch{
         return drivers;
     }
 
+    /**
+     * Do a search for a list of requests by their location
+     * @return RequestCollection
+     * @param start the starting location of a certain request
+     * @param radiusInKm the radius from the location with which to search
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
     public static RequestCollection getRequestsbyGeoLocation(GeoLocation start, Double radiusInKm){
         RequestCollection requestCollection =new RequestCollection();
         String query ="{\n" +
@@ -100,6 +130,13 @@ public class ElasticSearchController extends ElasticSearch{
         return requestCollection;
     }
 
+    /**
+     * Do a search for a list of requests by one or more given keywords
+     * @return RequestCollection
+     * @param keyword a word that will be compared against existing requests to find a match
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
     public static RequestCollection getRequestsbyKeyWord(String keyword){
         RequestCollection requestCollection =new RequestCollection();
         String query =

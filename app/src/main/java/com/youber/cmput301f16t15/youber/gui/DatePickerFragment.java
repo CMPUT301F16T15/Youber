@@ -14,7 +14,9 @@ import java.util.Calendar;
 
 /**
  * Created by Reem on 2016-11-11.
+ * Dialog used to select a date
  */
+
 
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {

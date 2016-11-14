@@ -27,6 +27,9 @@ import com.youber.cmput301f16t15.youber.users.UserController;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * @see Request
+ */
 public class RequestActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
     RelativeLayout layout;

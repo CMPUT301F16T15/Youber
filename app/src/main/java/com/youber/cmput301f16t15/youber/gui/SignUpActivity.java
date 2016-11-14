@@ -18,6 +18,14 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * The type Sign up activity.
+ *
+ *
+ * <p>
+ *     This activity is triggered when a user signs up for the first time.
+ * </p>
+ *
+ * @see LoginActivity
+ * @see User
  */
 public class SignUpActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 

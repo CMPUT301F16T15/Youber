@@ -18,9 +18,20 @@ import io.searchbox.core.Search;
 
 /**
  * Created by aphilips on 11/7/16.
+ *
+ * <p>
+ *     Subclass of elastic search that checks the webserver for matching users
+ * </p>
+ *
+ * @see ElasticSearchController
+ * @see ElasticSearch
  */
 public class ElasticSearchUser extends ElasticSearch {
 
+    /**
+     * Update the request ID's if there has been a change (addition/removal)
+     * @see add
+     */
     @Override
     public void update()
     {
@@ -29,7 +40,7 @@ public class ElasticSearchUser extends ElasticSearch {
         adder.execute(user);
     }
     /**
-     * The type Add.
+     * Add a request to the server.
      */
     public static class add extends AsyncTask<User, Void, Void> {
 
@@ -52,7 +63,8 @@ public class ElasticSearchUser extends ElasticSearch {
     }
 
     /**
-     * The type Get objects.
+     * Search parameters for our query
+     * @see ElasticSearchController
      */
     public static class getObjects extends AsyncTask<String, Void, ArrayList<User>> {
 

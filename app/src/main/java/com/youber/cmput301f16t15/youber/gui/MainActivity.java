@@ -52,6 +52,11 @@ import java.util.Locale;
 
 /**
  * The type map activity.
+ * <p>
+ *     This activity displays the requests on a map as a route.
+ * </p>
+ *
+ * @see org.osmdroid.bonuspack.routing.OSRMRoadManager
  */
 public class MainActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
@@ -62,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
     MapView map;
     Road[] mRoads;
 
+    /**
+     * Various map fields used to overlay the route on the map
+     */
     long start;
     long stop;
     int x, y;
@@ -169,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
     /**
      * On new request btn click.
      *
-     * @param view the view
+     * @param view the map
      */
 //  Button Click Actions
     public void onNewRequestBtnClick(View view) {
@@ -206,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
     /**
      * Prompt confirm dialog.
      *
-     * @param view the view
+     * @param view dialog pops up
      */
 // Code that implements the dialog window that will ensure if the user wants to create the request or not
     public void promptConfirmDialog(final View view) {

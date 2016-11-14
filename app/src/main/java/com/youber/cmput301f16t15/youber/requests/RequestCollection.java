@@ -11,6 +11,11 @@ import java.util.UUID;
 
 /**
  * Created by Reem on 2016-10-13.
+ * <p>
+ *     This class is used to store multiple requests in a specific collection.
+ * </p>
+ * @see Request
+ * @see RequestCollectionsController
  */
 public class RequestCollection extends HashMap<UUID,Request> implements Serializable{
 

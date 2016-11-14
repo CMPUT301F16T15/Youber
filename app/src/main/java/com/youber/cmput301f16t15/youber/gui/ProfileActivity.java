@@ -14,6 +14,13 @@ import com.youber.cmput301f16t15.youber.users.UserController;
 
 /**
  * The type Profile activity.
+ *
+ * <p>
+ *     This activity is triggered when a user edits their profile
+ * </p>
+ *
+ * @see LoginActivity
+ * @see User
  */
 public class ProfileActivity extends Activity {
 

@@ -7,6 +7,13 @@ import java.text.DecimalFormat;
 
 /**
  * Created by Reem on 2016-10-24.
+ *
+ *  <p>
+ *     Handles manipulation of requests including confirmation and acceptance drivers
+ * </p>
+ *
+ * @see RequestCollection
+ * @see com.youber.cmput301f16t15.youber.misc.Payment
  */
 public class RequestController
 {
@@ -16,7 +23,7 @@ public class RequestController
      * Confirm request.
      *
      * @param request the request
-     * @param driver1 the driver 1
+     * @param driver1 the driver
      */
     public static void confirmRequest(Request request, Driver driver1)
     {
@@ -26,7 +33,7 @@ public class RequestController
     /**
      * Accept request.
      *
-     * @param request the request
+     * @param request the given request
      */
     public static void acceptRequest(Request request)
     {
@@ -34,9 +41,9 @@ public class RequestController
     }
 
     /**
-     * Search request request.
+     * Search request.
      *
-     * @param rider the rider
+     * @param rider the request's rider
      * @return the request
      */
     public static Request searchRequest(Rider rider) //********************** "dont worry about it" - Aaron *********************************
@@ -47,7 +54,7 @@ public class RequestController
     /**
      * Link driver with request.
      *
-     * @param request1 the request 1
+     * @param request1 the given request
      * @param driver   the driver
      */
     public static void linkDriverWithRequest(Request request1, Driver driver) //*********************** "dont need" - Reem *****************
@@ -60,7 +67,7 @@ public class RequestController
     /**
      * Gets driver.
      *
-     * @param request1 the request 1
+     * @param request1 the given request
      * @return the driver
      */
     public static Driver getDriver(Request request1) {
@@ -76,7 +83,7 @@ public class RequestController
     /**
      * Complete request.
      *
-     * @param request1 the request 1
+     * @param request1 the given request
      */
     public static void completeRequest(Request request1) {
     }
@@ -87,7 +94,7 @@ public class RequestController
     }
 
     /**
-     * Add driver.
+     * Add driver to a request
      *
      * @param request1 the request 1
      * @param driver2  the driver 2
@@ -95,6 +102,11 @@ public class RequestController
     public static void addDriver(Request request1, Driver driver2) {
     }
 
+    /**
+     * Find the distance of a specific request
+     * @param request
+     * @return
+     */
     public static Double getDistanceOfRequest(Request request) {
         double lat1 = request.getStartLocation().getLat();
         double lat2 = request.getEndLocation().getLat();

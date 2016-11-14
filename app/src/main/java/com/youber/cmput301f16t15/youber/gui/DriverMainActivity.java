@@ -51,6 +51,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * <p>
+ *     This class is the main activity for a driver which will show once logged in as a driver.
+ *     This functions similarly to the Rider class except they have Type specific options.
+ * </p>
+ *
+ * @see com.youber.cmput301f16t15.youber.users.Rider
+ * @see com.youber.cmput301f16t15.youber.users.User
+ * @see MapQuestRoadManager
+ * @see GeoPoint
+ */
 public class DriverMainActivity extends AppCompatActivity {
 
     //TODO use controller not global

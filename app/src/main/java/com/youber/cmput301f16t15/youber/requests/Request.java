@@ -13,6 +13,15 @@ import io.searchbox.annotations.JestId;
 
 /**
  * Created by Reem on 2016-10-13.
+ *
+ * <p>
+ *     The request class handles new or preexisting requests from a user.
+ * </p>
+ *
+ * @see Rider
+ * @see Driver
+ * @see com.youber.cmput301f16t15.youber.gui.RequestActivity
+ * @see RequestCollection
  */
 public class Request implements Serializable {
 
@@ -57,8 +66,8 @@ public class Request implements Serializable {
     /**
      * Instantiates a new Request.
      *
-     * @param location1 the location 1
-     * @param location2 the location 2
+     * @param location1 the starting location
+     * @param location2 the end location
      */
     public Request(GeoLocation location1, GeoLocation location2) {
         if (location1.equals(location2)) throw new RuntimeException(new InvalidRequestException());

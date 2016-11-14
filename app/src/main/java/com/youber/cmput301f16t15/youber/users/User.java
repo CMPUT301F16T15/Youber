@@ -16,6 +16,13 @@ import java.util.List;
 
 /**
  * Created by Reem on 2016-10-13.
+ * <p>
+ *     A user is any person using the app that could be either a rider or a driver or both.
+ *     Every user has a unique username and their contact information must be stored for contact
+ *     purposes via phone call or email.
+ * </p>
+ * @see com.youber.cmput301f16t15.youber.users.User.UserType
+ * @see UserController
  */
 public class User implements Serializable {
 
