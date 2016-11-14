@@ -45,5 +45,14 @@
         android:backgroundTint="#303030"
         android:layout_below="@+id/editText"
         android:layout_alignEnd="@+id/editText" />
-    
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/logobackground"
+        android:layout_alignBottom="@+id/editText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="75dp"
+        android:id="@+id/imageView" />
+
 </RelativeLayout>
