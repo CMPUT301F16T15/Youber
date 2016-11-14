@@ -22,8 +22,7 @@ import static org.junit.Assert.*;
 
 public class RequestsAndroidTest { // mainly using the controller
 
-    @Test
-    public void testAddingOneRequest() {
+    private void init() {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
@@ -33,6 +32,11 @@ public class RequestsAndroidTest { // mainly using the controller
 
         RequestCollectionsController.setContext(appContext);
         RequestCollectionsController.saveRequestCollections(new RequestCollection());
+    }
+
+    @Test
+    public void testAddingOneRequest() {
+        init();
 
         GeoLocation start = new GeoLocation(1, 1);
         GeoLocation end = new GeoLocation(2, 2);
@@ -45,17 +49,10 @@ public class RequestsAndroidTest { // mainly using the controller
         assertEquals(request, requests.getRequestByUUID(request.getUUID()));
     }
 
+
     @Test
     public void testAddingMultipleRequests() {
-        Context appContext = InstrumentationRegistry.getTargetContext();
-
-        User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
-
-        UserController.setContext(appContext);
-        UserController.saveUser(user);
-
-        RequestCollectionsController.setContext(appContext);
-        RequestCollectionsController.saveRequestCollections(new RequestCollection());
+        init();
 
         GeoLocation start = new GeoLocation(1, 1);
         GeoLocation end = new GeoLocation(2, 2);
@@ -72,43 +69,61 @@ public class RequestsAndroidTest { // mainly using the controller
     }
 
     @Test
-    public void testCancelRequest() // cancel deletes this
-    {
+    public void testCancelRequest() { // cancel deletes this
+        init();
+
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-        Request request1 = new Request(geoLocation1, geoLocation2);
+        Request request = new Request(geoLocation1, geoLocation2);
 
-        Rider rider1 = new Rider();
-        //TODO
-//        RequestController.addRequest(request1,rider1);
-//        RequestController.deleteRequest(request1, rider1);
-        assertEquals(0, rider1.getRequestUUIDs().size());
+        RequestCollectionsController.addRequest(request);
+        RequestCollectionsController.deleteRequest(request);
+        RequestCollection requests = RequestCollectionsController.getRequestCollection();
 
+        assertEquals("Wrong request collection size", 0, requests.size());
     }
 
     @Test
     public void testCancelWithMultipleRequests() // cancel deletes this
     {
+        init();
+
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-        Request request1 = new Request(geoLocation1, geoLocation2);
+        Request request = new Request(geoLocation1, geoLocation2);
+        Request request2 = new Request(geoLocation1, geoLocation2);
 
-        Rider rider1 = new Rider();
-        //TODO
-//        RequestController.addRequest(request1,rider1);
-//        RequestController.deleteRequest(request1, rider1);
-        assertEquals(0, rider1.getRequestUUIDs().size());
+        RequestCollectionsController.addRequest(request);
+        RequestCollectionsController.addRequest(request2);
+        RequestCollectionsController.deleteRequest(request);
 
+        RequestCollection requests = RequestCollectionsController.getRequestCollection();
+        assertEquals("Wrong request collection size", 1, requests.size());
+        assertEquals("Wrong request", request2, requests.getRequestByUUID(request2.getUUID()));
     }
 
     @Test
     public void testGetOpenRequest()
     {
-//        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
-//        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-//
-//        Request request1 = new Request(geoLocation1, geoLocation2);
-//        assertEquals(request1.getCurrentStatus(), Request.RequestStatus.opened);
+        //right now the structure of the getRequests, gets all but we should split this up
+        // getOpen, getAcceptedByDrivers, getRiderSelectedDriver, getPayed/getCompleted
+        init();
+
+        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
+        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
+        Request request = new Request(geoLocation1, geoLocation2);
+        Request request2 = new Request(geoLocation1, geoLocation2);
+        Request request3 = new Request(geoLocation1, geoLocation2);
+
+        RequestCollectionsController.addRequest(request);
+        RequestCollectionsController.addRequest(request2);
+        RequestCollectionsController.addRequest(request3);
+
+        RequestCollection openRequests = RequestCollectionsController.getOpenRequests();
+
+        assertEquals(Request.RequestStatus.opened, openRequests.get(request.getUUID()).getCurrentStatus());
+        assertEquals(Request.RequestStatus.opened, openRequests.get(request2.getUUID()).getCurrentStatus());
+        assertEquals(Request.RequestStatus.opened, openRequests.get(request3.getUUID()).getCurrentStatus());
     }
 
 
