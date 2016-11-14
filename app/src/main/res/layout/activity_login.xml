@@ -49,11 +49,11 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/logoBackground"
-        android:layout_alignBottom="@+id/editText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="105dp"
-        android:id="@+id/imageView" />
+        app:srcCompat="@drawable/logobackground"
+        android:layout_marginBottom="111dp"
+        android:id="@+id/imageView2"
+        android:layout_above="@+id/loginbutton"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>
