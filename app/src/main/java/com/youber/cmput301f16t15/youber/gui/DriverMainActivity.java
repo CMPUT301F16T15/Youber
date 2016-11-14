@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -58,18 +59,12 @@ public class DriverMainActivity extends AppCompatActivity {
 
     Activity ourActivity = this;
     MapView map;
-    Road[] mRoads;
 
     long start;
     long stop;
     int x, y;
-    GeoPoint touchedPoint;
-    ArrayList<OverlayItem> overlayItemArray = new ArrayList<>();
-    GeoPoint searchPoint;
-    LocationManager locationManager;
-    String towers;
-    int lat = 0;
-    int lon = 0;
+    static GeoPoint touchedPoint;
+    static GeoPoint searchPoint;
 
     static double radius = 1;
 
@@ -89,10 +84,12 @@ public class DriverMainActivity extends AppCompatActivity {
         map.setBuiltInZoomControls(true);
         map.setMultiTouchControls(true);
 
-
+        searchPoint = null;
+        touchedPoint = null;
 
         IMapController mapController = map.getController();
         mapController.setZoom(12);
+        //map currently focuses on Lister on launch
         GeoPoint EdmontonGPS = new GeoPoint(53.521609, -113.530633);
         mapController.setCenter(EdmontonGPS);
 
@@ -110,6 +107,7 @@ public class DriverMainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(DriverMainActivity.this, DriverSearchListActivity.class);
                 intent.putExtra("Keyword",keyword);
+                finish();
                 startActivity(intent);
 
             }
@@ -120,11 +118,18 @@ public class DriverMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if(searchPoint == null) // check for empty arguements
+                {
+                    Snackbar.make(v, "Please select a point to search", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    return;
+                }
+
                 GeoLocation geoLocation = new GeoLocation(searchPoint.getLatitude(), searchPoint.getLongitude());
 
                 Intent intent = new Intent(DriverMainActivity.this,DriverSearchListActivity.class);
                 intent.putExtra("GeoLocation", (Parcelable) geoLocation);
                 intent.putExtra("Radius",radius);
+                finish();
                 startActivity(intent);
 
 
@@ -162,7 +167,7 @@ public class DriverMainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
+    //youtube Android Application Development Tutorial series by thenewboston
     public class Touch extends Overlay {
 
         @Override
@@ -243,7 +248,7 @@ public class DriverMainActivity extends AppCompatActivity {
                             searchRadiusDialog.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-
+                                    //https://github.com/MKergall/osmbonuspack/wiki/Tutorial_5
                                     Polygon circle = new Polygon();
                                     circle.setPoints(Polygon.pointsAsCircle(searchPoint, radius));
                                     circle.setFillColor(0x6984e1e1);
@@ -268,52 +273,6 @@ public class DriverMainActivity extends AppCompatActivity {
             }
 
             return false;
-        }
-    }
-
-    public void getRoadAsync(GeoPoint startPoint, GeoPoint destinationPoint) {
-        mRoads = null;
-
-        ArrayList<GeoPoint> waypoints = new ArrayList<GeoPoint>();
-        waypoints.add(startPoint);
-        waypoints.add(destinationPoint);
-        new UpdateRoadTask().execute(waypoints);
-    }
-
-
-    private class UpdateRoadTask extends AsyncTask<Object, Void, Road[]> {
-
-        protected Road[] doInBackground(Object... params) {
-            @SuppressWarnings("unchecked")
-            ArrayList<GeoPoint> waypoints = (ArrayList<GeoPoint>) params[0];
-            RoadManager roadManager = new MapQuestRoadManager("9EEnjA3zxWdtQSkkUxB7QKAo0jLpGaCb");
-            return roadManager.getRoads(waypoints);
-        }
-
-        @Override
-        protected void onPostExecute(Road[] roads) {
-            mRoads = roads;
-            if (roads == null)
-                return;
-            if (roads[0].mStatus == Road.STATUS_TECHNICAL_ISSUE)
-                Toast.makeText(map.getContext(), "Technical issue when getting the route", Toast.LENGTH_SHORT).show();
-            else if (roads[0].mStatus > Road.STATUS_TECHNICAL_ISSUE) //functional issues
-                Toast.makeText(map.getContext(), "No possible route here", Toast.LENGTH_SHORT).show();
-            Polyline[] mRoadOverlays = new Polyline[roads.length];
-            List<Overlay> mapOverlays = map.getOverlays();
-            for (int i = 0; i < roads.length; i++) {
-                Polyline roadPolyline = RoadManager.buildRoadOverlay(roads[i]);
-                mRoadOverlays[i] = roadPolyline;
-                String routeDesc = roads[i].getLengthDurationText(ourActivity, -1);
-                roadPolyline.setTitle(getString(R.string.app_name) + " - " + routeDesc);
-                roadPolyline.setInfoWindow(new BasicInfoWindow(org.osmdroid.bonuspack.R.layout.bonuspack_bubble, map));
-                roadPolyline.setRelatedObject(i);
-                mapOverlays.add(roadPolyline);
-                //selectRoad(0);
-                map.invalidate();
-                //we insert the road overlays at the "bottom", just above the MapEventsOverlay,
-                //to avoid covering the other overlays.
-            }
         }
     }
 }

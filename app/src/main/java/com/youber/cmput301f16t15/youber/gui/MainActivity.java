@@ -66,13 +66,8 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
     long stop;
     int x, y;
     GeoPoint touchedPoint;
-    ArrayList<OverlayItem> overlayItemArray = new ArrayList<>();
     GeoPoint startPoint;
     GeoPoint endPoint;
-    LocationManager locationManager;
-    String towers;
-    int lat = 0;
-    int lon = 0;
 
 
     @Override
@@ -91,38 +86,13 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
 
         IMapController mapController = map.getController();
         mapController.setZoom(12);
+        //map currently focuses on Lister on launch
         GeoPoint EdmontonGPS = new GeoPoint(53.521609, -113.530633);
         mapController.setCenter(EdmontonGPS);
 
         Touch t = new Touch();
         List<Overlay> overlayList = map.getOverlays();
         overlayList.add(t);
-
-//        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//        Criteria crit = new Criteria();
-//
-//        towers = locationManager.getBestProvider(crit, false);
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            return;
-//        }
-//        android.location.Location location = locationManager.getLastKnownLocation(towers);
-//
-//        if (location != null) {
-//            lat = (int) location.getLatitude();
-//            lon = (int) location.getLongitude();
-//            GeoPoint ourLocation = new GeoPoint(lat, lon);
-//            OverlayItem overlayItem = new OverlayItem("ourLocation", "this is our location", ourLocation );
-//            //overlayList.add(overlayItem);
-//        }else {
-//            Toast.makeText(MainActivity.this, "couldnt get provider", Toast.LENGTH_SHORT).show();
-//        }
 
 
         UserController.setContext(this);
@@ -307,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
     public void onDialogNegativeClick(DialogFragment dialog) {
 
     }
-
+    //youtube Android Application Development Tutorial series by thenewboston
     public class Touch extends Overlay {
 
         @Override
@@ -388,7 +358,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
             return false;
         }
     }
-
+    //cmput301 lab8
     public void getRoadAsync(GeoPoint startPoint, GeoPoint destinationPoint) {
         mRoads = null;
 
