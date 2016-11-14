@@ -49,7 +49,7 @@ public class Request implements Serializable {
      * Payed/Completed
      */
     public enum RequestStatus {
-        opened, acceptedByDrivers, confirmedByRider, finalizedByDriver, payed
+        opened, acceptedByDrivers, riderSelectedDriver, payed
     }
 
     private RequestStatus currentStatus;
@@ -202,7 +202,7 @@ public class Request implements Serializable {
      */
     public void finalizeByDriver() {
         this.confirmationStage = 3;
-        currentStatus = RequestStatus.finalizedByDriver;
+//        currentStatus = RequestStatus.finalizedByDriver;
     }
 
     /**
