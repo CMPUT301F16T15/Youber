@@ -1,12 +1,24 @@
 package com.youber.cmput301f16t15.youber;
 
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
+
+import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
+import com.youber.cmput301f16t15.youber.gui.UserTypeActivity;
+import com.youber.cmput301f16t15.youber.misc.GeoLocation;
+import com.youber.cmput301f16t15.youber.requests.Request;
+import com.youber.cmput301f16t15.youber.requests.RequestCollection;
+import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
+import com.youber.cmput301f16t15.youber.users.Rider;
 import com.youber.cmput301f16t15.youber.users.User;
+import com.youber.cmput301f16t15.youber.users.UserController;
 
 import org.junit.Test;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -60,4 +72,124 @@ public class UserAndroidTest {
             assertFalse("Elastic search get failed", false);
         }
     }
+
+
+    @Test
+    public void testChangeUserType()
+    {
+
+        Context appContext = InstrumentationRegistry.getTargetContext();
+
+        User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
+
+        UserController.setContext(appContext);
+        UserController.saveUser(user);
+
+        UserController.setUserType(User.UserType.rider);
+        assertEquals(UserController.getUser().getCurrentUserType(), User.UserType.rider);
+
+    }
+
+
+    @Test
+    public void testSetEmail()
+    {
+        Context appContext = InstrumentationRegistry.getTargetContext();
+
+        User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
+
+        UserController.setContext(appContext);
+        UserController.saveUser(user);
+
+        UserController.setEmail("notReal@noEmail.com");
+        assertEquals(UserController.getUser().getEmail(), "notReal@noEmail.com");
+    }
+
+    @Test
+    public void testSetPhoneNumber()
+    {
+        Context appContext = InstrumentationRegistry.getTargetContext();
+
+        User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
+
+        UserController.setContext(appContext);
+        UserController.saveUser(user);
+
+        UserController.setPhoneNumber("000");
+        assertEquals(UserController.getUser().getPhoneNumber(), "000");
+    }
+
+
+
+    @Test
+    public void testSetBirthOfDate()
+    {
+        Context appContext = InstrumentationRegistry.getTargetContext();
+
+        User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
+
+        UserController.setContext(appContext);
+        UserController.saveUser(user);
+
+        UserController.setDateOfBirth("000");
+        assertEquals(UserController.getUser().getDateOfBirth(), "000");
+    }
+
+
+
+    @Test
+    public void testSetFirstName()
+    {
+        Context appContext = InstrumentationRegistry.getTargetContext();
+
+        User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
+
+        UserController.setContext(appContext);
+        UserController.saveUser(user);
+
+        UserController.setFirstName("NewName");
+        assertEquals(UserController.getUser().getFirstName(), "NewName");
+    }
+
+
+
+    @Test
+    public void testSetLastName()
+    {
+        Context appContext = InstrumentationRegistry.getTargetContext();
+
+        User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
+
+        UserController.setContext(appContext);
+        UserController.saveUser(user);
+
+        UserController.setLastName("NewName");
+        assertEquals(UserController.getUser().getLastName(), "Name");
+    }
+
+
+    /*
+    // get requests for user
+    @Test
+    public void testGetDriverRequests()
+    {
+        Context appContext = InstrumentationRegistry.getTargetContext();
+
+        User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
+
+        UserController.setContext(appContext);
+        UserController.saveUser(user);
+
+        UserController.setUserType(User.UserType.rider);
+
+        RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(UserController.getUser().getRequestUUIDs());
+        RequestCollectionsController.setContext(UserTypeActivity.this);
+        RequestCollectionsController.saveRequestCollections(requestCollection);
+
+
+    }
+    */
+
+
+
 }
