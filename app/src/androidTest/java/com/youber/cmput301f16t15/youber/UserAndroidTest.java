@@ -164,14 +164,14 @@ public class UserAndroidTest {
         UserController.saveUser(user);
 
         UserController.setLastName("NewName");
-        assertEquals(UserController.getUser().getLastName(), "Name");
+        assertEquals(UserController.getUser().getLastName(), "NewName");
     }
 
 
-    /*
-    // get requests for user
+
+    // get requests for rider
     @Test
-    public void testGetDriverRequests()
+    public void testGetRiderRequests()
     {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
@@ -182,13 +182,37 @@ public class UserAndroidTest {
 
         UserController.setUserType(User.UserType.rider);
 
-        RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(UserController.getUser().getRequestUUIDs());
-        RequestCollectionsController.setContext(UserTypeActivity.this);
-        RequestCollectionsController.saveRequestCollections(requestCollection);
+        GeoLocation g1 = new GeoLocation(10,10);
+        GeoLocation g2 = new GeoLocation(10.1, 10.1);
 
+        Request request =new Request(g1,g2);
+        RequestCollectionsController.setContext(appContext);
+        RequestCollectionsController.addRequest(request);
 
+        assertTrue(UserController.getUser().getRequestUUIDs().contains(request.getUUID()));
     }
-    */
+
+    @Test
+    public void testGetDriverRequests()
+    {
+        Context appContext = InstrumentationRegistry.getTargetContext();
+
+        User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
+
+        UserController.setContext(appContext);
+        UserController.saveUser(user);
+
+        UserController.setUserType(User.UserType.driver);
+
+        GeoLocation g1 = new GeoLocation(10,10);
+        GeoLocation g2 = new GeoLocation(10.1, 10.1);
+
+        Request request =new Request(g1,g2);
+        RequestCollectionsController.setContext(appContext);
+        RequestCollectionsController.addRequest(request);
+
+        assertTrue(UserController.getUser().getRequestUUIDs().contains(request.getUUID()));
+    }
 
 
 
