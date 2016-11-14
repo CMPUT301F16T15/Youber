@@ -113,9 +113,9 @@ public class Driver extends User {
      *
      * @param request the request
      */
-    public void finalize(Request request) {
-        request.finalizeByDriver();
-    }
+//    public void finalize(Request request) {
+//        request.finalizeByDriver();
+//    }
 
     /**
      * Delete request.

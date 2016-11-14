@@ -32,8 +32,8 @@ public class Request implements Serializable {
     private boolean status = true; //open is true
     private String description;
     private Payment payment;
-    private int confirmationStage = 0; //0 initial, 1 accepted by a driver, 2 confirmed by a rider, 3 finalized by driver
-    private boolean accepted = false;
+    //private int confirmationStage = 0; //0 initial, 1 accepted by a driver, 2 confirmed by a rider, 3 finalized by driver
+    //private boolean accepted = false;
     private Driver driver;
 
     public Driver getDriver() {
@@ -49,7 +49,7 @@ public class Request implements Serializable {
      * Payed/Completed
      */
     public enum RequestStatus {
-        opened, acceptedByDrivers, confirmedByRider, finalizedByDriver, payed
+        opened,closed, acceptedByDrivers, riderSelectedDriver, paid
     }
 
     private RequestStatus currentStatus;
@@ -124,8 +124,8 @@ public class Request implements Serializable {
     /**
      * Close.
      */
-    public void close() {
-    }
+//    public void close() {
+//    }
 
     /**
      * Is closed boolean.
@@ -144,17 +144,17 @@ public class Request implements Serializable {
     /**
      * Accept.
      */
-    public void accept() {
-        this.accepted = true;
-    }
+//    public void accept() {
+//        this.accepted = true;
+//    }
 
     /**
      * Is accepted boolean.
      * @return the boolean
      */
-    public boolean isAccepted() {
-        return this.accepted;
-    }
+//    public boolean isAccepted() {
+//        return this.accepted;
+//    }
 
     /**
      * Complete.
@@ -193,17 +193,17 @@ public class Request implements Serializable {
      * @param driver the driver
      */
     public void confirmByDriver(Driver driver) {
-        this.confirmationStage = 1;
+        //this.confirmationStage = 1;
         currentStatus = RequestStatus.acceptedByDrivers;
     }
 
     /**
      * Finalize by driver.
      */
-    public void finalizeByDriver() {
-        this.confirmationStage = 3;
-        currentStatus = RequestStatus.finalizedByDriver;
-    }
+//    public void finalizeByDriver() {
+//        this.confirmationStage = 3;
+//        currentStatus = RequestStatus.finalizedByDriver;
+//    }
 
     /**
      * Is confirmed boolean.
@@ -230,5 +230,21 @@ public class Request implements Serializable {
     public RequestStatus getCurrentStatus() {
         return currentStatus;
     }
+    //opened, acceptedByDrivers, riderSelectedDriver, paid
+    public void setClosed(){
+        this.currentStatus=RequestStatus.closed;
+    }
+    public void setAcceptedByDrivers(){
+        this.currentStatus=RequestStatus.acceptedByDrivers;
+    }
+
+    public void setRiderSelectedDriver(){
+        this.currentStatus=RequestStatus.riderSelectedDriver;
+    }
+
+    public void setPaid(){
+        this.currentStatus=RequestStatus.paid;
+    }
+
 
 }
