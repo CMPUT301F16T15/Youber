@@ -57,8 +57,18 @@ public class User implements Serializable {
     /**
      * The Driver requests.
      */
+
+    private RiderUserInfo riderUserInfo;
+    private DriverUserInfo driverUserInfo;
+
+
+
+    /*
     private HashSet<UUID> driverUUIDs;
     private HashSet<UUID> riderUUIDs;// depending on their userType
+    */
+
+
 
     // is this suppose to be a list of uuids?
 //    ArrayList<UUID> riderRequestUUIDs = new ArrayList<UUID>();
@@ -90,8 +100,11 @@ public class User implements Serializable {
         this.email = email;
         this.currentUserType = UserType.rider;
 
-        riderUUIDs=new HashSet<UUID>();
-        driverUUIDs=new HashSet<UUID>();
+        //riderUUIDs=new HashSet<UUID>();
+        //driverUUIDs=new HashSet<UUID>();
+
+        riderUserInfo = new RiderUserInfo();
+        driverUserInfo = new DriverUserInfo();
     }
 
     @Override
@@ -211,30 +224,34 @@ public class User implements Serializable {
      *
      * @return the requests
      */
-    public HashSet<UUID> getRequestUUIDs() {
-        if(currentUserType == UserType.rider){return riderUUIDs;}
 
-        return driverUUIDs;
+
+
+    public HashSet<UUID> getRequestUUIDs() {
+        if(currentUserType == UserType.rider){return riderUserInfo.getUUIDs();}
+
+        return driverUserInfo.getAcceptedRequests();
     }
 
     public HashSet<UUID> getDriverUUIDs()
     {
-        return driverUUIDs;
+        return driverUserInfo.getAcceptedRequests();
     }
 
     public void addRequesttUUID(UUID uuid){
         if(currentUserType == UserType.rider)
-            riderUUIDs.add(uuid);
+            riderUserInfo.getUUIDs().add(uuid);
         else
-            driverUUIDs.add(uuid);
+            driverUserInfo.getAcceptedRequests().add(uuid);
     }
 
     public void removeRequestUUID(UUID uuid){
         if(currentUserType == UserType.rider)
-            riderUUIDs.remove(uuid);
+            riderUserInfo.getUUIDs().remove(uuid);
         else
-            driverUUIDs.remove(uuid);
+            driverUserInfo.getAcceptedRequests().remove(uuid);
     }
+
 
     public UserType getCurrentUserType()
     {
