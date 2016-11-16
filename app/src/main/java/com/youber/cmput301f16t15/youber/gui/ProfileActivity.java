@@ -58,6 +58,15 @@ public class ProfileActivity extends Activity {
 
 
         Button saveInfo = (Button) findViewById(R.id.saveInfo);
+        Button vehicleInfo = (Button) findViewById(R.id.editVehicleInfo);
+
+        // Hide vehicle info button for riders
+        //http://stackoverflow.com/questions/4127725/how-can-i-remove-a-button-or-make-it-invisible-in-android
+        // Author: Konstantin Burov
+
+        if(user.getCurrentUserType() == User.UserType.rider){
+            vehicleInfo.setVisibility(View.GONE);
+        }
 
         saveInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,8 +94,14 @@ public class ProfileActivity extends Activity {
             }
         });
 
-
-
+        vehicleInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(ProfileActivity.this, VehicleInfoActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
 }

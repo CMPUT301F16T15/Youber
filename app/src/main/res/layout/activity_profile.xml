@@ -74,7 +74,7 @@
         android:layout_alignStart="@+id/contactUsername" />
 
     <Button
-        android:text="SAVE CONTACT INFO"
+        android:text="@string/SaveContactInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -84,6 +84,17 @@
         android:id="@+id/saveInfo"
         android:layout_alignEnd="@+id/contactPhone"
         android:layout_alignStart="@+id/textView13" />
+
+    <Button
+        android:text="@string/EditVehicleInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/saveInfo"
+        android:id="@+id/editVehicleInfo"
+        android:backgroundTint="@color/grey"
+        android:textColor="@color/black"
+        android:layout_alignStart="@+id/saveInfo"
+        android:layout_alignEnd="@+id/saveInfo" />
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -183,4 +194,5 @@
         android:layout_marginTop="48dp"
         android:layout_below="@+id/toolbar"
         android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
