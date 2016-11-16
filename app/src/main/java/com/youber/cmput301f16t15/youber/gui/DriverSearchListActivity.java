@@ -42,7 +42,9 @@ public class DriverSearchListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
-
+                Intent intent = new Intent(DriverSearchListActivity.this, DriverViewRequestActivity.class);
+                intent.putExtra("uuid", requestArray.get(i).getUUID());
+                startActivity(intent);
             }
         });
 
