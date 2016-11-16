@@ -8,11 +8,10 @@ import com.youber.cmput301f16t15.youber.R;
 
 public class VehicleInfoActivity extends AppCompatActivity {
 
-    Button saveVehicleInfo = (Button) findViewById(R.id.saveVehicleInfoButton);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicle_info);
+        Button saveVehicleInfo = (Button) findViewById(R.id.saveVehicleInfoButton);
     }
 }
