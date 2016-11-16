@@ -21,6 +21,7 @@ public class AddUserCommand implements Command {
     public void execute() {
         ElasticSearchUser.add adder = new ElasticSearchUser.add();
         adder.execute(user);
+        executionState = true;
     }
 
     @Override

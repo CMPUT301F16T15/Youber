@@ -8,6 +8,7 @@ import com.youber.cmput301f16t15.youber.commands.AddRequestCommand;
 import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
 import com.youber.cmput301f16t15.youber.commands.DeleteRequestCommand;
 import com.youber.cmput301f16t15.youber.misc.Observable;
+import com.youber.cmput301f16t15.youber.misc.Updater;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
@@ -60,6 +61,7 @@ public class RequestCollectionsController {
 
     public static void setContext(Context context) {
         c = context;
+        observable.addListener(new Updater());
     }
 
     /**

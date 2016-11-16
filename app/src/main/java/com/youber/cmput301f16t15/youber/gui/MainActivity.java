@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
@@ -231,6 +232,10 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         RequestCollectionsController.getRequestCollection();
+                        MacroCommand.setContext(MainActivity.this);
+                        Boolean network = MacroCommand.isNetworkAvailable();
+                        int ehslsf = 0;
+
                         RequestCollectionsController.addRequest(request);
                     }
                 })
