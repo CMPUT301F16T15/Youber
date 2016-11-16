@@ -44,14 +44,14 @@
         <activity
             android:name=".gui.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".gui.DriverMainActivity"
+        <activity
+            android:name=".gui.DriverMainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
-        <activity android:name=".gui.DriverSearchListActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+        <activity
+            android:name=".gui.DriverSearchListActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".gui.DriverViewRequestActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -18,7 +18,15 @@ public class DriverUserInfo {
     private HashSet<UUID> confirmedRequests;
 
     public DriverUserInfo()
-    {}
+    {
+        this.make = "";
+        this.model = "";
+        this.year = "";
+        this.color = "";
+
+        acceptedRequests = new HashSet<UUID>();
+        confirmedRequests = new HashSet<UUID>();
+    }
 
     public DriverUserInfo(String make, String model, String year, String color)
     {
@@ -26,6 +34,9 @@ public class DriverUserInfo {
         this.model = model;
         this.year = year;
         this.color = color;
+
+        acceptedRequests = new HashSet<UUID>();
+        confirmedRequests = new HashSet<UUID>();
     }
 
 
