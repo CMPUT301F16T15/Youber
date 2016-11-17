@@ -139,13 +139,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * On new request btn click.
-     *
-     * @param view the map
-     */
-//  Button Click Actions
-    public void onNewRequestBtnClick(View view) {
+    private Request initRequestObj(boolean throwInsteadOfToast) { // map and on new click both use this!
         String startLatStr = ((EditText)findViewById(R.id.start_lat_edit)).getText().toString();
         String startLonStr = ((EditText)findViewById(R.id.start_lon_edit)).getText().toString();
         String endLatStr = ((EditText)findViewById(R.id.end_lat_edit)).getText().toString();
@@ -153,8 +147,12 @@ public class MainActivity extends AppCompatActivity {
 
         if(startLatStr.isEmpty() || startLonStr.isEmpty() || endLatStr.isEmpty() || endLonStr.isEmpty()) // check for empty arguements
         {
-            Snackbar.make(view, "Cannot have empty values for latitudes and longitudes", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            return;
+            if(throwInsteadOfToast)
+                throw new RuntimeException();
+            else {
+                Toast.makeText(MainActivity.this, "Cannot have empty values for latitudes and longitudes", Toast.LENGTH_SHORT).show();
+                return null;
+            }
         }
 
         Double startLat, startLon, endLat, endLon;
@@ -165,14 +163,29 @@ public class MainActivity extends AppCompatActivity {
             endLon = Double.parseDouble(endLonStr);
         }
         catch(NumberFormatException e) {
-            Snackbar.make(view, "Invalid argument format. Please input doubles for latitudes and longitudes", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            return;
+            if(throwInsteadOfToast)
+                throw new RuntimeException();
+            else {
+                Toast.makeText(MainActivity.this, "Invalid argument format. Please input doubles for latitudes and longitudes", Toast.LENGTH_SHORT).show();
+                return null;
+            }
         }
 
         GeoLocation start = new GeoLocation(startLat, startLon);
         GeoLocation end   = new GeoLocation(endLat, endLon);
-        request = new Request(start, end);
-        promptToCreateRequest();
+        return new Request(start, end);
+    }
+
+    /**
+     * On new request btn click.
+     *
+     * @param view the map
+     */
+//  Button Click Actions
+    public void onNewRequestBtnClick(View view) {
+        request = initRequestObj(false);
+        if(request != null)
+            promptToCreateRequest();
     }
 
     private void promptToCreateRequest() {
@@ -366,6 +379,9 @@ public class MainActivity extends AppCompatActivity {
                 Polyline roadPolyline = RoadManager.buildRoadOverlay(roads[i]);
                 mRoadOverlays[i] = roadPolyline;
                 String routeDesc = roads[i].getLengthDurationText(ourActivity, -1);
+
+                initRequestFromMap(routeDesc);
+
                 roadPolyline.setTitle(getString(R.string.app_name) + " - " + routeDesc);
                 roadPolyline.setInfoWindow(new BasicInfoWindow(org.osmdroid.bonuspack.R.layout.bonuspack_bubble, map));
                 roadPolyline.setRelatedObject(i);
@@ -378,4 +394,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void initRequestFromMap(String routeDesc) {
+        request = initRequestObj(true); // true to throw! bc this means the map didnt fill out the lat lon properly
+        RequestController.setRouteLenDist(request, routeDesc);
+    }
 }

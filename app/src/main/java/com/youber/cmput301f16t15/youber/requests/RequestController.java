@@ -157,9 +157,21 @@ public class RequestController
     }
 
     public static boolean isValidRequest(Request request) {
-        if(request.getCost() != 0 && !request.getDescription().isEmpty())
+        if(request.getCost() != 0 && !request.getDescription().isEmpty() && !request.getRouteDistLen().isEmpty())
             return true;
 
         return false;
+    }
+
+    public static void setRouteLenDist(Request request, String routeDesc) {
+        // 14km, 19min
+        Pattern p = Pattern.compile("\\d+\\.?+\\d+km,\\s{1}.*");
+        Matcher m = p.matcher(routeDesc);
+
+        if(!m.matches()) { // Safe guard so coders won't use this improperly (should be used with map)
+            throw new RuntimeException();
+        }
+        else
+            request.setRouteDistLen(routeDesc);
     }
 }

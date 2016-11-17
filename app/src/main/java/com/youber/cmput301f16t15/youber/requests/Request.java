@@ -33,9 +33,9 @@ public class Request implements Serializable {
     double [] startLocation =new double[2];
     double [] endLocation= new double[2];
 
-
     private boolean status = true; //open is true
     private String description = "";
+    private String routeDistLen = "";
 
     private Payment payment = new Payment(0);
     private Driver driver;
@@ -71,8 +71,6 @@ public class Request implements Serializable {
         startLocation[1] = location1.getLon();
         endLocation[0] = location2.getLat();
         endLocation[1] = location2.getLon();
-
-
 
         uuID = UUID.randomUUID();
         currentStatus = RequestStatus.opened;
@@ -235,6 +233,15 @@ public class Request implements Serializable {
     public void setDescription(String s) {
         description = s;
     }
+
+    public String getRouteDistLen() {
+        return routeDistLen;
+    }
+
+    public void setRouteDistLen(String str) {
+        this.routeDistLen = str;
+    }
+
 
     public RequestStatus getCurrentStatus() {
         return currentStatus;
