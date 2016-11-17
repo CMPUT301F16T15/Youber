@@ -17,9 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_below="@+id/request_description_title"
+        android:gravity="top|left"
         android:layout_margin="12dp"
         android:background="@android:color/white"
         android:textColor="@color/black"
-        android:inputType="textMultiLine"
-        android:textAlignment="textStart"/>
+        android:inputType="textMultiLine"/>
 </RelativeLayout>
