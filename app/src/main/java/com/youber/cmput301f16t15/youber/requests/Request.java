@@ -33,17 +33,11 @@ public class Request implements Serializable {
     double [] startLocation =new double[2];
     double [] endLocation= new double[2];
 
-    /**
-     * The End location.
-     */
-
 
     private boolean status = true; //open is true
-    private String description;
+    private String description = "";
 
-    private Payment payment;
-    //private int confirmationStage = 0; //0 initial, 1 accepted by a driver, 2 confirmed by a rider, 3 finalized by driver
-    //private boolean accepted = false;
+    private Payment payment = new Payment(0);
     private Driver driver;
 
     public Driver getDriver() {

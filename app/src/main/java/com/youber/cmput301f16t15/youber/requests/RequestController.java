@@ -4,6 +4,8 @@ import com.youber.cmput301f16t15.youber.users.Driver;
 import com.youber.cmput301f16t15.youber.users.Rider;
 
 import java.text.DecimalFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Reem on 2016-10-24.
@@ -110,6 +112,19 @@ public class RequestController
         request.setPaid();
     }
 
+    public static boolean setPaymentAmount(String amt, Request request) {
+        Pattern p = Pattern.compile("\\d+\\.\\d{2}");
+        Matcher m = p.matcher(amt);
+
+        if(m.matches()) {
+            request.setPayment(Double.parseDouble(amt));
+            return true;
+        }
+
+        request.setPayment(0); // failed so we want to clear it
+        return false;
+    }
+
     public static Double getDistanceOfRequest(Request request) {
         double lat1 = request.getStartLocation().getLat();
         double lat2 = request.getEndLocation().getLat();
@@ -139,5 +154,12 @@ public class RequestController
 
         DecimalFormat df = new DecimalFormat("#.##"); // round it off to 4 decimal places
         return Double.parseDouble(df.format(estFare));
+    }
+
+    public static boolean isValidRequest(Request request) {
+        if(request.getCost() != 0 && !request.getDescription().isEmpty())
+            return true;
+
+        return false;
     }
 }

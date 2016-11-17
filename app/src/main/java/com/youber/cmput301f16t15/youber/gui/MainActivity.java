@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -171,18 +172,41 @@ public class MainActivity extends AppCompatActivity {
         GeoLocation start = new GeoLocation(startLat, startLon);
         GeoLocation end   = new GeoLocation(endLat, endLon);
         request = new Request(start, end);
-        promptCreateDialog();
+        promptToCreateRequest();
     }
 
+    private void promptToCreateRequest() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater(); // Get the layout inflater
 
-    /**
-     * Prompt create dialog.
-     */
-// Code that implements the dialog window that will ensure if the user wants to create the request or not
-    public void promptCreateDialog() {
-        Dialog dlg = promptToCreateRequest();
+        // Inflate and set the layout for the dialog, Pass null as the parent view because its going in the dialog layout
+        builder.setView(inflater.inflate(R.layout.dlg_request_creation, null))
+                .setPositiveButton(R.string.dlg_create, null) // null so we do logic to close it or not
+                .setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {}
+                });
+
+        final Dialog dlg = builder.create();
         dlg.show();
+        setCreateDialogFields(dlg);
 
+        ((AlertDialog)dlg).getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(RequestController.isValidRequest(request)) {
+                    RequestCollectionsController.getRequestCollection();
+                    RequestCollectionsController.addRequest(request);
+                    dlg.dismiss(); //Dismiss once everything is OK.
+                    Toast.makeText(MainActivity.this, "Successfully added request", Toast.LENGTH_SHORT).show();
+                }
+                else
+                    Toast.makeText(MainActivity.this, "Invalid request. Please ensure all fields are valid"
+                            , Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setCreateDialogFields(Dialog dlg) {
         TextView startLoc = (TextView)dlg.findViewById(R.id.create_start_value);
         startLoc.setText(request.getStartLocation().toString());
 
@@ -206,13 +230,9 @@ public class MainActivity extends AppCompatActivity {
             @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
-            public void afterTextChanged(Editable editable) { //TODO move this to request controller
+            public void afterTextChanged(Editable editable) {
                 String paymentStr = payment.getText().toString();
-
-                Pattern p = Pattern.compile("\\d+\\.\\d{2}");
-                Matcher m = p.matcher(paymentStr);
-                if(m.matches())
-                    request.setPayment(Double.parseDouble(paymentStr));
+                RequestController.setPaymentAmount(paymentStr, request);
             }
         });
 
@@ -228,28 +248,6 @@ public class MainActivity extends AppCompatActivity {
                 request.setDescription(descStr);
             }
         });
-    }
-
-    public Dialog promptToCreateRequest() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater(); // Get the layout inflater
-
-        // Inflate and set the layout for the dialog, Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(R.layout.dlg_request_creation, null))
-                .setPositiveButton(R.string.dlg_create, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        RequestCollectionsController.getRequestCollection();
-                        RequestCollectionsController.addRequest(request);
-                    }
-                })
-                // Add action buttons
-                .setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
-                });
-
-        return builder.create();
     }
 
     //youtube Android Application Development Tutorial series by thenewboston
