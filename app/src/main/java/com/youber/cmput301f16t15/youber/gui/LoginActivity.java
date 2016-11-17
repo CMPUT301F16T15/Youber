@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
+import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
 import com.youber.cmput301f16t15.youber.misc.Updater;
 import com.youber.cmput301f16t15.youber.users.User;
@@ -43,6 +44,8 @@ public class LoginActivity extends AppCompatActivity implements NoticeDialogFrag
         Button loginButton = (Button) findViewById(R.id.loginbutton);
         Button signUpButton = (Button) findViewById(R.id.signupbutton);
 
+        MacroCommand.setContext(this);
+
         loginButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -74,7 +77,6 @@ public class LoginActivity extends AppCompatActivity implements NoticeDialogFrag
                        startActivity(intent);
                        //finish();
                    }
-
                    else
                    {
                        Log.i("Error", "The request for user has failed");

@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 
 public class MacroCommand {
-    private static ArrayList<Command> commands;
+    private static ArrayList<Command> commands = new ArrayList<Command>();
     private static Context context;
 
     public static void setContext(Context c) {

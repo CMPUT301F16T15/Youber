@@ -18,7 +18,6 @@ public class Observable {
     public void notifyListeners(Command c) {
         for (Listener listener:listeners ) {
             listener.update(c);
-
         }
     }
     public void addListener(Listener listener){

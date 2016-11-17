@@ -232,10 +232,6 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         RequestCollectionsController.getRequestCollection();
-                        MacroCommand.setContext(MainActivity.this);
-                        Boolean network = MacroCommand.isNetworkAvailable();
-                        int ehslsf = 0;
-
                         RequestCollectionsController.addRequest(request);
                     }
                 })
