@@ -2,7 +2,10 @@ package com.youber.cmput301f16t15.youber.elasticsearch;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.youber.cmput301f16t15.youber.commands.Command;
+import com.youber.cmput301f16t15.youber.gui.MainActivity;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
@@ -32,25 +35,6 @@ import io.searchbox.core.Search;
  * @see ElasticSearchController
  */
 public class ElasticSearchRequest extends ElasticSearch{
-
-    /**
-     * Update the request ID's if there has been a change (addition/removal)
-     * @see add
-     */
-    @Override
-    public void update(){
-        HashSet<UUID> requestUUIDs = UserController.getUser().getRequestUUIDs();
-        RequestCollection requestCollection = RequestCollectionsController.getRequestCollection();
-
-        for (UUID uuid:requestUUIDs ) {
-            ElasticSearchRequest.add adder = new ElasticSearchRequest.add();
-            Request request = requestCollection.get(uuid);
-            adder.execute(request);
-        }
-
-
-    }
-
     /**
      * Add a request to the server.
      */
@@ -192,8 +176,8 @@ public class ElasticSearchRequest extends ElasticSearch{
                 ArrayList<Request> requests=searchRequest.get();
                 if(requests.size()==1){
                     Log.i("Request!",requests.get(0).toString());
+                    requestCollection.add(requests.get(0));
                 }
-                requestCollection.add(requests.get(0));
             }
             catch (ExecutionException e){
 

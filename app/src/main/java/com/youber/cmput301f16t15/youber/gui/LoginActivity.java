@@ -10,7 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.youber.cmput301f16t15.youber.R;
+import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
+import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
+import com.youber.cmput301f16t15.youber.misc.Updater;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
@@ -41,6 +44,8 @@ public class LoginActivity extends AppCompatActivity implements NoticeDialogFrag
         Button loginButton = (Button) findViewById(R.id.loginbutton);
         Button signUpButton = (Button) findViewById(R.id.signupbutton);
 
+        MacroCommand.setContext(this);
+
         loginButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -61,8 +66,10 @@ public class LoginActivity extends AppCompatActivity implements NoticeDialogFrag
                    {
                        User user = users.get(0);
 
-                       UserController.observable.addListener(new ElasticSearchUser());
-                       UserController.observable.notifyListeners();
+                       UserController.observable.addListener(new Updater());
+
+                       AddUserCommand addUser = new AddUserCommand(user);
+                       UserController.observable.notifyListeners(addUser);
                        UserController.saveUser(user);
 
                        Log.i ("Works", "Found user"+user.getUsername());
@@ -70,7 +77,6 @@ public class LoginActivity extends AppCompatActivity implements NoticeDialogFrag
                        startActivity(intent);
                        //finish();
                    }
-
                    else
                    {
                        Log.i("Error", "The request for user has failed");

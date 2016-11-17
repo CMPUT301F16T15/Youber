@@ -1,5 +1,7 @@
 package com.youber.cmput301f16t15.youber.misc;
 
+import com.youber.cmput301f16t15.youber.commands.Command;
+
 import java.util.ArrayList;
 
 /**
@@ -13,10 +15,9 @@ import java.util.ArrayList;
 public class Observable {
     ArrayList<Listener> listeners= new ArrayList<Listener>();
 
-    public void notifyListeners() {
+    public void notifyListeners(Command c) {
         for (Listener listener:listeners ) {
-            listener.update();
-
+            listener.update(c);
         }
     }
     public void addListener(Listener listener){
