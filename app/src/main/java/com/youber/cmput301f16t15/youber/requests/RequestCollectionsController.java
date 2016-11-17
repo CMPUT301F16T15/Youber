@@ -168,6 +168,7 @@ public class RequestCollectionsController {
 
         saveRequestCollections(requestCollection);
 
+        // Commands
         AddUserCommand addUser = new AddUserCommand(user);
         UserController.observable.notifyListeners(addUser);
 

@@ -153,7 +153,6 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) { // add new request
         RequestCollectionsController.deleteRequest(selectedRequest);
-
         finish();
     }
 

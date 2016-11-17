@@ -27,12 +27,23 @@ public class MacroCommand {
 
     public static void execute() {
         for(Command c : commands) {
-            if(c.getExecutionState() == false)
-                c.execute();
-
+            if(!isNetworkAvailable())
+                break;
+            else if (c.getExecutionState() == false)
+                    c.execute();
         }
 
+        cleanupCommandArray();
+    }
 
+    private static void cleanupCommandArray() {
+        ArrayList<Command> newCommands = new ArrayList<Command>();
+        for(Command c : commands) {
+            if(c.getExecutionState() == false)
+                newCommands.add(c);
+        }
+
+        commands = newCommands;
     }
 
     public static boolean isNetworkAvailable() {

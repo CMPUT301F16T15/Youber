@@ -79,7 +79,6 @@ public class ProfileActivity extends Activity {
                 UserController.setLastName(lastNameText);
 
                 // Does not change in elastic search yet.
-
                 Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();

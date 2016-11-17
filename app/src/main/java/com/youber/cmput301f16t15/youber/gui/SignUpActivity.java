@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.youber.cmput301f16t15.youber.R;
+import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
+import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
@@ -36,7 +38,6 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
     EditText firstName;
     EditText lastName;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,64 +51,51 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
 
         Button createNewUser = (Button) findViewById(R.id.createNewUser);
 
-
         createNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            String usernameText = username.getText().toString();
+            String emailText = email.getText().toString();
+            String phoneNumText = phoneNum.getText().toString();
+            String dateOfBirthText = dateOfBirth.getText().toString();
+            String firstNameText = firstName.getText().toString();
+            String lastNameText = lastName.getText().toString();
 
+            try
+            {
+                ElasticSearchUser.getObjects getter = new ElasticSearchUser.getObjects();
+                getter.execute(usernameText);
+                ArrayList<User> users = getter.get();
 
-                String usernameText = username.getText().toString();
-                String emailText = email.getText().toString();
-                String phoneNumText = phoneNum.getText().toString();
-                String dateOfBirthText = dateOfBirth.getText().toString();
-                String firstNameText = firstName.getText().toString();
-                String lastNameText = lastName.getText().toString();
-
-
-                try
+                if (users.size()==0)
                 {
+                    User user = new User(usernameText, firstNameText, lastNameText, dateOfBirthText, phoneNumText, emailText);
 
-                    ElasticSearchUser.getObjects getter = new ElasticSearchUser.getObjects();
-                    getter.execute(usernameText);
-                    ArrayList<User> users = getter.get();
+                    UserController.setContext(SignUpActivity.this);
+                    UserController.saveUser(user);
 
-                    if (users.size()==0)
-                    {
-                        User user = new User(usernameText, firstNameText, lastNameText, dateOfBirthText, phoneNumText, emailText);
-
-                        UserController.setContext(SignUpActivity.this);
-                        UserController.saveUser(user);
-
-                        ElasticSearchUser.add adder = new ElasticSearchUser.add();
-                        adder.execute(user);
-                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
-
-                    }
-                    else
-                    {
-                        Bundle bundle = new Bundle();
-                        bundle.putString(getResources().getString(R.string.message), getResources().getString(R.string.usernameExitsMessage));
-                        bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.ok));
-                        bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.login));
-
-                        DialogFragment dialog = new NoticeDialogFragment();
-                        dialog.setArguments(bundle);
-                        dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
+                    AddUserCommand addUser = new AddUserCommand(user);
+                    MacroCommand.addCommand(addUser);
+                    finish();
                 }
+                else
+                {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(getResources().getString(R.string.message), getResources().getString(R.string.usernameExitsMessage));
+                    bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.ok));
+                    bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.login));
 
-
-
+                    DialogFragment dialog = new NoticeDialogFragment();
+                    dialog.setArguments(bundle);
+                    dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
             }
         });
-
-
     }
 
 
@@ -125,9 +113,6 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
-        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-        startActivity(intent);
         finish();
     }
-
 }
