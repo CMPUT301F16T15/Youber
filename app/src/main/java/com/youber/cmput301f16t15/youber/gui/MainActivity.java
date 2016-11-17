@@ -256,77 +256,70 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
 
         }
 
-        public boolean onTouchEvent(MotionEvent e, MapView m) {
-            if (e.getAction() == MotionEvent.ACTION_DOWN) {
-                start = e.getEventTime();
-                x = (int) e.getX();
-                y = (int) e.getY();
-                touchedPoint = (GeoPoint) map.getProjection().fromPixels(x, y);
-            }
-            if (e.getAction() == MotionEvent.ACTION_UP) {
-                stop = e.getEventTime();
-            }
-            if (stop - start > 1000) {
-                Geocoder geocoder = new Geocoder(getBaseContext(), Locale.getDefault());
-                try {
-                    List<Address> address = geocoder.getFromLocation(touchedPoint.getLatitude(), touchedPoint.getLongitude(), 1);
-                    if (address.size() > 0) {
-                        String display = "Latitude: " + touchedPoint.getLatitude() + "\n" + "Longitude: " + touchedPoint.getLongitude() + "\n";
-                        for (int i = 0; i < address.get(0).getMaxAddressLineIndex(); i++) {
-                            display += address.get(0).getAddressLine(i) + "\n";
-                        }
-                        Toast t = Toast.makeText(getBaseContext(), display, Toast.LENGTH_LONG);
-                        t.show();
-
-                        if (startPoint == null) {
-                            startPoint = new GeoPoint(touchedPoint.getLatitude(), touchedPoint.getLongitude());
-                            String startLat = String.valueOf(startPoint.getLatitude());
-                            String startLon = String.valueOf(startPoint.getLongitude());
-                            ((EditText)findViewById(R.id.start_lat_edit)).setText(startLat);
-                            ((EditText)findViewById(R.id.start_lon_edit)).setText(startLon);
-                            Marker startMarker = new Marker(map);
-                            startMarker.setPosition(startPoint);
-                            startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                            startMarker.setTitle("start point");
-                            map.getOverlays().add(startMarker);
-                            map.invalidate();
-                            Toast.makeText(getBaseContext(), "start location is set", Toast.LENGTH_LONG);
-                        } else if (endPoint == null) {
-                            endPoint = new GeoPoint(touchedPoint.getLatitude(), touchedPoint.getLongitude());
-                            String endLat = String.valueOf(endPoint.getLatitude());
-                            String endLon = String.valueOf(endPoint.getLongitude());
-                            ((EditText)findViewById(R.id.end_lat_edit)).setText(endLat);
-                            ((EditText)findViewById(R.id.end_lon_edit)).setText(endLon);
-                            Marker endMarker = new Marker(map);
-                            endMarker.setPosition(endPoint);
-                            endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                            endMarker.setTitle("end point");
-                            map.getOverlays().add(endMarker);
-                            map.invalidate();
-                            Toast.makeText(getBaseContext(), "end location is set", Toast.LENGTH_LONG);
-                        }
-                        if (startPoint != null && endPoint != null) {
-                            // http://stackoverflow.com/questions/38539637/osmbonuspack-roadmanager-networkonmainthreadexception
-                            // accessed on October 27th, 2016
-                            // author: yubaraj poudel
-                            ArrayList<OverlayItem> overlayItemArray;
-                            overlayItemArray = new ArrayList<>();
-
-                            overlayItemArray.add(new OverlayItem("Starting Point", "This is the starting point", startPoint));
-                            overlayItemArray.add(new OverlayItem("Destination", "This is the detination point", endPoint));
-                            getRoadAsync(startPoint, endPoint);
-                        }
-
-
+        //http://stackoverflow.com/questions/16665426/get-coordinates-by-clicking-on-map-openstreetmaps
+        @Override
+        public boolean onSingleTapConfirmed(final MotionEvent e, final MapView mapView){
+            Geocoder geocoder = new Geocoder(getBaseContext(), Locale.getDefault());
+            x = (int) e.getX();
+            y = (int) e.getY();
+            touchedPoint = (GeoPoint) map.getProjection().fromPixels(x, y);
+            try {
+                List<Address> address = geocoder.getFromLocation(touchedPoint.getLatitude(), touchedPoint.getLongitude(), 1);
+                if (address.size() > 0) {
+                    String display = "Latitude: " + touchedPoint.getLatitude() + "\n" + "Longitude: " + touchedPoint.getLongitude() + "\n";
+                    for (int i = 0; i < address.get(0).getMaxAddressLineIndex(); i++) {
+                        display += address.get(0).getAddressLine(i) + "\n";
                     }
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                } finally {
+                    Toast t = Toast.makeText(getBaseContext(), display, Toast.LENGTH_LONG);
+                    t.show();
+
+                    if (startPoint == null) {
+                        startPoint = new GeoPoint(touchedPoint.getLatitude(), touchedPoint.getLongitude());
+                        String startLat = String.valueOf(startPoint.getLatitude());
+                        String startLon = String.valueOf(startPoint.getLongitude());
+                        ((EditText)findViewById(R.id.start_lat_edit)).setText(startLat);
+                        ((EditText)findViewById(R.id.start_lon_edit)).setText(startLon);
+                        Marker startMarker = new Marker(map);
+                        startMarker.setPosition(startPoint);
+                        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                        startMarker.setTitle("start point");
+                        map.getOverlays().add(startMarker);
+                        map.invalidate();
+                        Toast.makeText(getBaseContext(), "start location is set", Toast.LENGTH_LONG);
+                    } else if (endPoint == null) {
+                        endPoint = new GeoPoint(touchedPoint.getLatitude(), touchedPoint.getLongitude());
+                        String endLat = String.valueOf(endPoint.getLatitude());
+                        String endLon = String.valueOf(endPoint.getLongitude());
+                        ((EditText)findViewById(R.id.end_lat_edit)).setText(endLat);
+                        ((EditText)findViewById(R.id.end_lon_edit)).setText(endLon);
+                        Marker endMarker = new Marker(map);
+                        endMarker.setPosition(endPoint);
+                        endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                        endMarker.setTitle("end point");
+                        map.getOverlays().add(endMarker);
+                        map.invalidate();
+                        Toast.makeText(getBaseContext(), "end location is set", Toast.LENGTH_LONG);
+                    }
+                    if (startPoint != null && endPoint != null) {
+                        // http://stackoverflow.com/questions/38539637/osmbonuspack-roadmanager-networkonmainthreadexception
+                        // accessed on October 27th, 2016
+                        // author: yubaraj poudel
+                        ArrayList<OverlayItem> overlayItemArray;
+                        overlayItemArray = new ArrayList<>();
+
+                        overlayItemArray.add(new OverlayItem("Starting Point", "This is the starting point", startPoint));
+                        overlayItemArray.add(new OverlayItem("Destination", "This is the detination point", endPoint));
+                        getRoadAsync(startPoint, endPoint);
+                    }
+
 
                 }
-            }
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } finally {
 
-            return false;
+            }
+            return true;
         }
     }
     //cmput301 lab8
