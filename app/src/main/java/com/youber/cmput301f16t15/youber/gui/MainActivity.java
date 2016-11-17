@@ -8,9 +8,7 @@ import android.graphics.Canvas;
 import android.location.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,20 +21,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.R;
-import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
+import com.youber.cmput301f16t15.youber.requests.RequestController;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.routing.MapQuestRoadManager;
 import org.osmdroid.bonuspack.routing.Road;
 import org.osmdroid.bonuspack.routing.RoadManager;
+import org.osmdroid.bonuspack.utils.DouglasPeuckerReducer;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -50,6 +49,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The type map activity.
@@ -59,7 +60,7 @@ import java.util.Locale;
  *
  * @see org.osmdroid.bonuspack.routing.OSRMRoadManager
  */
-public class MainActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
+public class MainActivity extends AppCompatActivity {
 
     //TODO use controller not global
     private Request request;
@@ -170,48 +171,56 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
         GeoLocation start = new GeoLocation(startLat, startLon);
         GeoLocation end   = new GeoLocation(endLat, endLon);
         request = new Request(start, end);
-        promptConfirmDialog(view);
+        promptCreateDialog();
     }
 
 
     /**
-     * Prompt confirm dialog.
-     *
-     * @param view dialog pops up
+     * Prompt create dialog.
      */
 // Code that implements the dialog window that will ensure if the user wants to create the request or not
-    public void promptConfirmDialog(final View view) {
-        Bundle bundle = new Bundle();
-
-        String start = request.getStartLocation().toString();
-        String end = request.getEndLocation().toString();
-        String msg = "Please confirm new request.\nStart: " + start + "\nEnd: " + end;
-        bundle.putString(getResources().getString(R.string.message), msg);
-
-        bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.next));
-        bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.dlg_cancel));
-
-        DialogFragment dialog = new NoticeDialogFragment();
-        dialog.setArguments(bundle);
-        dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
-    }
-
-    @Override
-    public void onDialogPositiveClick(DialogFragment dialog) { // add new request
-        Dialog dlg = promptToAddDescription();
+    public void promptCreateDialog() {
+        Dialog dlg = promptToCreateRequest();
         dlg.show();
+
+        TextView startLoc = (TextView)dlg.findViewById(R.id.create_start_value);
+        startLoc.setText(request.getStartLocation().toString());
+
+        TextView endLoc = (TextView)dlg.findViewById(R.id.create_end_value);
+        endLoc.setText(request.getEndLocation().toString());
+
+        TextView dist = (TextView)dlg.findViewById(R.id.create_dist_value);
+        Double distKM = RequestController.getDistanceOfRequest(request);
+        dist.setText(Double.toString(distKM) + " km");
+
+        TextView estFare = (TextView)dlg.findViewById(R.id.create_est_fare_value);
+        Double estFareDb = RequestController.getEstimatedFare(request);
+        String estFareStr = "$" + Double.toString(estFareDb);
+        estFare.setText(estFareStr);
+
+        final EditText payment = (EditText)dlg.findViewById(R.id.enter_payment_value);
+        payment.setHint(estFareStr);
+
+        payment.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) { //TODO move this to request controller
+                String paymentStr = payment.getText().toString();
+
+                Pattern p = Pattern.compile("\\d+\\.\\d{2}");
+                Matcher m = p.matcher(paymentStr);
+                if(m.matches())
+                    request.setPayment(Double.parseDouble(paymentStr));
+            }
+        });
+
 
         final EditText description = (EditText)dlg.findViewById(R.id.description_edit_text);
         description.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -221,13 +230,12 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
         });
     }
 
-    public Dialog promptToAddDescription() {
+    public Dialog promptToCreateRequest() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater(); // Get the layout inflater
 
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(R.layout.dlg_request_description, null))
+        // Inflate and set the layout for the dialog, Pass null as the parent view because its going in the dialog layout
+        builder.setView(inflater.inflate(R.layout.dlg_request_creation, null))
                 .setPositiveButton(R.string.dlg_create, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -244,10 +252,6 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
         return builder.create();
     }
 
-    @Override
-    public void onDialogNegativeClick(DialogFragment dialog) {
-
-    }
     //youtube Android Application Development Tutorial series by thenewboston
     public class Touch extends Overlay {
 

@@ -40,6 +40,7 @@ public class Request implements Serializable {
 
     private boolean status = true; //open is true
     private String description;
+
     private Payment payment;
     //private int confirmationStage = 0; //0 initial, 1 accepted by a driver, 2 confirmed by a rider, 3 finalized by driver
     //private boolean accepted = false;
@@ -186,6 +187,11 @@ public class Request implements Serializable {
     public Double getCost() {
         return this.payment.getActualCost();
     }
+
+    public void setPayment(double payAmt) {
+        this.payment = new Payment(payAmt);
+    }
+
 
     /**
      * Add driver driver.

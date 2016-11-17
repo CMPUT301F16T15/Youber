@@ -6,7 +6,7 @@
     <string name="title_activity_user_profile">UserProfileActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
 
-    <string name="dummy_string">Dummy Str (change me)</string>
+    <string name="dummy_string">(change me)</string>
 
     <string name="open_request">Open Request</string>
     <string name="accepted_by_drivers">Accepted by driver(s)</string>
@@ -30,8 +30,11 @@
     <string name="negativeInput">negativeInput</string>
     <string name="next">Next</string>
 
-    <!--Request Description Dlg-->
+    <!--Request Creation Dlg-->
+    <string name="fair_fare">Estimated Fair Fare:</string>
+    <string name="request_fare">Please enter payment</string>
     <string name="request_desc_title">Please enter a description for the request</string>
+    <string name="request_distance">Travel Distance:</string>
 
     <!--Request View-->
     <string name="request_title">Request</string>
@@ -41,7 +44,6 @@
     <string name="driver_title">Driver:</string>
     <string name="more_options">More Options</string>
     <string name="cancel_request">Cancel Request</string>
-    <string name="fair_fare">Estimated Fair Fare:</string>
     <string name="view_request_map">View Request On Map</string>
     <string name="promptCancelConfirm">Are you sure you want to cancel this request?</string>
     <string name="yes">Yes</string>
