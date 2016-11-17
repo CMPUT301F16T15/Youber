@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.location.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -25,10 +24,9 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.R;
-import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
+import com.youber.cmput301f16t15.youber.notification.NotificationEventReceiver;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
 import com.youber.cmput301f16t15.youber.users.UserController;
@@ -105,6 +103,12 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
 
         UserController.setContext(this);
         RequestCollectionsController.setContext(this);
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        NotificationEventReceiver.setupAlarm(getApplicationContext());
     }
 
     @Override
@@ -375,5 +379,20 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
             }
         }
     }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+
+    // To prevent crash on resuming activity  : interaction with fragments allowed only after Fragments Resumed or in OnCreate
+    // http://www.androiddesignpatterns.com/2013/08/fragment-transaction-commit-state-loss.html
+    @Override
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+        // handleIntent();
+    }
+
 
 }
