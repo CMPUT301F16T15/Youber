@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
     static Marker endMarker;
     static Polyline roadPolyline;
 
+    static UpdateRoadTask async;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -184,6 +186,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
         ((EditText)findViewById(R.id.start_lon_edit)).setText(null);
         ((EditText)findViewById(R.id.end_lat_edit)).setText(null);
         ((EditText)findViewById(R.id.end_lon_edit)).setText(null);
+        async.cancel(true);
         map.getOverlays().remove(roadPolyline);
         map.invalidate();
     }
@@ -326,6 +329,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
 
                         overlayItemArray.add(new OverlayItem("Starting Point", "This is the starting point", startPoint));
                         overlayItemArray.add(new OverlayItem("Destination", "This is the detination point", endPoint));
+                        async = new UpdateRoadTask();
                         getRoadAsync(startPoint, endPoint);
                     }
 
@@ -346,11 +350,12 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
         ArrayList<GeoPoint> waypoints = new ArrayList<GeoPoint>();
         waypoints.add(startPoint);
         waypoints.add(destinationPoint);
-        new UpdateRoadTask().execute(waypoints);
+        async.execute(waypoints);
+
     }
 
 
-    private class UpdateRoadTask extends AsyncTask<Object, Void, Road[]> {
+    public class UpdateRoadTask extends AsyncTask<Object, Void, Road[]> {
 
         protected Road[] doInBackground(Object... params) {
             @SuppressWarnings("unchecked")
