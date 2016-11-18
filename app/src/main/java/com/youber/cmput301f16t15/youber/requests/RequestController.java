@@ -1,5 +1,7 @@
 package com.youber.cmput301f16t15.youber.requests;
 
+import android.util.Log;
+
 import com.youber.cmput301f16t15.youber.users.Driver;
 import com.youber.cmput301f16t15.youber.users.Rider;
 
@@ -112,39 +114,21 @@ public class RequestController
         request.setPaid();
     }
 
-    public static boolean setPaymentAmount(String amt, Request request) {
-        Pattern p = Pattern.compile("\\d+\\.\\d{2}");
-        Matcher m = p.matcher(amt);
 
-        if(m.matches()) {
-            request.setPayment(Double.parseDouble(amt));
+    public static boolean setPaymentAmount(String amt, Request request) throws Exception {
+        try {
+            Double price = Double.parseDouble(amt);
+            request.setPayment(price);
             return true;
+        } catch (Exception e) {
+            Log.i("Error", "Invalid double string" + e.toString());
+            request.setPayment(0);
+            return false;
         }
-
-        request.setPayment(0); // failed so we want to clear it
-        return false;
     }
 
     public static Double getDistanceOfRequest(Request request) {
-        double lat1 = request.getStartLocation().getLat();
-        double lat2 = request.getEndLocation().getLat();
-        double lon1 = request.getStartLocation().getLon();
-        double lon2 = request.getEndLocation().getLon();
-
-        final int R = 6371; // Radius of the earth
-
-        Double latDistance = Math.toRadians(lat2 - lat1);
-        Double lonDistance = Math.toRadians(lon2 - lon1);
-        Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double distance = R * c * 1000; // convert to meters
-        distance = Math.pow(distance, 2);
-
-        distance = Math.sqrt(distance)/1000; //convert to km
-        DecimalFormat df = new DecimalFormat("#.####"); // round it off to 4 decimal places
-        return Double.parseDouble(df.format(distance));
+        return request.getDistance();
     }
 
     public static Double getEstimatedFare(Request request) { // this is $8 base pay and $2/km
@@ -157,21 +141,13 @@ public class RequestController
     }
 
     public static boolean isValidRequest(Request request) {
-        if(request.getCost() != 0 && !request.getDescription().isEmpty() && !request.getRouteDistLen().isEmpty())
+        if(request.getCost() > 0 && !request.getDescription().isEmpty())
             return true;
 
         return false;
     }
 
-    public static void setRouteLenDist(Request request, String routeDesc) {
-        // 14km, 19min
-        Pattern p = Pattern.compile("\\d+\\.?+\\d+km,\\s{1}.*");
-        Matcher m = p.matcher(routeDesc);
-
-        if(!m.matches()) { // Safe guard so coders won't use this improperly (should be used with map)
-            throw new RuntimeException();
-        }
-        else
-            request.setRouteDistLen(routeDesc);
+    public static void setRouteDistance(Request request, Double distance) {
+        request.setDistance(distance);
     }
 }

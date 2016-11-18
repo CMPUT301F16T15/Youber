@@ -70,11 +70,11 @@ public class MainActivity extends AppCompatActivity {
     MapView map;
     Road[] mRoads;
 
+    Double distance = 0.0;
+
     /**
      * Various map fields used to overlay the route on the map
      */
-    long start;
-    long stop;
     int x, y;
     GeoPoint touchedPoint;
     GeoPoint startPoint;
@@ -184,6 +184,8 @@ public class MainActivity extends AppCompatActivity {
 //  Button Click Actions
     public void onNewRequestBtnClick(View view) {
         request = initRequestObj(false);
+        RequestController.setRouteDistance(request, distance);
+
         if(request != null)
             promptToCreateRequest();
     }
@@ -245,7 +247,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 String paymentStr = payment.getText().toString();
-                RequestController.setPaymentAmount(paymentStr, request);
+                try {
+                    RequestController.setPaymentAmount(paymentStr, request);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -373,7 +379,7 @@ public class MainActivity extends AppCompatActivity {
                 mRoadOverlays[i] = roadPolyline;
                 String routeDesc = roads[i].getLengthDurationText(ourActivity, -1);
 
-                initRequestFromMap(routeDesc);
+                distance = roads[i].mLength;
 
                 roadPolyline.setTitle(getString(R.string.app_name) + " - " + routeDesc);
                 roadPolyline.setInfoWindow(new BasicInfoWindow(org.osmdroid.bonuspack.R.layout.bonuspack_bubble, map));
@@ -385,10 +391,5 @@ public class MainActivity extends AppCompatActivity {
                 //to avoid covering the other overlays.
             }
         }
-    }
-
-    private void initRequestFromMap(String routeDesc) {
-        request = initRequestObj(true); // true to throw! bc this means the map didnt fill out the lat lon properly
-        RequestController.setRouteLenDist(request, routeDesc);
     }
 }

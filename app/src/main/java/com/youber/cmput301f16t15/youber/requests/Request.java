@@ -35,7 +35,7 @@ public class Request implements Serializable {
 
     private boolean status = true; //open is true
     private String description = "";
-    private String routeDistLen = "";
+    private Double distance = 0.0;
 
     private Payment payment = new Payment(0);
     private Driver driver;
@@ -234,12 +234,12 @@ public class Request implements Serializable {
         description = s;
     }
 
-    public String getRouteDistLen() {
-        return routeDistLen;
+    public Double getDistance() {
+        return distance;
     }
 
-    public void setRouteDistLen(String str) {
-        this.routeDistLen = str;
+    public void setDistance(Double d) {
+        this.distance = d;
     }
 
 
