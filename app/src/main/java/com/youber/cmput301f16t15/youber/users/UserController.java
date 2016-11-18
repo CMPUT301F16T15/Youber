@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
 import com.youber.cmput301f16t15.youber.misc.Observable;
 
 import java.io.BufferedReader;
@@ -29,7 +30,6 @@ public class UserController {
 
     private final static String FILENAME = "user.sav";
     private static Context c;
-    //private static ArrayList<Listener> listeners = new ArrayList<Listener>();
 
     private static User user = null;
     public static Observable observable = new Observable();
@@ -115,9 +115,7 @@ public class UserController {
      */
     public static void setFirstName(String firstName) {
         user.setFirstName(firstName);
-        saveUser(user);
-        observable.notifyListeners();
-        //notifyObservers();
+        update();
     }
 
     /**
@@ -127,9 +125,7 @@ public class UserController {
      */
     public static void setDateOfBirth(String dateOfBirth) {
         user.setDateOfBirth(dateOfBirth);
-        saveUser(user);
-        observable.notifyListeners();
-        //notifyObservers();
+        update();
     }
 
     /**
@@ -139,9 +135,7 @@ public class UserController {
      */
     public static void setPhoneNumber(String phoneNumber) {
         user.setPhoneNumber(phoneNumber);
-        saveUser(user);
-        observable.notifyListeners();
-        //notifyObservers();
+        update();
     }
 
     /**
@@ -151,9 +145,7 @@ public class UserController {
      */
     public static void setLastName(String lastName) {
         user.setLastName(lastName);
-        saveUser(user);
-        observable.notifyListeners();
-        //notifyObservers();
+        update();
     }
 
     /**
@@ -163,18 +155,18 @@ public class UserController {
      */
     public static void setEmail(String email) {
         user.setEmail(email);
-        observable.notifyListeners();
-        //notifyObservers();
+        update();
     }
 
     public static void setUserType(User.UserType userType)
     {
-
         user.setCurrentUserType(userType);
+        update();
+    }
+
+    private static void update() {
         saveUser(user);
-        observable.notifyListeners();
-        //notifyObservers();
-
-
+        AddUserCommand userCommand = new AddUserCommand(user);
+        observable.notifyListeners(userCommand);
     }
 }

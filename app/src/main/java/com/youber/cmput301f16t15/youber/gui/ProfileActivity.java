@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
+import com.youber.cmput301f16t15.youber.misc.Updater;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
@@ -79,7 +80,7 @@ public class ProfileActivity extends Activity {
                 String lastNameText = lastName.getText().toString();
 
                 UserController.setContext(ProfileActivity.this);
-                UserController.observable.addListener(new ElasticSearchUser());
+                UserController.observable.addListener(new Updater());
 
                 UserController.setDateOfBirth(dateOfBirthText);
                 UserController.setEmail(emailText);
@@ -87,7 +88,6 @@ public class ProfileActivity extends Activity {
                 UserController.setLastName(lastNameText);
 
                 // Does not change in elastic search yet.
-
                 Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();

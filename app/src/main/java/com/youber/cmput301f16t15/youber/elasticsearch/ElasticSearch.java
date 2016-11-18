@@ -5,6 +5,7 @@ import android.util.Log;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
+import com.youber.cmput301f16t15.youber.commands.Command;
 import com.youber.cmput301f16t15.youber.misc.Listener;
 
 import java.util.ArrayList;
@@ -25,14 +26,9 @@ import java.util.ArrayList;
  * @see ElasticSearchController
  */
 
-public class ElasticSearch implements Listener {
+public class ElasticSearch {
 
     private static JestDroidClient jestDroidClient;
-
-    @Override
-    public void update() {
-        Log.i("Update", "Got a notification from a change");
-    }
 
     /**
      * The type Add.

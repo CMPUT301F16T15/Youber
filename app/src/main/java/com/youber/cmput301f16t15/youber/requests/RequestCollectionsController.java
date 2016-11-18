@@ -4,7 +4,11 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.youber.cmput301f16t15.youber.commands.AddRequestCommand;
+import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
+import com.youber.cmput301f16t15.youber.commands.DeleteRequestCommand;
 import com.youber.cmput301f16t15.youber.misc.Observable;
+import com.youber.cmput301f16t15.youber.misc.Updater;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
@@ -38,6 +42,7 @@ import java.util.concurrent.ExecutionException;
 public class RequestCollectionsController {
     private final static String FILENAME_rider = "rider_request_collections.sav";
     private final static String FILENAME_driver ="driver_request_collections.sav";
+    //*************************************dont place android context classes in static fields; memory leak******************************
     private static Context c;
 
     private static RequestCollection riderRequestCollection = new RequestCollection();
@@ -57,6 +62,7 @@ public class RequestCollectionsController {
 
     public static void setContext(Context context) {
         c = context;
+        observable.addListener(new Updater());
     }
 
     /**
@@ -162,8 +168,14 @@ public class RequestCollectionsController {
         requestCollection.add(request);
 
         saveRequestCollections(requestCollection);
-        UserController.observable.notifyListeners();
-        observable.notifyListeners();
+
+        // Commands
+        AddUserCommand addUser = new AddUserCommand(user);
+        UserController.observable.notifyListeners(addUser);
+
+        //Request listener
+        AddRequestCommand add = new AddRequestCommand(request);
+        observable.notifyListeners(add);
     }
 
     public static void deleteRequest(Request request){
@@ -178,8 +190,12 @@ public class RequestCollectionsController {
         ElasticSearchRequest.delete deleteRequest = new ElasticSearchRequest.delete();
         deleteRequest.execute(request);
 
-        UserController.observable.notifyListeners();
-        observable.notifyListeners();
+        // Commands
+        AddUserCommand updateUser = new AddUserCommand(user);
+        UserController.observable.notifyListeners(updateUser);
+
+        DeleteRequestCommand deleteRequestCommand = new DeleteRequestCommand(request);
+        observable.notifyListeners(deleteRequestCommand);
     }
 
     //this is a little weird DRY?? maybe getRequestsByStatus(RequestStatus status) is better

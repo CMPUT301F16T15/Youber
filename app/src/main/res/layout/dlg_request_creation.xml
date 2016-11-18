@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:id="@+id/dlg_request_description">
+
+    <TextView
+        android:id="@+id/create_start_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="20dp"
+        android:textSize="16dp"
+        android:text="@string/start_location_title"/>
+
+    <TextView
+        android:id="@+id/create_start_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_below="@+id/create_start_title"
+        android:textSize="16dp"
+        android:text="@string/dummy_string"/>
+
+    <TextView
+        android:id="@+id/create_end_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_below="@+id/create_start_value"
+        android:textSize="16dp"
+        android:text="@string/end_location_title"/>
+
+    <TextView
+        android:id="@+id/create_end_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_below="@+id/create_end_title"
+        android:textSize="16dp"
+        android:text="@string/dummy_string"/>
+
+    <TextView
+        android:id="@+id/create_distance_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/request_distance"
+        android:textSize="16dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/create_end_value"/>
+
+    <TextView
+        android:id="@+id/create_dist_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="2dp"
+        android:layout_toRightOf="@+id/create_distance_title"
+        android:layout_below="@+id/create_end_value"
+        android:textSize="16dp"
+        android:text="@string/dummy_string"/>
+
+    <TextView
+        android:id="@+id/create_est_fare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fair_fare"
+        android:layout_marginLeft="12dp"
+        android:textSize="16dp"
+        android:layout_below="@id/create_distance_title"/>
+
+    <TextView
+        android:id="@+id/create_est_fare_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/create_distance_title"
+        android:layout_toRightOf="@+id/create_est_fare"
+        android:text="@string/dummy_string"
+        android:textSize="16dp"
+        android:layout_marginLeft="2dp"/>
+
+    <TextView
+        android:id="@+id/enter_payment_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/create_est_fare"
+        android:text="@string/request_fare"
+        android:textSize="16dp"/>
+
+    <EditText
+        android:id="@+id/enter_payment_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/enter_payment_title"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:background="@android:color/white"
+        android:textColor="@color/black"
+        android:textSize="16dp"
+        android:hint="@string/dummy_string"/>
+
+    <TextView
+        android:id="@+id/request_description_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="start"
+        android:layout_marginLeft="12dp"
+        android:layout_below="@+id/enter_payment_value"
+        android:text="@string/request_desc_title"
+        android:textSize="16dp"/>
+
+    <EditText
+        android:id="@+id/description_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/request_description_title"
+        android:gravity="top|left"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:background="@android:color/white"
+        android:textColor="@color/black"
+        android:inputType="textMultiLine"/>
+</RelativeLayout>

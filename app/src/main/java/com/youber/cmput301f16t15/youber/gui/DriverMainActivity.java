@@ -77,6 +77,9 @@ public class DriverMainActivity extends AppCompatActivity {
     static GeoPoint touchedPoint;
     static GeoPoint searchPoint;
 
+    static Marker searchMarker;
+    static Polygon circle;
+
     static double radius = 1;
 
 
@@ -178,6 +181,14 @@ public class DriverMainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void clearMap(View view) {
+        map.getOverlays().remove(searchMarker);
+        map.getOverlays().remove(circle);
+        searchPoint = null;
+        map.invalidate();
+    }
+
     //youtube Android Application Development Tutorial series by thenewboston
     public class Touch extends Overlay {
 
@@ -185,105 +196,97 @@ public class DriverMainActivity extends AppCompatActivity {
         protected void draw(Canvas canvas, MapView mapView, boolean b) {
 
         }
-
-        public boolean onTouchEvent(MotionEvent e, MapView m) {
-            if (e.getAction() == MotionEvent.ACTION_DOWN) {
-                start = e.getEventTime();
-                x = (int) e.getX();
-                y = (int) e.getY();
-                touchedPoint = (GeoPoint) map.getProjection().fromPixels(x, y);
-            }
-            if (e.getAction() == MotionEvent.ACTION_UP) {
-                stop = e.getEventTime();
-            }
-            if (stop - start > 1000) {
-                Geocoder geocoder = new Geocoder(getBaseContext(), Locale.getDefault());
-                try {
-                    List<Address> address = geocoder.getFromLocation(touchedPoint.getLatitude(), touchedPoint.getLongitude(), 1);
-                    if (address.size() > 0) {
-                        String display = "Latitude: " + touchedPoint.getLatitude() + "\n" + "Longitude: " + touchedPoint.getLongitude() + "\n";
-                        for (int i = 0; i < address.get(0).getMaxAddressLineIndex(); i++) {
-                            display += address.get(0).getAddressLine(i) + "\n";
-                        }
-                        Toast t = Toast.makeText(getBaseContext(), display, Toast.LENGTH_LONG);
-                        //t.show();
-
-                        if (searchPoint == null) {
-                            searchPoint = new GeoPoint(touchedPoint.getLatitude(), touchedPoint.getLongitude());
-                            String searchtLat = String.valueOf(searchPoint.getLatitude());
-                            String searchLon = String.valueOf(searchPoint.getLongitude());
-                            Marker searchMarker = new Marker(map);
-                            searchMarker.setPosition(searchPoint);
-                            searchMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                            searchMarker.setTitle("search point");
-                            map.getOverlays().add(searchMarker);
-                            map.invalidate();
-
-                            //http://stackoverflow.com/questions/6424032/android-seekbar-in-dialog
-                            AlertDialog.Builder searchRadiusDialog = new AlertDialog.Builder(ourActivity);
-                            LayoutInflater inflater = (LayoutInflater)ourActivity.getSystemService(LAYOUT_INFLATER_SERVICE);
-                            final  View layout = inflater.inflate(R.layout.search_geolocation_dialog, (ViewGroup)findViewById(R.id.search_radius_dialog));
-                            final TextView radiusText = (TextView)layout.findViewById(R.id.result);
-                            radiusText.setText("1 meters");
-
-                            searchRadiusDialog.setTitle("please set radius to search");
-                            searchRadiusDialog.setView(layout);
-
-
-
-//                            Button searchRadiusButton = (Button)layout.findViewById(R.id.search_radius_button);
-                            SeekBar searchRadiusSeekbar = (SeekBar)layout.findViewById(R.id.search_radius_seekbar);
-                            searchRadiusSeekbar.setMax(2000);
-                            searchRadiusSeekbar.setProgress(1);
-                            searchRadiusSeekbar.setKeyProgressIncrement(50);
-
-
-                            SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
-                                @Override
-                                public void onProgressChanged(SeekBar seekBar, int result, boolean b) {
-                                    radius = result;
-                                    radiusText.setText(result + " meters");
-
-                                }
-
-                                @Override
-                                public void onStartTrackingTouch(SeekBar seekBar) {
-                                }
-
-                                @Override
-                                public void onStopTrackingTouch(SeekBar seekBar) {
-                                }
-                            };
-                            searchRadiusSeekbar.setOnSeekBarChangeListener(seekBarChangeListener);
-
-                            searchRadiusDialog.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    //https://github.com/MKergall/osmbonuspack/wiki/Tutorial_5
-                                    Polygon circle = new Polygon();
-                                    circle.setPoints(Polygon.pointsAsCircle(searchPoint, radius));
-                                    circle.setFillColor(0x6984e1e1);
-                                    circle.setStrokeColor(Color.CYAN);
-                                    circle.setStrokeWidth(2);
-                                    map.getOverlays().add(circle);
-                                    map.invalidate();
-
-                                    dialogInterface.dismiss();
-                                }
-                            });
-
-                            searchRadiusDialog.show();
-
-                        }
+        //http://stackoverflow.com/questions/16665426/get-coordinates-by-clicking-on-map-openstreetmaps
+        @Override
+        public boolean onSingleTapConfirmed(final MotionEvent e, final MapView mapView){
+            Geocoder geocoder = new Geocoder(getBaseContext(), Locale.getDefault());
+            x = (int) e.getX();
+            y = (int) e.getY();
+            touchedPoint = (GeoPoint) map.getProjection().fromPixels(x, y);
+            try {
+                List<Address> address = geocoder.getFromLocation(touchedPoint.getLatitude(), touchedPoint.getLongitude(), 1);
+                if (address.size() > 0) {
+                    String display = "Latitude: " + touchedPoint.getLatitude() + "\n" + "Longitude: " + touchedPoint.getLongitude() + "\n";
+                    for (int i = 0; i < address.get(0).getMaxAddressLineIndex(); i++) {
+                        display += address.get(0).getAddressLine(i) + "\n";
                     }
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                } finally {
+                    Toast t = Toast.makeText(getBaseContext(), display, Toast.LENGTH_LONG);
+                    //t.show();
 
+                    if (searchPoint == null) {
+                        searchPoint = new GeoPoint(touchedPoint.getLatitude(), touchedPoint.getLongitude());
+                        String searchtLat = String.valueOf(searchPoint.getLatitude());
+                        String searchLon = String.valueOf(searchPoint.getLongitude());
+                        searchMarker = new Marker(map);
+                        searchMarker.setPosition(searchPoint);
+                        searchMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                        searchMarker.setTitle("search point");
+                        map.getOverlays().add(searchMarker);
+                        map.invalidate();
+
+                        //http://stackoverflow.com/questions/6424032/android-seekbar-in-dialog
+                        AlertDialog.Builder searchRadiusDialog = new AlertDialog.Builder(ourActivity);
+                        LayoutInflater inflater = (LayoutInflater)ourActivity.getSystemService(LAYOUT_INFLATER_SERVICE);
+                        final  View layout = inflater.inflate(R.layout.search_geolocation_dialog, (ViewGroup)findViewById(R.id.search_radius_dialog));
+                        final TextView radiusText = (TextView)layout.findViewById(R.id.result);
+                        radiusText.setText("1 meters");
+
+                        searchRadiusDialog.setTitle("please set radius to search");
+                        searchRadiusDialog.setView(layout);
+
+
+
+                        SeekBar searchRadiusSeekbar = (SeekBar)layout.findViewById(R.id.search_radius_seekbar);
+                        searchRadiusSeekbar.setMax(2000);
+                        searchRadiusSeekbar.setProgress(1);
+                        searchRadiusSeekbar.setKeyProgressIncrement(50);
+
+
+                        SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+                            @Override
+                            public void onProgressChanged(SeekBar seekBar, int result, boolean b) {
+                                radius = result;
+                                radiusText.setText(result + " meters");
+
+                            }
+
+                            @Override
+                            public void onStartTrackingTouch(SeekBar seekBar) {
+                            }
+
+                            @Override
+                            public void onStopTrackingTouch(SeekBar seekBar) {
+                            }
+                        };
+                        searchRadiusSeekbar.setOnSeekBarChangeListener(seekBarChangeListener);
+
+                        searchRadiusDialog.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //https://github.com/MKergall/osmbonuspack/wiki/Tutorial_5
+                                circle = new Polygon();
+                                circle.setPoints(Polygon.pointsAsCircle(searchPoint, radius));
+                                circle.setFillColor(0x6984e1e1);
+                                circle.setStrokeColor(Color.CYAN);
+                                circle.setStrokeWidth(2);
+                                map.getOverlays().add(circle);
+                                map.invalidate();
+
+                                dialogInterface.dismiss();
+                            }
+                        });
+
+                        searchRadiusDialog.show();
+
+                    }
                 }
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } finally {
+
             }
 
-            return false;
+            return true;
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.youber.cmput301f16t15.youber.misc;
 
+import com.youber.cmput301f16t15.youber.commands.Command;
+
 import java.io.Serializable;
 
 /**
@@ -9,6 +11,6 @@ import java.io.Serializable;
 
 public interface Listener extends Serializable {
 
-    void update();
+    void update(Command c); // take in Command, add, get, update?, delete inherit Command
 
 }
