@@ -142,12 +142,7 @@ public class Request implements Serializable {
      * @return the boolean
      */
     public boolean isClosed() {
-        if (status) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        return !status;
     }
 
     /**

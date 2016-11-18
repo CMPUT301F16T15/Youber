@@ -13,5 +13,7 @@ public class VehicleInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicle_info);
         Button saveVehicleInfo = (Button) findViewById(R.id.saveVehicleInfoButton);
+
+
     }
 }
