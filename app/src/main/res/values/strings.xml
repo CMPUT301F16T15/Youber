@@ -60,5 +60,8 @@
     <string name="signup">Sign Up</string>
     <string name="login">Log In</string>
     <string name="ok">OK</string>
+    <string name="EditVehicleInfo">EDIT VEHICLE INFO</string>
+    <string name="SaveContactInfo">SAVE CONTACT INFO</string>
+    <string name="SaveVehicleInfo">SAVE VEHICLE INFO</string>
 
 </resources>
