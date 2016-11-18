@@ -41,6 +41,7 @@
     <string name="driver_title">Driver:</string>
     <string name="more_options">More Options</string>
     <string name="cancel_request">Cancel Request</string>
+    <string name="accept_request">Accept Request</string>
     <string name="fair_fare">Estimated Fair Fare:</string>
     <string name="view_request_map">View Request On Map</string>
     <string name="promptCancelConfirm">Are you sure you want to cancel this request?</string>

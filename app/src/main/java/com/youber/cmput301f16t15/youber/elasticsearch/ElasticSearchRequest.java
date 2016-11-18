@@ -192,8 +192,8 @@ public class ElasticSearchRequest extends ElasticSearch{
                 ArrayList<Request> requests=searchRequest.get();
                 if(requests.size()==1){
                     Log.i("Request!",requests.get(0).toString());
+                    requestCollection.add(requests.get(0));
                 }
-                requestCollection.add(requests.get(0));
             }
             catch (ExecutionException e){
 

@@ -5,9 +5,11 @@ import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.misc.Observable;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
+import com.youber.cmput301f16t15.youber.users.Rider;
 import com.youber.cmput301f16t15.youber.users.User;
 
 import java.util.ArrayList;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -57,6 +59,15 @@ public class ElasticSearchController extends ElasticSearch{
     }
 
 
+    // do it on the postman side
+    public static Rider getRider(UUID uuid)
+    {
+            ElasticSearchUser.getObjects getter = new ElasticSearchUser.getObjects();
+            getter.execute();
+
+
+            return null;
+    }
 
 
 
