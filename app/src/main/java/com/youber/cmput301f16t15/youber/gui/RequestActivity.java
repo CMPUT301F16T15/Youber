@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.youber.cmput301f16t15.youber.R;
+import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
 import com.youber.cmput301f16t15.youber.requests.RequestController;
@@ -53,9 +54,12 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
                 Dialog dlg = promptDialog(R.layout.dlg_user_info); //test
+                dlg.show();
+
                 driverSelected = i;
 
-                dlg.show();
+                TextView title = (TextView)dlg.findViewById(R.id.usernameInfoTitle);
+                title.setText(driverArray.get(i).getUsername());
 
                 TextView email = (TextView)dlg.findViewById(R.id.emailLink);
                 email.setText(driverArray.get(i).getEmail());
@@ -84,9 +88,13 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
         TextView endLoc = (TextView)findViewById(R.id.end_loc_info);
         endLoc.setText(selectedRequest.getEndLocation().toString());
 
-        TextView estFare = (TextView)findViewById(R.id.est_fare_info);
-        Double estFair = RequestController.getEstimatedFare(selectedRequest);
-        estFare.setText("$" + Double.toString(estFair));
+        TextView priceStr = (TextView)findViewById(R.id.price_value);
+        Double price = RequestController.getPrice(selectedRequest);
+        priceStr.setText(Double.toString(price));
+
+        TextView distStr = (TextView)findViewById(R.id.distance_value);
+        Double dist = RequestController.getDistanceOfRequest(selectedRequest);
+        distStr.setText(Double.toString(dist));
 
         TextView userTitle = (TextView)findViewById(R.id.user_request_title);
         userTitle.setText((userType == User.UserType.driver)? "Rider":"Driver");
@@ -96,16 +104,14 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     protected void onResume() { // update the driver stuff
         super.onResume();
 
-        driverArray = new ArrayList<Driver>();
+        try {
+            driverArray = ElasticSearchController.getAcceptedDrivers(selectedRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         Driver driver1 = new Driver("driver1", "Jess", "Huynh", "10", "7801234567", "test@gmail.com", User.UserType.driver);
-        Driver driver2 = new Driver("driver2", "Caro", "Carlos", "10", "7801112222", "test2@gmail.com", User.UserType.driver);
         driverArray.add(driver1);
-        driverArray.add(driver2);
-
-        // Eventually the stuff on the top will be removed. Uncomment the ElasticSearch
-        //driverArray= ElasticSearchController.getAcceptedDrivers(selectedRequest);
-
         ArrayAdapter<Driver> adapter = new ArrayAdapter<Driver>(this, R.layout.list_item, driverArray);
         driverListView.setAdapter(adapter);
     }

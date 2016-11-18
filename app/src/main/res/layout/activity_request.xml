@@ -73,22 +73,39 @@
         android:textSize="16dp"/>
 
     <TextView
-        android:id="@+id/est_fare_title"
+        android:id="@+id/price_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/end_loc_info"
         android:layout_marginTop="10dp"
-        android:text="@string/fair_fare"
+        android:text="@string/price"
         android:textSize="16dp"/>
 
     <TextView
-        android:id="@+id/est_fare_info"
+        android:id="@+id/price_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/end_loc_info"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="2dp"
-        android:layout_toRightOf="@+id/est_fare_title"
+        android:layout_toRightOf="@+id/price_title"
+        android:text="@string/dummy_string"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:id="@+id/distance_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/price_title"
+        android:textSize="16dp"
+        android:text="@string/distance" />
+
+    <TextView
+        android:id="@+id/distance_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/distance_title"
+        android:layout_below="@+id/price_title"
         android:text="@string/dummy_string"
         android:textSize="16dp"/>
 
@@ -96,9 +113,9 @@
         android:id="@+id/user_request_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/est_fare_title"
+        android:layout_below="@id/distance_title"
         android:layout_marginTop="30dp"
-        android:text="@string/dummy_string"
+        android:text="@string/driver_title"
         android:textSize="16dp"/>
 
     <ListView

@@ -21,8 +21,6 @@ import java.util.regex.Pattern;
  */
 public class RequestController
 {
-
-
     /**
      * Confirm request.
      *
@@ -32,27 +30,6 @@ public class RequestController
     public static void confirmRequest(Request request, Driver driver1)
     {
         driver1.confirm(request);
-    }
-
-    /**
-     * Accept request.
-     *
-     * @param request the given request
-     */
-//    public static void acceptRequest(Request request)
-//    {
-//        request.accept();
-//    }
-
-    /**
-     * Search request.
-     *
-     * @param rider the request's rider
-     * @return the request
-     */
-    public static Request searchRequest(Rider rider) //********************** "dont worry about it" - Aaron *********************************
-    {
-        return null;
     }
 
     /**
@@ -136,7 +113,7 @@ public class RequestController
         double dist = getDistanceOfRequest(request);
         estFare += (2)*dist;
 
-        DecimalFormat df = new DecimalFormat("#.##"); // round it off to 4 decimal places
+        DecimalFormat df = new DecimalFormat("#.##"); // round it off to 2 decimal places
         return Double.parseDouble(df.format(estFare));
     }
 
@@ -148,6 +125,12 @@ public class RequestController
     }
 
     public static void setRouteDistance(Request request, Double distance) {
-        request.setDistance(distance);
+        DecimalFormat df = new DecimalFormat("#.####"); // round it off to 4 decimal places
+        Double roundedDist = Double.parseDouble(df.format(distance));
+        request.setDistance(roundedDist);
+    }
+
+    public static Double getPrice(Request selectedRequest) {
+        return selectedRequest.getCost();
     }
 }
