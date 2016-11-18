@@ -28,13 +28,6 @@ import java.util.concurrent.ExecutionException;
 public class ElasticSearchController extends ElasticSearch{
 
     /**
-     * This observable is used to get around the need for multiple inheritance.
-     * @see Observable
-     */
-    public static Observable observable = new Observable();
-
-
-    /**
      * Do a search for a list of requests
      * @throws InterruptedException
      * @throws ExecutionException

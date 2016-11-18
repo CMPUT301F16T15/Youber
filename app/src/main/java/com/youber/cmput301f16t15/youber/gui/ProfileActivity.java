@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
+import com.youber.cmput301f16t15.youber.misc.Updater;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
@@ -58,6 +59,15 @@ public class ProfileActivity extends Activity {
 
 
         Button saveInfo = (Button) findViewById(R.id.saveInfo);
+        Button vehicleInfo = (Button) findViewById(R.id.editVehicleInfo);
+
+        // Hide vehicle info button for riders
+        //http://stackoverflow.com/questions/4127725/how-can-i-remove-a-button-or-make-it-invisible-in-android
+        // Author: Konstantin Burov
+
+        if(user.getCurrentUserType() == User.UserType.rider){
+            vehicleInfo.setVisibility(View.GONE);
+        }
 
         saveInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +80,7 @@ public class ProfileActivity extends Activity {
                 String lastNameText = lastName.getText().toString();
 
                 UserController.setContext(ProfileActivity.this);
-                UserController.observable.addListener(new ElasticSearchUser());
+                UserController.observable.addListener(new Updater());
 
                 UserController.setDateOfBirth(dateOfBirthText);
                 UserController.setEmail(emailText);
@@ -78,15 +88,20 @@ public class ProfileActivity extends Activity {
                 UserController.setLastName(lastNameText);
 
                 // Does not change in elastic search yet.
-
                 Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
 
-
-
+        vehicleInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(ProfileActivity.this, VehicleInfoActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
 }

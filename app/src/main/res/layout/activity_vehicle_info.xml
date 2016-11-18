@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_vehicle_info"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:theme="@android:style/Theme.Holo"
+    tools:context="com.youber.cmput301f16t15.youber.gui.VehicleInfoActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:layout_alignTop="@+id/userSignupText"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp">
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/lightGreen"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="VEHICLE INFO"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        android:id="@+id/vehicleInfoText"
+        android:layout_below="@+id/toolbar"
+        android:layout_toEndOf="@+id/vehicleMake"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="63dp" />
+
+    <TextView
+        android:text="Model"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:id="@+id/vehicleModel"
+        android:layout_alignBottom="@+id/editTextModel"
+        android:layout_alignStart="@+id/vehicleYear" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vehicleMake"
+        android:textSize="18sp"
+        android:text="Make:"
+        android:layout_marginStart="29dp"
+        android:layout_alignBottom="@+id/editTextMake"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Year:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:id="@+id/vehicleYear"
+        android:layout_alignBottom="@+id/editTextYear"
+        android:layout_alignStart="@+id/vehicleMake" />
+
+    <TextView
+        android:text="Colour:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:id="@+id/vehicleColour"
+        android:layout_alignBottom="@+id/editTextColour"
+        android:layout_alignStart="@+id/vehicleMake" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:background="@color/lightGreen"
+        android:ems="10"
+        android:layout_height="35sp"
+        android:id="@+id/editTextModel"
+        android:layout_below="@+id/editTextMake"
+        android:layout_alignStart="@+id/editTextMake"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="35sp"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:textColor="@color/black"
+        android:background="@color/lightGreen"
+        android:id="@+id/editTextYear"
+        android:layout_below="@+id/editTextModel"
+        android:layout_alignStart="@+id/editTextModel"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="35sp"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextColour"
+        android:textColor="@color/black"
+        android:background="@color/lightGreen"
+        android:layout_below="@+id/editTextYear"
+        android:layout_alignStart="@+id/editTextYear"
+        android:layout_marginTop="5dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="35sp"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextMake"
+        android:textColor="@color/black"
+        android:background="@color/lightGreen"
+        android:layout_marginTop="53dp"
+        android:layout_below="@+id/vehicleInfoText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="5dp" />
+
+    <Button
+        android:text="@string/SaveVehicleInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/saveVehicleInfoButton"
+        android:layout_alignStart="@+id/vehicleColour"
+        android:layout_alignEnd="@+id/editTextColour"
+        android:backgroundTint="@color/grey"
+        android:textColor="@color/black"/>
+
+</RelativeLayout>

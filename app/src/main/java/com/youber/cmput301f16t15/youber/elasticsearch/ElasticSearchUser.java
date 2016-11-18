@@ -3,6 +3,7 @@ package com.youber.cmput301f16t15.youber.elasticsearch;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.youber.cmput301f16t15.youber.commands.Command;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
@@ -27,18 +28,6 @@ import io.searchbox.core.Search;
  * @see ElasticSearch
  */
 public class ElasticSearchUser extends ElasticSearch {
-
-    /**
-     * Update the request ID's if there has been a change (addition/removal)
-     * @see add
-     */
-    @Override
-    public void update()
-    {
-        User user = UserController.getUser();
-        ElasticSearchUser.add adder = new ElasticSearchUser.add();
-        adder.execute(user);
-    }
     /**
      * Add a request to the server.
      */
