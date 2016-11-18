@@ -135,6 +135,7 @@ public class Request implements Serializable {
      * @return the boolean
      */
     public boolean isClosed() {
+        //***********************can be simplified to !status rather than two if statements****************************
         if (status) {
             return false;
         }

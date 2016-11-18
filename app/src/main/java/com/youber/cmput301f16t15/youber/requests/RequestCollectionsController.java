@@ -42,6 +42,7 @@ import java.util.concurrent.ExecutionException;
 public class RequestCollectionsController {
     private final static String FILENAME_rider = "rider_request_collections.sav";
     private final static String FILENAME_driver ="driver_request_collections.sav";
+    //*************************************dont place android context classes in static fields; memory leak******************************
     private static Context c;
 
     private static RequestCollection riderRequestCollection = new RequestCollection();

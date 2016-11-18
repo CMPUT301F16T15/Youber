@@ -56,12 +56,24 @@
 
     <Button
         android:id="@+id/newRequestButton"
-        android:layout_width="110dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:text="@string/new_request_btn"
         android:background="@color/lightGreen"
         android:textColor="@android:color/white"
         android:onClick="onNewRequestBtnClick" />
+
+    <Button
+        android:text="Clear"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/clear_button"
+        android:onClick="clearMap"
+        android:background="@color/lightGreen"
+        android:textColor="@android:color/white"
+        />
 
 </RelativeLayout>

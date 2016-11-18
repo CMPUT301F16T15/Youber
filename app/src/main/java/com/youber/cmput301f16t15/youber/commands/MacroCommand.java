@@ -29,6 +29,7 @@ public class MacroCommand {
         for(Command c : commands) {
             if(!isNetworkAvailable())
                 break;
+            //***********************************can be from c.getExecutionState() == false to !c.getExecutionState()********************
             else if (c.getExecutionState() == false)
                     c.execute();
         }

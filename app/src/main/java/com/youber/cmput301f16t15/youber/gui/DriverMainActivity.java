@@ -77,6 +77,9 @@ public class DriverMainActivity extends AppCompatActivity {
     static GeoPoint touchedPoint;
     static GeoPoint searchPoint;
 
+    static Marker searchMarker;
+    static Polygon circle;
+
     static double radius = 1;
 
 
@@ -178,6 +181,14 @@ public class DriverMainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void clearMap(View view) {
+        map.getOverlays().remove(searchMarker);
+        map.getOverlays().remove(circle);
+        searchPoint = null;
+        map.invalidate();
+    }
+
     //youtube Android Application Development Tutorial series by thenewboston
     public class Touch extends Overlay {
 
@@ -206,7 +217,7 @@ public class DriverMainActivity extends AppCompatActivity {
                         searchPoint = new GeoPoint(touchedPoint.getLatitude(), touchedPoint.getLongitude());
                         String searchtLat = String.valueOf(searchPoint.getLatitude());
                         String searchLon = String.valueOf(searchPoint.getLongitude());
-                        Marker searchMarker = new Marker(map);
+                        searchMarker = new Marker(map);
                         searchMarker.setPosition(searchPoint);
                         searchMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
                         searchMarker.setTitle("search point");
@@ -225,7 +236,6 @@ public class DriverMainActivity extends AppCompatActivity {
 
 
 
-//                            Button searchRadiusButton = (Button)layout.findViewById(R.id.search_radius_button);
                         SeekBar searchRadiusSeekbar = (SeekBar)layout.findViewById(R.id.search_radius_seekbar);
                         searchRadiusSeekbar.setMax(2000);
                         searchRadiusSeekbar.setProgress(1);
@@ -254,7 +264,7 @@ public class DriverMainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //https://github.com/MKergall/osmbonuspack/wiki/Tutorial_5
-                                Polygon circle = new Polygon();
+                                circle = new Polygon();
                                 circle.setPoints(Polygon.pointsAsCircle(searchPoint, radius));
                                 circle.setFillColor(0x6984e1e1);
                                 circle.setStrokeColor(Color.CYAN);

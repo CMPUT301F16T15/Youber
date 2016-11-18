@@ -94,7 +94,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
         TextView distStr = (TextView)findViewById(R.id.distance_value);
         Double dist = RequestController.getDistanceOfRequest(selectedRequest);
-        distStr.setText(Double.toString(dist));
+        distStr.setText(Double.toString(dist) + getString(R.string.km));
 
         TextView userTitle = (TextView)findViewById(R.id.user_request_title);
         userTitle.setText((userType == User.UserType.driver)? "Rider":"Driver");

@@ -79,7 +79,9 @@ public class MainActivity extends AppCompatActivity {
     GeoPoint touchedPoint;
     GeoPoint startPoint;
     GeoPoint endPoint;
-
+    static Marker startMarker;
+    static Marker endMarker;
+    static Polyline roadPolyline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,6 +178,19 @@ public class MainActivity extends AppCompatActivity {
         return new Request(start, end);
     }
 
+    public void clearMap(View view) {
+        map.getOverlays().remove(startMarker);
+        map.getOverlays().remove(endMarker);
+        startPoint = null;
+        endPoint = null;
+        ((EditText)findViewById(R.id.start_lat_edit)).setText(null);
+        ((EditText)findViewById(R.id.start_lon_edit)).setText(null);
+        ((EditText)findViewById(R.id.end_lat_edit)).setText(null);
+        ((EditText)findViewById(R.id.end_lon_edit)).setText(null);
+        map.getOverlays().remove(roadPolyline);
+        map.invalidate();
+    }
+
     /**
      * On new request btn click.
      *
@@ -239,7 +254,6 @@ public class MainActivity extends AppCompatActivity {
 
         final EditText payment = (EditText)dlg.findViewById(R.id.enter_payment_value);
         payment.setHint(estFareStr);
-
         payment.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -254,7 +268,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
 
         final EditText description = (EditText)dlg.findViewById(R.id.description_edit_text);
         description.addTextChangedListener(new TextWatcher() {
@@ -300,12 +313,13 @@ public class MainActivity extends AppCompatActivity {
                         String startLon = String.valueOf(startPoint.getLongitude());
                         ((EditText)findViewById(R.id.start_lat_edit)).setText(startLat);
                         ((EditText)findViewById(R.id.start_lon_edit)).setText(startLon);
-                        Marker startMarker = new Marker(map);
+                        startMarker = new Marker(map);
                         startMarker.setPosition(startPoint);
                         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
                         startMarker.setTitle("start point");
                         map.getOverlays().add(startMarker);
                         map.invalidate();
+                        //************************************unused toast***********************************
                         Toast.makeText(getBaseContext(), "start location is set", Toast.LENGTH_LONG);
                     } else if (endPoint == null) {
                         endPoint = new GeoPoint(touchedPoint.getLatitude(), touchedPoint.getLongitude());
@@ -313,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
                         String endLon = String.valueOf(endPoint.getLongitude());
                         ((EditText)findViewById(R.id.end_lat_edit)).setText(endLat);
                         ((EditText)findViewById(R.id.end_lon_edit)).setText(endLon);
-                        Marker endMarker = new Marker(map);
+                        endMarker = new Marker(map);
                         endMarker.setPosition(endPoint);
                         endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
                         endMarker.setTitle("end point");
@@ -375,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
             Polyline[] mRoadOverlays = new Polyline[roads.length];
             List<Overlay> mapOverlays = map.getOverlays();
             for (int i = 0; i < roads.length; i++) {
-                Polyline roadPolyline = RoadManager.buildRoadOverlay(roads[i]);
+                roadPolyline = RoadManager.buildRoadOverlay(roads[i]);
                 mRoadOverlays[i] = roadPolyline;
                 String routeDesc = roads[i].getLengthDurationText(ourActivity, -1);
 
