@@ -35,6 +35,11 @@ public class User implements Serializable {
     private String phoneNumber;
     private String email;
 
+    private String make;
+    private String model;
+    private String year;
+    private String colour;
+
     /**
      * The enum User type.
      */
@@ -211,6 +216,22 @@ public class User implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getMake() { return make; }
+
+    public void setMake(String make){ this.make = make;}
+
+    public String getModel() { return model;}
+
+    public void setModel(String model) { this.model = model;}
+
+    public String getYear() { return year;}
+
+    public void setYear(String year) { this.year = year;}
+
+    public String getColour() {return colour;}
+
+    public void setColour(String colour){this.colour = colour;}
 
 //    public ArrayList<UUID> getRequestUUIDs() { // note this returns the relavant uuids respective to the current user type
 //        if(currentUserType == UserType.rider)
