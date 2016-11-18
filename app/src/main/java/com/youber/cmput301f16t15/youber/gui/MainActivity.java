@@ -77,7 +77,9 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
     GeoPoint touchedPoint;
     GeoPoint startPoint;
     GeoPoint endPoint;
-
+    static Marker startMarker;
+    static Marker endMarker;
+    static Polyline roadPolyline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,6 +175,19 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
         promptConfirmDialog(view);
     }
 
+    public void clearMap(View view) {
+        map.getOverlays().remove(startMarker);
+        map.getOverlays().remove(endMarker);
+        startPoint = null;
+        endPoint = null;
+        ((EditText)findViewById(R.id.start_lat_edit)).setText(null);
+        ((EditText)findViewById(R.id.start_lon_edit)).setText(null);
+        ((EditText)findViewById(R.id.end_lat_edit)).setText(null);
+        ((EditText)findViewById(R.id.end_lon_edit)).setText(null);
+        map.getOverlays().remove(roadPolyline);
+        map.invalidate();
+    }
+
 
     /**
      * Prompt confirm dialog.
@@ -227,6 +242,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
+        //********************************should not pass a null as the view root**********************************
         builder.setView(inflater.inflate(R.layout.dlg_request_description, null))
                 .setPositiveButton(R.string.dlg_create, new DialogInterface.OnClickListener() {
                     @Override
@@ -279,12 +295,13 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
                         String startLon = String.valueOf(startPoint.getLongitude());
                         ((EditText)findViewById(R.id.start_lat_edit)).setText(startLat);
                         ((EditText)findViewById(R.id.start_lon_edit)).setText(startLon);
-                        Marker startMarker = new Marker(map);
+                        startMarker = new Marker(map);
                         startMarker.setPosition(startPoint);
                         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
                         startMarker.setTitle("start point");
                         map.getOverlays().add(startMarker);
                         map.invalidate();
+                        //************************************unused toast***********************************
                         Toast.makeText(getBaseContext(), "start location is set", Toast.LENGTH_LONG);
                     } else if (endPoint == null) {
                         endPoint = new GeoPoint(touchedPoint.getLatitude(), touchedPoint.getLongitude());
@@ -292,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
                         String endLon = String.valueOf(endPoint.getLongitude());
                         ((EditText)findViewById(R.id.end_lat_edit)).setText(endLat);
                         ((EditText)findViewById(R.id.end_lon_edit)).setText(endLon);
-                        Marker endMarker = new Marker(map);
+                        endMarker = new Marker(map);
                         endMarker.setPosition(endPoint);
                         endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
                         endMarker.setTitle("end point");
@@ -354,7 +371,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
             Polyline[] mRoadOverlays = new Polyline[roads.length];
             List<Overlay> mapOverlays = map.getOverlays();
             for (int i = 0; i < roads.length; i++) {
-                Polyline roadPolyline = RoadManager.buildRoadOverlay(roads[i]);
+                roadPolyline = RoadManager.buildRoadOverlay(roads[i]);
                 mRoadOverlays[i] = roadPolyline;
                 String routeDesc = roads[i].getLengthDurationText(ourActivity, -1);
                 roadPolyline.setTitle(getString(R.string.app_name) + " - " + routeDesc);

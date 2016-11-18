@@ -31,6 +31,7 @@ public class NoticeDialogFragment extends DialogFragment {
          *
          * @param dialog the dialog
          */
+        //***************************************redundant public***********************************
         public void onDialogNegativeClick(DialogFragment dialog);
     }
 
