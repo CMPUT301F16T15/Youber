@@ -244,6 +244,11 @@ public class User implements Serializable {
         driverUserInfo.getConfirmedRequests().add(uuid);
     }
 
+    public void deleteUUIDFromAccepted(UUID uuid)
+    {
+        driverUserInfo.getAcceptedRequests().remove(uuid);
+    }
+
 
     public void addRequesttUUID(UUID uuid){
         if(currentUserType == UserType.rider)
