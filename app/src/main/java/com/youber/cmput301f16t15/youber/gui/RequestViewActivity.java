@@ -12,7 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.youber.cmput301f16t15.youber.R;
+
 import com.youber.cmput301f16t15.youber.commands.MacroCommand;
+
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
@@ -75,17 +77,20 @@ RequestViewActivity extends AppCompatActivity {
         requestArray = new ArrayList<Request>();
         requestArray.addAll(requests.values());
 
-        ArrayAdapter<Request> adapter = new ArrayAdapter<Request>(this, R.layout.list_item, requestArray)
-        {
+
+//        http://stackoverflow.com/questions/20809272/android-change-listview-item-text-color
+        ArrayAdapter<Request> adapter = new ArrayAdapter<Request>(this, R.layout.list_item, requestArray) {
+
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
 
                 UUID requestUUID = requestArray.get(position).getUUID();
-                /*
+
+
                 if (MacroCommand.isRequestContained(requestUUID)) {
                     view.setBackgroundColor(Color.LTGRAY);
-                }*/
+                }
                 if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.acceptedByDrivers))
                 {
                     view.setBackgroundColor(getResources().getColor(R.color.orange));
@@ -100,18 +105,24 @@ RequestViewActivity extends AppCompatActivity {
                     view.setBackgroundColor(getResources().getColor(R.color.paleGreen));
 
                 }
-                else if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.completed))
-                {
+                else if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.completed)) {
                     view.setBackgroundColor(getResources().getColor(R.color.green));
-                }
 
+                }
                 return view;
             }
         };
+
         requestListView.setAdapter(adapter);
 
 
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MacroCommand.execute(); // try to execute on resume!
     }
 }
