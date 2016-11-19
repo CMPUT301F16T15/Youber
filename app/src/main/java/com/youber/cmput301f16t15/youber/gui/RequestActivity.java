@@ -36,7 +36,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
     RelativeLayout layout;
     ListView driverListView;
-    ArrayList<Driver> driverArray = new ArrayList<Driver>();
+    ArrayList<User> driverArray = new ArrayList<User>();
     int driverSelected;
     Request selectedRequest;
     User.UserType userType;
@@ -111,9 +111,9 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
             e.printStackTrace();
         }
 
-        Driver driver1 = new Driver("driver1", "Jess", "Huynh", "10", "7801234567", "test@gmail.com", User.UserType.driver);
-        driverArray.add(driver1);
-        ArrayAdapter<Driver> adapter = new ArrayAdapter<Driver>(this, R.layout.list_item, driverArray);
+        //Driver driver1 = new Driver("driver1", "Jess", "Huynh", "10", "7801234567", "test@gmail.com", User.UserType.driver);
+        //driverArray.add(driver1);
+        ArrayAdapter<User> adapter = new ArrayAdapter<User>(this, R.layout.list_item, driverArray);
         driverListView.setAdapter(adapter);
     }
 
@@ -173,7 +173,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     }
 
     public void onPhoneNumberClick(View view) {
-        Driver driver = driverArray.get(driverSelected);
+        User driver = driverArray.get(driverSelected);
 
         Intent intent = new Intent(Intent.ACTION_CALL);
         intent.setData(Uri.parse("tel:" + driver.getPhoneNumber()));
@@ -181,7 +181,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     }
 
     public void onEmailClick(View view) {
-        Driver driver = driverArray.get(driverSelected);
+        User driver = driverArray.get(driverSelected);
 
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");

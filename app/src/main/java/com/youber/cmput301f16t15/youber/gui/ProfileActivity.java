@@ -86,6 +86,7 @@ public class ProfileActivity extends Activity {
                 UserController.setEmail(emailText);
                 UserController.setFirstName(firstNameText);
                 UserController.setLastName(lastNameText);
+                UserController.setPhoneNumber(phoneNumText);
 
                 // Does not change in elastic search yet.
                 Intent intent = new Intent(ProfileActivity.this, MainActivity.class);

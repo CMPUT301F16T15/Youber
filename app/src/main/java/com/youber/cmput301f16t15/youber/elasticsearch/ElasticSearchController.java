@@ -60,23 +60,24 @@ public class ElasticSearchController extends ElasticSearch{
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    public static ArrayList<Driver> getAcceptedDrivers(Request request) throws Exception
+    public static ArrayList<User> getAcceptedDrivers(Request request) throws Exception
     {
-        ElasticSearchUser.getObjects getter = new ElasticSearchUser.getObjects();
-        getter.execute();
-        ArrayList<Driver> drivers = new ArrayList<Driver>();
+
+        String query =
+        "{\n" +
+                "    \"query\" : {\n" +
+                "        \"match\" : {\n" +
+                "            \"acceptedRequests\" : \""+request.getUUID().toString()+"\"\n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
+        ElasticSearchUser.getUserByRequestUUID getter = new ElasticSearchUser.getUserByRequestUUID();
+        getter.execute(query);
+
         try {
             ArrayList<User> users = getter.get();
+            return users;
 
-            for (User user: users)
-            {
-
-                if (user.getDriverUUIDs().contains(request.getUUID()))
-                {
-                    drivers.add((Driver)user);
-                }
-
-            }
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -84,7 +85,7 @@ public class ElasticSearchController extends ElasticSearch{
             e.printStackTrace();
         }
 
-        return drivers;
+        return null;
     }
 
     /**

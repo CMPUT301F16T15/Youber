@@ -160,6 +160,7 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
         RequestCollectionsController.addRequest(selectedRequest);
         finish();
 
+
     }
 
     @Override
