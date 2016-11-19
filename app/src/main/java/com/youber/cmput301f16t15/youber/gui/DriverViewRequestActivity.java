@@ -42,6 +42,12 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
         setSupportActionBar(toolbar);
 
         final TextView username = (TextView) findViewById(R.id.driverUsernameInput);
+
+        UUID selectedRequestUUID = (UUID)getIntent().getExtras().getSerializable("uuid");
+        selectedRequest = RequestCollectionsController.getRequest(selectedRequestUUID);
+        rider = ElasticSearchController.getRider(selectedRequestUUID);
+
+
         username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,13 +128,8 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
         super.onStart();
 
 
-        UUID selectedRequestUUID = (UUID)getIntent().getExtras().getSerializable("uuid");
-        selectedRequest = RequestCollectionsController.getRequest(selectedRequestUUID);
-
         TextView status = (TextView) findViewById(R.id.driverViewStatusUpdate);
         status.setText(selectedRequest.getCurrentStatus().toString());
-
-        rider = ElasticSearchController.getRider(selectedRequestUUID);
         if (rider != null)
         {
             TextView username = (TextView) findViewById(R.id.driverUsernameInput);
