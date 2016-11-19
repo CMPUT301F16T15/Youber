@@ -3,6 +3,7 @@ package com.youber.cmput301f16t15.youber.gui;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,7 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
 
     Button cancel;
     Request selectedRequest;
+    User rider;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +41,28 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        final TextView username = (TextView) findViewById(R.id.driverUsernameInput);
+        username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                username.setTextColor(getResources().getColor(R.color.lightGreen));
+                Dialog dlg = promptDialog(R.layout.dlg_user_info); //test
+                dlg.show();
+
+
+                TextView title = (TextView)dlg.findViewById(R.id.usernameInfoTitle);
+                title.setText(rider.getUsername());
+
+                TextView email = (TextView)dlg.findViewById(R.id.emailLink);
+                email.setText(rider.getEmail());
+
+                TextView phone = (TextView) dlg.findViewById(R.id.phoneNumberLink);
+                phone.setText(rider.getPhoneNumber());
+            }
+        });
+
         Button optionsButton = (Button) findViewById(R.id.options);
+
         optionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +75,7 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
             }
 
         });
+
 
 
     }
@@ -104,7 +128,7 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
         TextView status = (TextView) findViewById(R.id.driverViewStatusUpdate);
         status.setText(selectedRequest.getCurrentStatus().toString());
 
-        User rider = ElasticSearchController.getRider(selectedRequestUUID);
+        rider = ElasticSearchController.getRider(selectedRequestUUID);
         if (rider != null)
         {
             TextView username = (TextView) findViewById(R.id.driverUsernameInput);
@@ -149,6 +173,12 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
 
             return true;
         }
+        else if (id == R.id.action_switch_user)
+        {
+            Intent intent = new Intent(this, UserTypeActivity.class);
+            startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -166,5 +196,24 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
 
+    }
+
+    public void onPhoneNumberClick(View view) {
+
+
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:" + rider.getPhoneNumber()));
+        startActivity(intent);
+    }
+
+    public void onEmailClick(View view) {
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("plain/text");
+        intent.putExtra(Intent.EXTRA_EMAIL, rider.getEmail());
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.youber_email_subject));
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.email_body));
+
+        startActivity(Intent.createChooser(intent, "Send mail..."));
     }
 }

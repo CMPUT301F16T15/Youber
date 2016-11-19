@@ -13,6 +13,8 @@ import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
+import com.youber.cmput301f16t15.youber.users.User;
+import com.youber.cmput301f16t15.youber.users.UserController;
 
 import java.util.ArrayList;
 
@@ -41,9 +43,17 @@ RequestViewActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
-                Intent intent = new Intent(RequestViewActivity.this, RequestActivity.class);
-                intent.putExtra("uuid", requestArray.get(i).getUUID());
-                startActivity(intent);
+                if (UserController.getUser().getCurrentUserType().equals(User.UserType.rider)) {
+                    Intent intent = new Intent(RequestViewActivity.this, RequestActivity.class);
+                    intent.putExtra("uuid", requestArray.get(i).getUUID());
+                    startActivity(intent);
+                }
+                else
+                {
+                    Intent intent = new Intent(RequestViewActivity.this, DriverViewRequestActivity.class);
+                    intent.putExtra("uuid", requestArray.get(i).getUUID());
+                    startActivity(intent);
+                }
             }
         });
 

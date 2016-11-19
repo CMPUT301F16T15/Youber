@@ -135,12 +135,30 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(resource, null))
-                // Add action buttons
-                .setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
-                });
+
+        if (resource==R.layout.request_more_options) {
+            builder.setView(inflater.inflate(resource, null))
+                    // Add action buttons
+                    .setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    });
+        }
+        else if (resource==R.layout.dlg_user_info)
+        {
+            builder.setView(inflater.inflate(resource, null))
+                    // Add action buttons
+                    .setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }}).setPositiveButton(R.string.dlg_accept, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+
+                    // click on accept
+                }})
+
+
+            ;
+        }
 
         return builder.create();
     }

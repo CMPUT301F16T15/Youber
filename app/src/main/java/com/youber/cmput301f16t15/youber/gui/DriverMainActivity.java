@@ -178,9 +178,16 @@ public class DriverMainActivity extends AppCompatActivity {
 
             return true;
         }
+        else if (id == R.id.action_switch_user)
+        {
+            Intent intent = new Intent(this, UserTypeActivity.class);
+            startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
+
 
     public void clearMap(View view) {
         map.getOverlays().remove(searchMarker);
