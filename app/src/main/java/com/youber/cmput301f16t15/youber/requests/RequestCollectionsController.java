@@ -217,7 +217,7 @@ public class RequestCollectionsController {
 
         Collection<Request> requests = requestsHash.values();
         for(Request r: requests) {
-            if(r.getCurrentStatus() == Request.RequestStatus.closed)
+            if(r.getCurrentStatus() == Request.RequestStatus.completed)
                 closedRequests.add(r);
         }
 
@@ -249,4 +249,22 @@ public class RequestCollectionsController {
 
         return acceptedRequests;
     }
+
+    public static Request getRequest(UUID uuid)
+    {
+        ElasticSearchRequest.getObjects getter = new ElasticSearchRequest.getObjects();
+        getter.execute(uuid.toString());
+
+        try {
+            Request request = getter.get().get(0);
+            return request;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 }
