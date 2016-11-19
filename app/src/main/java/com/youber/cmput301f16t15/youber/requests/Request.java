@@ -33,16 +33,11 @@ public class Request implements Serializable {
     double [] startLocation =new double[2];
     double [] endLocation= new double[2];
 
-    /**
-     * The End location.
-     */
-
-
     private boolean status = true; //open is true
-    private String description;
-    private Payment payment;
-    //private int confirmationStage = 0; //0 initial, 1 accepted by a driver, 2 confirmed by a rider, 3 finalized by driver
-    //private boolean accepted = false;
+    private String description = "";
+    private Double distance = 0.0;
+
+    private Payment payment = new Payment(0);
     private Driver driver;
 
     public Driver getDriver() {
@@ -76,8 +71,6 @@ public class Request implements Serializable {
         startLocation[1] = location1.getLon();
         endLocation[0] = location2.getLat();
         endLocation[1] = location2.getLon();
-
-
 
         uuID = UUID.randomUUID();
         currentStatus = RequestStatus.opened;
@@ -142,6 +135,7 @@ public class Request implements Serializable {
      * @return the boolean
      */
     public boolean isClosed() {
+        //***********************can be simplified to !status rather than two if statements****************************
         if (status) {
             return false;
         }
@@ -186,6 +180,11 @@ public class Request implements Serializable {
     public Double getCost() {
         return this.payment.getActualCost();
     }
+
+    public void setPayment(double payAmt) {
+        this.payment = new Payment(payAmt);
+    }
+
 
     /**
      * Add driver driver.
@@ -235,6 +234,15 @@ public class Request implements Serializable {
     public void setDescription(String s) {
         description = s;
     }
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double d) {
+        this.distance = d;
+    }
+
 
     public RequestStatus getCurrentStatus() {
         return currentStatus;

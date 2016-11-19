@@ -51,6 +51,9 @@
         <activity
             android:name=".gui.DriverSearchListActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".gui.VehicleInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".gui.DriverViewRequestActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

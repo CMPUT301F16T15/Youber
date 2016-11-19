@@ -164,6 +164,26 @@ public class UserController {
         update();
     }
 
+    public static void setVehicleMake(String make){
+        user.setMake(make);
+        update();
+    }
+
+    public static void setVehicleModel(String model){
+        user.setModel(model);
+        update();
+    }
+
+    public static void setVehicleYear(String year){
+        user.setYear(year);
+        update();
+    }
+
+    public static void setVehicleColour(String colour){
+        user.setColour(colour);
+        update();
+    }
+
     private static void update() {
         saveUser(user);
         AddUserCommand userCommand = new AddUserCommand(user);

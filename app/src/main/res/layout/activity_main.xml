@@ -27,8 +27,9 @@
 
     <org.osmdroid.views.MapView android:id="@+id/map"
         android:layout_width="wrap_content"
-        android:layout_height="350dip"
+        android:layout_height="wrap_content"
         android:layout_marginTop="150dip"
+        android:layout_marginBottom="75dip"
         android:enabled= "true"
         android:clickable = "true"
         />

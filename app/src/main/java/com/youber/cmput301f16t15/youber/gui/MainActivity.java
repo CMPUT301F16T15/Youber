@@ -8,9 +8,7 @@ import android.graphics.Canvas;
 import android.location.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,21 +20,23 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.R;
-import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
+import com.youber.cmput301f16t15.youber.requests.RequestController;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.routing.MapQuestRoadManager;
 import org.osmdroid.bonuspack.routing.Road;
 import org.osmdroid.bonuspack.routing.RoadManager;
+import org.osmdroid.bonuspack.utils.DouglasPeuckerReducer;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -50,6 +50,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The type map activity.
@@ -59,7 +61,7 @@ import java.util.Locale;
  *
  * @see org.osmdroid.bonuspack.routing.OSRMRoadManager
  */
-public class MainActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
+public class MainActivity extends AppCompatActivity {
 
     //TODO use controller not global
     private Request request;
@@ -68,16 +70,18 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
     MapView map;
     Road[] mRoads;
 
+    Double distance = 0.0;
+
     /**
      * Various map fields used to overlay the route on the map
      */
-    long start;
-    long stop;
     int x, y;
     GeoPoint touchedPoint;
     GeoPoint startPoint;
     GeoPoint endPoint;
-
+    static Marker startMarker;
+    static Marker endMarker;
+    static Polyline roadPolyline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,13 +141,7 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * On new request btn click.
-     *
-     * @param view the map
-     */
-//  Button Click Actions
-    public void onNewRequestBtnClick(View view) {
+    private Request initRequestObj(boolean throwInsteadOfToast) { // map and on new click both use this!
         String startLatStr = ((EditText)findViewById(R.id.start_lat_edit)).getText().toString();
         String startLonStr = ((EditText)findViewById(R.id.start_lon_edit)).getText().toString();
         String endLatStr = ((EditText)findViewById(R.id.end_lat_edit)).getText().toString();
@@ -151,8 +149,12 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
 
         if(startLatStr.isEmpty() || startLonStr.isEmpty() || endLatStr.isEmpty() || endLonStr.isEmpty()) // check for empty arguements
         {
-            Snackbar.make(view, "Cannot have empty values for latitudes and longitudes", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            return;
+            if(throwInsteadOfToast)
+                throw new RuntimeException();
+            else {
+                Toast.makeText(MainActivity.this, "Cannot have empty values for latitudes and longitudes", Toast.LENGTH_SHORT).show();
+                return null;
+            }
         }
 
         Double startLat, startLon, endLat, endLon;
@@ -163,55 +165,114 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
             endLon = Double.parseDouble(endLonStr);
         }
         catch(NumberFormatException e) {
-            Snackbar.make(view, "Invalid argument format. Please input doubles for latitudes and longitudes", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            return;
+            if(throwInsteadOfToast)
+                throw new RuntimeException();
+            else {
+                Toast.makeText(MainActivity.this, "Invalid argument format. Please input doubles for latitudes and longitudes", Toast.LENGTH_SHORT).show();
+                return null;
+            }
         }
 
         GeoLocation start = new GeoLocation(startLat, startLon);
         GeoLocation end   = new GeoLocation(endLat, endLon);
-        request = new Request(start, end);
-        promptConfirmDialog(view);
+        return new Request(start, end);
     }
 
+    public void clearMap(View view) {
+        map.getOverlays().remove(startMarker);
+        map.getOverlays().remove(endMarker);
+        startPoint = null;
+        endPoint = null;
+        ((EditText)findViewById(R.id.start_lat_edit)).setText(null);
+        ((EditText)findViewById(R.id.start_lon_edit)).setText(null);
+        ((EditText)findViewById(R.id.end_lat_edit)).setText(null);
+        ((EditText)findViewById(R.id.end_lon_edit)).setText(null);
+        map.getOverlays().remove(roadPolyline);
+        map.invalidate();
+    }
 
     /**
-     * Prompt confirm dialog.
+     * On new request btn click.
      *
-     * @param view dialog pops up
+     * @param view the map
      */
-// Code that implements the dialog window that will ensure if the user wants to create the request or not
-    public void promptConfirmDialog(final View view) {
-        Bundle bundle = new Bundle();
+//  Button Click Actions
+    public void onNewRequestBtnClick(View view) {
+        request = initRequestObj(false);
+        RequestController.setRouteDistance(request, distance);
 
-        String start = request.getStartLocation().toString();
-        String end = request.getEndLocation().toString();
-        String msg = "Please confirm new request.\nStart: " + start + "\nEnd: " + end;
-        bundle.putString(getResources().getString(R.string.message), msg);
-
-        bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.next));
-        bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.dlg_cancel));
-
-        DialogFragment dialog = new NoticeDialogFragment();
-        dialog.setArguments(bundle);
-        dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
+        if(request != null)
+            promptToCreateRequest();
     }
 
-    @Override
-    public void onDialogPositiveClick(DialogFragment dialog) { // add new request
-        Dialog dlg = promptToAddDescription();
+    private void promptToCreateRequest() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater(); // Get the layout inflater
+
+        // Inflate and set the layout for the dialog, Pass null as the parent view because its going in the dialog layout
+        builder.setView(inflater.inflate(R.layout.dlg_request_creation, null))
+                .setPositiveButton(R.string.dlg_create, null) // null so we do logic to close it or not
+                .setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {}
+                });
+
+        final Dialog dlg = builder.create();
         dlg.show();
+        setCreateDialogFields(dlg);
+
+        ((AlertDialog)dlg).getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(RequestController.isValidRequest(request)) {
+                    RequestCollectionsController.getRequestCollection();
+                    RequestCollectionsController.addRequest(request);
+                    dlg.dismiss(); //Dismiss once everything is OK.
+                    Toast.makeText(MainActivity.this, "Successfully added request", Toast.LENGTH_SHORT).show();
+                }
+                else
+                    Toast.makeText(MainActivity.this, "Invalid request. Please ensure all fields are valid"
+                            , Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setCreateDialogFields(Dialog dlg) {
+        TextView startLoc = (TextView)dlg.findViewById(R.id.create_start_value);
+        startLoc.setText(request.getStartLocation().toString());
+
+        TextView endLoc = (TextView)dlg.findViewById(R.id.create_end_value);
+        endLoc.setText(request.getEndLocation().toString());
+
+        TextView dist = (TextView)dlg.findViewById(R.id.create_dist_value);
+        Double distKM = RequestController.getDistanceOfRequest(request);
+        dist.setText(Double.toString(distKM) + " km");
+
+        TextView estFare = (TextView)dlg.findViewById(R.id.create_est_fare_value);
+        Double estFareDb = RequestController.getEstimatedFare(request);
+        String estFareStr = "$" + Double.toString(estFareDb);
+        estFare.setText(estFareStr);
+
+        final EditText payment = (EditText)dlg.findViewById(R.id.enter_payment_value);
+        payment.setHint(estFareStr);
+        payment.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String paymentStr = payment.getText().toString();
+                try {
+                    RequestController.setPaymentAmount(paymentStr, request);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         final EditText description = (EditText)dlg.findViewById(R.id.description_edit_text);
         description.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -221,33 +282,6 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
         });
     }
 
-    public Dialog promptToAddDescription() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater(); // Get the layout inflater
-
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(R.layout.dlg_request_description, null))
-                .setPositiveButton(R.string.dlg_create, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        RequestCollectionsController.getRequestCollection();
-                        RequestCollectionsController.addRequest(request);
-                    }
-                })
-                // Add action buttons
-                .setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
-                });
-
-        return builder.create();
-    }
-
-    @Override
-    public void onDialogNegativeClick(DialogFragment dialog) {
-
-    }
     //youtube Android Application Development Tutorial series by thenewboston
     public class Touch extends Overlay {
 
@@ -256,77 +290,71 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
 
         }
 
-        public boolean onTouchEvent(MotionEvent e, MapView m) {
-            if (e.getAction() == MotionEvent.ACTION_DOWN) {
-                start = e.getEventTime();
-                x = (int) e.getX();
-                y = (int) e.getY();
-                touchedPoint = (GeoPoint) map.getProjection().fromPixels(x, y);
-            }
-            if (e.getAction() == MotionEvent.ACTION_UP) {
-                stop = e.getEventTime();
-            }
-            if (stop - start > 1000) {
-                Geocoder geocoder = new Geocoder(getBaseContext(), Locale.getDefault());
-                try {
-                    List<Address> address = geocoder.getFromLocation(touchedPoint.getLatitude(), touchedPoint.getLongitude(), 1);
-                    if (address.size() > 0) {
-                        String display = "Latitude: " + touchedPoint.getLatitude() + "\n" + "Longitude: " + touchedPoint.getLongitude() + "\n";
-                        for (int i = 0; i < address.get(0).getMaxAddressLineIndex(); i++) {
-                            display += address.get(0).getAddressLine(i) + "\n";
-                        }
-                        Toast t = Toast.makeText(getBaseContext(), display, Toast.LENGTH_LONG);
-                        t.show();
-
-                        if (startPoint == null) {
-                            startPoint = new GeoPoint(touchedPoint.getLatitude(), touchedPoint.getLongitude());
-                            String startLat = String.valueOf(startPoint.getLatitude());
-                            String startLon = String.valueOf(startPoint.getLongitude());
-                            ((EditText)findViewById(R.id.start_lat_edit)).setText(startLat);
-                            ((EditText)findViewById(R.id.start_lon_edit)).setText(startLon);
-                            Marker startMarker = new Marker(map);
-                            startMarker.setPosition(startPoint);
-                            startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                            startMarker.setTitle("start point");
-                            map.getOverlays().add(startMarker);
-                            map.invalidate();
-                            Toast.makeText(getBaseContext(), "start location is set", Toast.LENGTH_LONG);
-                        } else if (endPoint == null) {
-                            endPoint = new GeoPoint(touchedPoint.getLatitude(), touchedPoint.getLongitude());
-                            String endLat = String.valueOf(endPoint.getLatitude());
-                            String endLon = String.valueOf(endPoint.getLongitude());
-                            ((EditText)findViewById(R.id.end_lat_edit)).setText(endLat);
-                            ((EditText)findViewById(R.id.end_lon_edit)).setText(endLon);
-                            Marker endMarker = new Marker(map);
-                            endMarker.setPosition(endPoint);
-                            endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                            endMarker.setTitle("end point");
-                            map.getOverlays().add(endMarker);
-                            map.invalidate();
-                            Toast.makeText(getBaseContext(), "end location is set", Toast.LENGTH_LONG);
-                        }
-                        if (startPoint != null && endPoint != null) {
-                            // http://stackoverflow.com/questions/38539637/osmbonuspack-roadmanager-networkonmainthreadexception
-                            // accessed on October 27th, 2016
-                            // author: yubaraj poudel
-                            ArrayList<OverlayItem> overlayItemArray;
-                            overlayItemArray = new ArrayList<>();
-
-                            overlayItemArray.add(new OverlayItem("Starting Point", "This is the starting point", startPoint));
-                            overlayItemArray.add(new OverlayItem("Destination", "This is the detination point", endPoint));
-                            getRoadAsync(startPoint, endPoint);
-                        }
-
-
+        //http://stackoverflow.com/questions/16665426/get-coordinates-by-clicking-on-map-openstreetmaps
+        @Override
+        public boolean onSingleTapConfirmed(final MotionEvent e, final MapView mapView){
+            Geocoder geocoder = new Geocoder(getBaseContext(), Locale.getDefault());
+            x = (int) e.getX();
+            y = (int) e.getY();
+            touchedPoint = (GeoPoint) map.getProjection().fromPixels(x, y);
+            try {
+                List<Address> address = geocoder.getFromLocation(touchedPoint.getLatitude(), touchedPoint.getLongitude(), 1);
+                if (address.size() > 0) {
+                    String display = "Latitude: " + touchedPoint.getLatitude() + "\n" + "Longitude: " + touchedPoint.getLongitude() + "\n";
+                    for (int i = 0; i < address.get(0).getMaxAddressLineIndex(); i++) {
+                        display += address.get(0).getAddressLine(i) + "\n";
                     }
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                } finally {
+                    Toast t = Toast.makeText(getBaseContext(), display, Toast.LENGTH_LONG);
+                    t.show();
+
+                    if (startPoint == null) {
+                        startPoint = new GeoPoint(touchedPoint.getLatitude(), touchedPoint.getLongitude());
+                        String startLat = String.valueOf(startPoint.getLatitude());
+                        String startLon = String.valueOf(startPoint.getLongitude());
+                        ((EditText)findViewById(R.id.start_lat_edit)).setText(startLat);
+                        ((EditText)findViewById(R.id.start_lon_edit)).setText(startLon);
+                        startMarker = new Marker(map);
+                        startMarker.setPosition(startPoint);
+                        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                        startMarker.setTitle("start point");
+                        map.getOverlays().add(startMarker);
+                        map.invalidate();
+                        //************************************unused toast***********************************
+                        Toast.makeText(getBaseContext(), "start location is set", Toast.LENGTH_LONG);
+                    } else if (endPoint == null) {
+                        endPoint = new GeoPoint(touchedPoint.getLatitude(), touchedPoint.getLongitude());
+                        String endLat = String.valueOf(endPoint.getLatitude());
+                        String endLon = String.valueOf(endPoint.getLongitude());
+                        ((EditText)findViewById(R.id.end_lat_edit)).setText(endLat);
+                        ((EditText)findViewById(R.id.end_lon_edit)).setText(endLon);
+                        endMarker = new Marker(map);
+                        endMarker.setPosition(endPoint);
+                        endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                        endMarker.setTitle("end point");
+                        map.getOverlays().add(endMarker);
+                        map.invalidate();
+                        Toast.makeText(getBaseContext(), "end location is set", Toast.LENGTH_LONG);
+                    }
+                    if (startPoint != null && endPoint != null) {
+                        // http://stackoverflow.com/questions/38539637/osmbonuspack-roadmanager-networkonmainthreadexception
+                        // accessed on October 27th, 2016
+                        // author: yubaraj poudel
+                        ArrayList<OverlayItem> overlayItemArray;
+                        overlayItemArray = new ArrayList<>();
+
+                        overlayItemArray.add(new OverlayItem("Starting Point", "This is the starting point", startPoint));
+                        overlayItemArray.add(new OverlayItem("Destination", "This is the detination point", endPoint));
+                        getRoadAsync(startPoint, endPoint);
+                    }
+
 
                 }
-            }
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } finally {
 
-            return false;
+            }
+            return true;
         }
     }
     //cmput301 lab8
@@ -361,9 +389,12 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
             Polyline[] mRoadOverlays = new Polyline[roads.length];
             List<Overlay> mapOverlays = map.getOverlays();
             for (int i = 0; i < roads.length; i++) {
-                Polyline roadPolyline = RoadManager.buildRoadOverlay(roads[i]);
+                roadPolyline = RoadManager.buildRoadOverlay(roads[i]);
                 mRoadOverlays[i] = roadPolyline;
                 String routeDesc = roads[i].getLengthDurationText(ourActivity, -1);
+
+                distance = roads[i].mLength;
+
                 roadPolyline.setTitle(getString(R.string.app_name) + " - " + routeDesc);
                 roadPolyline.setInfoWindow(new BasicInfoWindow(org.osmdroid.bonuspack.R.layout.bonuspack_bubble, map));
                 roadPolyline.setRelatedObject(i);
@@ -375,5 +406,4 @@ public class MainActivity extends AppCompatActivity implements NoticeDialogFragm
             }
         }
     }
-
 }
