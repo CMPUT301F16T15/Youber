@@ -12,12 +12,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.youber.cmput301f16t15.youber.R;
-import com.youber.cmput301f16t15.youber.commands.Command;
+
 import com.youber.cmput301f16t15.youber.commands.MacroCommand;
-import com.youber.cmput301f16t15.youber.commands.RequestCommand;
+
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
+import com.youber.cmput301f16t15.youber.users.User;
+import com.youber.cmput301f16t15.youber.users.UserController;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -47,9 +49,20 @@ RequestViewActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
-                Intent intent = new Intent(RequestViewActivity.this, RequestActivity.class);
-                intent.putExtra("uuid", requestArray.get(i).getUUID());
-                startActivity(intent);
+
+
+
+                if (UserController.getUser().getCurrentUserType().equals(User.UserType.rider)) {
+                    Intent intent = new Intent(RequestViewActivity.this, RequestActivity.class);
+                    intent.putExtra("uuid", requestArray.get(i).getUUID());
+                    startActivity(intent);
+                }
+                else
+                {
+                    Intent intent = new Intent(RequestViewActivity.this, DriverViewRequestActivity.class);
+                    intent.putExtra("uuid", requestArray.get(i).getUUID());
+                    startActivity(intent);
+                }
             }
         });
 
@@ -64,22 +77,47 @@ RequestViewActivity extends AppCompatActivity {
         requestArray = new ArrayList<Request>();
         requestArray.addAll(requests.values());
 
+
 //        http://stackoverflow.com/questions/20809272/android-change-listview-item-text-color
         ArrayAdapter<Request> adapter = new ArrayAdapter<Request>(this, R.layout.list_item, requestArray) {
+
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
 
                 UUID requestUUID = requestArray.get(position).getUUID();
+
+
                 if (MacroCommand.isRequestContained(requestUUID)) {
                     view.setBackgroundColor(Color.LTGRAY);
                 }
+                if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.acceptedByDrivers))
+                {
+                    view.setBackgroundColor(getResources().getColor(R.color.orange));
+                }
+                else if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.riderSelectedDriver))
+                {
+                    view.setBackgroundColor(getResources().getColor(R.color.yellow));
 
+                }
+                else if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.paid))
+                {
+                    view.setBackgroundColor(getResources().getColor(R.color.paleGreen));
+
+                }
+                else if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.completed)) {
+                    view.setBackgroundColor(getResources().getColor(R.color.green));
+
+                }
                 return view;
             }
         };
 
         requestListView.setAdapter(adapter);
+
+
+
+
     }
 
     @Override

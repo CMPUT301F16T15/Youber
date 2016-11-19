@@ -85,7 +85,7 @@ public class RequestController
         request.setAcceptedByDrivers();
     }
     public static  void closeRequest(Request request){
-        request.setClosed();
+        request.setCompleted();
     }
     public static  void payRequest(Request request){
         request.setPaid();

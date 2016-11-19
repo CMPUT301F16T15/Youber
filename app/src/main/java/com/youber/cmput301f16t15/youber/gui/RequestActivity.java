@@ -12,11 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.youber.cmput301f16t15.youber.R;
+import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
+import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
@@ -35,7 +38,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
     RelativeLayout layout;
     ListView driverListView;
-    ArrayList<Driver> driverArray = new ArrayList<Driver>();
+    ArrayList<User> driverArray = new ArrayList<User>();
     int driverSelected;
     Request selectedRequest;
     User.UserType userType;
@@ -111,9 +114,9 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
             e.printStackTrace();
         }
 
-        Driver driver1 = new Driver("driver1", "Jess", "Huynh", "10", "7801234567", "test@gmail.com", User.UserType.driver);
-        driverArray.add(driver1);
-        ArrayAdapter<Driver> adapter = new ArrayAdapter<Driver>(this, R.layout.list_item, driverArray);
+        //Driver driver1 = new Driver("driver1", "Jess", "Huynh", "10", "7801234567", "test@gmail.com", User.UserType.driver);
+        //driverArray.add(driver1);
+        ArrayAdapter<User> adapter = new ArrayAdapter<User>(this, R.layout.list_item, driverArray);
         driverListView.setAdapter(adapter);
     }
 
@@ -124,6 +127,8 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     public void onMoreOptionClick(View view) {
         Dialog dialog = promptDialog(R.layout.request_more_options);
         dialog.show();
+        Button accept = (Button) dialog.findViewById(R.id.accept_request);
+        accept.setVisibility(View.GONE);
     }
 
     public Dialog promptDialog(int resource) {
@@ -133,12 +138,47 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(resource, null))
-                // Add action buttons
-                .setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
-                });
+
+        if (resource==R.layout.request_more_options) {
+            builder.setView(inflater.inflate(resource, null))
+                    // Add action buttons
+                    .setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    });
+        }
+        else if (resource==R.layout.dlg_user_info)
+        {
+            builder.setView(inflater.inflate(resource, null))
+                    // Add action buttons
+                    .setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }}).setPositiveButton(R.string.dlg_accept, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            selectedRequest.setRiderSelectedDriver();
+                            RequestCollectionsController.addRequest(selectedRequest);
+                            // add it to the confirmed list for driver
+                            // might be smelly code
+                            driverArray.get(driverSelected).addToDriverConfirmed(selectedRequest.getUUID());
+                            AddUserCommand addUserCommand = new AddUserCommand(driverArray.get(driverSelected));
+                            MacroCommand.addCommand(addUserCommand);
+
+                            for (User user: driverArray)
+                            {
+                                if (!user.equals(driverArray.get(driverSelected)))
+                                {
+                                    user.deleteUUIDFromAccepted(selectedRequest.getUUID());
+                                    AddUserCommand update = new AddUserCommand(user);
+                                    MacroCommand.addCommand(update);
+
+
+                                }
+                            }
+
+                            finish();
+                            // click on accept
+                }});
+        }
 
         return builder.create();
     }
@@ -171,7 +211,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     }
 
     public void onPhoneNumberClick(View view) {
-        Driver driver = driverArray.get(driverSelected);
+        User driver = driverArray.get(driverSelected);
 
         Intent intent = new Intent(Intent.ACTION_CALL);
         intent.setData(Uri.parse("tel:" + driver.getPhoneNumber()));
@@ -179,7 +219,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     }
 
     public void onEmailClick(View view) {
-        Driver driver = driverArray.get(driverSelected);
+        User driver = driverArray.get(driverSelected);
 
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
