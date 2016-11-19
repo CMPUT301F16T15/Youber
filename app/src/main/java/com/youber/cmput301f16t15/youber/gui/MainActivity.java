@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.requests.Request;
@@ -227,7 +228,11 @@ public class MainActivity extends AppCompatActivity {
                     RequestCollectionsController.getRequestCollection();
                     RequestCollectionsController.addRequest(request);
                     dlg.dismiss(); //Dismiss once everything is OK.
-                    Toast.makeText(MainActivity.this, "Successfully added request", Toast.LENGTH_SHORT).show();
+
+                    if(MacroCommand.isRequestContained(request.getUUID()))
+                        Toast.makeText(MainActivity.this, "Currently Offline: add request queued", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(MainActivity.this, "Successfully added request", Toast.LENGTH_SHORT).show();
                 }
                 else
                     Toast.makeText(MainActivity.this, "Invalid request. Please ensure all fields are valid"

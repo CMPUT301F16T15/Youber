@@ -25,4 +25,8 @@ public abstract class RequestCommand implements Command {
     public Boolean getExecutionState() {
         return executionState;
     }
+
+    public Request getRequest() {
+        return request;
+    }
 }
