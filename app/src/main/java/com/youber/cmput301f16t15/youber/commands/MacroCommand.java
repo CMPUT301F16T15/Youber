@@ -34,7 +34,7 @@ public class MacroCommand {
 
     public static void setContext(Context c) {
         context = c;
-        loadCommands();
+//        loadCommands();
     }
 
     private static void saveCommands() {
@@ -78,7 +78,7 @@ public class MacroCommand {
     public static void addCommand(Command c) {
         commands.add(c);
         execute();
-        saveCommands();
+//        saveCommands();
     }
 
     public static void execute() {
@@ -90,7 +90,7 @@ public class MacroCommand {
         }
 
         cleanupCommandArray();
-        saveCommands();
+//        saveCommands();
     }
 
     private static void cleanupCommandArray() {
