@@ -162,16 +162,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-
-        if (resource==R.layout.request_more_options) {
-            builder.setView(inflater.inflate(resource, null))
-                    // Add action buttons
-                    .setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                        }
-                    });
-        }
-        else if (resource==R.layout.dlg_user_info)
+        if (resource==R.layout.dlg_user_info)
         {
             builder.setView(inflater.inflate(resource, null))
                     // Add action buttons
@@ -202,6 +193,14 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
                             finish();
                             // click on accept
                 }});
+        }
+        else {
+            builder.setView(inflater.inflate(resource, null))
+                    // Add action buttons
+                    .setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    });
         }
 
         return builder.create();
@@ -329,7 +328,8 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
                 roadPolyline.setTitle(getString(R.string.app_name) + " - " + routeDesc);
                 roadPolyline.setInfoWindow(new BasicInfoWindow(org.osmdroid.bonuspack.R.layout.bonuspack_bubble, map));
                 roadPolyline.setRelatedObject(i);
-                mapOverlays.add(1, roadPolyline);
+                mapOverlays.add(roadPolyline);
+                map.invalidate();
             }
         }
     }
