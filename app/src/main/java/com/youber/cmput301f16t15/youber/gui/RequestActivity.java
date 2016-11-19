@@ -18,12 +18,20 @@ import android.widget.TextView;
 
 import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
+import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
 import com.youber.cmput301f16t15.youber.requests.RequestController;
 import com.youber.cmput301f16t15.youber.users.Driver;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
+
+import org.osmdroid.api.IMapController;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.OverlayItem;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -70,6 +78,8 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
                 userType =(UserController.getUser().getCurrentUserType());
             }
         });
+
+
     }
 
     @Override
@@ -167,6 +177,34 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     }
 
     public void onViewRequestOnMapBtnClick(View view) {
+        Dialog dialog = promptDialog(R.layout.dlg_request_map);
+        dialog.show();
+
+        MapView map = (MapView)dialog.findViewById(R.id.request_map);
+        map.setTileSource(TileSourceFactory.MAPNIK);
+        map.setBuiltInZoomControls(true);
+        map.setMultiTouchControls(true);
+
+        GeoPoint startLoc = new GeoPoint(selectedRequest.getStartLocation().getLat(), selectedRequest.getStartLocation().getLon());
+        GeoPoint endLoc = new GeoPoint(selectedRequest.getEndLocation().getLat(), selectedRequest.getEndLocation().getLon());
+
+        IMapController mapController = map.getController();
+        mapController.setZoom(12);
+        mapController.setCenter(startLoc);
+
+        Marker startMarker = new Marker(map);
+        startMarker.setPosition(startLoc);
+        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        map.getOverlays().add(startMarker);
+
+        // http://stackoverflow.com/questions/38539637/osmbonuspack-roadmanager-networkonmainthreadexception
+        // Author: yubaraj poudel
+        ArrayList<OverlayItem> overlayItemArray;
+        overlayItemArray = new ArrayList<>();
+
+        overlayItemArray.add(new OverlayItem("Start Location", "This is the start location", startLoc));
+        overlayItemArray.add(new OverlayItem("End Location", "This is the end location", endLoc));
+        getRoadAsync(startPoint, destinationPoint);
     }
 
     public void onPhoneNumberClick(View view) {
