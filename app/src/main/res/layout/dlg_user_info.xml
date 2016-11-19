@@ -57,4 +57,85 @@
         android:text="@string/dummy_string"
         android:textSize="16dp"
         android:onClick="onEmailClick" />
+
+    <TextView
+        android:text="@string/vehicle_model"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/driverVehicleModel"
+        android:layout_below="@+id/driverVehicleMake"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:textSize="16dp" />
+
+    <TextView
+        android:text="@string/vehicle_colour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/driverVehicleYear"
+        android:layout_alignStart="@+id/driverVehicleMake"
+        android:id="@+id/driverVehicleColour"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:text="@string/dummy_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/driverVehicleMake"
+        android:layout_toEndOf="@+id/driverVehicleMake"
+        android:id="@+id/vehicleMakeLink"
+        android:textSize="16dp"
+        android:textColor="@color/lightGreen"/>
+
+    <TextView
+        android:text="@string/vehicle_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/driverVehicleYear"
+        android:layout_below="@+id/driverVehicleModel"
+        android:layout_alignStart="@+id/driverVehicleColour"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:text="@string/dummy_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vehicleColourLink"
+        android:layout_alignBaseline="@+id/driverVehicleColour"
+        android:layout_alignBottom="@+id/driverVehicleColour"
+        android:layout_toEndOf="@+id/driverVehicleColour"
+        android:textSize="16dp"
+        android:textColor="@color/lightGreen"/>
+
+    <TextView
+        android:text="@string/vehicle_make"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:id="@+id/driverVehicleMake"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/emailTitle"
+        android:layout_alignParentStart="true"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:text="@string/dummy_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vehicleYearLink"
+        android:layout_alignBaseline="@+id/driverVehicleYear"
+        android:layout_alignBottom="@+id/driverVehicleYear"
+        android:layout_toEndOf="@+id/driverVehicleYear"
+        android:textSize="16dp"
+        android:textColor="@color/lightGreen"/>
+
+    <TextView
+        android:text="@string/dummy_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vehicleModelLink"
+        android:layout_below="@+id/vehicleMakeLink"
+        android:layout_toEndOf="@+id/driverVehicleModel"
+        android:textSize="16dp"
+        android:textColor="@color/lightGreen"/>
 </RelativeLayout>

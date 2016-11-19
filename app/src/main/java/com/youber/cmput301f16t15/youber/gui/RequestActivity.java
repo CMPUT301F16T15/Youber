@@ -72,6 +72,18 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
                 TextView phone = (TextView) dlg.findViewById(R.id.phoneNumberLink);
                 phone.setText(driverArray.get(i).getPhoneNumber());
 
+                TextView make = (TextView) dlg.findViewById(R.id.vehicleMakeLink);
+                make.setText(driverArray.get(i).getMake());
+
+                TextView model = (TextView) dlg.findViewById(R.id.vehicleModelLink);
+                model.setText(driverArray.get(i).getModel());
+
+                TextView year = (TextView) dlg.findViewById(R.id.vehicleYearLink);
+                year.setText(driverArray.get(i).getYear());
+
+                TextView colour = (TextView) dlg.findViewById(R.id.vehicleColourLink);
+                colour.setText(driverArray.get(i).getColour());
+
 
                 userType =(UserController.getUser().getCurrentUserType());
             }
