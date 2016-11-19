@@ -13,15 +13,28 @@
         android:background="@color/lightGreen"
         android:onClick="onCancelRequestBnClick" />
 
+
+    <Button
+        android:id="@+id/accept_request"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:text="OFFER RIDE"
+        android:background="@color/lightGreen"
+        android:onClick="onAcceptRequestBnClick"
+        android:layout_marginBottom="11dp" />
+
     <Button
         android:id="@+id/view_request_on_map"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/cancel_request"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="100dp"
         android:text="@string/view_request_map"
         android:background="@color/lightGreen"
         android:onClick="onViewRequestOnMapBtnClick" />
+
+
 
 </RelativeLayout>

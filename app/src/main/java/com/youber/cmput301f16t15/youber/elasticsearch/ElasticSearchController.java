@@ -52,17 +52,6 @@ public class ElasticSearchController extends ElasticSearch{
     }
 
 
-    // do it on the postman side
-    public static Rider getRider(UUID uuid)
-    {
-            ElasticSearchUser.getObjects getter = new ElasticSearchUser.getObjects();
-            getter.execute();
-
-
-            return null;
-    }
-
-
 
 
     /**
@@ -162,6 +151,31 @@ public class ElasticSearchController extends ElasticSearch{
         }
 
         return requestCollection;
+    }
+
+    public static User getRider(UUID uuid)
+    {
+
+        String query =
+        "{\n" +
+                "    \"query\" : {\n" +
+                "        \"match\" : {\n" +
+                "            \"uuids\" : \""+uuid.toString()+"\"\n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
+        ElasticSearchUser.getUserByRequestUUID getter = new ElasticSearchUser.getUserByRequestUUID();
+        getter.execute(query);
+        try {
+            User user = getter.get().get(0);
+            return user;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
 }

@@ -15,6 +15,7 @@ import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
+import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
 
 import java.util.ArrayList;
 
@@ -64,10 +65,6 @@ public class DriverSearchListActivity extends AppCompatActivity {
             if(geoLocation==null)throw new NullPointerException();
             radius=intent.getDoubleExtra("Radius",2.0);
             Log.i("radius: ", Double.toString(radius));
-            //dummy stuff
-
-            //geoLocation = new GeoLocation(53.507, -113.507);
-            //radius = 200.0;
 
            requests = ElasticSearchController.getRequestsbyGeoLocation(geoLocation,radius);
         } catch (Exception e){
@@ -86,6 +83,7 @@ public class DriverSearchListActivity extends AppCompatActivity {
         ArrayAdapter<Request> adapter = new ArrayAdapter<Request>(this, R.layout.list_item, requestArray);
         requestListView.setAdapter(adapter);
     }
+
 
 
 

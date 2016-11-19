@@ -250,4 +250,22 @@ public class RequestCollectionsController {
 
         return acceptedRequests;
     }
+
+    public static Request getRequest(UUID uuid)
+    {
+        ElasticSearchRequest.getObjects getter = new ElasticSearchRequest.getObjects();
+        getter.execute(uuid.toString());
+
+        try {
+            Request request = getter.get().get(0);
+            return request;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 }

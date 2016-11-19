@@ -50,6 +50,7 @@
     <string name="cancel_request">Cancel Request</string>
     <string name="view_request_map">View Request On Map</string>
     <string name="promptCancelConfirm">Are you sure you want to cancel this request?</string>
+    <string name="driverOfferRide">Are you sure you want to offer a ride?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="youber_email_subject">Youber App:</string>

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -123,6 +124,8 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     public void onMoreOptionClick(View view) {
         Dialog dialog = promptDialog(R.layout.request_more_options);
         dialog.show();
+        Button accept = (Button) dialog.findViewById(R.id.accept_request);
+        accept.setVisibility(View.GONE);
     }
 
     public Dialog promptDialog(int resource) {

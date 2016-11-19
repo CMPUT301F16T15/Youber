@@ -134,12 +134,9 @@ public class Request implements Serializable {
      *
      * @return the boolean
      */
-<<<<<<< HEAD
+
     public boolean isCompleted() {
-=======
-    public boolean isClosed() {
-        //***********************can be simplified to !status rather than two if statements****************************
->>>>>>> 56c9256936ce21992e9c0ecb7435fd5cd0d003f0
+
         if (status) {
             return false;
         }
@@ -251,6 +248,8 @@ public class Request implements Serializable {
     public RequestStatus getCurrentStatus() {
         return currentStatus;
     }
+
+
     //opened, acceptedByDrivers, riderSelectedDriver, paid
     public void setCompleted(){
         this.currentStatus=RequestStatus.completed;

@@ -9,6 +9,7 @@
     android:theme="@android:style/Theme.Holo"
     tools:context="com.youber.cmput301f16t15.youber.gui.DriverViewRequestActivity">
 
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,19 +23,6 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
-
-
-
-    <TextView
-        android:text="REQUEST"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="67dp"
-        android:id="@+id/driverViewRequest"
-        android:textSize="30sp" />
-
     <TextView
         android:text="Dummy Str"
         android:layout_width="wrap_content"
@@ -85,58 +73,6 @@
         android:layout_toEndOf="@+id/RiderInfo" />
 
     <TextView
-        android:text="Dummy Str"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/driverViewOffPaymentInput"
-        android:layout_alignBaseline="@+id/DriverViewOfPay"
-        android:layout_alignBottom="@+id/DriverViewOfPay"
-        android:layout_toEndOf="@+id/driverViewStatusUpdate"
-        android:textSize="20sp" />
-
-    <Button
-        android:text="Offer Ride"
-        android:layout_height="wrap_content"
-        android:id="@+id/DriverAcceptButton"
-        android:background="@color/lightGreen"
-        android:layout_width="170dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/viewRequestButton"
-        android:layout_marginBottom="11dp"
-        android:layout_alignEnd="@+id/viewRequestButton" />
-
-    <Button
-        android:text="View Request On Map"
-        android:layout_height="wrap_content"
-        android:background="@color/lightGreen"
-        android:id="@+id/viewRequestButton"
-        android:layout_width="180dp"
-        android:textSize="16sp"
-        android:layout_marginBottom="10dp"
-        android:layout_above="@+id/DriverAcceptButton"
-        android:layout_alignStart="@+id/driverUsernameInput" />
-
-    <Button
-        android:text="Accept Payment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/DriverAcceptButton"
-        android:background="@color/lightGreen"
-        android:id="@+id/acceptPaymentButton"
-        android:layout_alignEnd="@+id/DriverAcceptButton"
-        android:layout_alignStart="@+id/DriverAcceptButton" />
-
-    <TextView
-        android:text="Dummy Str"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/driverViewStatusUpdate"
-        android:layout_alignBaseline="@+id/driverViewStatus"
-        android:layout_alignBottom="@+id/driverViewStatus"
-        android:layout_toEndOf="@+id/driverViewStartLocInput"
-        android:textSize="20sp" />
-
-    <TextView
         android:text="Rider username:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -165,6 +101,50 @@
         android:layout_below="@+id/driverViewStatusUpdate"
         android:layout_alignStart="@+id/driverViewStatus"
         android:layout_marginTop="22dp" />
+
+    <Button
+        android:text="OPTIONS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="23dp"
+        android:backgroundTint="@color/lightGreen"
+        android:id="@+id/options"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="REQUEST"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="76dp"
+        android:id="@+id/driverViewRequest"
+        android:textSize="30sp"
+        android:layout_below="@+id/appBarLayout"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Dummy Str"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/driverViewStatusUpdate"
+        android:textSize="20sp"
+        android:layout_alignBaseline="@+id/driverViewStatus"
+        android:layout_alignBottom="@+id/driverViewStatus"
+        android:layout_toEndOf="@+id/driverViewStatus"
+        android:layout_marginStart="14dp" />
+
+    <TextView
+        android:text="Dummy Str"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/driverViewOffPaymentInput"
+        android:textSize="20sp"
+        android:layout_alignBaseline="@+id/DriverViewOfPay"
+        android:layout_alignBottom="@+id/DriverViewOfPay"
+        android:layout_toEndOf="@+id/driverViewStatusUpdate"
+        android:layout_marginStart="20dp" />
 
 
 </RelativeLayout>
