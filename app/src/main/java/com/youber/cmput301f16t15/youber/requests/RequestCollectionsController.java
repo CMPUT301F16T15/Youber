@@ -156,7 +156,6 @@ public class RequestCollectionsController {
         {
             throw new RuntimeException();
         }
-
     }
 
     public static void addRequest (Request request){
