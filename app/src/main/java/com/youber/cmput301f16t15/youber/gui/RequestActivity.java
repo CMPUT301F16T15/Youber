@@ -18,6 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.youber.cmput301f16t15.youber.R;
+import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
+import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
@@ -151,13 +153,20 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
                     .setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                         }}).setPositiveButton(R.string.dlg_accept, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
+                        public void onClick(DialogInterface dialog, int id) {
+                            selectedRequest.setRiderSelectedDriver();
+                            RequestCollectionsController.addRequest(selectedRequest);
+                            // add it to the confirmed list for driver
+                            // might be smelly code
+                            driverArray.get(driverSelected).addToDriverConfirmed(selectedRequest.getUUID());
+                            AddUserCommand addUserCommand = new AddUserCommand(driverArray.get(driverSelected));
+                            MacroCommand.addCommand(addUserCommand);
 
-                    // click on accept
-                }})
+                            
 
-
-            ;
+                            finish();
+                            // click on accept
+                }});
         }
 
         return builder.create();
