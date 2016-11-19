@@ -21,4 +21,10 @@
         app:showAsAction="never"
         android:id="@+id/action_switch_user" />
 
+    <item
+        android:orderInCategory="100"
+        android:title="Logout"
+        app:showAsAction="never"
+        android:id="@+id/logout" />
+
 </menu>
