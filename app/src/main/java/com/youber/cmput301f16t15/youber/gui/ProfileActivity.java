@@ -63,7 +63,6 @@ public class ProfileActivity extends Activity {
 
         // Hide vehicle info button for riders
         //http://stackoverflow.com/questions/4127725/how-can-i-remove-a-button-or-make-it-invisible-in-android
-        // Author: Konstantin Burov
 
         if(user.getCurrentUserType() == User.UserType.rider){
             vehicleInfo.setVisibility(View.GONE);

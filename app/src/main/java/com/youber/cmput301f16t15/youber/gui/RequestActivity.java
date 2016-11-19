@@ -67,6 +67,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
                 TextView phone = (TextView) dlg.findViewById(R.id.phoneNumberLink);
                 phone.setText(driverArray.get(i).getPhoneNumber());
 
+
                 userType =(UserController.getUser().getCurrentUserType());
             }
         });
