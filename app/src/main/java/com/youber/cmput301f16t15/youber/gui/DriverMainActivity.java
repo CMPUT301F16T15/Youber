@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,6 +72,7 @@ public class DriverMainActivity extends AppCompatActivity {
 
     Activity ourActivity = this;
     MapView map;
+    MapView Amap;
 
     long start;
     long stop;
@@ -98,14 +101,43 @@ public class DriverMainActivity extends AppCompatActivity {
         map.setBuiltInZoomControls(true);
         map.setMultiTouchControls(true);
 
+        Amap = (MapView) findViewById(R.id.AddressMap);
+        Amap.setTileSource(TileSourceFactory.MAPNIK);
+        Amap.setBuiltInZoomControls(true);
+        Amap.setMultiTouchControls(true);
+
         searchPoint = null;
         touchedPoint = null;
+
+        TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
+
+        tabHost.setup();
+
+        TabHost.TabSpec tabSpec = tabHost.newTabSpec("keywordSpec");
+        tabSpec.setContent(R.id.keyword);
+        tabSpec.setIndicator("Keyword");
+        tabHost.addTab(tabSpec);
+
+        tabSpec = tabHost.newTabSpec("geoSpec");
+        tabSpec.setContent(R.id.Location);
+        tabSpec.setIndicator("Location");
+        tabHost.addTab(tabSpec);
+
+        tabSpec = tabHost.newTabSpec("addressSpec");
+        tabSpec.setContent(R.id.Address);
+        tabSpec.setIndicator("Address");
+        tabHost.addTab(tabSpec);
 
         IMapController mapController = map.getController();
         mapController.setZoom(12);
         //map currently focuses on Lister on launch
         GeoPoint EdmontonGPS = new GeoPoint(53.521609, -113.530633);
         mapController.setCenter(EdmontonGPS);
+
+        IMapController mapController2 = Amap.getController();
+        mapController2.setZoom(12);
+        //map currently focuses on Lister on launch
+        mapController2.setCenter(EdmontonGPS);
 
         Touch t = new Touch();
         List<Overlay> overlayList = map.getOverlays();
