@@ -101,12 +101,12 @@ public class ElasticSearchUser extends ElasticSearch {
     }
 
     public static User getUser(String username) throws UserNotFoundException {
-        ElasticSearchUser.getObjects getObjects= new ElasticSearchUser.getObjects();
-        getObjects.execute(username);
+        ElasticSearchUser.getObjects getUser= new ElasticSearchUser.getObjects();
+        getUser.execute(username);
         User latestUser=null;
         try {
 
-            ArrayList<User> users =  new getObjects().get();
+            ArrayList<User> users =  getUser.get();
 
             if(users.size() == 1){
                 latestUser=users.get(0);

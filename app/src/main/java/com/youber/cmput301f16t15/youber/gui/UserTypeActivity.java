@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
+import com.youber.cmput301f16t15.youber.misc.Setup;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
 import com.youber.cmput301f16t15.youber.users.User;
@@ -59,6 +60,7 @@ public class UserTypeActivity extends AppCompatActivity {
 
     private void saveUserTypeRequests(User user)
     {
+        Setup.run(this);
         Log.i("Requests:" ,Integer.toString(user.getRequestUUIDs().size()));
         RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
         RequestCollectionsController.setContext(UserTypeActivity.this);

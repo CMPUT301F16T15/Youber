@@ -1,5 +1,6 @@
 package com.youber.cmput301f16t15.youber.misc;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
@@ -63,7 +64,10 @@ public class Setup {
         NotificationManager mNotificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         // mId allows you to update the notification later on.
-        mNotificationManager.notify(1, mBuilder.build());
+
+        Notification notification=mBuilder.build();
+        notification.flags=Notification.FLAG_AUTO_CANCEL;
+        mNotificationManager.notify(1, notification);
     }
     private static boolean hasUpdated(){
        return checkUserUpdated()||checkRequestsUpdated();
@@ -99,7 +103,7 @@ public class Setup {
         RequestCollection latestRequests= ElasticSearchRequest.getRequestCollection(uuids);
 
 
-        return latestRequests.equals(RequestCollectionsController.getRequestCollection());
+        return !latestRequests.equals(RequestCollectionsController.getRequestCollection());
     }
 
 }
