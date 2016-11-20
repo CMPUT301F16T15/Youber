@@ -4,9 +4,13 @@ import com.youber.cmput301f16t15.youber.users.Driver;
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.users.Rider;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -141,4 +145,35 @@ public class RequestCollection extends HashMap<UUID,Request> implements Serializ
             this.put(r.getUUID(), r);
         }
     }
+
+    @Override
+    public int hashCode(){
+        HashCodeBuilder hashCodeBuilder= new HashCodeBuilder();
+        for(Request request: this.values()){
+            hashCodeBuilder.append(request);
+        }
+        return hashCodeBuilder.toHashCode();
+    }
+
+    @Override
+    public  boolean equals(Object other){
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof RequestCollection))return false;
+        RequestCollection otherRequestCollection=(RequestCollection)other;
+        if(this.size()!=otherRequestCollection.size())return false;
+        EqualsBuilder equalsBuilder= new EqualsBuilder();
+
+        for(UUID uuid: this.keySet()){
+
+            if(!otherRequestCollection.containsKey(uuid))return false;
+
+            if(!this.getRequestByUUID(uuid).equals(otherRequestCollection.getRequestByUUID(uuid))) return false;
+
+        }
+
+
+        return true;
+    }
+
 }

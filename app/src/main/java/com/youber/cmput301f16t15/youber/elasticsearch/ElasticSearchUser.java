@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.youber.cmput301f16t15.youber.commands.Command;
+import com.youber.cmput301f16t15.youber.exceptions.UserNotFoundException;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
@@ -94,5 +95,28 @@ public class ElasticSearchUser extends ElasticSearch {
         }
     }
 
+    public static User getUser(String username) throws UserNotFoundException {
+        ElasticSearchUser.getObjects getObjects= new ElasticSearchUser.getObjects();
+        getObjects.execute(username);
+        User latestUser=null;
+        try {
+
+            ArrayList<User> users =  new getObjects().get();
+
+            if(users.size() == 1){
+                latestUser=users.get(0);
+            }
+
+            else{
+                throw new UserNotFoundException();
+            }
+
+
+        } catch (Exception e) {
+
+        }
+        return latestUser;
+
+    }
 
 }
