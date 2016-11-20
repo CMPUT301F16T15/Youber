@@ -1,5 +1,7 @@
 package com.youber.cmput301f16t15.youber.commands;
 
+import android.os.Parcelable;
+
 /**
  * Created by Jess on 2016-11-16.
  */
@@ -7,5 +9,5 @@ package com.youber.cmput301f16t15.youber.commands;
 public interface Command {
     void execute();
     void unexecute();
-    Boolean getExecutionState();
+    Boolean isExecuted();
 }

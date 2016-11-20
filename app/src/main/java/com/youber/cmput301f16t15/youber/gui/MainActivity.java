@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.misc.Setup;
@@ -144,11 +145,30 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         }
+        else if (id == R.id.action_switch_user)
+        {
+            Intent intent = new Intent(this, UserTypeActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        else if (id == R.id.logout)
+        {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private Request initRequestObj(boolean throwInsteadOfToast) { // map and on new click both use this!
+    /**
+     * initRequestObj This just initializes a request with the gui values in the activity
+     *
+     * @return Request a request is made with the gui values!
+     */
+    private Request initRequestObj() { // map and on new click both use this!
         String startLatStr = ((EditText)findViewById(R.id.start_lat_edit)).getText().toString();
         String startLonStr = ((EditText)findViewById(R.id.start_lon_edit)).getText().toString();
         String endLatStr = ((EditText)findViewById(R.id.end_lat_edit)).getText().toString();
@@ -156,12 +176,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(startLatStr.isEmpty() || startLonStr.isEmpty() || endLatStr.isEmpty() || endLonStr.isEmpty()) // check for empty arguements
         {
-            if(throwInsteadOfToast)
-                throw new RuntimeException();
-            else {
-                Toast.makeText(MainActivity.this, "Cannot have empty values for latitudes and longitudes", Toast.LENGTH_SHORT).show();
-                return null;
-            }
+            Toast.makeText(MainActivity.this, "Cannot have empty values for latitudes and longitudes", Toast.LENGTH_SHORT).show();
+            return null;
         }
 
         Double startLat, startLon, endLat, endLon;
@@ -172,12 +188,8 @@ public class MainActivity extends AppCompatActivity {
             endLon = Double.parseDouble(endLonStr);
         }
         catch(NumberFormatException e) {
-            if(throwInsteadOfToast)
-                throw new RuntimeException();
-            else {
-                Toast.makeText(MainActivity.this, "Invalid argument format. Please input doubles for latitudes and longitudes", Toast.LENGTH_SHORT).show();
-                return null;
-            }
+            Toast.makeText(MainActivity.this, "Invalid argument format. Please input doubles for latitudes and longitudes", Toast.LENGTH_SHORT).show();
+            return null;
         }
 
         GeoLocation start = new GeoLocation(startLat, startLon);
@@ -205,13 +217,18 @@ public class MainActivity extends AppCompatActivity {
      */
 //  Button Click Actions
     public void onNewRequestBtnClick(View view) {
-        request = initRequestObj(false);
+        request = initRequestObj();
         RequestController.setRouteDistance(request, distance);
 
         if(request != null)
             promptToCreateRequest();
     }
 
+
+    /**
+     * prompt the create request dialog, called on "New Request" button
+     *
+     */
     private void promptToCreateRequest() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater(); // Get the layout inflater
@@ -227,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
         dlg.show();
         setCreateDialogFields(dlg);
 
+        // http://stackoverflow.com/questions/2620444/how-to-prevent-a-dialog-from-closing-when-a-button-is-clicked
         ((AlertDialog)dlg).getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -234,15 +252,22 @@ public class MainActivity extends AppCompatActivity {
                     RequestCollectionsController.getRequestCollection();
                     RequestCollectionsController.addRequest(request);
                     dlg.dismiss(); //Dismiss once everything is OK.
-                    Toast.makeText(MainActivity.this, "Successfully added request", Toast.LENGTH_SHORT).show();
+
+                    if(MacroCommand.isRequestContained(request.getUUID()))
+                        Toast.makeText(MainActivity.this, "Currently Offline: add request queued", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(MainActivity.this, "Successfully added request", Toast.LENGTH_SHORT).show();
                 }
                 else
-                    Toast.makeText(MainActivity.this, "Invalid request. Please ensure all fields are valid"
-                            , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Invalid request. Please ensure all fields are valid", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    /**
+     *
+     * @param dlg the create request setting, the text
+     */
     private void setCreateDialogFields(Dialog dlg) {
         TextView startLoc = (TextView)dlg.findViewById(R.id.create_start_value);
         startLoc.setText(request.getStartLocation().toString());

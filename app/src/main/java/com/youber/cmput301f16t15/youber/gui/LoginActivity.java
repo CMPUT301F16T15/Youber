@@ -75,7 +75,6 @@ public class LoginActivity extends AppCompatActivity implements NoticeDialogFrag
                        Log.i ("Works", "Found user"+user.getUsername());
                        Intent intent = new Intent(LoginActivity.this, UserTypeActivity.class);
                        startActivity(intent);
-                       //finish();
                    }
                    else
                    {
@@ -112,7 +111,6 @@ public class LoginActivity extends AppCompatActivity implements NoticeDialogFrag
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(intent);
-//                finish();
             }
         });
 
@@ -123,7 +121,6 @@ public class LoginActivity extends AppCompatActivity implements NoticeDialogFrag
     public void onDialogPositiveClick(DialogFragment dialog) {
         Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
         startActivity(intent);
-//        finish();
     }
 
     @Override

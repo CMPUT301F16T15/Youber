@@ -56,7 +56,7 @@ public class Request implements Serializable {
      * Payed/Completed
      */
     public enum RequestStatus {
-        opened,closed, acceptedByDrivers, riderSelectedDriver, paid
+        opened,acceptedByDrivers, riderSelectedDriver, paid, completed
     }
 
     private RequestStatus currentStatus;
@@ -137,8 +137,9 @@ public class Request implements Serializable {
      *
      * @return the boolean
      */
-    public boolean isClosed() {
-        //***********************can be simplified to !status rather than two if statements****************************
+
+    public boolean isCompleted() {
+
         if (status) {
             return false;
         }
@@ -250,9 +251,11 @@ public class Request implements Serializable {
     public RequestStatus getCurrentStatus() {
         return currentStatus;
     }
+
+
     //opened, acceptedByDrivers, riderSelectedDriver, paid
-    public void setClosed(){
-        this.currentStatus=RequestStatus.closed;
+    public void setCompleted(){
+        this.currentStatus=RequestStatus.completed;
     }
     public void setAcceptedByDrivers(){
         this.currentStatus=RequestStatus.acceptedByDrivers;

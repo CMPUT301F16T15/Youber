@@ -57,7 +57,7 @@ public class RequestCollection extends HashMap<UUID,Request> implements Serializ
      * @return the request status
      */
     public boolean getRequestStatus(UUID uuid) {
-        return this.get(uuid).isClosed();
+        return this.get(uuid).isComplete();
     }
 
     /**

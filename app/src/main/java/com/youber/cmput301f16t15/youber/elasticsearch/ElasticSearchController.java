@@ -5,9 +5,11 @@ import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.misc.Observable;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
+import com.youber.cmput301f16t15.youber.users.Rider;
 import com.youber.cmput301f16t15.youber.users.User;
 
 import java.util.ArrayList;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -52,31 +54,30 @@ public class ElasticSearchController extends ElasticSearch{
 
 
 
-
-
     /**
      * Do a search for a list accepted Drivers
      * @param request Request
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    public static ArrayList<Driver> getAcceptedDrivers(Request request) throws Exception
+    public static ArrayList<User> getAcceptedDrivers(Request request) throws Exception
     {
-        ElasticSearchUser.getObjects getter = new ElasticSearchUser.getObjects();
-        getter.execute();
-        ArrayList<Driver> drivers = new ArrayList<Driver>();
+
+        String query =
+        "{\n" +
+                "    \"query\" : {\n" +
+                "        \"match\" : {\n" +
+                "            \"acceptedRequests\" : \""+request.getUUID().toString()+"\"\n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
+        ElasticSearchUser.getUserByRequestUUID getter = new ElasticSearchUser.getUserByRequestUUID();
+        getter.execute(query);
+
         try {
             ArrayList<User> users = getter.get();
+            return users;
 
-            for (User user: users)
-            {
-
-                if (user.getDriverUUIDs().contains(request.getUUID()))
-                {
-                    drivers.add((Driver)user);
-                }
-
-            }
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -84,7 +85,7 @@ public class ElasticSearchController extends ElasticSearch{
             e.printStackTrace();
         }
 
-        return drivers;
+        return null;
     }
 
     /**
@@ -151,6 +152,31 @@ public class ElasticSearchController extends ElasticSearch{
         }
 
         return requestCollection;
+    }
+
+    public static User getRider(UUID uuid)
+    {
+
+        String query =
+        "{\n" +
+                "    \"query\" : {\n" +
+                "        \"match\" : {\n" +
+                "            \"uuids\" : \""+uuid.toString()+"\"\n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
+        ElasticSearchUser.getUserByRequestUUID getter = new ElasticSearchUser.getUserByRequestUUID();
+        getter.execute(query);
+        try {
+            User user = getter.get().get(0);
+            return user;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
 }
