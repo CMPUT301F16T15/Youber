@@ -34,7 +34,7 @@ public class MacroCommand {
 
     public static void setContext(Context c) {
         context = c;
-//        loadCommands();
+        loadCommands();
     }
 
     private static void saveCommands() {
@@ -42,7 +42,7 @@ public class MacroCommand {
             FileOutputStream fos = context.openFileOutput(FILENAME_COMMANDS, 0);
             OutputStreamWriter writer = new OutputStreamWriter(fos);
 
-            GsonBuilder builder = new GsonBuilder().registerTypeAdapter(Command.class, new CommandSerializer());
+            GsonBuilder builder = new GsonBuilder().registerTypeHierarchyAdapter(Command.class, new CommandSerializer());
             Gson gson = builder.create();
 
 //            Gson gson = new Gson();
@@ -50,6 +50,8 @@ public class MacroCommand {
             gson.toJson(commands, writer);
 
             writer.flush();
+
+            loadCommands();
         }
         catch (Exception e) {
             commands = new ArrayList<>();
@@ -61,7 +63,7 @@ public class MacroCommand {
             FileInputStream fis = context.openFileInput(FILENAME_COMMANDS);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
 
-            GsonBuilder builder = new GsonBuilder().registerTypeAdapter(Command.class, new CommandSerializer());
+            GsonBuilder builder = new GsonBuilder().registerTypeHierarchyAdapter(Command.class, new CommandSerializer());
             Gson gson = builder.create();
 
 //            Gson gson = new Gson();
@@ -73,12 +75,14 @@ public class MacroCommand {
             Log.i("HELP", e.toString());
             commands = new ArrayList<Command>();
         }
+
+        if(commands == null)
+            commands = new ArrayList<Command>();
     }
 
     public static void addCommand(Command c) {
         commands.add(c);
         execute();
-//        saveCommands();
     }
 
     public static void execute() {
@@ -90,7 +94,7 @@ public class MacroCommand {
         }
 
         cleanupCommandArray();
-//        saveCommands();
+        saveCommands();
     }
 
     private static void cleanupCommandArray() {

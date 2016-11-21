@@ -5,6 +5,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
@@ -15,39 +16,38 @@ import java.lang.reflect.Type;
  * Created by Jess on 2016-11-19.
  */
 
-public class CommandSerializer implements JsonSerializer<Command>, JsonDeserializer<Command> {
-    @Override
-    public Command deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        final JsonObject wrapper = (JsonObject)jsonElement;
-        final JsonElement typeName = get(wrapper, "type");
-        final JsonElement data = get(wrapper, "data");
-        final Type actualType = typeForName(typeName);
+public class CommandSerializer implements JsonSerializer, JsonDeserializer {
 
-        return jsonDeserializationContext.deserialize(data, actualType);
+    private static final String CLASSNAME = "CLASSNAME";
+    private static final String DATA = "DATA";
+
+    @Override
+    public Object deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+        JsonPrimitive prim = (JsonPrimitive)jsonObject.get(CLASSNAME);
+        String className = prim.getAsString();
+        Class klass = getObjectClass(className);
+
+        return jsonDeserializationContext.deserialize(jsonObject.get(DATA), klass);
     }
 
     @Override
-    public JsonElement serialize(Command command, Type type, JsonSerializationContext jsonSerializationContext) {
-        final JsonObject wrapper =  new JsonObject();
-        wrapper.addProperty("type", command.getClass().getName());
-        wrapper.add("data", jsonSerializationContext.serialize(command));
+    public JsonElement serialize(Object jsonElement, Type type, JsonSerializationContext jsonSerializationContext) {
+        JsonObject jsonObject = new JsonObject();
+        String name = jsonElement.getClass().getName();
+        jsonObject.addProperty(CLASSNAME, jsonElement.getClass().getName());
+        jsonObject.add(DATA, jsonSerializationContext.serialize(jsonElement));
 
-        return wrapper;
+        return jsonObject;
     }
 
-    private Type typeForName(final JsonElement typeElem) {
+    /****** Helper method to get the className of the object to be deserialized *****/
+    public Class getObjectClass(String className) {
         try {
-            return Class.forName(typeElem.getAsString());
+            return Class.forName(className);
         } catch (ClassNotFoundException e) {
-            throw new JsonParseException(e);
+            //e.printStackTrace();
+            throw new JsonParseException(e.getMessage());
         }
-    }
-
-    private JsonElement get(final JsonObject wrapper, String memberName) {
-        final JsonElement elem = wrapper.get(memberName);
-        if(elem == null)
-            throw new JsonParseException("no " + memberName + " member found in what was expected to be an interface wrapper");
-
-        return elem;
     }
 }
