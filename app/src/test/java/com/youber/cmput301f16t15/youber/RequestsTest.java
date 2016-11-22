@@ -78,7 +78,8 @@ public class RequestsTest
 
         Request request1 = new Request(geoLocation1, geoLocation2);
         RequestController.closeRequest(request1);
-        assertTrue("Expected to fail until Project Part 5", request1.isClosed());
+//        assertTrue("Expected to fail until Project Part 5", request1.isClosed());
+        assertTrue(false);
     }
 
     @Test

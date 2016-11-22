@@ -38,4 +38,8 @@ public class AddUserCommand implements Command {
     public Boolean isExecuted() {
         return executionState;
     }
+
+    public User getUser() {
+        return user;
+    }
 }

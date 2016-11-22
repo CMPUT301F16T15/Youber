@@ -1,11 +1,18 @@
 package com.youber.cmput301f16t15.youber.requests;
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.util.Log;
 
+import com.youber.cmput301f16t15.youber.gui.MainActivity;
+import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.users.Driver;
 import com.youber.cmput301f16t15.youber.users.Rider;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -132,5 +139,24 @@ public class RequestController
 
     public static Double getPrice(Request selectedRequest) {
         return selectedRequest.getCost();
+    }
+
+    public static String getLocationStr(Geocoder geocoder, GeoLocation loc) {
+        String addr = "";
+
+        List<Address> address = null;
+        try {
+            address = geocoder.getFromLocation(loc.getLat(), loc.getLon(), 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (address.size() > 0) {
+            for (int i = 0; i < address.get(0).getMaxAddressLineIndex(); i++) {
+                addr += address.get(0).getAddressLine(i) + "\n";
+            }
+        }
+
+        return addr;
     }
 }
