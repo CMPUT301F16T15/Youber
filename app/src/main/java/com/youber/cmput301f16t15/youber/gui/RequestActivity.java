@@ -54,6 +54,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+import javax.crypto.Mac;
+
 /**
  * @see Request
  */
@@ -111,10 +113,10 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
         status.setText(selectedRequest.getCurrentStatus().toString());
 
         TextView startLoc = (TextView)findViewById(R.id.start_loc_info);
-        startLoc.setText(selectedRequest.getStartLocation().getAddress(this));
+        startLoc.setText(selectedRequest.getStartLocStr());
 
         TextView endLoc = (TextView)findViewById(R.id.end_loc_info);
-        endLoc.setText(selectedRequest.getEndLocation().getAddress(this));
+        endLoc.setText(selectedRequest.getEndLocStr());
 
         TextView priceStr = (TextView)findViewById(R.id.price_value);
         Double price = RequestController.getPrice(selectedRequest);
@@ -132,14 +134,19 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     protected void onResume() { // update the driver stuff
         super.onResume();
 
-        try {
-            driverArray = ElasticSearchController.getAcceptedDrivers(selectedRequest);
-        } catch (Exception e) {
-            e.printStackTrace();
+        TextView userTitle = (TextView)findViewById(R.id.user_request_title);
+        if(selectedRequest.getCurrentStatus() == Request.RequestStatus.opened)
+            userTitle.setText("No drivers have selected your request");
+        else {
+            if (MacroCommand.isNetworkAvailable()) {
+                try {
+                    driverArray = ElasticSearchController.getAcceptedDrivers(selectedRequest);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else
+                userTitle.setText("Currently Offline cannot obtain drivers");
         }
-
-        //Driver driver1 = new Driver("driver1", "Jess", "Huynh", "10", "7801234567", "test@gmail.com", User.UserType.driver);
-        //driverArray.add(driver1);
         ArrayAdapter<User> adapter = new ArrayAdapter<User>(this, R.layout.list_item, driverArray);
         driverListView.setAdapter(adapter);
     }
@@ -271,13 +278,13 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
         Marker startMarker = new Marker(map);
         startMarker.setPosition(startLoc);
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        startMarker.setTitle("Start point: " + selectedRequest.getStartLocation().getAddress(getBaseContext()));
+        startMarker.setTitle("Start point: " + selectedRequest.getStartLocStr());
         map.getOverlays().add(startMarker);
 
         Marker endMarker = new Marker(map);
         endMarker.setPosition(endLoc);
         endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        endMarker.setTitle("end point: " + selectedRequest.getEndLocation().getAddress(getBaseContext()));
+        endMarker.setTitle("end point: " + selectedRequest.getEndLocStr());
         map.getOverlays().add(endMarker);
 
         // http://stackoverflow.com/questions/38539637/osmbonuspack-roadmanager-networkonmainthreadexception

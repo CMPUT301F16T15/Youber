@@ -187,7 +187,12 @@ public class MainActivity extends AppCompatActivity {
 
         GeoLocation start = new GeoLocation(startLat, startLon);
         GeoLocation end   = new GeoLocation(endLat, endLon);
-        return new Request(start, end);
+
+        Geocoder geocoder = new Geocoder(this);
+        String startStr = RequestController.getLocationStr(geocoder, start);
+        String endStr = RequestController.getLocationStr(geocoder, end);
+
+        return new Request(start, startStr, end, endStr);
     }
 
     public void clearMap(View view) {

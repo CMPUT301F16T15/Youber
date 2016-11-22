@@ -263,13 +263,13 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
         Marker startMarker = new Marker(map);
         startMarker.setPosition(startLoc);
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        startMarker.setTitle("Start point: " + selectedRequest.getStartLocation().getAddress(getBaseContext()));
+        startMarker.setTitle("Start point: " + selectedRequest.getStartLocStr());
         map.getOverlays().add(startMarker);
 
         Marker endMarker = new Marker(map);
         endMarker.setPosition(endLoc);
         endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        endMarker.setTitle("end point: " + selectedRequest.getEndLocation().getAddress(getBaseContext()));
+        endMarker.setTitle("end point: " + selectedRequest.getEndLocStr());
         map.getOverlays().add(endMarker);
 
         // http://stackoverflow.com/questions/38539637/osmbonuspack-roadmanager-networkonmainthreadexception

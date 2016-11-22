@@ -21,7 +21,7 @@ public class  DriverTest {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
 
-        Request request1 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1, "start", geoLocation2, "end");
 
         Rider rider1 = new Rider();
         //TODO FIX
@@ -38,7 +38,7 @@ public class  DriverTest {
     public void testEmailDriver() {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-        Request request1 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1, "start",  geoLocation2, "end");
 
         Rider rider1 = new Rider();
         //TODO FIX
@@ -56,7 +56,7 @@ public class  DriverTest {
         GeoLocation geoLocation1 = new GeoLocation(53.623236, -113.569712);
         GeoLocation geoLocation2 = new GeoLocation(53.614820, -113.569697);
 
-        Request request1 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1, "start", geoLocation2, "end");
 
         Rider rider1 = new Rider();
         //TODO
@@ -75,7 +75,7 @@ public class  DriverTest {
         GeoLocation geoLocation1 = new GeoLocation(53.623236, -113.569712);
         GeoLocation geoLocation2 = new GeoLocation(53.614820, -113.569697);
 
-        Request request1 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1, "start", geoLocation2, "end");
 
         Driver driver1 = new Driver();
         Driver driver2 = new Driver();
@@ -92,8 +92,8 @@ public class  DriverTest {
         GeoLocation geoLocation1 = new GeoLocation(53.623236, -113.569712);
         GeoLocation geoLocation2 = new GeoLocation(53.614820, -113.569697);
 
-        Request request1 = new Request(geoLocation1, geoLocation2);
-        Request request2 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1, "start", geoLocation2, "end");
+        Request request2 = new Request(geoLocation1, "start", geoLocation2, "end");
 
         Driver driver1 = new Driver();
 
@@ -109,7 +109,7 @@ public class  DriverTest {
     public void testDriverSearchOpenRequestsByLocation() {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-        Request request1 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1, "start", geoLocation2, "end");
 //        RequestCollection totalRequests = Helper.getTotalRequests();
         Driver driver1 = new Driver();
         RequestController.linkDriverWithRequest(request1, driver1);
