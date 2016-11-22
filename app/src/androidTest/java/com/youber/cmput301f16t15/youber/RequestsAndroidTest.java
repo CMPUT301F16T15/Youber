@@ -164,11 +164,11 @@ public class RequestsAndroidTest { // mainly using the controller
 
         RequestCollection closedRequests = RequestCollectionsController.getClosedRequests();
 
-        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, closedRequests.get(request.getUUID()).getCurrentStatus());
-        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, closedRequests.get(request2.getUUID()).getCurrentStatus());
-        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, closedRequests.get(request3.getUUID()).getCurrentStatus());
+//        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, closedRequests.get(request.getUUID()).getCurrentStatus());
+//        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, closedRequests.get(request2.getUUID()).getCurrentStatus());
+//        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, closedRequests.get(request3.getUUID()).getCurrentStatus());
 
-
+        assertFalse(true);
     }
 
     @Test
@@ -200,9 +200,11 @@ public class RequestsAndroidTest { // mainly using the controller
 
         RequestCollection acceptedRequests = RequestCollectionsController.getAcceptedRequests();
 
-        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, acceptedRequests.get(request.getUUID()).getCurrentStatus());
-        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, acceptedRequests.get(request2.getUUID()).getCurrentStatus());
-        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, acceptedRequests.get(request3.getUUID()).getCurrentStatus());
+//        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, acceptedRequests.get(request.getUUID()).getCurrentStatus());
+//        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, acceptedRequests.get(request2.getUUID()).getCurrentStatus());
+//        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, acceptedRequests.get(request3.getUUID()).getCurrentStatus());
+
+        assertFalse(true);
     }
 
     @Test
@@ -234,9 +236,11 @@ public class RequestsAndroidTest { // mainly using the controller
 
         RequestCollection paidRequests = RequestCollectionsController.getPaidRequests();
 
-        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request.getUUID()).getCurrentStatus());
-        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request2.getUUID()).getCurrentStatus());
-        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request3.getUUID()).getCurrentStatus());
+//        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request.getUUID()).getCurrentStatus());
+//        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request2.getUUID()).getCurrentStatus());
+//        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request3.getUUID()).getCurrentStatus());
+
+        assertFalse(true);
     }
 
     @Test
