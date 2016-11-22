@@ -60,14 +60,13 @@ public class DriverSearchListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         RequestCollection requests=null;
         try{
-            //Need this when Calvin is able to send a geolocation and double
-
 
             geoLocation=(GeoLocation) intent.getParcelableExtra("GeoLocation");
             if(geoLocation==null)throw new NullPointerException();
             radius=intent.getDoubleExtra("Radius",2.0);
             Log.i("radius: ", Double.toString(radius));
-
+            Log.i("radius: ", Double.toString(geoLocation.getLat()));
+            Log.i("radius: ", Double.toString(geoLocation.getLon()));
            requests = ElasticSearchController.getRequestsbyGeoLocation(geoLocation,radius);
         } catch (Exception e){
             String keyword=intent.getStringExtra("Keyword");

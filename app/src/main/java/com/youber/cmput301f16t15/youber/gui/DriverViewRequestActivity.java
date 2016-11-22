@@ -50,6 +50,8 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
     Button cancel;
     Request selectedRequest;
     User rider;
+    Dialog moreOptionsDialog;
+    UUID selectedRequestUUID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +62,7 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
 
         final TextView username = (TextView) findViewById(R.id.driverUsernameInput);
 
-        UUID selectedRequestUUID = (UUID)getIntent().getExtras().getSerializable("uuid");
+        selectedRequestUUID = (UUID)getIntent().getExtras().getSerializable("uuid");
         selectedRequest = RequestCollectionsController.getRequest(selectedRequestUUID);
         rider = ElasticSearchController.getRider(selectedRequestUUID);
 
@@ -90,10 +92,10 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
             @Override
             public void onClick(View v) {
 
-                    Dialog dialog = promptDialog(R.layout.request_more_options);
+                    moreOptionsDialog = promptDialog(R.layout.request_more_options);
 
-                    dialog.show();
-                    Button cancel = (Button) dialog.findViewById(R.id.cancel_request);
+                    moreOptionsDialog.show();
+                    Button cancel = (Button) moreOptionsDialog.findViewById(R.id.cancel_request);
                     cancel.setVisibility(View.GONE);
             }
 
@@ -144,7 +146,13 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
     protected void onStart() {
         super.onStart();
 
+        loadRequest();
 
+    }
+
+
+    public void loadRequest()
+    {
         TextView status = (TextView) findViewById(R.id.driverViewStatusUpdate);
         status.setText(selectedRequest.getCurrentStatus().toString());
         if (rider != null)
@@ -161,9 +169,7 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
 
         TextView offeredPayment = (TextView) findViewById(R.id.driverViewOffPaymentInput);
         offeredPayment.setText(selectedRequest.getCost().toString());
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -214,8 +220,9 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
         // the way we update a user, update that request
         selectedRequest.setAcceptedByDrivers();
         RequestCollectionsController.addRequest(selectedRequest);
-        finish();
-
+        dialog.dismiss();
+        moreOptionsDialog.dismiss();
+        loadRequest();
 
     }
 
