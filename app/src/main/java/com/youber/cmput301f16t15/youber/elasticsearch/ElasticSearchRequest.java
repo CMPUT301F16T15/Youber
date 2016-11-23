@@ -24,6 +24,7 @@ import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Get;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
+import io.searchbox.indices.mapping.PutMapping;
 
 /**
  * Created by aphilips on 11/7/16.
@@ -188,5 +189,37 @@ public class ElasticSearchRequest extends ElasticSearch{
         }
 
         return requestCollection;
+    }
+
+    /**
+     * Add a request to the server.
+     */
+    public static class addPutMap extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... putmaps) {
+            verifySettings();
+
+            for (String putmap : putmaps) {
+//                Index index = new Index.Builder(request).index("youber").type("request").build();
+//
+//                try {
+//                    DocumentResult result = getClient().execute(index);
+//                } catch (Exception e) {
+//                    Log.i("Error", "The app failed to build and and add request");
+//                }
+                PutMapping putMapping =new PutMapping.Builder(
+                        "youber",
+                        "request",
+                        "{\"request\" : { \"properties\" : { \""+putmap+"\" : {\"type\" : \"geo_point\"}}}}"
+                ).build();
+                JestResult jr=null;
+                try{
+                    jr= getClient().execute(putMapping);
+                }catch(Exception e){Log.i("put map","failed cause :" + jr.toString());}
+            }
+
+            return null;
+        }
     }
 }

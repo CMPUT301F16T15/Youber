@@ -1,15 +1,25 @@
 package com.youber.cmput301f16t15.youber.requests;
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+
 import com.youber.cmput301f16t15.youber.users.Driver;
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.exceptions.InvalidRequestException;
 import com.youber.cmput301f16t15.youber.misc.Payment;
 import com.youber.cmput301f16t15.youber.users.Rider;
 
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+
+import java.io.IOException;
+
 import java.io.Serializable;
+import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import io.searchbox.annotations.JestId;
@@ -34,7 +44,9 @@ public class Request implements Serializable {
      * The Start location.
      */
     double [] startLocation =new double[2];
+    String startLocStr = "";
     double [] endLocation= new double[2];
+    String endLocStr = "";
 
     private boolean status = true; //open is true
     private String description = "";
@@ -91,14 +103,31 @@ public class Request implements Serializable {
         description = s;
     }
 
+    /**
+     * Instantiates a new Request.
+     *
+     * @param location1 the starting location
+     * @param location2 the end location
+     */
+    public Request(GeoLocation location1, String start, GeoLocation location2, String end) {
+        if (location1.equals(location2)) throw new RuntimeException(new InvalidRequestException());
+
+        startLocation[0] = location1.getLat();
+        startLocation[1] = location1.getLon();
+        endLocation[0] = location2.getLat();
+        endLocation[1] = location2.getLon();
+
+        uuID = UUID.randomUUID();
+        currentStatus = RequestStatus.opened;
+
+        startLocStr = start;
+        endLocStr = end;
+    }
+
     @Override
     public String toString() {
         String currentStat = currentStatus.toString(); // TODO FIX THIS
-        GeoLocation start = new GeoLocation(startLocation[0], startLocation[1]);
-        String startStr = start.toString();
-        GeoLocation end = new GeoLocation(endLocation[0], endLocation[1]);
-        String endStr = end.toString();
-        return currentStat + "\nStart: " + startStr + "\nEnd: " + endStr;
+        return currentStat + "\nStart: " + startLocStr + "\nEnd: " + endLocStr;
     }
 
     public Rider addRider(Rider rider) {
@@ -117,6 +146,10 @@ public class Request implements Serializable {
         return new GeoLocation(startLocation[0],startLocation[1]);
     }
 
+    public String getStartLocStr() {
+        return startLocStr;
+    }
+
     /**
      * Gets end location.
      * @return the end location
@@ -124,6 +157,10 @@ public class Request implements Serializable {
     public GeoLocation getEndLocation() {
 
         return new GeoLocation(endLocation[0],endLocation[1]);
+    }
+
+    public String getEndLocStr() {
+        return endLocStr;
     }
 
     /**

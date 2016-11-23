@@ -138,105 +138,116 @@ public class RequestsAndroidTest { // mainly using the controller
     @Test
     public void testGetClosedRequests() // AARON HERE AND DOWN, project part 5
     {
-//        init();
-//
-//        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
-//        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-//        Request request = new Request(geoLocation1, geoLocation2);
-//        Request request2 = new Request(geoLocation1, geoLocation2);
-//        Request request3 = new Request(geoLocation1, geoLocation2);
-//
-//        RequestCollectionsController.addRequest(request);
-//        RequestCollectionsController.addRequest(request2);
-//        RequestCollectionsController.addRequest(request3);
-//
-//
-//
-//        RequestController.closeRequest(request);
-//        RequestController.closeRequest(request2);// could happen on other app
-//        RequestController.closeRequest(request3);
-//
-//        init2();
-//
-//        RequestCollectionsController.addRequest(request);
-//        RequestCollectionsController.addRequest(request2);
-//        RequestCollectionsController.addRequest(request3);
-//
-//        RequestCollection closedRequests = RequestCollectionsController.getClosedRequests();
-//
+
+
+        init();
+
+        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
+        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
+        Request request = new Request(geoLocation1, geoLocation2);
+        Request request2 = new Request(geoLocation1, geoLocation2);
+        Request request3 = new Request(geoLocation1, geoLocation2);
+
+        RequestCollectionsController.addRequest(request);
+        RequestCollectionsController.addRequest(request2);
+        RequestCollectionsController.addRequest(request3);
+
+
+
+        RequestController.closeRequest(request);
+        RequestController.closeRequest(request2);// could happen on other app
+        RequestController.closeRequest(request3);
+
+        init2();
+
+        RequestCollectionsController.addRequest(request);
+        RequestCollectionsController.addRequest(request2);
+        RequestCollectionsController.addRequest(request3);
+
+        RequestCollection closedRequests = RequestCollectionsController.getClosedRequests();
+
 //        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, closedRequests.get(request.getUUID()).getCurrentStatus());
 //        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, closedRequests.get(request2.getUUID()).getCurrentStatus());
 //        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, closedRequests.get(request3.getUUID()).getCurrentStatus());
 
 
+        assertFalse(true);
     }
 
     @Test
     public void testGetAcceptedRequest() // project part 5
     {
-//        init();
-//
-//        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
-//        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-//        Request request = new Request(geoLocation1, geoLocation2);
-//        Request request2 = new Request(geoLocation1, geoLocation2);
-//        Request request3 = new Request(geoLocation1, geoLocation2);
-//
-//        RequestCollectionsController.addRequest(request);
-//        RequestCollectionsController.addRequest(request2);
-//        RequestCollectionsController.addRequest(request3);
-//
-//        RequestController.acceptRequest(request);//
-//        RequestController.acceptRequest(request2);// these same function calls would happen on another users app
-//        RequestController.acceptRequest(request3);//
-//
-//        init2();
-//
-//        RequestCollectionsController.addRequest(request);
-//        RequestCollectionsController.addRequest(request2);
-//        RequestCollectionsController.addRequest(request3);
-//
-//
-//
-//        RequestCollection acceptedRequests = RequestCollectionsController.getAcceptedRequests();
-//
+
+        init();
+
+        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
+        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
+        Request request = new Request(geoLocation1, geoLocation2);
+        Request request2 = new Request(geoLocation1, geoLocation2);
+        Request request3 = new Request(geoLocation1, geoLocation2);
+
+        RequestCollectionsController.addRequest(request);
+        RequestCollectionsController.addRequest(request2);
+        RequestCollectionsController.addRequest(request3);
+
+        RequestController.acceptRequest(request);//
+        RequestController.acceptRequest(request2);// these same function calls would happen on another users app
+        RequestController.acceptRequest(request3);//
+
+        init2();
+
+        RequestCollectionsController.addRequest(request);
+        RequestCollectionsController.addRequest(request2);
+        RequestCollectionsController.addRequest(request3);
+
+
+
+        RequestCollection acceptedRequests = RequestCollectionsController.getAcceptedRequests();
+
 //        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, acceptedRequests.get(request.getUUID()).getCurrentStatus());
 //        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, acceptedRequests.get(request2.getUUID()).getCurrentStatus());
 //        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, acceptedRequests.get(request3.getUUID()).getCurrentStatus());
+
+        assertFalse(true);
+
     }
 
     @Test
     public void testGetPaidRequests() // project part 5
     {
-//        init();
-//
-//        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
-//        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-//        Request request = new Request(geoLocation1, geoLocation2);
-//        Request request2 = new Request(geoLocation1, geoLocation2);
-//        Request request3 = new Request(geoLocation1, geoLocation2);
-//
-//        RequestCollectionsController.addRequest(request);
-//        RequestCollectionsController.addRequest(request2);
-//        RequestCollectionsController.addRequest(request3);
-//
-//        RequestController.payRequest(request);//
-//        RequestController.payRequest(request2);// these same function calls would happen on another users app
-//        RequestController.payRequest(request3);//
-//
-//        init2();
-//
-//        RequestCollectionsController.addRequest(request);
-//        RequestCollectionsController.addRequest(request2);
-//        RequestCollectionsController.addRequest(request3);
-//
-//
-//
-//        RequestCollection paidRequests = RequestCollectionsController.getPaidRequests();
-//
+
+        init();
+
+        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
+        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
+        Request request = new Request(geoLocation1, geoLocation2);
+        Request request2 = new Request(geoLocation1, geoLocation2);
+        Request request3 = new Request(geoLocation1, geoLocation2);
+
+        RequestCollectionsController.addRequest(request);
+        RequestCollectionsController.addRequest(request2);
+        RequestCollectionsController.addRequest(request3);
+
+        RequestController.payRequest(request);//
+        RequestController.payRequest(request2);// these same function calls would happen on another users app
+        RequestController.payRequest(request3);//
+
+        init2();
+
+        RequestCollectionsController.addRequest(request);
+        RequestCollectionsController.addRequest(request2);
+        RequestCollectionsController.addRequest(request3);
+
+
+
+        RequestCollection paidRequests = RequestCollectionsController.getPaidRequests();
+
 //        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request.getUUID()).getCurrentStatus());
 //        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request2.getUUID()).getCurrentStatus());
 //        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request3.getUUID()).getCurrentStatus());
+
+        assertFalse(true);
+
     }
 
     @Test

@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.youber.cmput301f16t15.youber.commands.Command;
 import com.youber.cmput301f16t15.youber.requests.Request;
+import com.youber.cmput301f16t15.youber.users.User;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -27,58 +28,22 @@ import java.util.UUID;
  */
 
 public class MacroCommand {
-    private final static String FILENAME_COMMANDS ="macro_commands.sav";
+    private final static String FILE_COMMAND_USER ="user_commands.sav";
+    private final static String FILE_COMMAND_ADDREQUEST ="add_request_commands.sav";
+    private final static String FILE_COMMAND_DELETEREQUEST ="delete_request_commands.sav";
 
     private static ArrayList<Command> commands = new ArrayList<>();
     private static Context context;
 
     public static void setContext(Context c) {
         context = c;
-//        loadCommands();
-    }
-
-    private static void saveCommands() {
-        try {
-            FileOutputStream fos = context.openFileOutput(FILENAME_COMMANDS, 0);
-            OutputStreamWriter writer = new OutputStreamWriter(fos);
-
-            GsonBuilder builder = new GsonBuilder().registerTypeAdapter(Command.class, new CommandSerializer());
-            Gson gson = builder.create();
-
-//            Gson gson = new Gson();
-
-            gson.toJson(commands, writer);
-
-            writer.flush();
-        }
-        catch (Exception e) {
-            commands = new ArrayList<>();
-        }
-    }
-
-    private static void loadCommands() {
-        try {
-            FileInputStream fis = context.openFileInput(FILENAME_COMMANDS);
-            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-
-            GsonBuilder builder = new GsonBuilder().registerTypeAdapter(Command.class, new CommandSerializer());
-            Gson gson = builder.create();
-
-//            Gson gson = new Gson();
-
-            Type listType = new TypeToken<ArrayList<Command>>(){}.getType();
-            commands = gson.fromJson(in, listType);
-        }
-        catch (Exception e) {
-            Log.i("HELP", e.toString());
-            commands = new ArrayList<Command>();
-        }
+        loadCommands();
+        execute();
     }
 
     public static void addCommand(Command c) {
         commands.add(c);
         execute();
-//        saveCommands();
     }
 
     public static void execute() {
@@ -86,11 +51,11 @@ public class MacroCommand {
             if(!isNetworkAvailable())
                 break;
             else if (!c.isExecuted())
-                    c.execute();
+                c.execute();
         }
 
         cleanupCommandArray();
-//        saveCommands();
+        saveCommands();
     }
 
     private static void cleanupCommandArray() {
@@ -122,6 +87,97 @@ public class MacroCommand {
         }
 
         return false;
+    }
+
+    // SAVING AND LOADING COMMANDS
+    private static void saveUsers(ArrayList<User> array) {
+        try {
+            FileOutputStream fos = context.openFileOutput(FILE_COMMAND_USER, 0);
+            OutputStreamWriter writer = new OutputStreamWriter(fos);
+            Gson gson = new Gson();
+            gson.toJson(array, writer);
+            writer.flush();
+        }
+        catch (Exception e) {
+            Log.i("Error", "Failed to save commands, " + e.toString());
+            commands = new ArrayList<>();
+        }
+    }
+
+    private static void saveRequests(String filename, ArrayList<Request> array) {
+        try {
+            FileOutputStream fos = context.openFileOutput(filename, 0);
+            OutputStreamWriter writer = new OutputStreamWriter(fos);
+            Gson gson = new Gson();
+            gson.toJson(array, writer);
+            writer.flush();
+        }
+        catch (Exception e) {
+            Log.i("Error", "Failed to save commands, " + e.toString());
+            commands = new ArrayList<>();
+        }
+    }
+
+    private static void saveCommands() {
+            ArrayList<Request> addrequests = new ArrayList<>();
+            ArrayList<Request> deleterequests = new ArrayList<>();
+            ArrayList<User> users = new ArrayList<>();
+
+            for(Command c : commands) {
+                if(c instanceof AddRequestCommand)
+                    addrequests.add(((AddRequestCommand) c).getRequest());
+                else if(c instanceof DeleteRequestCommand)
+                    deleterequests.add(((DeleteRequestCommand) c).getRequest());
+                else if(c instanceof AddUserCommand)
+                    users.add(((AddUserCommand) c).getUser());
+            }
+
+            saveRequests(FILE_COMMAND_ADDREQUEST, addrequests);
+            saveRequests(FILE_COMMAND_DELETEREQUEST, deleterequests);
+            saveUsers(users);
+    }
+
+
+    private static ArrayList<Command> load(String filename) {
+        ArrayList<Command> loadedCommands = new ArrayList<>();
+
+        try {
+            FileInputStream fis = context.openFileInput(filename);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+
+            Gson gson = new Gson();
+            Type listType;
+            if(filename == FILE_COMMAND_USER) {
+                listType = new TypeToken<ArrayList<User>>() {}.getType();
+                ArrayList<User> users = gson.fromJson(in, listType);
+
+                for(User u: users)
+                    loadedCommands.add(new AddUserCommand(u));
+            }
+            else {
+                listType = new TypeToken<ArrayList<Request>>() {}.getType();
+                ArrayList<Request> requests = gson.fromJson(in, listType);
+
+                for(Request r: requests) {
+                    if(filename == FILE_COMMAND_ADDREQUEST)
+                        loadedCommands.add(new AddRequestCommand(r));
+                    else
+                        loadedCommands.add(new DeleteRequestCommand(r));
+                }
+            }
+
+            return loadedCommands;
+        }
+        catch (Exception e) {
+            Log.i("HELP", e.toString());
+            return loadedCommands;
+        }
+    }
+
+    private static void loadCommands() {
+        commands.addAll(load(FILE_COMMAND_USER));
+        commands.addAll(load(FILE_COMMAND_ADDREQUEST));
+        commands.addAll(load(FILE_COMMAND_DELETEREQUEST));
     }
 }
 

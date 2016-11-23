@@ -85,23 +85,6 @@ public class GeoLocation implements Serializable, Parcelable {
         return "Lat " + Double.toString(lat) + ", " + "Lon " + Double.toString(lon);
     }
 
-    public String getAddress(Context c) {
-        Geocoder geocoder = new Geocoder(c, Locale.getDefault());
-        String addr = "";
-
-        try {
-            List<Address> address = geocoder.getFromLocation(lat, lon, 1);
-
-            for (int i = 0; i < address.get(0).getMaxAddressLineIndex(); i++) {
-                addr += address.get(0).getAddressLine(i) + "\n";
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return addr;
-    }
-
     @Override
     public int describeContents() {
         return 0;

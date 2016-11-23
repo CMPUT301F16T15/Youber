@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
 import com.youber.cmput301f16t15.youber.R;
+import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
 import com.youber.cmput301f16t15.youber.exceptions.UserNotFoundException;
@@ -28,6 +29,7 @@ import java.util.UUID;
 
 public class Setup {
     public static void run(Context context){
+        ElasticSearchController.setupPutmap();
         UserController.setContext(context);
         RequestCollectionsController.setContext(context);
         if(hasUpdated()){
@@ -40,7 +42,7 @@ public class Setup {
                 MainActivity.class:DriverMainActivity.class;
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.notification_icon)
+                        .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle("Youber")
                         .setContentText("Your Requests have updated");
         // Creates an explicit intent for an Activity in your app
