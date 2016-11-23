@@ -69,5 +69,6 @@
     <string name="SaveContactInfo">SAVE CONTACT INFO</string>
     <string name="SaveVehicleInfo">SAVE VEHICLE INFO</string>
     <string name="dlg_accept">Accept Driver</string>
+    <string name="dlg_payment">Accept</string>
 
 </resources>
