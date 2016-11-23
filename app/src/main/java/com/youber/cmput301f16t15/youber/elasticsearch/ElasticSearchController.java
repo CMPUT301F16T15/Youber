@@ -108,6 +108,21 @@ public class ElasticSearchController extends ElasticSearch{
                 "    }\n" +
                 "}";
 
+    /*
+        String query ="{\n" +
+                "    \"filter\" : {\n" +
+
+                "        \"bool\" : {\n" +
+                "         \"\"
+                "        \"geo_distance\" : {\n" +
+                "            \"distance\" : \""+Double.toString(radiusInKm)+"m\",\n" +
+                "            \"startLocation\" :[ "+Double.toString(start.getLat())+",\n" +
+                "            "+Double.toString(start.getLon())+"]\n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
+*/
+
         ElasticSearchRequest.getObjectsByGeolocation getter = new ElasticSearchRequest.getObjectsByGeolocation();
         getter.execute(query);
         try {
@@ -131,15 +146,32 @@ public class ElasticSearchController extends ElasticSearch{
      */
     public static RequestCollection getRequestsbyKeyWord(String keyword) throws Exception {
         RequestCollection requestCollection =new RequestCollection();
+        /*
         String query =
                 "{\n" +
                 "    \"query\" : {\n" +
                 "        \"match\" : {\n" +
                 "            \"description\" : \""+keyword+"\"\n" +
-                        
+
                 "        }\n" +
                 "    }\n" +
                 "}";
+
+*/
+        String query = "{\n" +
+        "    \"query\" : {\n" +
+        "        \"bool\" : {\n" +
+        "            \"must\" : { \"match\" : {\"description\" : \""+keyword+"\"}},\n" +
+        "            \"should\" :\n" +
+        "            [\n" +
+        "            {\"match\" : {\"currentStatus\": \"opened\"}},\n" +
+        "            {\"match\" : {\"currentStatus\": \"acceptedByDrivers\"}}\n" +
+        "            ]\n" +
+        "        }\n" +
+        "    }\n" +
+        "}";
+
+
 
         ElasticSearchRequest.getObjectsByGeolocation getter = new ElasticSearchRequest.getObjectsByGeolocation();
         getter.execute(query);
