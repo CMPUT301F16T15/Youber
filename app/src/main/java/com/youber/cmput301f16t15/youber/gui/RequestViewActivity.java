@@ -95,20 +95,20 @@ RequestViewActivity extends AppCompatActivity {
                 }
                 if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.acceptedByDrivers))
                 {
-                    view.setBackgroundColor(getResources().getColor(R.color.orange));
+                    view.setBackgroundColor(getResources().getColor(R.color.red));
                 }
                 else if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.riderSelectedDriver))
                 {
-                    view.setBackgroundColor(getResources().getColor(R.color.yellow));
+                    view.setBackgroundColor(getResources().getColor(R.color.orange));
 
                 }
                 else if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.paid))
                 {
-                    view.setBackgroundColor(getResources().getColor(R.color.paleGreen));
+                    view.setBackgroundColor(getResources().getColor(R.color.yellow));
 
                 }
                 else if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.completed)) {
-                    view.setBackgroundColor(getResources().getColor(R.color.green));
+                    view.setBackgroundColor(getResources().getColor(R.color.paleGreen));
 
                 }
                 return view;

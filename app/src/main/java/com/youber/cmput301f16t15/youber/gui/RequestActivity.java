@@ -47,6 +47,7 @@ import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.infowindow.BasicInfoWindow;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -156,11 +157,55 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
     }
 
     public void onMoreOptionClick(View view) {
+
         Dialog dialog = promptDialog(R.layout.request_more_options);
         dialog.show();
-        Button accept = (Button) dialog.findViewById(R.id.accept_request);
-        accept.setVisibility(View.GONE);
+
+        if (selectedRequest.getCurrentStatus().equals(Request.RequestStatus.opened)
+                || selectedRequest.getCurrentStatus().equals(Request.RequestStatus.acceptedByDrivers)) {
+
+                Button accept = (Button) dialog.findViewById(R.id.accept_request);
+                accept.setVisibility(View.GONE);
+                Button pay = (Button) dialog.findViewById(R.id.offer_payment);
+                pay.setVisibility(View.GONE);
+                Button accept_pay = (Button) dialog.findViewById(R.id.accept_payment);
+                accept_pay.setVisibility(View.GONE);
+        }
+        else if (selectedRequest.getCurrentStatus().equals(Request.RequestStatus.riderSelectedDriver))
+        {
+            Button accept = (Button) dialog.findViewById(R.id.accept_request);
+            accept.setVisibility(View.GONE);
+            Button cancel = (Button) dialog.findViewById(R.id.cancel_request);
+            cancel.setVisibility(View.GONE);
+            Button accept_pay = (Button) dialog.findViewById(R.id.accept_payment);
+            accept_pay.setVisibility(View.GONE);
+        }
+        else if (selectedRequest.getCurrentStatus().equals(Request.RequestStatus.paid)
+            || selectedRequest.getCurrentStatus().equals(Request.RequestStatus.completed))
+        {
+            Button accept = (Button) dialog.findViewById(R.id.accept_request);
+            accept.setVisibility(View.GONE);
+            Button cancel = (Button) dialog.findViewById(R.id.cancel_request);
+            cancel.setVisibility(View.GONE);
+            Button pay = (Button) dialog.findViewById(R.id.offer_payment);
+            pay.setVisibility(View.GONE);
+            Button accept_pay = (Button) dialog.findViewById(R.id.accept_payment);
+            accept_pay.setVisibility(View.GONE);
+        }
+
+
     }
+
+    public void onPayRequestBnClick(View view)
+    {
+        Dialog dialog = promptDialog(R.layout.dlg_payment);
+        dialog.show();
+
+        TextView payment = (TextView) dialog.findViewById(R.id.payment);
+        payment.setText("Make payment of "+selectedRequest.getCost().toString()+" to driver?");
+
+    }
+
 
     public Dialog promptDialog(int resource) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -169,7 +214,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        if (resource==R.layout.dlg_user_info)
+        if (resource==R.layout.dlg_user_info && selectedRequest.getCurrentStatus().equals(Request.RequestStatus.acceptedByDrivers))
         {
             builder.setView(inflater.inflate(resource, null))
                     // Add action buttons
@@ -198,10 +243,29 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
                             }
 
                             finish();
-                            // click on accept
                 }});
         }
-        else {
+
+        else if (resource==R.layout.dlg_payment)
+        {
+            builder.setView(inflater.inflate(resource, null))
+                    .setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            }).setPositiveButton(R.string.dlg_payment, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            selectedRequest.setPaid();
+                            RequestCollectionsController.addRequest(selectedRequest);
+                            // dismiss dialog
+                            dialog.dismiss();
+                            finish();
+                        }
+                        });
+
+
+        }
+
+        else{
             builder.setView(inflater.inflate(resource, null))
                     // Add action buttons
                     .setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
@@ -209,6 +273,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
                         }
                     });
         }
+
 
         return builder.create();
     }
