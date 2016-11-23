@@ -10,7 +10,13 @@ import com.youber.cmput301f16t15.youber.exceptions.InvalidRequestException;
 import com.youber.cmput301f16t15.youber.misc.Payment;
 import com.youber.cmput301f16t15.youber.users.Rider;
 
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+
 import java.io.IOException;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
@@ -300,5 +306,40 @@ public class Request implements Serializable {
         this.currentStatus=RequestStatus.paid;
     }
 
+    //http://stackoverflow.com/questions/185937/overriding-the-java-equals-method-quirk
+    //http://stackoverflow.com/questions/10912646/hashcodebuilder-and-equalsbuilder-usage-style
+
+    @Override
+    public int hashCode(){
+        HashCodeBuilder hashCodeBuilder = new HashCodeBuilder();
+        hashCodeBuilder.append(getUUID());
+        hashCodeBuilder.append(getCurrentStatus());
+        return hashCodeBuilder.toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object other){
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof Request))return false;
+        Request otherRequest=(Request)other;
+        EqualsBuilder equalsBuilder= new EqualsBuilder();
+        equalsBuilder.append(getUUID(),otherRequest.getUUID());
+        equalsBuilder.append(getCurrentStatus(),otherRequest.getCurrentStatus());
+        return equalsBuilder.isEquals();
+
+    }
+    //NEVER USER THIS
+    public Request(GeoLocation location1, GeoLocation location2, UUID otheruuid) {
+        if (location1.equals(location2)) throw new RuntimeException(new InvalidRequestException());
+
+        startLocation[0] = location1.getLat();
+        startLocation[1] = location1.getLon();
+        endLocation[0] = location2.getLat();
+        endLocation[1] = location2.getLon();
+
+        uuID = otheruuid;
+        currentStatus = RequestStatus.opened;
+    }
 
 }
