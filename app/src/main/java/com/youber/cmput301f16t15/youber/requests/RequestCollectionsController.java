@@ -7,8 +7,10 @@ import com.google.gson.reflect.TypeToken;
 import com.youber.cmput301f16t15.youber.commands.AddRequestCommand;
 import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
 import com.youber.cmput301f16t15.youber.commands.DeleteRequestCommand;
+import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.misc.Observable;
 import com.youber.cmput301f16t15.youber.misc.Updater;
+import com.youber.cmput301f16t15.youber.users.Driver;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
@@ -267,4 +269,15 @@ public class RequestCollectionsController {
         return null;
     }
 
+    public static void deleteUUIDFromAccepted(ArrayList<User> driverArray, int driverSelected, Request selectedRequest){
+        for (User user: driverArray)
+        {
+            if (!user.equals(driverArray.get(driverSelected)))
+            {
+                user.deleteUUIDFromAccepted(selectedRequest.getUUID());
+                AddUserCommand update = new AddUserCommand(user);
+                MacroCommand.addCommand(update);
+            }
+        }
+    }
 }

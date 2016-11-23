@@ -230,17 +230,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
                             AddUserCommand addUserCommand = new AddUserCommand(driverArray.get(driverSelected));
                             MacroCommand.addCommand(addUserCommand);
 
-                            for (User user: driverArray)
-                            {
-                                if (!user.equals(driverArray.get(driverSelected)))
-                                {
-                                    user.deleteUUIDFromAccepted(selectedRequest.getUUID());
-                                    AddUserCommand update = new AddUserCommand(user);
-                                    MacroCommand.addCommand(update);
-
-
-                                }
-                            }
+                            RequestCollectionsController.deleteUUIDFromAccepted(driverArray, driverSelected, selectedRequest);
 
                             finish();
                 }});
