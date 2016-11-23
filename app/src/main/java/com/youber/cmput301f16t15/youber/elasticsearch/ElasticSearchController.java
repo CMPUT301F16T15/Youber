@@ -212,4 +212,10 @@ public class ElasticSearchController extends ElasticSearch{
 
     }
 
+    public static void setupPutmap(){
+        ElasticSearchRequest.addPutMap addPutMap= new ElasticSearchRequest.addPutMap();
+        addPutMap.execute("startLocation");
+    }
+
+
 }
