@@ -169,31 +169,13 @@ public class MainActivity extends AppCompatActivity {
      * @return Request a request is made with the gui values!
      */
     private Request initRequestObj() { // map and on new click both use this!
-        String startLatStr = ((EditText)findViewById(R.id.start_lat_edit)).getText().toString();
-        String startLonStr = ((EditText)findViewById(R.id.start_lon_edit)).getText().toString();
-        String endLatStr = ((EditText)findViewById(R.id.end_lat_edit)).getText().toString();
-        String endLonStr = ((EditText)findViewById(R.id.end_lon_edit)).getText().toString();
-
-        if(startLatStr.isEmpty() || startLonStr.isEmpty() || endLatStr.isEmpty() || endLonStr.isEmpty()) // check for empty arguements
-        {
-            Toast.makeText(MainActivity.this, "Cannot have empty values for latitudes and longitudes", Toast.LENGTH_SHORT).show();
+        if(startPoint == null || endPoint == null) {
+            Toast.makeText(MainActivity.this, "Please select a start and end point", Toast.LENGTH_SHORT).show();
             return null;
         }
 
-        Double startLat, startLon, endLat, endLon;
-        try {
-            startLat = Double.parseDouble(startLatStr);
-            startLon = Double.parseDouble(startLonStr);
-            endLat = Double.parseDouble(endLatStr);
-            endLon = Double.parseDouble(endLonStr);
-        }
-        catch(NumberFormatException e) {
-            Toast.makeText(MainActivity.this, "Invalid argument format. Please input doubles for latitudes and longitudes", Toast.LENGTH_SHORT).show();
-            return null;
-        }
-
-        GeoLocation start = new GeoLocation(startLat, startLon);
-        GeoLocation end   = new GeoLocation(endLat, endLon);
+        GeoLocation start = new GeoLocation(startPoint.getLatitude(), startPoint.getLongitude());
+        GeoLocation end   = new GeoLocation(endPoint.getLatitude(), endPoint.getLongitude());
 
         Geocoder geocoder = new Geocoder(this);
         String startStr = RequestController.getLocationStr(geocoder, start);
@@ -205,12 +187,10 @@ public class MainActivity extends AppCompatActivity {
     public void clearMap(View view) {
         map.getOverlays().remove(startMarker);
         map.getOverlays().remove(endMarker);
+
         startPoint = null;
         endPoint = null;
-        ((EditText)findViewById(R.id.start_lat_edit)).setText(null);
-        ((EditText)findViewById(R.id.start_lon_edit)).setText(null);
-        ((EditText)findViewById(R.id.end_lat_edit)).setText(null);
-        ((EditText)findViewById(R.id.end_lon_edit)).setText(null);
+
         map.getOverlays().remove(roadPolyline);
         map.invalidate();
     }
@@ -223,10 +203,11 @@ public class MainActivity extends AppCompatActivity {
 //  Button Click Actions
     public void onNewRequestBtnClick(View view) {
         request = initRequestObj();
-        RequestController.setRouteDistance(request, distance);
 
-        if(request != null)
+        if(request != null) {
+            RequestController.setRouteDistance(request, distance);
             promptToCreateRequest();
+        }
     }
 
 
@@ -275,10 +256,10 @@ public class MainActivity extends AppCompatActivity {
      */
     private void setCreateDialogFields(Dialog dlg) {
         TextView startLoc = (TextView)dlg.findViewById(R.id.create_start_value);
-        startLoc.setText(request.getStartLocation().toString());
+        startLoc.setText(request.getStartLocStr());
 
         TextView endLoc = (TextView)dlg.findViewById(R.id.create_end_value);
-        endLoc.setText(request.getEndLocation().toString());
+        endLoc.setText(request.getEndLocStr());
 
         TextView dist = (TextView)dlg.findViewById(R.id.create_dist_value);
         Double distKM = RequestController.getDistanceOfRequest(request);
@@ -337,40 +318,38 @@ public class MainActivity extends AppCompatActivity {
             try {
                 List<Address> address = geocoder.getFromLocation(touchedPoint.getLatitude(), touchedPoint.getLongitude(), 1);
                 if (address.size() > 0) {
-                    String display = "Latitude: " + touchedPoint.getLatitude() + "\n" + "Longitude: " + touchedPoint.getLongitude() + "\n";
+                    String display = "";
                     for (int i = 0; i < address.get(0).getMaxAddressLineIndex(); i++) {
                         display += address.get(0).getAddressLine(i) + "\n";
                     }
-                    Toast t = Toast.makeText(getBaseContext(), display, Toast.LENGTH_LONG);
+
+                    display = display.trim();
+                    Toast t = Toast.makeText(getBaseContext(), display, Toast.LENGTH_SHORT);
                     t.show();
 
                     if (startPoint == null) {
                         startPoint = new GeoPoint(touchedPoint.getLatitude(), touchedPoint.getLongitude());
-                        String startLat = String.valueOf(startPoint.getLatitude());
-                        String startLon = String.valueOf(startPoint.getLongitude());
-                        ((EditText)findViewById(R.id.start_lat_edit)).setText(startLat);
-                        ((EditText)findViewById(R.id.start_lon_edit)).setText(startLon);
+
                         startMarker = new Marker(map);
                         startMarker.setPosition(startPoint);
                         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
                         startMarker.setTitle("start point");
+
                         map.getOverlays().add(startMarker);
                         map.invalidate();
                         //************************************unused toast***********************************
-                        Toast.makeText(getBaseContext(), "start location is set", Toast.LENGTH_LONG);
+                        Toast.makeText(getBaseContext(), "start location is set", Toast.LENGTH_SHORT);
                     } else if (endPoint == null) {
                         endPoint = new GeoPoint(touchedPoint.getLatitude(), touchedPoint.getLongitude());
-                        String endLat = String.valueOf(endPoint.getLatitude());
-                        String endLon = String.valueOf(endPoint.getLongitude());
-                        ((EditText)findViewById(R.id.end_lat_edit)).setText(endLat);
-                        ((EditText)findViewById(R.id.end_lon_edit)).setText(endLon);
+
                         endMarker = new Marker(map);
                         endMarker.setPosition(endPoint);
                         endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
                         endMarker.setTitle("end point");
+
                         map.getOverlays().add(endMarker);
                         map.invalidate();
-                        Toast.makeText(getBaseContext(), "end location is set", Toast.LENGTH_LONG);
+                        Toast.makeText(getBaseContext(), "end location is set", Toast.LENGTH_SHORT);
                     }
                     if (startPoint != null && endPoint != null) {
                         // http://stackoverflow.com/questions/38539637/osmbonuspack-roadmanager-networkonmainthreadexception
