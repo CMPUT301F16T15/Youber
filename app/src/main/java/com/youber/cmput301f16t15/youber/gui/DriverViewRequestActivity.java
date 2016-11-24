@@ -66,7 +66,6 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
         selectedRequest = RequestCollectionsController.getRequest(selectedRequestUUID);
         rider = ElasticSearchController.getRider(selectedRequestUUID);
 
-
         username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,10 +229,10 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
             //implement the onclick button
         }
         TextView startLoc = (TextView) findViewById(R.id.driverViewStartLocInput);
-        startLoc.setText(selectedRequest.getStartLocation().toString());
+        startLoc.setText(selectedRequest.getStartLocStr());
 
         TextView endLoc = (TextView) findViewById(R.id.driverViewEndLocInput);
-        endLoc.setText(selectedRequest.getEndLocation().toString());
+        endLoc.setText(selectedRequest.getEndLocStr());
 
         TextView offeredPayment = (TextView) findViewById(R.id.driverViewOffPaymentInput);
         offeredPayment.setText(selectedRequest.getCost().toString());

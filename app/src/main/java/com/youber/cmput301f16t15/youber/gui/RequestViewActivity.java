@@ -93,7 +93,7 @@ RequestViewActivity extends AppCompatActivity {
                 if (MacroCommand.isRequestContained(requestUUID)) {
                     view.setBackgroundColor(Color.LTGRAY);
                 }
-                if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.acceptedByDrivers))
+                else if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.acceptedByDrivers))
                 {
                     view.setBackgroundColor(getResources().getColor(R.color.red));
                 }
