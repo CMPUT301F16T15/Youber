@@ -48,6 +48,8 @@ public class ProfileActivity extends AppCompatActivity {
         User user = UserController.getUser();
         username = (EditText) findViewById(R.id.contactUsername);
         username.setText(user.getUsername());
+        username.setKeyListener(null);
+        username.setEnabled(false);
 
         email = (EditText) findViewById(R.id.contactEmail);
         email.setText(user.getEmail());
