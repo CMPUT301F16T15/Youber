@@ -10,6 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.youber.cmput301f16t15.youber.gui.RequestActivity">
 
+    <View
+        android:id="@+id/centerDummyView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true" />
+
     <TextView
         android:id="@+id/singleRequestTitle"
         android:layout_width="wrap_content"
@@ -19,101 +25,122 @@
         android:textSize="20dp"
         android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/statusTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_below="@+id/singleRequestTitle"
+        android:layout_above="@+id/centerDummyView"
         android:layout_marginTop="10dp"
-        android:text="@string/status_title"
-        android:textSize="16dp"/>
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
+        android:id="@+id/ScrollView">
 
-    <TextView
-        android:id="@+id/status_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/singleRequestTitle"
-        android:layout_toRightOf="@+id/statusTitle"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="2dp"
-        android:text="@string/dummy_string"
-        android:textSize="16dp" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:id="@+id/linearLayout1"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_vertical|center_horizontal">
 
-    <TextView
-        android:id="@+id/start_loc_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/status_info"
-        android:layout_marginTop="10dp"
-        android:text="@string/start_location_title"
-        android:textSize="16dp"/>
+            <TextView
+                android:id="@+id/statusTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/status_title"
+                android:layout_marginTop="30dp"
+                android:textSize="16dp"/>
 
-    <TextView
-        android:id="@+id/start_loc_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/start_loc_title"
-        android:text="@string/dummy_string"
-        android:textSize="16dp" />
+            <TextView
+                android:id="@+id/status_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/statusTitle"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="2dp"
+                android:text="@string/dummy_string"
+                android:textSize="16dp" />
 
-    <TextView
-        android:id="@+id/end_loc_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/start_loc_info"
-        android:text="@string/end_location_title"
-        android:textSize="16dp" />
-    
-    <TextView
-        android:id="@+id/end_loc_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/end_loc_title"
-        android:text="@string/dummy_string"
-        android:textSize="16dp"/>
+            <TextView
+                android:id="@+id/start_loc_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/status_info"
+                android:layout_marginTop="10dp"
+                android:text="@string/start_location_title"
+                android:textSize="16dp"/>
 
-    <TextView
-        android:id="@+id/price_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/end_loc_info"
-        android:layout_marginTop="10dp"
-        android:text="@string/price"
-        android:textSize="16dp"/>
+            <TextView
+                android:id="@+id/start_loc_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/start_loc_title"
+                android:text="@string/dummy_string"
+                android:textSize="16dp" />
 
-    <TextView
-        android:id="@+id/price_value"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/end_loc_info"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="2dp"
-        android:layout_toRightOf="@+id/price_title"
-        android:text="@string/dummy_string"
-        android:textSize="16dp"/>
+            <TextView
+                android:id="@+id/end_loc_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/start_loc_info"
+                android:text="@string/end_location_title"
+                android:textSize="16dp" />
 
-    <TextView
-        android:id="@+id/distance_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/price_title"
-        android:textSize="16dp"
-        android:text="@string/distance" />
+            <TextView
+                android:id="@+id/end_loc_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/end_loc_title"
+                android:text="@string/dummy_string"
+                android:textSize="16dp"/>
 
-    <TextView
-        android:id="@+id/distance_value"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/distance_title"
-        android:layout_below="@+id/price_title"
-        android:text="@string/dummy_string"
-        android:textSize="16dp"/>
+            <TextView
+                android:id="@+id/price_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/end_loc_info"
+                android:layout_marginTop="10dp"
+                android:text="@string/price"
+                android:textSize="16dp"/>
+
+            <TextView
+                android:id="@+id/price_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/end_loc_info"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="2dp"
+                android:layout_toRightOf="@+id/price_title"
+                android:text="@string/dummy_string"
+                android:textSize="16dp"/>
+
+            <TextView
+                android:id="@+id/distance_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/price_title"
+                android:textSize="16dp"
+                android:text="@string/distance" />
+
+            <TextView
+                android:id="@+id/distance_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/distance_title"
+                android:layout_below="@+id/price_title"
+                android:layout_marginLeft="2dp"
+                android:text="@string/dummy_string"
+                android:textSize="16dp"/>
+
+            
+        </RelativeLayout>
+    </ScrollView>
 
     <TextView
         android:id="@+id/user_request_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/distance_title"
+        android:layout_below="@id/centerDummyView"
         android:layout_marginTop="30dp"
         android:text="@string/driver_title"
         android:textSize="16dp"/>
