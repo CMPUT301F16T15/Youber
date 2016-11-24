@@ -37,7 +37,8 @@ public class UserTypeActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 UserController.setUserType(User.UserType.driver);
-                saveUserTypeRequests(user);
+                Setup.run(UserTypeActivity.this);
+                //saveUserTypeRequests(user);
                 Intent intent = new Intent(UserTypeActivity.this, DriverMainActivity.class);
                 startActivity(intent);
 
@@ -50,7 +51,8 @@ public class UserTypeActivity extends AppCompatActivity {
 
 
                 UserController.setUserType(User.UserType.rider);
-                saveUserTypeRequests(user);
+                Setup.run(UserTypeActivity.this);
+                //saveUserTypeRequests(user);
                 Intent intent = new Intent(UserTypeActivity.this, MainActivity.class);
                 startActivity(intent);
 
@@ -58,14 +60,14 @@ public class UserTypeActivity extends AppCompatActivity {
         });
     }
 
-    private void saveUserTypeRequests(User user)
-    {
-        Setup.run(this);
-        Log.i("Requests:" ,Integer.toString(user.getRequestUUIDs().size()));
-        RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
-        RequestCollectionsController.setContext(UserTypeActivity.this);
-        RequestCollectionsController.saveRequestCollections(requestCollection);
-    }
+//    private void saveUserTypeRequests(User user)
+//    {
+//        Setup.run(this);
+//        Log.i("Requests:" ,Integer.toString(user.getRequestUUIDs().size()));
+//        RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
+//        RequestCollectionsController.setContext(UserTypeActivity.this);
+//        RequestCollectionsController.saveRequestCollections(requestCollection);
+//    }
 
 
 

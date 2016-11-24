@@ -7,8 +7,11 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.widget.EditText;
 
 import com.youber.cmput301f16t15.youber.R;
+import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
+import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearch;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
@@ -16,6 +19,7 @@ import com.youber.cmput301f16t15.youber.exceptions.UserNotFoundException;
 import com.youber.cmput301f16t15.youber.gui.DriverMainActivity;
 import com.youber.cmput301f16t15.youber.gui.MainActivity;
 import com.youber.cmput301f16t15.youber.gui.RequestViewActivity;
+import com.youber.cmput301f16t15.youber.gui.UserTypeActivity;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
 import com.youber.cmput301f16t15.youber.users.User;
@@ -35,11 +39,33 @@ public class Setup {
 
 
     public static void run(Context context){
+
         ElasticSearchController.setupPutmap();
         UserController.setContext(context);
         RequestCollectionsController.setContext(context);
+        User user=null;
+        String username= UserController.getUser().getUsername();
+        try{
+            user = ElasticSearchUser.getUser(username);
+        }
+        catch (UserNotFoundException e){}
+
         if(hasUpdated()){
             sendRequestUpdateNotification(context);
+        }
+        if(checkRequestsUpdated()){
+
+            RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
+            RequestCollectionsController.saveRequestCollections(requestCollection);
+        }
+        if(checkUserUpdated()){
+
+
+            UserController.observable.addListener(new Updater());
+
+            AddUserCommand addUser = new AddUserCommand(user);
+            UserController.observable.notifyListeners(addUser);
+            UserController.saveUser(user);
         }
     }
     //https://developer.android.com/guide/topics/ui/notifiers/notifications.html
