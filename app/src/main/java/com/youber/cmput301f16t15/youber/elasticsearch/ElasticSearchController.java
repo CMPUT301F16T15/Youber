@@ -108,7 +108,7 @@ public class ElasticSearchController extends ElasticSearch{
                 "    }\n" +
                 "}";
 
-    /*
+/*
         String query ="{\n" +
                 "    \"filter\" : {\n" +
 
@@ -121,8 +121,8 @@ public class ElasticSearchController extends ElasticSearch{
                 "        }\n" +
                 "    }\n" +
                 "}";
-*/
 
+*/
         ElasticSearchRequest.getObjectsByGeolocation getter = new ElasticSearchRequest.getObjectsByGeolocation();
         getter.execute(query);
         try {
@@ -146,18 +146,7 @@ public class ElasticSearchController extends ElasticSearch{
      */
     public static RequestCollection getRequestsbyKeyWord(String keyword) throws Exception {
         RequestCollection requestCollection =new RequestCollection();
-        /*
-        String query =
-                "{\n" +
-                "    \"query\" : {\n" +
-                "        \"match\" : {\n" +
-                "            \"description\" : \""+keyword+"\"\n" +
 
-                "        }\n" +
-                "    }\n" +
-                "}";
-
-*/
         String query = "{\n" +
         "    \"query\" : {\n" +
         "        \"bool\" : {\n" +

@@ -15,6 +15,7 @@ import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
 import com.youber.cmput301f16t15.youber.exceptions.UserNotFoundException;
 import com.youber.cmput301f16t15.youber.gui.DriverMainActivity;
 import com.youber.cmput301f16t15.youber.gui.MainActivity;
+import com.youber.cmput301f16t15.youber.gui.RequestViewActivity;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
 import com.youber.cmput301f16t15.youber.users.User;
@@ -28,6 +29,11 @@ import java.util.UUID;
  */
 
 public class Setup {
+
+
+
+
+
     public static void run(Context context){
         ElasticSearchController.setupPutmap();
         UserController.setContext(context);
@@ -38,15 +44,16 @@ public class Setup {
     }
     //https://developer.android.com/guide/topics/ui/notifiers/notifications.html
     public static void sendRequestUpdateNotification(Context context){
-        Class activityClass= UserController.getUser().getCurrentUserType()== User.UserType.rider ?
-                MainActivity.class:DriverMainActivity.class;
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(context)
+
+        Notification.Builder mBuilder =
+                new Notification.Builder(context)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle("Youber")
-                        .setContentText("Your Requests have updated");
+                        .setContentText("Your Requests have updated")
+                        .setDefaults(Notification.DEFAULT_VIBRATE)
+                        .setPriority(Notification.PRIORITY_HIGH);
         // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(context, activityClass);
+        Intent resultIntent = new Intent(context, RequestViewActivity.class);
 
         // The stack builder object will contain an artificial back stack for the
         // started Activity.
@@ -54,7 +61,7 @@ public class Setup {
         // your application to the Home screen.
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(activityClass);
+        stackBuilder.addParentStack(RequestViewActivity.class);
         // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent =
