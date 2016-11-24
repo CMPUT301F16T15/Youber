@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.util.UUID;
 
 /**
  * Created by Jess on 2016-11-08.
@@ -181,6 +182,15 @@ public class UserController {
 
     public static void setVehicleColour(String colour){
         user.setColour(colour);
+        update();
+    }
+
+    public static boolean isRequestContainedInAcceptedDriversUUIDS(UUID uuid) {
+        return user.getRequestUUIDs().contains(uuid);
+    }
+
+    public static void removeRequestFromAcceptedDriverUUIDS(UUID uuid) {
+        user.deleteUUIDFromAccepted(uuid);
         update();
     }
 

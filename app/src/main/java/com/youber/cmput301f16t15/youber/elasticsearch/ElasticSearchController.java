@@ -88,6 +88,42 @@ public class ElasticSearchController extends ElasticSearch{
         return null;
     }
 
+
+
+    public static ArrayList<User> getConfirmedDriver(Request request) throws Exception
+    {
+
+        String query =
+                "{\n" +
+                        "    \"query\" : {\n" +
+                        "        \"match\" : {\n" +
+                        "            \"confirmedRequests\" : \""+request.getUUID().toString()+"\"\n" +
+                        "        }\n" +
+                        "    }\n" +
+                        "}";
+        ElasticSearchUser.getUserByRequestUUID getter = new ElasticSearchUser.getUserByRequestUUID();
+        getter.execute(query);
+
+        try {
+            ArrayList<User> users = getter.get();
+            return users;
+
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+
+
+
+
+
     /**
      * Do a search for a list of requests by their location
      * @return RequestCollection

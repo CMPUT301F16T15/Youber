@@ -138,10 +138,21 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
         TextView userTitle = (TextView)findViewById(R.id.user_request_title);
         if(selectedRequest.getCurrentStatus() == Request.RequestStatus.opened)
             userTitle.setText("No drivers have selected your request");
-        else {
+        else if (selectedRequest.getCurrentStatus() == Request.RequestStatus.acceptedByDrivers){
             if (MacroCommand.isNetworkAvailable()) {
                 try {
                     driverArray = ElasticSearchController.getAcceptedDrivers(selectedRequest);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else
+                userTitle.setText("Currently Offline cannot obtain drivers");
+        }
+        else
+        {
+            if (MacroCommand.isNetworkAvailable()) {
+                try {
+                    driverArray = ElasticSearchController.getConfirmedDriver(selectedRequest);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -230,17 +241,15 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
                             AddUserCommand addUserCommand = new AddUserCommand(driverArray.get(driverSelected));
                             MacroCommand.addCommand(addUserCommand);
 
-                            for (User user: driverArray)
-                            {
-                                if (!user.equals(driverArray.get(driverSelected)))
-                                {
-                                    user.deleteUUIDFromAccepted(selectedRequest.getUUID());
-                                    AddUserCommand update = new AddUserCommand(user);
-                                    MacroCommand.addCommand(update);
-
-
-                                }
-                            }
+//                            for (User user: driverArray)
+//                            {
+//                                if (!user.equals(driverArray.get(driverSelected)))
+//                                {
+////                                    user.deleteUUIDFromAccepted(selectedRequest.getUUID());
+//                                    AddUserCommand update = new AddUserCommand(user);
+//                                    MacroCommand.addCommand(update);
+//                                }
+//                            }
 
                             finish();
                 }});

@@ -4,11 +4,14 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
 import com.youber.cmput301f16t15.youber.commands.Command;
+import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.gui.MainActivity;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
+import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
 import java.io.IOException;
@@ -177,6 +180,16 @@ public class ElasticSearchRequest extends ElasticSearch{
                 ArrayList<Request> requests=searchRequest.get();
                 if(requests.size()==1){
                     Log.i("Request!",requests.get(0).toString());
+                    Request request = requests.get(0);
+                    if (request.getCurrentStatus() != Request.RequestStatus.acceptedByDrivers)
+                    {
+                        if(UserController.isRequestContainedInAcceptedDriversUUIDS(request.getUUID())) {
+                            UserController.removeRequestFromAcceptedDriverUUIDS(request.getUUID());
+                            continue;
+                        }
+
+                    }
+
                     requestCollection.add(requests.get(0));
                 }
             }
