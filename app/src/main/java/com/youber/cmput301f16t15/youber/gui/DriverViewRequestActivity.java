@@ -73,7 +73,6 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
                 Dialog dlg = promptDialog(R.layout.dlg_user_info); //test
                 dlg.show();
 
-
                 TextView title = (TextView)dlg.findViewById(R.id.usernameInfoTitle);
                 title.setText(rider.getUsername());
 
@@ -132,14 +131,9 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
                 Button accept_pay = (Button) moreOptionsDialog.findViewById(R.id.accept_payment);
                 accept_pay.setVisibility(View.GONE);
             }
-
-
             }
 
         });
-
-
-
     }
 
 
@@ -212,9 +206,7 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
     @Override
     protected void onStart() {
         super.onStart();
-
         loadRequest();
-
     }
 
 
@@ -236,6 +228,9 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
 
         TextView offeredPayment = (TextView) findViewById(R.id.driverViewOffPaymentInput);
         offeredPayment.setText(selectedRequest.getCost().toString());
+
+        TextView description = (TextView)findViewById(R.id.driver_request_descp);
+        description.setText(selectedRequest.getDescription());
     }
 
     @Override
