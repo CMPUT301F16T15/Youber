@@ -132,7 +132,22 @@
                 android:text="@string/dummy_string"
                 android:textSize="16dp"/>
 
-            
+            <TextView
+                android:id="@+id/rider_request_descp_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_below="@+id/distance_title"
+                android:layout_marginTop="10dp"
+                android:text="@string/description"/>
+
+            <TextView
+                android:id="@+id/rider_request_descp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rider_request_descp_title"
+                android:textSize="16sp"
+                android:text="@string/dummy_string"/>
         </RelativeLayout>
     </ScrollView>
 

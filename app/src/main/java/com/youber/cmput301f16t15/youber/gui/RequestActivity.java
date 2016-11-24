@@ -129,6 +129,9 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
         TextView userTitle = (TextView)findViewById(R.id.user_request_title);
         userTitle.setText((userType == User.UserType.driver)? "Rider":"Driver");
+
+        TextView description = (TextView)findViewById(R.id.rider_request_descp);
+        description.setText(selectedRequest.getDescription());
     }
 
     @Override
