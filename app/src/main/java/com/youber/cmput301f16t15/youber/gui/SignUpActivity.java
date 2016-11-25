@@ -124,6 +124,7 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+
                 }
             }
         });
@@ -146,8 +147,14 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
         dialog.dismiss();
     }
 
-    @Override
+
     public void onDialogNegativeClick(DialogFragment dialog) { }
+
+    
+
+    public void changeEmptyFieldsText(){
+
+    }
 
 }
 

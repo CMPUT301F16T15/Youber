@@ -62,9 +62,14 @@
     <!--User Info View-->
     <string name="phone_number_title">Phone Number:</string>
     <string name="email_title">Email:</string>
+    <string name="vehicle_make">Vehicle Make:</string>
+    <string name="vehicle_model">Vehicle Model:</string>
+    <string name="vehicle_year">Vehicle Year:</string>
+    <string name="vehicle_colour">Vehicle Colour:</string>
 
     <string name="InvalidUsernameMessage">This username does not exist. Please try again.</string>
-    <string name="usernameExitsMessage">This username already exits. Please try again.</string>
+    <string name="usernameExitsMessage">This username already exists. Please try again.</string>
+
     <string name="validateFieldsMessage">Please fill all required fields.</string>
     <string name="signup">Sign Up</string>
     <string name="login">Log In</string>

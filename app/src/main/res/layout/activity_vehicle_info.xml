@@ -129,16 +129,29 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="5dp" />
 
+    <TextView
+        android:text="VEHICLE INFO"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        android:id="@+id/vehicleInfoText"
+        android:layout_marginTop="63dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:textStyle="normal|bold" />
+
     <Button
         android:text="@string/SaveVehicleInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:id="@+id/saveVehicleInfoButton"
-        android:layout_alignStart="@+id/vehicleColour"
-        android:layout_alignEnd="@+id/editTextColour"
         android:backgroundTint="@color/grey"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:layout_marginBottom="47dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/vehicleColour"
+        android:layout_alignEnd="@+id/editTextColour" />
 
     <TextView
         android:text="* indicates required field"
