@@ -5,7 +5,9 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
+import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.misc.Observable;
+import com.youber.cmput301f16t15.youber.requests.Request;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -198,5 +201,30 @@ public class UserController {
         saveUser(user);
         AddUserCommand userCommand = new AddUserCommand(user);
         observable.notifyListeners(userCommand);
+    }
+
+   public static void clearAcceptedWhenConfirmed(){
+        for (UUID uuid: UserController.getUser().getDriverUUIDs()) {
+            Request request=null;
+            try{
+                ElasticSearchRequest.getObjects getter = new ElasticSearchRequest.getObjects();
+                getter.execute(uuid.toString());
+                ArrayList<Request> requests =getter.get();
+                if(requests.size()<1){
+                    throw new RuntimeException();
+                }
+               request = requests.get(0);
+            }catch(Exception e){}
+
+
+
+
+            if (request.getCurrentStatus() != Request.RequestStatus.acceptedByDrivers) {
+                if (UserController.isRequestContainedInAcceptedDriversUUIDS(request.getUUID())) {
+                    UserController.removeRequestFromAcceptedDriverUUIDS(request.getUUID());
+                }
+
+            }
+        }
     }
 }

@@ -53,11 +53,7 @@ public class Setup {
         if(hasUpdated()){
             sendRequestUpdateNotification(context);
         }
-        if(checkRequestsUpdated()){
 
-            RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
-            RequestCollectionsController.saveRequestCollections(requestCollection);
-        }
         if(checkUserUpdated()){
 
 
@@ -65,7 +61,13 @@ public class Setup {
 
             AddUserCommand addUser = new AddUserCommand(user);
             UserController.observable.notifyListeners(addUser);
+            UserController.clearAcceptedWhenConfirmed();
             UserController.saveUser(user);
+        }
+        if(checkRequestsUpdated()){
+
+            RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
+            RequestCollectionsController.saveRequestCollections(requestCollection);
         }
     }
     //https://developer.android.com/guide/topics/ui/notifiers/notifications.html

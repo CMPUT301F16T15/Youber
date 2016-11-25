@@ -35,9 +35,8 @@ public class UserTypeActivity extends AppCompatActivity {
         driverOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                UserController.setUserType(User.UserType.driver);
                 Setup.run(UserTypeActivity.this);
+                UserController.setUserType(User.UserType.driver);
                 //saveUserTypeRequests(user);
                 Intent intent = new Intent(UserTypeActivity.this, DriverMainActivity.class);
                 startActivity(intent);
@@ -49,9 +48,9 @@ public class UserTypeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-                UserController.setUserType(User.UserType.rider);
                 Setup.run(UserTypeActivity.this);
+                UserController.setUserType(User.UserType.rider);
+
                 //saveUserTypeRequests(user);
                 Intent intent = new Intent(UserTypeActivity.this, MainActivity.class);
                 startActivity(intent);
