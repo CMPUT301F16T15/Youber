@@ -55,17 +55,15 @@ public class Setup {
         }
 
         if(checkUserUpdated()){
-
-
             UserController.observable.addListener(new Updater());
 
             AddUserCommand addUser = new AddUserCommand(user);
             UserController.observable.notifyListeners(addUser);
+
             UserController.clearAcceptedWhenConfirmed();
             UserController.saveUser(user);
         }
         if(checkRequestsUpdated()){
-
             RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
             RequestCollectionsController.saveRequestCollections(requestCollection);
         }
@@ -119,16 +117,22 @@ public class Setup {
             return true;
         }
 
-        HashSet<UUID> latestUUIDS =UserController.getUser().getCurrentUserType()== User.UserType.rider ?
+        HashSet<UUID> latestAcceptedUUIDS =UserController.getUser().getCurrentUserType()== User.UserType.rider ?
                 latestUser.getRequestUUIDs():latestUser.getDriverUUIDs();
 
-        HashSet<UUID> currentUUIDS = UserController.getUser().getCurrentUserType()== User.UserType.rider ?
+        HashSet<UUID> currentAcceptedUUIDS = UserController.getUser().getCurrentUserType()== User.UserType.rider ?
                 UserController.getUser().getRequestUUIDs():UserController.getUser().getDriverUUIDs();
 
+        if(!currentAcceptedUUIDS.equals(latestAcceptedUUIDS)) return true;
 
-        if(!currentUUIDS.equals(latestUUIDS)) return true;
 
+        if(UserController.getUser().getCurrentUserType()== User.UserType.driver) {
+            HashSet<UUID> latestConfirmedUUIDS = latestUser.getConfirmedDriverUUIDs();
+            HashSet<UUID> currentConfirmedUUIDS = UserController.getUser().getConfirmedDriverUUIDs();
 
+            if(!currentConfirmedUUIDS.equals(latestConfirmedUUIDS)) return true;
+
+        }
 
         return false;
     }

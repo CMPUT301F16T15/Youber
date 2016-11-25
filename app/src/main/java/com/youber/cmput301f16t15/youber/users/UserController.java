@@ -217,8 +217,6 @@ public class UserController {
             }catch(Exception e){}
 
 
-
-
             if (request.getCurrentStatus() != Request.RequestStatus.acceptedByDrivers) {
                 if (UserController.isRequestContainedInAcceptedDriversUUIDS(request.getUUID())) {
                     UserController.removeRequestFromAcceptedDriverUUIDS(request.getUUID());

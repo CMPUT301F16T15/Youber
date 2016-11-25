@@ -259,6 +259,9 @@ public class User implements Serializable {
         return driverUserInfo.getAcceptedRequests();
     }
 
+    public HashSet<UUID> getConfirmedDriverUUIDs() {
+        return driverUserInfo.getConfirmedRequests();
+    }
 
     public void addToDriverConfirmed(UUID uuid)
     {
