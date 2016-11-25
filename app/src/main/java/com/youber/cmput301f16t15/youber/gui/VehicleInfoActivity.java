@@ -1,26 +1,35 @@
 package com.youber.cmput301f16t15.youber.gui;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.misc.Updater;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
-public class VehicleInfoActivity extends AppCompatActivity {
+public class VehicleInfoActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
     EditText make;
     EditText model;
     EditText year;
     EditText colour;
+
+    TextView makeString;
+    TextView modelString;
+    TextView yearString;
+    TextView colourString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +53,11 @@ public class VehicleInfoActivity extends AppCompatActivity {
         colour = (EditText) findViewById(R.id.editTextColour);
         colour.setText(user.getColour());
 
+        makeString = (TextView) findViewById(R.id.vehicleMake);
+        modelString = (TextView) findViewById(R.id.vehicleModel);
+        yearString = (TextView) findViewById(R.id.vehicleYear);
+        colourString = (TextView) findViewById(R.id.vehicleColour);
+
         Button saveVehicleInfo = (Button) findViewById(R.id.saveVehicleInfoButton);
 
         saveVehicleInfo.setOnClickListener(new View.OnClickListener() {
@@ -54,18 +68,33 @@ public class VehicleInfoActivity extends AppCompatActivity {
                 String yearText = year.getText().toString();
                 String colourText = colour.getText().toString();
 
-                UserController.setContext(VehicleInfoActivity.this);
-                UserController.observable.addListener(new Updater());
+                changeTextColour(makeText, makeString);
+                changeTextColour(modelText, modelString);
+                changeTextColour(yearText, yearString);
+                changeTextColour(colourText, colourString);
 
-                UserController.setVehicleMake(makeText);
-                UserController.setVehicleModel(modelText);
-                UserController.setVehicleYear(yearText);
-                UserController.setVehicleColour(colourText);
+                if (TextUtils.isEmpty(makeText.trim()) || TextUtils.isEmpty(modelText.trim()) || TextUtils.isEmpty(yearText.trim()) || TextUtils.isEmpty(colourText.trim())){
+                    Bundle bundle = new Bundle();
+                    bundle.putString("message", getResources().getString(R.string.validateFieldsMessage));
+                    bundle.putString(getResources().getString(R.string.positiveInput), "OK");
 
-                // Does not change in elastic search yet.
-                Intent intent = new Intent(VehicleInfoActivity.this, ProfileActivity.class);
-                startActivity(intent);
-                finish();
+                    DialogFragment dialog = new NoticeDialogFragment();
+                    dialog.setArguments(bundle);
+                    dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
+                }
+                else {
+                    UserController.setContext(VehicleInfoActivity.this);
+                    UserController.observable.addListener(new Updater());
+
+                    UserController.setVehicleMake(makeText);
+                    UserController.setVehicleModel(modelText);
+                    UserController.setVehicleYear(yearText);
+                    UserController.setVehicleColour(colourText);
+
+                    Intent intent = new Intent(VehicleInfoActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
 
             }
         });
@@ -73,7 +102,14 @@ public class VehicleInfoActivity extends AppCompatActivity {
 
     }
 
-
+    public void changeTextColour(String text, TextView textview){
+        if (TextUtils.isEmpty(text.trim())){
+            textview.setTextColor(Color.RED);
+        }
+        else {
+            textview.setTextColor(Color.LTGRAY);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -118,5 +154,13 @@ public class VehicleInfoActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        dialog.dismiss();
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) { }
 
 }

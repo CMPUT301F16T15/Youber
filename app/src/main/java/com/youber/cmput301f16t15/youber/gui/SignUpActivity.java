@@ -72,26 +72,14 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
                 String firstNameText = firstName.getText().toString();
                 String lastNameText = lastName.getText().toString();
 
-                if (TextUtils.isEmpty(phoneNumText.trim())) {
-                    phoneNumString.setTextColor(Color.RED);
-                }
-                else {
-                    phoneNumString.setTextColor(Color.LTGRAY);
-                }
+                changeTextColour(usernameText, userString);
+                changeTextColour(phoneNumText, phoneNumString);
+                changeTextColour(emailText, emailString);
 
-                if (TextUtils.isEmpty(usernameText.trim())){
-                    userString.setTextColor(Color.RED);
-                }
-                else {
-                    userString.setTextColor(Color.LTGRAY);
-                }
-
-                if (TextUtils.isEmpty(emailText.trim())){
+                if (!emailText.contains("@")){
                     emailString.setTextColor(Color.RED);
                 }
-                else {
-                    emailString.setTextColor(Color.LTGRAY);
-                }
+
 
                 try
                 {
@@ -141,6 +129,16 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
         });
     }
 
+
+    public void changeTextColour(String text, TextView textview){
+        if (TextUtils.isEmpty(text.trim())){
+            textview.setTextColor(Color.RED);
+        }
+        else {
+            textview.setTextColor(Color.LTGRAY);
+        }
+    }
+
     // These clicks are for when the user already exits
     // Positive click "OK" do nothing and dismiss the dialog, Negative is log in
     @Override
@@ -149,9 +147,7 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
     }
 
     @Override
-    public void onDialogNegativeClick(DialogFragment dialog) {
-        finish();
-    }
+    public void onDialogNegativeClick(DialogFragment dialog) { }
 
 }
 

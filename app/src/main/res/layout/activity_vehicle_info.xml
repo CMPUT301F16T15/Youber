@@ -41,7 +41,7 @@
         android:layout_marginTop="63dp" />
 
     <TextView
-        android:text="Model"
+        android:text="Model *"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
@@ -54,13 +54,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/vehicleMake"
         android:textSize="18sp"
-        android:text="Make:"
+        android:text="Make: *"
         android:layout_marginStart="29dp"
         android:layout_alignBottom="@+id/editTextMake"
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:text="Year:"
+        android:text="Year: *"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
@@ -69,7 +69,7 @@
         android:layout_alignStart="@+id/vehicleMake" />
 
     <TextView
-        android:text="Colour:"
+        android:text="Colour: *"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
@@ -139,5 +139,15 @@
         android:layout_alignEnd="@+id/editTextColour"
         android:backgroundTint="@color/grey"
         android:textColor="@color/black"/>
+
+    <TextView
+        android:text="* indicates required field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vehicleColour"
+        android:layout_alignStart="@+id/vehicleColour"
+        android:layout_marginTop="48dp"
+        android:id="@+id/textView8"
+        android:textSize="10sp" />
 
 </RelativeLayout>
