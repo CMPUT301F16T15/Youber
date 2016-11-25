@@ -73,5 +73,6 @@
     <string name="SaveVehicleInfo">SAVE VEHICLE INFO</string>
     <string name="dlg_accept">Accept Driver</string>
     <string name="dlg_payment">Accept</string>
+    <string name="offline_login">Currently offline: cannot login</string>
 
 </resources>
