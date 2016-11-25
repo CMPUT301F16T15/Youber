@@ -1,9 +1,6 @@
 package com.youber.cmput301f16t15.youber.requests;
 
-import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
-
+import com.youber.cmput301f16t15.youber.gui.RiderViewRequestActivity;
 import com.youber.cmput301f16t15.youber.users.Driver;
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.exceptions.InvalidRequestException;
@@ -15,11 +12,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 
-import java.io.IOException;
-
 import java.io.Serializable;
-import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 import io.searchbox.annotations.JestId;
@@ -33,7 +26,7 @@ import io.searchbox.annotations.JestId;
  *
  * @see Rider
  * @see Driver
- * @see com.youber.cmput301f16t15.youber.gui.RequestActivity
+ * @see RiderViewRequestActivity
  * @see RequestCollection
  */
 public class Request implements Serializable {

@@ -135,8 +135,15 @@ public class ProfileActivity extends AppCompatActivity {
 
             return true;
         }
+        else if (id == R.id.action_main) {
+            Class c = (UserController.getUser().getCurrentUserType() == User.UserType.rider) ?
+                    RiderMainActivity.class : DriverMainActivity.class;
+            Intent intent = new Intent(this, c);
+            startActivity(intent);
+            return true;
+        }
         else if (id == R.id.action_view_requests) {
-            Intent intent = new Intent(this, RequestViewActivity.class);
+            Intent intent = new Intent(this, RequestListActivity.class);
             startActivity(intent);
 
             return true;

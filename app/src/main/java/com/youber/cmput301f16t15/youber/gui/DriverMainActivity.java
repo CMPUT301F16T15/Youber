@@ -191,8 +191,13 @@ public class DriverMainActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        else if (id == R.id.action_main) {
+            Intent intent = new Intent(this, DriverMainActivity.class);
+            startActivity(intent);
+            return true;
+        }
         else if (id == R.id.action_view_requests) {
-            Intent intent = new Intent(this, RequestViewActivity.class);
+            Intent intent = new Intent(this, RequestListActivity.class);
             startActivity(intent);
             return true;
         }
