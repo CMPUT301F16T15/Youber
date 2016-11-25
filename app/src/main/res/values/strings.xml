@@ -64,6 +64,7 @@
 
     <string name="InvalidUsernameMessage">This username does not exist. Please try again.</string>
     <string name="usernameExitsMessage">This username already exits. Please try again.</string>
+    <string name="validateFieldsMessage">Please fill all required fields.</string>
     <string name="signup">Sign Up</string>
     <string name="login">Log In</string>
     <string name="ok">OK</string>
