@@ -2,17 +2,9 @@ package com.youber.cmput301f16t15.youber.elasticsearch;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
-import com.youber.cmput301f16t15.youber.commands.Command;
-import com.youber.cmput301f16t15.youber.commands.MacroCommand;
-import com.youber.cmput301f16t15.youber.gui.MainActivity;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
-import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
-import com.youber.cmput301f16t15.youber.users.User;
-import com.youber.cmput301f16t15.youber.users.UserController;
 
 import java.io.IOException;
 import java.util.ArrayList;

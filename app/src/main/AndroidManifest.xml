@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".gui.RequestViewActivity"
+            android:name=".gui.RequestListActivity"
             android:label="@string/title_activity_request_view"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -36,10 +36,10 @@
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".gui.MainActivity"
+            android:name=".gui.RiderMainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".gui.RequestActivity" />
+        <activity android:name=".gui.RiderViewRequestActivity" />
         <activity
             android:name=".gui.UserTypeActivity"
             android:theme="@style/AppTheme.NoActionBar" />

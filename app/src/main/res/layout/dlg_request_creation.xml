@@ -46,14 +46,12 @@
         android:text="@string/request_distance"
         android:textSize="16dp"
         android:layout_marginLeft="12dp"
-        android:layout_marginTop="20dp"
         android:layout_below="@+id/create_end_value"/>
 
     <TextView
         android:id="@+id/create_dist_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="2dp"
         android:layout_toRightOf="@+id/create_distance_title"
         android:layout_below="@+id/create_end_value"

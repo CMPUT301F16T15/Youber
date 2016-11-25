@@ -15,14 +15,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.youber.cmput301f16t15.youber.R;
-import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearch;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
-import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
 import com.youber.cmput301f16t15.youber.users.User;
@@ -43,7 +40,6 @@ import org.osmdroid.views.overlay.infowindow.BasicInfoWindow;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 
 public class DriverViewRequestActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener{
 
@@ -66,14 +62,12 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
         selectedRequest = RequestCollectionsController.getRequest(selectedRequestUUID);
         rider = ElasticSearchController.getRider(selectedRequestUUID);
 
-
         username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 username.setTextColor(getResources().getColor(R.color.lightGreen));
                 Dialog dlg = promptDialog(R.layout.dlg_user_info); //test
                 dlg.show();
-
 
                 TextView title = (TextView)dlg.findViewById(R.id.usernameInfoTitle);
                 title.setText(rider.getUsername());
@@ -133,14 +127,9 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
                 Button accept_pay = (Button) moreOptionsDialog.findViewById(R.id.accept_payment);
                 accept_pay.setVisibility(View.GONE);
             }
-
-
             }
 
         });
-
-
-
     }
 
 
@@ -213,9 +202,7 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
     @Override
     protected void onStart() {
         super.onStart();
-
         loadRequest();
-
     }
 
 
@@ -230,13 +217,16 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
             //implement the onclick button
         }
         TextView startLoc = (TextView) findViewById(R.id.driverViewStartLocInput);
-        startLoc.setText(selectedRequest.getStartLocation().toString());
+        startLoc.setText(selectedRequest.getStartLocStr());
 
         TextView endLoc = (TextView) findViewById(R.id.driverViewEndLocInput);
-        endLoc.setText(selectedRequest.getEndLocation().toString());
+        endLoc.setText(selectedRequest.getEndLocStr());
 
         TextView offeredPayment = (TextView) findViewById(R.id.driverViewOffPaymentInput);
         offeredPayment.setText(selectedRequest.getCost().toString());
+
+        TextView description = (TextView)findViewById(R.id.driver_request_descp);
+        description.setText(selectedRequest.getDescription());
     }
 
     @Override
@@ -259,8 +249,13 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
 
             return true;
         }
+        else if (id == R.id.action_main) {
+            Intent intent = new Intent(this, DriverMainActivity.class);
+            startActivity(intent);
+            return true;
+        }
         else if (id == R.id.action_view_requests) {
-            Intent intent = new Intent(this, RequestViewActivity.class);
+            Intent intent = new Intent(this, RequestListActivity.class);
             startActivity(intent);
 
             return true;

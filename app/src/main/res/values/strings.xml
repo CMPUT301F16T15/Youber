@@ -2,6 +2,7 @@
     <string name="app_name">Youber</string>
     <string name="action_view_requests">View Requests</string>
     <string name="action_profile">Profile</string>
+    <string name="action_main">Home</string>
     <string name="title_activity_request_view">RequestViewActivity</string>
     <string name="title_activity_user_profile">UserProfileActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
@@ -56,12 +57,15 @@
     <string name="youber_email_subject">Youber App:</string>
     <string name="email_body">Please write your email body here.</string>
 
+    <string name="description">Description:</string>
+
     <!--User Info View-->
     <string name="phone_number_title">Phone Number:</string>
     <string name="email_title">Email:</string>
 
     <string name="InvalidUsernameMessage">This username does not exist. Please try again.</string>
     <string name="usernameExitsMessage">This username already exits. Please try again.</string>
+    <string name="validateFieldsMessage">Please fill all required fields.</string>
     <string name="signup">Sign Up</string>
     <string name="login">Log In</string>
     <string name="ok">OK</string>
@@ -70,5 +74,6 @@
     <string name="SaveVehicleInfo">SAVE VEHICLE INFO</string>
     <string name="dlg_accept">Accept Driver</string>
     <string name="dlg_payment">Accept</string>
+    <string name="offline_login">Currently offline: cannot login</string>
 
 </resources>

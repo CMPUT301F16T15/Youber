@@ -3,8 +3,6 @@ package com.youber.cmput301f16t15.youber.gui;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.app.DialogFragment;
@@ -27,11 +25,9 @@ import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
 import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
-import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
 import com.youber.cmput301f16t15.youber.requests.RequestController;
-import com.youber.cmput301f16t15.youber.users.Driver;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
@@ -47,20 +43,15 @@ import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.infowindow.BasicInfoWindow;
-import org.w3c.dom.Text;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
-
-import javax.crypto.Mac;
 
 /**
  * @see Request
  */
-public class RequestActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
+public class RiderViewRequestActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
     RelativeLayout layout;
     ListView driverListView;
@@ -129,6 +120,9 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
 
         TextView userTitle = (TextView)findViewById(R.id.user_request_title);
         userTitle.setText((userType == User.UserType.driver)? "Rider":"Driver");
+
+        TextView description = (TextView)findViewById(R.id.rider_request_descp);
+        description.setText(selectedRequest.getDescription());
     }
 
     @Override
@@ -386,7 +380,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
         protected Road[] doInBackground(Object... params) {
             @SuppressWarnings("unchecked")
             ArrayList<GeoPoint> waypoints = (ArrayList<GeoPoint>) params[0];
-            RoadManager roadManager = new OSRMRoadManager(RequestActivity.this);
+            RoadManager roadManager = new OSRMRoadManager(RiderViewRequestActivity.this);
             return roadManager.getRoads(waypoints);
         }
 
@@ -405,7 +399,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
             for (int i = 0; i < roads.length; i++) {
                 Polyline roadPolyline = RoadManager.buildRoadOverlay(roads[i]);
                 mRoadOverlays[i] = roadPolyline;
-                String routeDesc = roads[i].getLengthDurationText(RequestActivity.this, -1);
+                String routeDesc = roads[i].getLengthDurationText(RiderViewRequestActivity.this, -1);
                 roadPolyline.setTitle(getString(R.string.app_name) + " - " + routeDesc);
                 roadPolyline.setInfoWindow(new BasicInfoWindow(org.osmdroid.bonuspack.R.layout.bonuspack_bubble, map));
                 roadPolyline.setRelatedObject(i);
@@ -436,7 +430,7 @@ public class RequestActivity extends AppCompatActivity implements NoticeDialogFr
             return true;
         }
         else if (id == R.id.action_view_requests) {
-            Intent intent = new Intent(this, RequestViewActivity.class);
+            Intent intent = new Intent(this, RequestListActivity.class);
             startActivity(intent);
 
             return true;

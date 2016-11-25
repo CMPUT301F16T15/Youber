@@ -27,7 +27,6 @@ public class UserTypeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_type);
 
-
         Button riderOption = (Button) findViewById(R.id.riderButton);
         Button driverOption = (Button) findViewById(R.id.driverButton);
 
@@ -35,39 +34,34 @@ public class UserTypeActivity extends AppCompatActivity {
         driverOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Setup.run(UserTypeActivity.this);
-                UserController.setUserType(User.UserType.driver);
-                //saveUserTypeRequests(user);
-                Intent intent = new Intent(UserTypeActivity.this, DriverMainActivity.class);
-                startActivity(intent);
-
+                choseUserType(User.UserType.driver);
             }
         });
 
         riderOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Setup.run(UserTypeActivity.this);
-                UserController.setUserType(User.UserType.rider);
-
-                //saveUserTypeRequests(user);
-                Intent intent = new Intent(UserTypeActivity.this, MainActivity.class);
-                startActivity(intent);
-
+                choseUserType(User.UserType.rider);
             }
         });
     }
 
-//    private void saveUserTypeRequests(User user)
-//    {
-//        Setup.run(this);
-//        Log.i("Requests:" ,Integer.toString(user.getRequestUUIDs().size()));
-//        RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
-//        RequestCollectionsController.setContext(UserTypeActivity.this);
-//        RequestCollectionsController.saveRequestCollections(requestCollection);
-//    }
+    private void choseUserType(User.UserType userType) {
+        UserController.setUserType(userType);
+        saveUserTypeRequests(user);
 
+        Class activityClass = (userType == User.UserType.rider) ? RiderMainActivity.class : DriverMainActivity.class;
 
+        Intent intent = new Intent(UserTypeActivity.this, activityClass);
+        startActivity(intent);
+    }
 
+    private void saveUserTypeRequests(User user)
+    {
+        Setup.run(this);
+        Log.i("Requests:" ,Integer.toString(user.getRequestUUIDs().size()));
+        RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
+        RequestCollectionsController.setContext(UserTypeActivity.this);
+        RequestCollectionsController.saveRequestCollections(requestCollection);
+    }
 }
