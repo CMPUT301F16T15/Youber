@@ -61,20 +61,21 @@ public class RiderMainActivity extends AppCompatActivity {
 
     private Request request;
 
-    MapView map;
-    Road[] mRoads;
-    Double distance = 0.0;
+    private MapView map;
+    private Double distance = 0.0;
+
+    private Road[] mRoads;
 
     /**
      * Various map fields used to overlay the route on the map
      */
-    int x, y; // need to be global so we can clear
-    GeoPoint startPoint;
-    GeoPoint endPoint;
-    static Marker startMarker;
-    static Marker endMarker;
-    static Polyline roadPolyline;
-    static UpdateRoadTask async;
+    private int x, y; // need to be global so we can clear
+    private static GeoPoint startPoint;
+    private static GeoPoint endPoint;
+    private static Marker startMarker;
+    private static Marker endMarker;
+    private static Polyline roadPolyline;
+    private static UpdateRoadTask async;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -347,7 +348,6 @@ public class RiderMainActivity extends AppCompatActivity {
     //cmput301 lab8
     public void getRoadAsync(GeoPoint startPoint, GeoPoint destinationPoint) {
         mRoads = null;
-
         ArrayList<GeoPoint> waypoints = new ArrayList<GeoPoint>();
         waypoints.add(startPoint);
         waypoints.add(destinationPoint);
@@ -385,10 +385,7 @@ public class RiderMainActivity extends AppCompatActivity {
                 roadPolyline.setInfoWindow(new BasicInfoWindow(org.osmdroid.bonuspack.R.layout.bonuspack_bubble, map));
                 roadPolyline.setRelatedObject(i);
                 mapOverlays.add(roadPolyline);
-                //selectRoad(0);
                 map.invalidate();
-                //we insert the road overlays at the "bottom", just above the MapEventsOverlay,
-                //to avoid covering the other overlays.
             }
         }
     }

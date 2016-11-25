@@ -49,7 +49,10 @@ public class UserTypeActivity extends AppCompatActivity {
     private void choseUserType(User.UserType userType) {
         UserController.setUserType(userType);
         saveUserTypeRequests(user);
-        Intent intent = new Intent(UserTypeActivity.this, RiderMainActivity.class);
+
+        Class activityClass = (userType == User.UserType.rider) ? RiderMainActivity.class : DriverMainActivity.class;
+
+        Intent intent = new Intent(UserTypeActivity.this, activityClass);
         startActivity(intent);
     }
 
