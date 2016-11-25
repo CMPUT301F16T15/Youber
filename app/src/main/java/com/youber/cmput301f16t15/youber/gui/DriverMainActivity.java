@@ -1,6 +1,7 @@
 package com.youber.cmput301f16t15.youber.gui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -23,6 +24,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.GeolocationPermissions;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
@@ -35,6 +37,7 @@ import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.misc.Setup;
 import com.youber.cmput301f16t15.youber.requests.Request;
 
+import org.json.JSONObject;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.routing.MapQuestRoadManager;
 import org.osmdroid.bonuspack.routing.Road;
@@ -51,8 +54,10 @@ import org.osmdroid.views.overlay.infowindow.BasicInfoWindow;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * <p>
@@ -183,6 +188,26 @@ public class DriverMainActivity extends AppCompatActivity {
 
             }
         });
+
+        Button searchByAddress = (Button) findViewById(R.id.search_address_button);
+        searchByAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String address = ((EditText)findViewById(R.id.address_search)).getText().toString();
+
+                GeoLocation geoLocation = getFromLocation(address);
+                String display = "lat: " + geoLocation.getLat() + "lon: " + geoLocation.getLon();
+                Toast t = Toast.makeText(getBaseContext(), display, Toast.LENGTH_LONG);
+                t.show();
+                //Intent intent = new Intent(DriverMainActivity.this, DriverSearchListActivity.class);
+                //intent.putExtra("Geolocation",geolocation);
+                //finish();
+                //startActivity(intent);
+
+            }
+        });
+
 
     }
     @Override
@@ -342,5 +367,39 @@ public class DriverMainActivity extends AppCompatActivity {
 
             return true;
         }
+    }
+
+    //http://stackoverflow.com/questions/11932453/how-to-get-latitude-longitude-from-address-on-android by Kamal
+    private GeoLocation getFromLocation(String address)
+    {
+        double latitude= 0.0, longtitude= 0.0;
+
+        Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
+        try
+        {
+            List<Address> addresses = geoCoder.getFromLocationName(address , 1);
+            if (addresses.size() > 0)
+            {
+                GeoPoint p = new GeoPoint(
+                        (int) (addresses.get(0).getLatitude() * 1E6),
+                        (int) (addresses.get(0).getLongitude() * 1E6 ));
+
+                latitude=p.getLatitude();
+                longtitude=p.getLongitude();
+
+                GeoLocation geoLocation = new GeoLocation(latitude, longtitude);
+
+                return geoLocation;
+            }
+        }
+        catch(Exception ee)
+        {
+
+        }
+
+        GeoLocation geoLocation = new GeoLocation(latitude, longtitude);
+
+        throw new RuntimeException();
+
     }
 }
