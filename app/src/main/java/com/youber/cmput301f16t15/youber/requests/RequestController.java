@@ -1,9 +1,20 @@
 package com.youber.cmput301f16t15.youber.requests;
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+import android.util.Log;
+
+import com.youber.cmput301f16t15.youber.gui.MainActivity;
+import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.users.Driver;
 import com.youber.cmput301f16t15.youber.users.Rider;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Reem on 2016-10-24.
@@ -17,8 +28,6 @@ import java.text.DecimalFormat;
  */
 public class RequestController
 {
-
-
     /**
      * Confirm request.
      *
@@ -28,27 +37,6 @@ public class RequestController
     public static void confirmRequest(Request request, Driver driver1)
     {
         driver1.confirm(request);
-    }
-
-    /**
-     * Accept request.
-     *
-     * @param request the given request
-     */
-//    public static void acceptRequest(Request request)
-//    {
-//        request.accept();
-//    }
-
-    /**
-     * Search request.
-     *
-     * @param rider the request's rider
-     * @return the request
-     */
-    public static Request searchRequest(Rider rider) //********************** "dont worry about it" - Aaron *********************************
-    {
-        return null;
     }
 
     /**
@@ -90,9 +78,6 @@ public class RequestController
 
     }
 
-
-
-
     /**
      * Add driver to a request
      *
@@ -107,32 +92,27 @@ public class RequestController
         request.setAcceptedByDrivers();
     }
     public static  void closeRequest(Request request){
-        request.setClosed();
+        request.setCompleted();
     }
     public static  void payRequest(Request request){
         request.setPaid();
     }
 
+
+    public static boolean setPaymentAmount(String amt, Request request) throws Exception {
+        try {
+            Double price = Double.parseDouble(amt);
+            request.setPayment(price);
+            return true;
+        } catch (Exception e) {
+            Log.i("Error", "Invalid double string" + e.toString());
+            request.setPayment(0);
+            return false;
+        }
+    }
+
     public static Double getDistanceOfRequest(Request request) {
-        double lat1 = request.getStartLocation().getLat();
-        double lat2 = request.getEndLocation().getLat();
-        double lon1 = request.getStartLocation().getLon();
-        double lon2 = request.getEndLocation().getLon();
-
-        final int R = 6371; // Radius of the earth
-
-        Double latDistance = Math.toRadians(lat2 - lat1);
-        Double lonDistance = Math.toRadians(lon2 - lon1);
-        Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double distance = R * c * 1000; // convert to meters
-        distance = Math.pow(distance, 2);
-
-        distance = Math.sqrt(distance)/1000; //convert to km
-        DecimalFormat df = new DecimalFormat("#.####"); // round it off to 4 decimal places
-        return Double.parseDouble(df.format(distance));
+        return request.getDistance();
     }
 
     public static Double getEstimatedFare(Request request) { // this is $8 base pay and $2/km
@@ -140,7 +120,43 @@ public class RequestController
         double dist = getDistanceOfRequest(request);
         estFare += (2)*dist;
 
-        DecimalFormat df = new DecimalFormat("#.##"); // round it off to 4 decimal places
+        DecimalFormat df = new DecimalFormat("#.##"); // round it off to 2 decimal places
         return Double.parseDouble(df.format(estFare));
+    }
+
+    public static boolean isValidRequest(Request request) {
+        if(request.getCost() > 0 && !request.getDescription().isEmpty())
+            return true;
+
+        return false;
+    }
+
+    public static void setRouteDistance(Request request, Double distance) {
+        DecimalFormat df = new DecimalFormat("#.####"); // round it off to 4 decimal places
+        Double roundedDist = Double.parseDouble(df.format(distance));
+        request.setDistance(roundedDist);
+    }
+
+    public static Double getPrice(Request selectedRequest) {
+        return selectedRequest.getCost();
+    }
+
+    public static String getLocationStr(Geocoder geocoder, GeoLocation loc) {
+        String addr = "";
+
+        List<Address> address = null;
+        try {
+            address = geocoder.getFromLocation(loc.getLat(), loc.getLon(), 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (address.size() > 0) {
+            for (int i = 0; i < address.get(0).getMaxAddressLineIndex(); i++) {
+                addr += address.get(0).getAddressLine(i) + "\n";
+            }
+        }
+
+        return addr;
     }
 }

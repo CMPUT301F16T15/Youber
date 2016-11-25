@@ -38,6 +38,7 @@
         <activity
             android:name=".gui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".gui.RequestActivity" />
         <activity
             android:name=".gui.UserTypeActivity"
@@ -54,6 +55,7 @@
         <activity
             android:name=".gui.VehicleInfoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".gui.DriverViewRequestActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

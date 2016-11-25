@@ -4,9 +4,15 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.youber.cmput301f16t15.youber.commands.Command;
+
+import com.youber.cmput301f16t15.youber.exceptions.UserNotFoundException;
+
+import com.youber.cmput301f16t15.youber.requests.Request;
+
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,6 +94,59 @@ public class ElasticSearchUser extends ElasticSearch {
             }
             catch(Exception e) {
                 Log.i("Error", "Executing the get users method failed" + e.toString());
+            }
+
+            return users;
+        }
+    }
+
+    public static User getUser(String username) throws UserNotFoundException {
+        ElasticSearchUser.getObjects getUser= new ElasticSearchUser.getObjects();
+        getUser.execute(username);
+        User latestUser=null;
+        try {
+
+            ArrayList<User> users =  getUser.get();
+
+            if(users.size() == 1){
+                latestUser=users.get(0);
+            }
+
+            else{
+                throw new UserNotFoundException();
+            }
+
+
+        } catch (Exception e) {
+
+        }
+        return latestUser;
+
+    }
+
+    public static class getUserByRequestUUID extends AsyncTask<String, Void, ArrayList<User>> {
+
+
+        @Override
+        protected ArrayList<User> doInBackground(String... params) {
+            verifySettings();
+            Search search = new Search.Builder(params[0]).addIndex("youber").addIndex("user").build();
+            JestResult result = null;
+            ArrayList<User> users = new ArrayList<User>();
+            try {
+                result = getClient().execute(search);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (result.isSucceeded()) {
+                List<User> user = result.getSourceAsObjectList(User.class);
+                users.addAll(user);
+
+
+            } else {
+                Log.i("Error", "The search executed but it didnt work");
+                Log.i("jest error",result.toString());
             }
 
             return users;

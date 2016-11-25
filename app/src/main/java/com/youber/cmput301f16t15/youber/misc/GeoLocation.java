@@ -1,9 +1,15 @@
 package com.youber.cmput301f16t15.youber.misc;
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Used http://stackoverflow.com/questions/2139134/how-to-send-an-object-from-one-android-activity-to-another-using-intents
@@ -89,7 +95,6 @@ public class GeoLocation implements Serializable, Parcelable {
         parcel.writeDouble(lat);
         parcel.writeDouble(lon);
     }
-
 
     // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
     public static final Parcelable.Creator<GeoLocation> CREATOR = new Parcelable.Creator<GeoLocation>() {

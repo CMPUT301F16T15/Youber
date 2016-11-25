@@ -24,8 +24,155 @@
     </android.support.design.widget.AppBarLayout>
 
 
+    <TextView
+        android:text="REQUEST"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="76dp"
+        android:id="@+id/driverViewRequest"
+        android:textSize="30sp"
+        android:layout_alignParentStart="true" />
 
+    <TextView
+        android:text="Rider username:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/RiderInfo"
+        android:textSize="20sp"
+        android:layout_marginTop="12dp"
+        android:layout_below="@+id/driverViewRequest"
+        android:layout_alignStart="@+id/driverViewRequest" />
 
+    <TextView
+        android:id="@+id/driverUsernameInput"
+        android:text="@string/dummy_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick=""
+        android:textSize="20sp"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="2dp"
+        android:layout_below="@+id/driverViewRequest"
+        android:layout_toRightOf="@+id/RiderInfo" />
 
+    <!--Start of scroll view-->
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/RiderInfo"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@+id/options"
+        android:layout_marginTop="10dp"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
+        android:id="@+id/ScrollView">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:id="@+id/linearLayout1"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_vertical|center_horizontal">
+            <TextView
+                android:text="Status:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/driverViewStatus"
+                android:textSize="20sp"
+                android:layout_marginTop="15dp" />
+
+            <TextView
+                android:text="@string/dummy_string"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/driverViewStatusUpdate"
+                android:textSize="20sp"
+                android:layout_toRightOf="@+id/driverViewStatus"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="14dp" />
+
+            <TextView
+                android:text="Start Location:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/driverViewStartLocation"
+                android:textSize="20sp"
+                android:layout_below="@+id/driverViewStatusUpdate"
+                android:layout_marginTop="22dp" />
+
+            <TextView
+                android:id="@+id/driverViewStartLocInput"
+                android:text="@string/dummy_string"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/driverViewStartLocation"
+                android:textSize="20sp" />
+
+            <TextView
+                android:text="End Location:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/driverViewStartLocInput"
+                android:id="@+id/driverViewEndLoc"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/driverViewEndLocInput"
+                android:text="@string/dummy_string"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/driverViewEndLoc"
+                android:textSize="20sp" />
+
+            <TextView
+                android:text="Offered Payment:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/driverViewEndLocInput"
+                android:id="@+id/DriverViewOfPay"
+                android:textSize="20sp" />
+
+            <TextView
+                android:text="@string/dummy_string"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/driverViewOffPaymentInput"
+                android:textSize="20sp"
+                android:layout_below="@+id/driverViewEndLocInput"
+                android:layout_marginLeft="2dp"
+                android:layout_toRightOf="@+id/DriverViewOfPay" />
+
+            <TextView
+                android:id="@+id/driver_request_descp_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/DriverViewOfPay"
+                android:textSize="20sp"
+                android:text="@string/description"/>
+
+            <TextView
+                android:id="@+id/driver_request_descp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/driver_request_descp_title"
+                android:text="@string/dummy_string"
+                android:textSize="20sp" />
+        </RelativeLayout>
+    </ScrollView>
+    <!--End of ScrollView-->
+    <Button
+        android:text="OPTIONS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="23dp"
+        android:backgroundTint="@color/lightGreen"
+        android:id="@+id/options"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

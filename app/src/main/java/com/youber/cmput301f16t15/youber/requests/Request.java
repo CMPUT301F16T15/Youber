@@ -1,12 +1,25 @@
 package com.youber.cmput301f16t15.youber.requests;
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+
 import com.youber.cmput301f16t15.youber.users.Driver;
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.exceptions.InvalidRequestException;
 import com.youber.cmput301f16t15.youber.misc.Payment;
 import com.youber.cmput301f16t15.youber.users.Rider;
 
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+
+import java.io.IOException;
+
 import java.io.Serializable;
+import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import io.searchbox.annotations.JestId;
@@ -31,18 +44,15 @@ public class Request implements Serializable {
      * The Start location.
      */
     double [] startLocation =new double[2];
+    String startLocStr = "";
     double [] endLocation= new double[2];
-
-    /**
-     * The End location.
-     */
-
+    String endLocStr = "";
 
     private boolean status = true; //open is true
-    private String description;
-    private Payment payment;
-    //private int confirmationStage = 0; //0 initial, 1 accepted by a driver, 2 confirmed by a rider, 3 finalized by driver
-    //private boolean accepted = false;
+    private String description = "";
+    private Double distance = 0.0;
+
+    private Payment payment = new Payment(0);
     private Driver driver;
 
     public Driver getDriver() {
@@ -58,7 +68,7 @@ public class Request implements Serializable {
      * Payed/Completed
      */
     public enum RequestStatus {
-        opened,closed, acceptedByDrivers, riderSelectedDriver, paid
+        opened,acceptedByDrivers, riderSelectedDriver, paid, completed
     }
 
     private RequestStatus currentStatus;
@@ -77,8 +87,6 @@ public class Request implements Serializable {
         endLocation[0] = location2.getLat();
         endLocation[1] = location2.getLon();
 
-
-
         uuID = UUID.randomUUID();
         currentStatus = RequestStatus.opened;
     }
@@ -95,14 +103,31 @@ public class Request implements Serializable {
         description = s;
     }
 
+    /**
+     * Instantiates a new Request.
+     *
+     * @param location1 the starting location
+     * @param location2 the end location
+     */
+    public Request(GeoLocation location1, String start, GeoLocation location2, String end) {
+        if (location1.equals(location2)) throw new RuntimeException(new InvalidRequestException());
+
+        startLocation[0] = location1.getLat();
+        startLocation[1] = location1.getLon();
+        endLocation[0] = location2.getLat();
+        endLocation[1] = location2.getLon();
+
+        uuID = UUID.randomUUID();
+        currentStatus = RequestStatus.opened;
+
+        startLocStr = start;
+        endLocStr = end;
+    }
+
     @Override
     public String toString() {
         String currentStat = currentStatus.toString(); // TODO FIX THIS
-        GeoLocation start = new GeoLocation(startLocation[0], startLocation[1]);
-        String startStr = start.toString();
-        GeoLocation end = new GeoLocation(endLocation[0], endLocation[1]);
-        String endStr = end.toString();
-        return currentStat + "\nStart: " + startStr + "\nEnd: " + endStr;
+        return currentStat + "\nStart: " + startLocStr + "\nEnd: " + endLocStr;
     }
 
     public Rider addRider(Rider rider) {
@@ -121,6 +146,10 @@ public class Request implements Serializable {
         return new GeoLocation(startLocation[0],startLocation[1]);
     }
 
+    public String getStartLocStr() {
+        return startLocStr;
+    }
+
     /**
      * Gets end location.
      * @return the end location
@@ -128,6 +157,10 @@ public class Request implements Serializable {
     public GeoLocation getEndLocation() {
 
         return new GeoLocation(endLocation[0],endLocation[1]);
+    }
+
+    public String getEndLocStr() {
+        return endLocStr;
     }
 
     /**
@@ -141,8 +174,9 @@ public class Request implements Serializable {
      *
      * @return the boolean
      */
-    public boolean isClosed() {
-        //***********************can be simplified to !status rather than two if statements****************************
+
+    public boolean isCompleted() {
+
         if (status) {
             return false;
         }
@@ -187,6 +221,11 @@ public class Request implements Serializable {
     public Double getCost() {
         return this.payment.getActualCost();
     }
+
+    public void setPayment(double payAmt) {
+        this.payment = new Payment(payAmt);
+    }
+
 
     /**
      * Add driver driver.
@@ -237,12 +276,23 @@ public class Request implements Serializable {
         description = s;
     }
 
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double d) {
+        this.distance = d;
+    }
+
+
     public RequestStatus getCurrentStatus() {
         return currentStatus;
     }
+
+
     //opened, acceptedByDrivers, riderSelectedDriver, paid
-    public void setClosed(){
-        this.currentStatus=RequestStatus.closed;
+    public void setCompleted(){
+        this.currentStatus=RequestStatus.completed;
     }
     public void setAcceptedByDrivers(){
         this.currentStatus=RequestStatus.acceptedByDrivers;
@@ -256,5 +306,40 @@ public class Request implements Serializable {
         this.currentStatus=RequestStatus.paid;
     }
 
+    //http://stackoverflow.com/questions/185937/overriding-the-java-equals-method-quirk
+    //http://stackoverflow.com/questions/10912646/hashcodebuilder-and-equalsbuilder-usage-style
+
+    @Override
+    public int hashCode(){
+        HashCodeBuilder hashCodeBuilder = new HashCodeBuilder();
+        hashCodeBuilder.append(getUUID());
+        hashCodeBuilder.append(getCurrentStatus());
+        return hashCodeBuilder.toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object other){
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof Request))return false;
+        Request otherRequest=(Request)other;
+        EqualsBuilder equalsBuilder= new EqualsBuilder();
+        equalsBuilder.append(getUUID(),otherRequest.getUUID());
+        equalsBuilder.append(getCurrentStatus(),otherRequest.getCurrentStatus());
+        return equalsBuilder.isEquals();
+
+    }
+    //NEVER USER THIS
+    public Request(GeoLocation location1, GeoLocation location2, UUID otheruuid) {
+        if (location1.equals(location2)) throw new RuntimeException(new InvalidRequestException());
+
+        startLocation[0] = location1.getLat();
+        startLocation[1] = location1.getLon();
+        endLocation[0] = location2.getLat();
+        endLocation[1] = location2.getLon();
+
+        uuID = otheruuid;
+        currentStatus = RequestStatus.opened;
+    }
 
 }

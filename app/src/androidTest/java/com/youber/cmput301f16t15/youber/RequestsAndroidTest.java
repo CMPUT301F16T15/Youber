@@ -138,6 +138,8 @@ public class RequestsAndroidTest { // mainly using the controller
     @Test
     public void testGetClosedRequests() // AARON HERE AND DOWN, project part 5
     {
+
+
         init();
 
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
@@ -164,16 +166,18 @@ public class RequestsAndroidTest { // mainly using the controller
 
         RequestCollection closedRequests = RequestCollectionsController.getClosedRequests();
 
-        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, closedRequests.get(request.getUUID()).getCurrentStatus());
-        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, closedRequests.get(request2.getUUID()).getCurrentStatus());
-        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, closedRequests.get(request3.getUUID()).getCurrentStatus());
+//        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, closedRequests.get(request.getUUID()).getCurrentStatus());
+//        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, closedRequests.get(request2.getUUID()).getCurrentStatus());
+//        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, closedRequests.get(request3.getUUID()).getCurrentStatus());
 
 
+        assertFalse(true);
     }
 
     @Test
     public void testGetAcceptedRequest() // project part 5
     {
+
         init();
 
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
@@ -200,14 +204,18 @@ public class RequestsAndroidTest { // mainly using the controller
 
         RequestCollection acceptedRequests = RequestCollectionsController.getAcceptedRequests();
 
-        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, acceptedRequests.get(request.getUUID()).getCurrentStatus());
-        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, acceptedRequests.get(request2.getUUID()).getCurrentStatus());
-        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, acceptedRequests.get(request3.getUUID()).getCurrentStatus());
+//        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, acceptedRequests.get(request.getUUID()).getCurrentStatus());
+//        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, acceptedRequests.get(request2.getUUID()).getCurrentStatus());
+//        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, acceptedRequests.get(request3.getUUID()).getCurrentStatus());
+
+        assertFalse(true);
+
     }
 
     @Test
     public void testGetPaidRequests() // project part 5
     {
+
         init();
 
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
@@ -234,9 +242,12 @@ public class RequestsAndroidTest { // mainly using the controller
 
         RequestCollection paidRequests = RequestCollectionsController.getPaidRequests();
 
-        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request.getUUID()).getCurrentStatus());
-        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request2.getUUID()).getCurrentStatus());
-        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request3.getUUID()).getCurrentStatus());
+//        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request.getUUID()).getCurrentStatus());
+//        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request2.getUUID()).getCurrentStatus());
+//        assertEquals("Expected to fail until Project Part 5",Request.RequestStatus.closed, paidRequests.get(request3.getUUID()).getCurrentStatus());
+
+        assertFalse(true);
+
     }
 
     @Test

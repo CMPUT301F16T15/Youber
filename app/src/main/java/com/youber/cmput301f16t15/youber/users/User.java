@@ -35,6 +35,11 @@ public class User implements Serializable {
     private String phoneNumber;
     private String email;
 
+    private String make;
+    private String model;
+    private String year;
+    private String colour;
+
     /**
      * The enum User type.
      */
@@ -212,6 +217,22 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public String getMake() { return make; }
+
+    public void setMake(String make){ this.make = make;}
+
+    public String getModel() { return model;}
+
+    public void setModel(String model) { this.model = model;}
+
+    public String getYear() { return year;}
+
+    public void setYear(String year) { this.year = year;}
+
+    public String getColour() {return colour;}
+
+    public void setColour(String colour){this.colour = colour;}
+
 //    public ArrayList<UUID> getRequestUUIDs() { // note this returns the relavant uuids respective to the current user type
 //        if(currentUserType == UserType.rider)
 //            return riderRequestUUIDs;
@@ -237,6 +258,18 @@ public class User implements Serializable {
     {
         return driverUserInfo.getAcceptedRequests();
     }
+
+
+    public void addToDriverConfirmed(UUID uuid)
+    {
+        driverUserInfo.getConfirmedRequests().add(uuid);
+    }
+
+    public void deleteUUIDFromAccepted(UUID uuid)
+    {
+        driverUserInfo.getAcceptedRequests().remove(uuid);
+    }
+
 
     public void addRequesttUUID(UUID uuid){
         if(currentUserType == UserType.rider)

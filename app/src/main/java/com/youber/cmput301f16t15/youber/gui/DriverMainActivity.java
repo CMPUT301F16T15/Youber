@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.R;
+import com.youber.cmput301f16t15.youber.misc.Setup;
 import com.youber.cmput301f16t15.youber.requests.Request;
 
 import org.osmdroid.api.IMapController;
@@ -91,6 +92,7 @@ public class DriverMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+       
         setContentView(R.layout.activity_driver_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -183,6 +185,11 @@ public class DriverMainActivity extends AppCompatActivity {
         });
 
     }
+    @Override
+    public void onStart(){
+        super.onStart();
+        Setup.run(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -210,9 +217,24 @@ public class DriverMainActivity extends AppCompatActivity {
 
             return true;
         }
+        else if (id == R.id.action_switch_user)
+        {
+            Intent intent = new Intent(this, UserTypeActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        else if (id == R.id.logout)
+        {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
+
 
     public void clearMap(View view) {
         map.getOverlays().remove(searchMarker);
