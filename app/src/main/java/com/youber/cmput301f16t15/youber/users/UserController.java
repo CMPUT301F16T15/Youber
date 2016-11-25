@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
+import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.misc.Observable;
 import com.youber.cmput301f16t15.youber.requests.Request;
@@ -17,7 +18,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.UUID;
 
 /**
@@ -203,26 +204,21 @@ public class UserController {
         observable.notifyListeners(userCommand);
     }
 
-   public static void clearAcceptedWhenConfirmed(){
-        for (UUID uuid: UserController.getUser().getDriverUUIDs()) {
-            Request request=null;
-            try{
-                ElasticSearchRequest.getObjects getter = new ElasticSearchRequest.getObjects();
-                getter.execute(uuid.toString());
-                ArrayList<Request> requests =getter.get();
-                if(requests.size()<1){
-                    throw new RuntimeException();
-                }
-               request = requests.get(0);
-            }catch(Exception e){}
+    public static void cleanUpDriverList() throws Exception {
+        if(user.getCurrentUserType() == User.UserType.rider)
+            return;
 
+        HashSet<UUID> tempAcceptedUUIDs = user.getAcceptedDriverUUIDs();
+        for(UUID u : tempAcceptedUUIDs) {
+            Request esReqeust = ElasticSearchController.getRequest(u);
 
-            if (request.getCurrentStatus() != Request.RequestStatus.acceptedByDrivers) {
-                if (UserController.isRequestContainedInAcceptedDriversUUIDS(request.getUUID())) {
-                    UserController.removeRequestFromAcceptedDriverUUIDS(request.getUUID());
-                }
-
-            }
+            String esDriver = esReqeust.getDriverUsernameID();
+            if(!esDriver.equals(""))
+                // if we are the selected driver, make sure we have it in our completed (extra safe)
+                if(esDriver.equals(user.getUsername()))
+                    user.addToDriverConfirmed(u);
+                else
+                    user.removeRequestUUID(u);
         }
     }
 }

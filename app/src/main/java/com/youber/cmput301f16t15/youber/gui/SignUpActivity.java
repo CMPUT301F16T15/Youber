@@ -126,8 +126,7 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
                         else {
                             Bundle bundle = new Bundle();
                             bundle.putString(getResources().getString(R.string.message), getResources().getString(R.string.usernameExitsMessage));
-                            bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.ok));
-                            bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.login));
+                            bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.ok));
 
                             DialogFragment dialog = new NoticeDialogFragment();
                             dialog.setArguments(bundle);
@@ -142,16 +141,13 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
     }
 
     // These clicks are for when the user already exits
-    // Positive click "OK" do nothing and dismiss the dialog, Negative is log in
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-        dialog.dismiss();
     }
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
-        finish();
-    }
 
+    }
 }
 

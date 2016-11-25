@@ -17,6 +17,7 @@ import com.youber.cmput301f16t15.youber.R;
 
 import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 
+import com.youber.cmput301f16t15.youber.misc.Setup;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
@@ -41,6 +42,8 @@ RequestListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Setup.run(this);
+
         setContentView(R.layout.activity_request_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,9 +54,6 @@ RequestListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
-
-
-
                 if (UserController.getUser().getCurrentUserType().equals(User.UserType.rider)) {
                     Intent intent = new Intent(RequestListActivity.this, RiderViewRequestActivity.class);
                     intent.putExtra("uuid", requestArray.get(i).getUUID());
@@ -126,10 +126,8 @@ RequestListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         MacroCommand.execute(); // try to execute on resume!
+        Setup.run(this);
     }
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -28,12 +28,7 @@ import java.util.UUID;
  */
 
 public class Setup {
-
-
-
-
-
-    public static void run(Context context){
+    public static void run(Context context) throws Exception {
 
         ElasticSearchController.setupPutmap();
         UserController.setContext(context);
@@ -55,7 +50,8 @@ public class Setup {
             AddUserCommand addUser = new AddUserCommand(user);
             UserController.observable.notifyListeners(addUser);
 
-            UserController.clearAcceptedWhenConfirmed();
+
+            UserController.cleanUpDriverList();
             UserController.saveUser(user);
         }
         if(checkRequestsUpdated()){
@@ -112,13 +108,12 @@ public class Setup {
         }
 
         HashSet<UUID> latestAcceptedUUIDS =UserController.getUser().getCurrentUserType()== User.UserType.rider ?
-                latestUser.getRequestUUIDs():latestUser.getDriverUUIDs();
+                latestUser.getRequestUUIDs():latestUser.getAcceptedDriverUUIDs();
 
         HashSet<UUID> currentAcceptedUUIDS = UserController.getUser().getCurrentUserType()== User.UserType.rider ?
-                UserController.getUser().getRequestUUIDs():UserController.getUser().getDriverUUIDs();
+                UserController.getUser().getRequestUUIDs():UserController.getUser().getAcceptedDriverUUIDs();
 
         if(!currentAcceptedUUIDS.equals(latestAcceptedUUIDS)) return true;
-
 
         if(UserController.getUser().getCurrentUserType()== User.UserType.driver) {
             HashSet<UUID> latestConfirmedUUIDS = latestUser.getConfirmedDriverUUIDs();
@@ -134,7 +129,7 @@ public class Setup {
     private static boolean checkRequestsUpdated(){
         //at this point userUUIDS have to be up to date
         HashSet<UUID> uuids= UserController.getUser().getCurrentUserType()== User.UserType.rider ?
-                UserController.getUser().getRequestUUIDs():UserController.getUser().getDriverUUIDs();
+                UserController.getUser().getRequestUUIDs():UserController.getUser().getAcceptedDriverUUIDs();
         RequestCollection latestRequests= ElasticSearchRequest.getRequestCollection(uuids);
 
 

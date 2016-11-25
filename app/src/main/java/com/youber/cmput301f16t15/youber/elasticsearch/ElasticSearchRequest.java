@@ -173,15 +173,6 @@ public class ElasticSearchRequest extends ElasticSearch{
                 if(requests.size()==1){
                     Log.i("Request!",requests.get(0).toString());
                     Request request = requests.get(0);
-//                    if (request.getCurrentStatus() != Request.RequestStatus.acceptedByDrivers)
-//                    {
-//                        if(UserController.isRequestContainedInAcceptedDriversUUIDS(request.getUUID())) {
-//                            UserController.removeRequestFromAcceptedDriverUUIDS(request.getUUID());
-//                            continue;
-//                        }
-//
-//                    }
-
                     requestCollection.add(requests.get(0));
                 }
             }

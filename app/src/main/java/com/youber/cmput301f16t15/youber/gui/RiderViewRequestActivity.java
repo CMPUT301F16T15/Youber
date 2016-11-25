@@ -227,14 +227,16 @@ public class RiderViewRequestActivity extends AppCompatActivity implements Notic
                         public void onClick(DialogInterface dialog, int id) {
                         }}).setPositiveButton(R.string.dlg_accept, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            // update the status and username for request
                             selectedRequest.setRiderSelectedDriver();
+                            selectedRequest.setDriverUsernameID(driverArray.get(driverSelected).getUsername());
                             RequestCollectionsController.addRequest(selectedRequest);
+
                             // add it to the confirmed list for driver
-                            // might be smelly code
                             driverArray.get(driverSelected).addToDriverConfirmed(selectedRequest.getUUID());
                             AddUserCommand addUserCommand = new AddUserCommand(driverArray.get(driverSelected));
                             MacroCommand.addCommand(addUserCommand);
-
+                            //TODO CLEAN UP
 //                            for (User user: driverArray)
 //                            {
 //                                if (!user.equals(driverArray.get(driverSelected)))

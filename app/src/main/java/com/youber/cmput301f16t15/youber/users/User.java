@@ -254,7 +254,7 @@ public class User implements Serializable {
         return driverUserInfo.getAcceptedRequests();
     }
 
-    public HashSet<UUID> getDriverUUIDs()
+    public HashSet<UUID> getAcceptedDriverUUIDs()
     {
         return driverUserInfo.getAcceptedRequests();
     }

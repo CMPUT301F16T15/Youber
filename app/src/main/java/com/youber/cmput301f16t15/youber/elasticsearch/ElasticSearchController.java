@@ -134,31 +134,27 @@ public class ElasticSearchController extends ElasticSearch{
      */
     public static RequestCollection getRequestsbyGeoLocation(GeoLocation start, Double radiusInKm) throws Exception {
         RequestCollection requestCollection =new RequestCollection();
+
         String query ="{\n" +
-                "    \"filter\" : {\n" +
-                "        \"geo_distance\" : {\n" +
-                "            \"distance\" : \""+Double.toString(radiusInKm)+"m\",\n" +
-                "            \"startLocation\" :[ "+Double.toString(start.getLat())+",\n" +
-                "            "+Double.toString(start.getLon())+"]\n" +
-                "        }\n" +
-                "    }\n" +
-                "}";
+            "     \"query\" : {\n"+
+            "      \"bool\" : {\n" +
+            "            \"should\" :\n" +
+            "            [\n" +
+            "            {\"match\" : {\"currentStatus\": \"opened\"}},\n" +
+            "            {\"match\" : {\"currentStatus\": \"acceptedByDrivers\"}}\n" +
+            "            ],\n" +
+            "               \"minimum_should_match\" : 1" +
+            "              }"+
+            "             },"+
+            "    \"filter\" : {\n" +
+            "        \"geo_distance\" : {\n" +
+            "            \"distance\" : \""+Double.toString(radiusInKm)+"m\",\n" +
+            "            \"startLocation\" :[ "+Double.toString(start.getLat())+",\n" +
+            "            "+Double.toString(start.getLon())+"]\n" +
+            "        }\n" +
+            "    }\n" +
+            "}";
 
-/*
-        String query ="{\n" +
-                "    \"filter\" : {\n" +
-
-                "        \"bool\" : {\n" +
-                "         \"\"
-                "        \"geo_distance\" : {\n" +
-                "            \"distance\" : \""+Double.toString(radiusInKm)+"m\",\n" +
-                "            \"startLocation\" :[ "+Double.toString(start.getLat())+",\n" +
-                "            "+Double.toString(start.getLon())+"]\n" +
-                "        }\n" +
-                "    }\n" +
-                "}";
-
-*/
         ElasticSearchRequest.getObjectsByGeolocation getter = new ElasticSearchRequest.getObjectsByGeolocation();
         getter.execute(query);
         try {
@@ -184,19 +180,18 @@ public class ElasticSearchController extends ElasticSearch{
         RequestCollection requestCollection =new RequestCollection();
 
         String query = "{\n" +
-        "    \"query\" : {\n" +
-        "        \"bool\" : {\n" +
-        "            \"must\" : { \"match\" : {\"description\" : \""+keyword+"\"}},\n" +
-        "            \"should\" :\n" +
-        "            [\n" +
-        "            {\"match\" : {\"currentStatus\": \"opened\"}},\n" +
-        "            {\"match\" : {\"currentStatus\": \"acceptedByDrivers\"}}\n" +
-        "            ]\n" +
-        "        }\n" +
-        "    }\n" +
-        "}";
-
-
+            "    \"query\" : {\n" +
+            "        \"bool\" : {\n" +
+            "            \"must\" : { \"match\" : {\"description\" : \""+keyword+"\"}},\n" +
+            "            \"should\" :\n" +
+            "            [\n" +
+            "            {\"match\" : {\"currentStatus\": \"opened\"}},\n" +
+            "            {\"match\" : {\"currentStatus\": \"acceptedByDrivers\"}}\n" +
+            "            ],\n" +
+            "               \"minimum_should_match\" : 1" +
+            "        }\n" +
+            "    }\n" +
+            "}";
 
         ElasticSearchRequest.getObjectsByGeolocation getter = new ElasticSearchRequest.getObjectsByGeolocation();
         getter.execute(query);
@@ -243,4 +238,18 @@ public class ElasticSearchController extends ElasticSearch{
     }
 
 
+    public static Request getRequest(UUID u) throws Exception {
+        ElasticSearchRequest.getObjects getter = new ElasticSearchRequest.getObjects();
+        getter.execute(u.toString());
+
+        try {
+            ArrayList<Request> requests = getter.get();
+            if(requests.size() == 1)
+                return requests.get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        throw new RuntimeException("Unable to get request from elastic search");
+    }
 }
