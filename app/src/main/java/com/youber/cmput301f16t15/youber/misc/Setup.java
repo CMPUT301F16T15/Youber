@@ -28,7 +28,7 @@ import java.util.UUID;
  */
 
 public class Setup {
-    public static void run(Context context) throws Exception {
+    public static void run(Context context) {
 
         ElasticSearchController.setupPutmap();
         UserController.setContext(context);
@@ -50,8 +50,12 @@ public class Setup {
             AddUserCommand addUser = new AddUserCommand(user);
             UserController.observable.notifyListeners(addUser);
 
+            try {
+                UserController.cleanUpDriverList();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-            UserController.cleanUpDriverList();
             UserController.saveUser(user);
         }
         if(checkRequestsUpdated()){

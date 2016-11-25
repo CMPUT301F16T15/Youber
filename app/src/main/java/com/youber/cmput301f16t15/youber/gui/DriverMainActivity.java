@@ -69,6 +69,7 @@ public class DriverMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Setup.run(this);
+
         setContentView(R.layout.activity_driver_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
