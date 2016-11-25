@@ -36,7 +36,7 @@
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".gui.MainActivity"
+            android:name=".gui.RiderMainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity android:name=".gui.RequestActivity" />

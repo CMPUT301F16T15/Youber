@@ -1,6 +1,5 @@
 package com.youber.cmput301f16t15.youber.gui;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,7 +7,6 @@ import android.graphics.Canvas;
 import android.location.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,7 +18,6 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +35,6 @@ import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.routing.MapQuestRoadManager;
 import org.osmdroid.bonuspack.routing.Road;
 import org.osmdroid.bonuspack.routing.RoadManager;
-import org.osmdroid.bonuspack.utils.DouglasPeuckerReducer;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -52,8 +48,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * The type map activity.
@@ -63,28 +57,23 @@ import java.util.regex.Pattern;
  *
  * @see org.osmdroid.bonuspack.routing.OSRMRoadManager
  */
-public class MainActivity extends AppCompatActivity {
+public class RiderMainActivity extends AppCompatActivity {
 
-    //TODO use controller not global
     private Request request;
 
-    Activity ourActivity = this;
     MapView map;
     Road[] mRoads;
-
     Double distance = 0.0;
 
     /**
      * Various map fields used to overlay the route on the map
      */
-    int x, y;
-    GeoPoint touchedPoint;
+    int x, y; // need to be global so we can clear
     GeoPoint startPoint;
     GeoPoint endPoint;
     static Marker startMarker;
     static Marker endMarker;
     static Polyline roadPolyline;
-
     static UpdateRoadTask async;
 
     @Override
@@ -92,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_rider_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -100,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setBuiltInZoomControls(true);
         map.setMultiTouchControls(true);
-
 
         IMapController mapController = map.getController();
         mapController.setZoom(12);
@@ -114,13 +102,14 @@ public class MainActivity extends AppCompatActivity {
 
         UserController.setContext(this);
         RequestCollectionsController.setContext(this);
-
     }
+
     @Override
     public void onStart(){
         super.onStart();
         Setup.run(this);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -138,13 +127,11 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_profile) {
             Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
-
             return true;
         }
         else if (id == R.id.action_view_requests) {
             Intent intent = new Intent(this, RequestViewActivity.class);
             startActivity(intent);
-
             return true;
         }
         else if (id == R.id.action_switch_user)
@@ -158,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-
             return true;
         }
 
@@ -172,9 +158,11 @@ public class MainActivity extends AppCompatActivity {
      */
     private Request initRequestObj() { // map and on new click both use this!
         if(startPoint == null || endPoint == null) {
-            Toast.makeText(MainActivity.this, "Please select a start and end point", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RiderMainActivity.this, "Please select a start and end point", Toast.LENGTH_SHORT).show();
             return null;
         }
+
+        while(distance == 0.0); // asynchronous drawing of route to get distance, so wait
 
         GeoLocation start = new GeoLocation(startPoint.getLatitude(), startPoint.getLongitude());
         GeoLocation end   = new GeoLocation(endPoint.getLatitude(), endPoint.getLongitude());
@@ -184,17 +172,6 @@ public class MainActivity extends AppCompatActivity {
         String endStr = RequestController.getLocationStr(geocoder, end);
 
         return new Request(start, startStr, end, endStr);
-    }
-
-    public void clearMap(View view) {
-        map.getOverlays().remove(startMarker);
-        map.getOverlays().remove(endMarker);
-
-        startPoint = null;
-        endPoint = null;
-
-        map.getOverlays().remove(roadPolyline);
-        map.invalidate();
     }
 
     /**
@@ -211,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
             promptToCreateRequest();
         }
     }
-
 
     /**
      * prompt the create request dialog, called on "New Request" button
@@ -242,12 +218,12 @@ public class MainActivity extends AppCompatActivity {
                     dlg.dismiss(); //Dismiss once everything is OK.
 
                     if(MacroCommand.isRequestContained(request.getUUID()))
-                        Toast.makeText(MainActivity.this, "Currently Offline: add request queued", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RiderMainActivity.this, "Currently Offline: add request queued", Toast.LENGTH_SHORT).show();
                     else
-                        Toast.makeText(MainActivity.this, "Successfully added request", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RiderMainActivity.this, "Successfully added request", Toast.LENGTH_SHORT).show();
                 }
                 else
-                    Toast.makeText(MainActivity.this, "Invalid request. Please ensure all fields are valid", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RiderMainActivity.this, "Invalid request. Please ensure all fields are valid", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -302,13 +278,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // ------------------------ MAP FUNCTIONS ------------------------
     //youtube Android Application Development Tutorial series by thenewboston
     public class Touch extends Overlay {
-
         @Override
-        protected void draw(Canvas canvas, MapView mapView, boolean b) {
-
-        }
+        protected void draw(Canvas canvas, MapView mapView, boolean b) {}
 
         //http://stackoverflow.com/questions/16665426/get-coordinates-by-clicking-on-map-openstreetmaps
         @Override
@@ -316,14 +290,14 @@ public class MainActivity extends AppCompatActivity {
             Geocoder geocoder = new Geocoder(getBaseContext(), Locale.getDefault());
             x = (int) e.getX();
             y = (int) e.getY();
-            touchedPoint = (GeoPoint) map.getProjection().fromPixels(x, y);
+            GeoPoint touchedPoint = (GeoPoint) map.getProjection().fromPixels(x, y);
+
             try {
                 List<Address> address = geocoder.getFromLocation(touchedPoint.getLatitude(), touchedPoint.getLongitude(), 1);
                 if (address.size() > 0) {
                     String display = "";
-                    for (int i = 0; i < address.get(0).getMaxAddressLineIndex(); i++) {
+                    for (int i = 0; i < address.get(0).getMaxAddressLineIndex(); i++)
                         display += address.get(0).getAddressLine(i) + "\n";
-                    }
 
                     display = display.trim();
                     Toast t = Toast.makeText(getBaseContext(), display, Toast.LENGTH_SHORT);
@@ -339,8 +313,6 @@ public class MainActivity extends AppCompatActivity {
 
                         map.getOverlays().add(startMarker);
                         map.invalidate();
-                        //************************************unused toast***********************************
-                        Toast.makeText(getBaseContext(), "start location is set", Toast.LENGTH_SHORT);
                     } else if (endPoint == null) {
                         endPoint = new GeoPoint(touchedPoint.getLatitude(), touchedPoint.getLongitude());
 
@@ -351,7 +323,6 @@ public class MainActivity extends AppCompatActivity {
 
                         map.getOverlays().add(endMarker);
                         map.invalidate();
-                        Toast.makeText(getBaseContext(), "end location is set", Toast.LENGTH_SHORT);
                     }
                     if (startPoint != null && endPoint != null) {
                         // http://stackoverflow.com/questions/38539637/osmbonuspack-roadmanager-networkonmainthreadexception
@@ -365,17 +336,14 @@ public class MainActivity extends AppCompatActivity {
                         async = new UpdateRoadTask();
                         getRoadAsync(startPoint, endPoint);
                     }
-
-
                 }
             } catch (IOException e1) {
                 e1.printStackTrace();
-            } finally {
-
             }
             return true;
         }
     }
+
     //cmput301 lab8
     public void getRoadAsync(GeoPoint startPoint, GeoPoint destinationPoint) {
         mRoads = null;
@@ -384,9 +352,7 @@ public class MainActivity extends AppCompatActivity {
         waypoints.add(startPoint);
         waypoints.add(destinationPoint);
         async.execute(waypoints);
-
     }
-
 
     public class UpdateRoadTask extends AsyncTask<Object, Void, Road[]> {
 
@@ -411,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < roads.length; i++) {
                 roadPolyline = RoadManager.buildRoadOverlay(roads[i]);
                 mRoadOverlays[i] = roadPolyline;
-                String routeDesc = roads[i].getLengthDurationText(ourActivity, -1);
+                String routeDesc = roads[i].getLengthDurationText(RiderMainActivity.this, -1);
 
                 distance = roads[i].mLength;
 
@@ -425,5 +391,16 @@ public class MainActivity extends AppCompatActivity {
                 //to avoid covering the other overlays.
             }
         }
+    }
+
+    public void clearMap(View view) {
+        map.getOverlays().remove(startMarker);
+        map.getOverlays().remove(endMarker);
+
+        startPoint = null;
+        endPoint = null;
+
+        map.getOverlays().remove(roadPolyline);
+        map.invalidate();
     }
 }

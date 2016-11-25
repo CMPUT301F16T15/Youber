@@ -19,7 +19,6 @@ import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 /**
  * The type Sign up activity.

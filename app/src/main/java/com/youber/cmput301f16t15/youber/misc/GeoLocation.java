@@ -1,15 +1,11 @@
 package com.youber.cmput301f16t15.youber.misc;
 
-import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.IOException;
+import com.youber.cmput301f16t15.youber.gui.RiderMainActivity;
+
 import java.io.Serializable;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * Used http://stackoverflow.com/questions/2139134/how-to-send-an-object-from-one-android-activity-to-another-using-intents
@@ -18,7 +14,7 @@ import java.util.Locale;
  * <p>
  *     This class specifies locations in coordinate form for requests
  * </p>
- * @see com.youber.cmput301f16t15.youber.gui.MainActivity
+ * @see RiderMainActivity
  */
 public class GeoLocation implements Serializable, Parcelable {
     private double lat;

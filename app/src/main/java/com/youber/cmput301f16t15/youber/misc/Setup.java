@@ -14,7 +14,7 @@ import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
 import com.youber.cmput301f16t15.youber.exceptions.UserNotFoundException;
 import com.youber.cmput301f16t15.youber.gui.DriverMainActivity;
-import com.youber.cmput301f16t15.youber.gui.MainActivity;
+import com.youber.cmput301f16t15.youber.gui.RiderMainActivity;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
 import com.youber.cmput301f16t15.youber.users.User;
@@ -39,7 +39,7 @@ public class Setup {
     //https://developer.android.com/guide/topics/ui/notifiers/notifications.html
     public static void sendRequestUpdateNotification(Context context){
         Class activityClass= UserController.getUser().getCurrentUserType()== User.UserType.rider ?
-                MainActivity.class:DriverMainActivity.class;
+                RiderMainActivity.class:DriverMainActivity.class;
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.mipmap.ic_launcher)
