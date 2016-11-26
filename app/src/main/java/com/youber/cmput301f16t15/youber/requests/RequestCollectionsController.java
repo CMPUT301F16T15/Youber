@@ -267,4 +267,22 @@ public class RequestCollectionsController {
         return null;
     }
 
+
+    public static RequestCollection hideUserRequestInSearch(User user, RequestCollection allRequests)
+    {
+
+        RequestCollection requests = new RequestCollection();
+        HashSet<UUID> riderUUIDs = user.getRiderUUIDs();
+
+        Collection<Request>  searchedCollection = allRequests.values();
+        for (Request request: searchedCollection)
+        {
+            if (!riderUUIDs.contains(request.getUUID()))
+            {
+                requests.add(request);
+            }
+        }
+        return requests;
+    }
+
 }
