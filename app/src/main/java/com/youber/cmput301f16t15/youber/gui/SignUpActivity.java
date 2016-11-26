@@ -18,6 +18,7 @@ import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
 import com.youber.cmput301f16t15.youber.misc.Setup;
+import com.youber.cmput301f16t15.youber.misc.Updater;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
@@ -141,11 +142,13 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
 
                 if (esUser == null) { // the new username is unique and doesnt exist in Elastic search
                     User user = new User(usernameText, firstNameText, lastNameText, dateOfBirthText, phoneNumText, emailText);
+
+                    UserController.observable.addListener(new Updater());
+                    AddUserCommand addUser = new AddUserCommand(user);
+                    UserController.observable.notifyListeners(addUser);
                     UserController.saveUser(user);
 
                     // add to commands to run and update to Elastic search
-                    AddUserCommand addUser = new AddUserCommand(user);
-                    MacroCommand.addCommand(addUser);
                     finish(); // finish since we shouldn't ever get back here
 
                     Intent intent = new Intent(SignUpActivity.this, UserTypeActivity.class);
