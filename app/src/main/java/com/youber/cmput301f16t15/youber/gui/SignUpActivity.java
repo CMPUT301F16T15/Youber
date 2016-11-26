@@ -19,7 +19,6 @@ import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 /**
  * The type Sign up activity.
@@ -49,6 +48,7 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
         username = (EditText) findViewById(R.id.usernameInput);
         email = (EditText) findViewById(R.id.emailInput);
         phoneNum = (EditText) findViewById(R.id.phoneInput);
@@ -59,7 +59,6 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
         userString = (TextView) findViewById(R.id.textView2);
         phoneNumString = (TextView) findViewById(R.id.textView6);
         emailString = (TextView) findViewById(R.id.textView);
-
 
         Button createNewUser = (Button) findViewById(R.id.createNewUser);
 
@@ -111,9 +110,7 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
                         getter.execute(usernameText);
                         ArrayList<User> users = getter.get();
 
-                        if (users.size()==0)
-                        {
-
+                        if (users.size()==0) { // unique user name
                             User user = new User(usernameText, firstNameText, lastNameText, dateOfBirthText, phoneNumText, emailText);
 
                             UserController.setContext(SignUpActivity.this);
@@ -121,10 +118,12 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
 
                             AddUserCommand addUser = new AddUserCommand(user);
                             MacroCommand.addCommand(addUser);
-                            finish();
+                            finish(); // finish since we shouldn't ever get back here
+
+                            Intent intent = new Intent(SignUpActivity.this, UserTypeActivity.class);
+                            startActivity(intent);
                         }
-                        else
-                        {
+                        else {
                             Bundle bundle = new Bundle();
                             bundle.putString(getResources().getString(R.string.message), getResources().getString(R.string.usernameExitsMessage));
                             bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.ok));
@@ -135,23 +134,15 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
                             dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
                         }
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
     }
 
-
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-    }
-
-
+    // These clicks are for when the user already exits
+    // Positive click "OK" do nothing and dismiss the dialog, Negative is log in
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         dialog.dismiss();

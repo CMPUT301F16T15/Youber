@@ -1,19 +1,13 @@
 package com.youber.cmput301f16t15.youber.gui;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Parcelable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,43 +18,31 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.GeolocationPermissions;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
-import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.misc.Setup;
-import com.youber.cmput301f16t15.youber.requests.Request;
 
-import org.json.JSONObject;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.routing.MapQuestRoadManager;
-import org.osmdroid.bonuspack.routing.Road;
-import org.osmdroid.bonuspack.routing.RoadManager;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Overlay;
-import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.Polygon;
-import org.osmdroid.views.overlay.Polyline;
-import org.osmdroid.views.overlay.infowindow.BasicInfoWindow;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * <p>
@@ -75,29 +57,22 @@ import java.util.TimeZone;
  */
 public class DriverMainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    //TODO use controller not global
-    private Request request;
-    private CoordinatorLayout layout;
+    private MapView map;
 
-    Activity ourActivity = this;
-    MapView map;
+    private int x, y;
+    private static GeoPoint touchedPoint;
+    private static GeoPoint searchPoint;
 
-    int x, y;
-    static GeoPoint touchedPoint;
-    static GeoPoint searchPoint;
+    private static Marker searchMarker;
+    private static Polygon circle;
 
-    static Marker searchMarker;
-    static Polygon circle;
+    private static double radius = 1;
 
-    static double radius = 1;
-
-    static Spinner dropdown;
+    private static Spinner dropdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-       
         setContentView(R.layout.activity_driver_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -127,13 +102,12 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
         List<Overlay> overlayList = map.getOverlays();
         overlayList.add(t);
 
+
         Button searchByGeolocation = (Button) findViewById(R.id.search_geolocation_button);
         searchByGeolocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(searchPoint == null) // check for empty arguements
-                {
+                if(searchPoint == null) { // check for empty arguements
                     Snackbar.make(v, "Please select a point to search", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     return;
                 }
@@ -143,14 +117,9 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
                 Intent intent = new Intent(DriverMainActivity.this,DriverSearchListActivity.class);
                 intent.putExtra("GeoLocation", (Parcelable) geoLocation);
                 intent.putExtra("Radius",radius);
-                finish();
                 startActivity(intent);
-
-
             }
         });
-
-
     }
 
     @Override
@@ -176,28 +145,27 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
 
     public void searchKeyword(){
         String keyword = ((EditText)findViewById(R.id.keyword_search)).getText().toString();
-
-
         Intent intent = new Intent(DriverMainActivity.this, DriverSearchListActivity.class);
         intent.putExtra("Keyword",keyword);
         startActivity(intent);
     }
 
     public void searchAddress(){
-            String address = ((EditText)findViewById(R.id.keyword_search)).getText().toString();
-            if (address.isEmpty()){
-                Toast.makeText(getBaseContext(), "Please enter an Address to search", Toast.LENGTH_LONG).show();
-                dropdown.setSelection(0);
-                return;
-            }
-            GeoLocation geoLocation = getFromLocation(address);
-            String display = "lat: " + geoLocation.getLat() + "lon: " + geoLocation.getLon();
-            Toast t = Toast.makeText(getBaseContext(), display, Toast.LENGTH_LONG);
-            t.show();
-            //Intent intent = new Intent(DriverMainActivity.this, DriverSearchListActivity.class);
-            //intent.putExtra("Geolocation",geolocation);
-            //finish();
-            //startActivity(intent);
+        String address = ((EditText)findViewById(R.id.keyword_search)).getText().toString();
+        if (address.isEmpty()){
+            Toast.makeText(getBaseContext(), "Please enter an Address to search", Toast.LENGTH_LONG).show();
+            dropdown.setSelection(0);
+            return;
+        }
+
+        GeoLocation geoLocation = getFromLocation(address);
+        String display = "lat: " + geoLocation.getLat() + "lon: " + geoLocation.getLon();
+        Toast t = Toast.makeText(getBaseContext(), display, Toast.LENGTH_LONG);
+        t.show();
+        //Intent intent = new Intent(DriverMainActivity.this, DriverSearchListActivity.class);
+        //intent.putExtra("Geolocation",geolocation);
+        //finish();
+        //startActivity(intent);
     }
 
 
@@ -225,23 +193,24 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
         if (id == R.id.action_profile) {
             Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
-
+            return true;
+        }
+        else if (id == R.id.action_main) {
+            Intent intent = new Intent(this, DriverMainActivity.class);
+            startActivity(intent);
             return true;
         }
         else if (id == R.id.action_view_requests) {
-            Intent intent = new Intent(this, RequestViewActivity.class);
+            Intent intent = new Intent(this, RequestListActivity.class);
             startActivity(intent);
-
             return true;
         }
-        else if (id == R.id.action_switch_user)
-        {
+        else if (id == R.id.action_switch_user) {
             Intent intent = new Intent(this, UserTypeActivity.class);
             startActivity(intent);
             return true;
         }
-        else if (id == R.id.logout)
-        {
+        else if (id == R.id.logout) {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
@@ -296,8 +265,8 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
                         map.invalidate();
 
                         //http://stackoverflow.com/questions/6424032/android-seekbar-in-dialog
-                        AlertDialog.Builder searchRadiusDialog = new AlertDialog.Builder(ourActivity);
-                        LayoutInflater inflater = (LayoutInflater)ourActivity.getSystemService(LAYOUT_INFLATER_SERVICE);
+                        AlertDialog.Builder searchRadiusDialog = new AlertDialog.Builder(DriverMainActivity.this);
+                        LayoutInflater inflater = (LayoutInflater)DriverMainActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
                         final  View layout = inflater.inflate(R.layout.search_geolocation_dialog, (ViewGroup)findViewById(R.id.search_radius_dialog));
                         final TextView radiusText = (TextView)layout.findViewById(R.id.result);
                         radiusText.setText("1 meters");
@@ -305,29 +274,20 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
                         searchRadiusDialog.setTitle("please set radius to search");
                         searchRadiusDialog.setView(layout);
 
-
-
                         SeekBar searchRadiusSeekbar = (SeekBar)layout.findViewById(R.id.search_radius_seekbar);
                         searchRadiusSeekbar.setMax(2000);
                         searchRadiusSeekbar.setProgress(1);
                         searchRadiusSeekbar.setKeyProgressIncrement(50);
-
 
                         SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
                             @Override
                             public void onProgressChanged(SeekBar seekBar, int result, boolean b) {
                                 radius = result;
                                 radiusText.setText(result + " meters");
-
                             }
 
-                            @Override
-                            public void onStartTrackingTouch(SeekBar seekBar) {
-                            }
-
-                            @Override
-                            public void onStopTrackingTouch(SeekBar seekBar) {
-                            }
+                            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+                            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
                         };
                         searchRadiusSeekbar.setOnSeekBarChangeListener(seekBarChangeListener);
 
@@ -348,13 +308,10 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
                         });
 
                         searchRadiusDialog.show();
-
                     }
                 }
             } catch (IOException e1) {
                 e1.printStackTrace();
-            } finally {
-
             }
 
             return true;
@@ -367,11 +324,9 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
         double latitude= 0.0, longtitude= 0.0;
 
         Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
-        try
-        {
+        try {
             List<Address> addresses = geoCoder.getFromLocationName(address , 1);
-            if (addresses.size() > 0)
-            {
+            if (addresses.size() > 0) {
                 GeoPoint p = new GeoPoint(
                         (int) (addresses.get(0).getLatitude() * 1E6),
                         (int) (addresses.get(0).getLongitude() * 1E6 ));
@@ -384,14 +339,11 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
                 return geoLocation;
             }
         }
-        catch(Exception ee)
-        {
+        catch(Exception ee) {
 
         }
 
         GeoLocation geoLocation = new GeoLocation(latitude, longtitude);
-
         throw new RuntimeException();
-
     }
 }

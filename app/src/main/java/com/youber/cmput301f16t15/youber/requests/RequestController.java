@@ -1,20 +1,15 @@
 package com.youber.cmput301f16t15.youber.requests;
 
-import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.util.Log;
 
-import com.youber.cmput301f16t15.youber.gui.MainActivity;
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.users.Driver;
-import com.youber.cmput301f16t15.youber.users.Rider;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Reem on 2016-10-24.

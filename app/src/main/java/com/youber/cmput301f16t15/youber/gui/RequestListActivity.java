@@ -31,7 +31,7 @@ import java.util.UUID;
  * @see Request
  */
 public class
-RequestViewActivity extends AppCompatActivity {
+RequestListActivity extends AppCompatActivity {
     /**
      * The Request list view.
      */
@@ -55,13 +55,13 @@ RequestViewActivity extends AppCompatActivity {
 
 
                 if (UserController.getUser().getCurrentUserType().equals(User.UserType.rider)) {
-                    Intent intent = new Intent(RequestViewActivity.this, RequestActivity.class);
+                    Intent intent = new Intent(RequestListActivity.this, RiderViewRequestActivity.class);
                     intent.putExtra("uuid", requestArray.get(i).getUUID());
                     startActivity(intent);
                 }
                 else
                 {
-                    Intent intent = new Intent(RequestViewActivity.this, DriverViewRequestActivity.class);
+                    Intent intent = new Intent(RequestListActivity.this, DriverViewRequestActivity.class);
                     intent.putExtra("uuid", requestArray.get(i).getUUID());
                     startActivity(intent);
                 }
@@ -151,8 +151,15 @@ RequestViewActivity extends AppCompatActivity {
 
             return true;
         }
+        else if (id == R.id.action_main) {
+            Class c = (UserController.getUser().getCurrentUserType() == User.UserType.rider) ?
+                    RiderMainActivity.class : DriverMainActivity.class;
+            Intent intent = new Intent(this, c);
+            startActivity(intent);
+            return true;
+        }
         else if (id == R.id.action_view_requests) {
-            Intent intent = new Intent(this, RequestViewActivity.class);
+            Intent intent = new Intent(this, RequestListActivity.class);
             startActivity(intent);
 
             return true;

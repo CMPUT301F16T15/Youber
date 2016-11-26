@@ -15,14 +15,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.youber.cmput301f16t15.youber.R;
-import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearch;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
-import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
 import com.youber.cmput301f16t15.youber.users.User;
@@ -43,7 +40,6 @@ import org.osmdroid.views.overlay.infowindow.BasicInfoWindow;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 
 public class DriverViewRequestActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener{
 
@@ -253,8 +249,13 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
 
             return true;
         }
+        else if (id == R.id.action_main) {
+            Intent intent = new Intent(this, DriverMainActivity.class);
+            startActivity(intent);
+            return true;
+        }
         else if (id == R.id.action_view_requests) {
-            Intent intent = new Intent(this, RequestViewActivity.class);
+            Intent intent = new Intent(this, RequestListActivity.class);
             startActivity(intent);
 
             return true;

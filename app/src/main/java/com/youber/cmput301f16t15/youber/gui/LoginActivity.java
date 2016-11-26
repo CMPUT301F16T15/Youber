@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
@@ -29,7 +30,6 @@ import java.util.ArrayList;
  */
 public class LoginActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
-
     /**
      * Username used to identify an app's user
      * @see User
@@ -49,74 +49,66 @@ public class LoginActivity extends AppCompatActivity implements NoticeDialogFrag
         loginButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-                // Need to remove late, just used for testing.
+                if(!MacroCommand.isNetworkAvailable()) {
+                    Toast.makeText(LoginActivity.this, getString(R.string.offline_login), Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    username = (EditText) findViewById(R.id.editText);
+                    ElasticSearchUser.getObjects searchUser = new ElasticSearchUser.getObjects();
+                    searchUser.execute(username.getText().toString());
+                    UserController.setContext(LoginActivity.this);
 
+                    try {
+                        ArrayList<User> users = searchUser.get();
 
-                username = (EditText) findViewById(R.id.editText);
+                        if (users.size() == 1) {
+                            User user = users.get(0);
+                            UserController.observable.addListener(new Updater());
 
-                ElasticSearchUser.getObjects searchUser = new ElasticSearchUser.getObjects();
-                searchUser.execute(username.getText().toString());
-                UserController.setContext(LoginActivity.this);
+                            AddUserCommand addUser = new AddUserCommand(user);
+                            UserController.observable.notifyListeners(addUser);
+                            UserController.saveUser(user);
 
-               try {
+                            Log.i("Works", "Found user" + user.getUsername());
+                            Intent intent = new Intent(LoginActivity.this, UserTypeActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Log.i("Error", "The request for user has failed");
+                            Bundle bundle = new Bundle();
+                            bundle.putString(getResources().getString(R.string.message), getResources().getString(R.string.InvalidUsernameMessage));
+                            bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.signup));
+                            bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.ok));
 
-                   ArrayList<User> users = searchUser.get();
+                            DialogFragment dialog = new NoticeDialogFragment();
+                            dialog.setArguments(bundle);
+                            dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
+                        }
+                    } catch (Exception e) {
+                        Log.i("Error", "The request for user has failed");
+                        Bundle bundle = new Bundle();
+                        bundle.putString(getResources().getString(R.string.message), getResources().getString(R.string.InvalidUsernameMessage));
+                        bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.signup));
+                        bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.ok));
 
-                   if (users.size()==1)
-                   {
-                       User user = users.get(0);
-
-                       UserController.observable.addListener(new Updater());
-
-                       AddUserCommand addUser = new AddUserCommand(user);
-                       UserController.observable.notifyListeners(addUser);
-                       UserController.saveUser(user);
-
-                       Log.i ("Works", "Found user"+user.getUsername());
-                       Intent intent = new Intent(LoginActivity.this, UserTypeActivity.class);
-                       startActivity(intent);
-                   }
-                   else
-                   {
-                       Log.i("Error", "The request for user has failed");
-                       Bundle bundle = new Bundle();
-                       bundle.putString(getResources().getString(R.string.message), getResources().getString(R.string.InvalidUsernameMessage));
-                       bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.signup));
-                       bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.ok));
-
-                       DialogFragment dialog = new NoticeDialogFragment();
-                       dialog.setArguments(bundle);
-                       dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
-                   }
-               }
-               catch (Exception e)
-               {
-                   Log.i("Error", "The request for user has failed");
-                   Bundle bundle = new Bundle();
-                   bundle.putString(getResources().getString(R.string.message), getResources().getString(R.string.InvalidUsernameMessage));
-                   bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.signup));
-                   bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.ok));
-
-                   DialogFragment dialog = new NoticeDialogFragment();
-                   dialog.setArguments(bundle);
-                   dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
-               }
-
-
+                        DialogFragment dialog = new NoticeDialogFragment();
+                        dialog.setArguments(bundle);
+                        dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
+                    }
+                }
            }
         });
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(intent);
+            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+            startActivity(intent);
             }
         });
-
     }
 
-
+    // These positive click and negative click, are for when the user tries to log in but
+    // is invalid: positive click is "Sign up", negative is "OK" does nothing
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);

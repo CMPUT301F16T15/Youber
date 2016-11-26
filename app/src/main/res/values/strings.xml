@@ -2,6 +2,7 @@
     <string name="app_name">Youber</string>
     <string name="action_view_requests">View Requests</string>
     <string name="action_profile">Profile</string>
+    <string name="action_main">Home</string>
     <string name="title_activity_request_view">RequestViewActivity</string>
     <string name="title_activity_user_profile">UserProfileActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
@@ -73,5 +74,6 @@
     <string name="SaveVehicleInfo">SAVE VEHICLE INFO</string>
     <string name="dlg_accept">Accept Driver</string>
     <string name="dlg_payment">Accept</string>
+    <string name="offline_login">Currently offline: cannot login</string>
 
 </resources>
