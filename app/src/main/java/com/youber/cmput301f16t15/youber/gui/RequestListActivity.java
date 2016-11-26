@@ -74,26 +74,25 @@ RequestListActivity extends AppCompatActivity {
                     intent.putExtra("uuid", requestArray.get(i).getUUID());
                     startActivity(intent);
                 }
-                else
-                {
+                else {
                     Intent intent = new Intent(RequestListActivity.this, DriverViewRequestActivity.class);
                     intent.putExtra("uuid", requestArray.get(i).getUUID());
                     startActivity(intent);
                 }
             }
         });
-
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
+        MacroCommand.execute(); // try to execute on resume!
+        Setup.refresh(this);
 
         // grab the requests!
         RequestCollection requests = RequestCollectionsController.getRequestCollection();
         requestArray = new ArrayList<Request>();
         requestArray.addAll(requests.values());
-
 
 //        http://stackoverflow.com/questions/20809272/android-change-listview-item-text-color
         ArrayAdapter<Request> adapter = new ArrayAdapter<Request>(this, R.layout.list_item, requestArray) {
@@ -101,47 +100,24 @@ RequestListActivity extends AppCompatActivity {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
-
                 UUID requestUUID = requestArray.get(position).getUUID();
 
-
-                if (MacroCommand.isRequestContained(requestUUID)) {
+                if (MacroCommand.isRequestContained(requestUUID))
                     view.setBackgroundColor(Color.LTGRAY);
-                }
                 else if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.acceptedByDrivers))
-                {
                     view.setBackgroundColor(getResources().getColor(R.color.red));
-                }
                 else if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.riderSelectedDriver))
-                {
                     view.setBackgroundColor(getResources().getColor(R.color.orange));
-
-                }
                 else if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.paid))
-                {
                     view.setBackgroundColor(getResources().getColor(R.color.yellow));
-
-                }
-                else if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.completed)) {
+                else if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.completed))
                     view.setBackgroundColor(getResources().getColor(R.color.paleGreen));
 
-                }
                 return view;
             }
         };
 
         requestListView.setAdapter(adapter);
-
-
-
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        MacroCommand.execute(); // try to execute on resume!
-        Setup.run(this);
     }
 
     @Override
