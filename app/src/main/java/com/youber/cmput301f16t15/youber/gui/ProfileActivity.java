@@ -2,7 +2,6 @@ package com.youber.cmput301f16t15.youber.gui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -12,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.youber.cmput301f16t15.youber.R;
-import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
 import com.youber.cmput301f16t15.youber.misc.Updater;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
@@ -98,7 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
                 UserController.setPhoneNumber(phoneNumText);
 
                 // Does not change in elastic search yet.
-                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                Intent intent = new Intent(ProfileActivity.this, RiderMainActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -137,8 +135,15 @@ public class ProfileActivity extends AppCompatActivity {
 
             return true;
         }
+        else if (id == R.id.action_main) {
+            Class c = (UserController.getUser().getCurrentUserType() == User.UserType.rider) ?
+                    RiderMainActivity.class : DriverMainActivity.class;
+            Intent intent = new Intent(this, c);
+            startActivity(intent);
+            return true;
+        }
         else if (id == R.id.action_view_requests) {
-            Intent intent = new Intent(this, RequestViewActivity.class);
+            Intent intent = new Intent(this, RequestListActivity.class);
             startActivity(intent);
 
             return true;

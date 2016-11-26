@@ -23,7 +23,6 @@ import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
-import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
 
 import java.util.ArrayList;
 
@@ -45,8 +44,6 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         requestListView = (ListView)findViewById(R.id.requestListView);
         requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -76,7 +73,6 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
         Intent intent = getIntent();
         RequestCollection requests=null;
         try{
-
             geoLocation=(GeoLocation) intent.getParcelableExtra("GeoLocation");
             if(geoLocation==null)throw new NullPointerException();
             radius=intent.getDoubleExtra("Radius",2.0);
@@ -123,8 +119,13 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
 
             return true;
         }
+        else if (id == R.id.action_main) {
+            Intent intent = new Intent(this, DriverMainActivity.class);
+            startActivity(intent);
+            return true;
+        }
         else if (id == R.id.action_view_requests) {
-            Intent intent = new Intent(this, RequestViewActivity.class);
+            Intent intent = new Intent(this, RequestListActivity.class);
             startActivity(intent);
 
             return true;

@@ -27,7 +27,6 @@ public class UserTypeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_type);
 
-
         Button riderOption = (Button) findViewById(R.id.riderButton);
         Button driverOption = (Button) findViewById(R.id.driverButton);
 
@@ -35,27 +34,26 @@ public class UserTypeActivity extends AppCompatActivity {
         driverOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                UserController.setUserType(User.UserType.driver);
-                saveUserTypeRequests(user);
-                Intent intent = new Intent(UserTypeActivity.this, DriverMainActivity.class);
-                startActivity(intent);
-
+                choseUserType(User.UserType.driver);
             }
         });
 
         riderOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                UserController.setUserType(User.UserType.rider);
-                saveUserTypeRequests(user);
-                Intent intent = new Intent(UserTypeActivity.this, MainActivity.class);
-                startActivity(intent);
-
+                choseUserType(User.UserType.rider);
             }
         });
+    }
+
+    private void choseUserType(User.UserType userType) {
+        UserController.setUserType(userType);
+        saveUserTypeRequests(user);
+
+        Class activityClass = (userType == User.UserType.rider) ? RiderMainActivity.class : DriverMainActivity.class;
+
+        Intent intent = new Intent(UserTypeActivity.this, activityClass);
+        startActivity(intent);
     }
 
     private void saveUserTypeRequests(User user)
@@ -66,7 +64,4 @@ public class UserTypeActivity extends AppCompatActivity {
         RequestCollectionsController.setContext(UserTypeActivity.this);
         RequestCollectionsController.saveRequestCollections(requestCollection);
     }
-
-
-
 }
