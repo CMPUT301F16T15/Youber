@@ -25,142 +25,71 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <TabHost
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_weight = "1"
+        android:inputType="textImeMultiLine|textPersonName"
+        android:ems="10"
+        android:layout_marginTop="100dip"
         android:layout_alignParentStart="true"
-        android:id="@+id/tabHost"
+        android:id="@+id/keyword_search"
+        android:hint="Keyword/Address"
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/keyword_search"
+        android:layout_marginTop="100dp"
+        android:layout_alignParentEnd="true"
+        android:background="@color/lightGreen"
+        android:textColor="@color/black"
+
         >
+        <Spinner
+            android:id="@+id/search_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            android:layout_alignParentEnd="true"
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            />
 
-            <TabWidget
-                android:id="@android:id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/lightGreen"
+    </RelativeLayout>
 
-                />
 
-            <FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
 
-                <RelativeLayout
-                    android:id="@+id/keyword"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+    <org.osmdroid.views.MapView android:id="@+id/map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:layout_marginBottom="50dp"
+        android:enabled= "true"
+        android:clickable = "true"
+        />
 
-                    <EditText
-                        android:layout_width="300dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight = "1"
-                        android:inputType="textImeMultiLine|textPersonName"
-                        android:ems="10"
-                        android:layout_marginTop="100dip"
-                        android:layout_alignParentStart="true"
-                        android:id="@+id/keyword_search"
-                        android:hint="keyword"
-                        />
+    <Button
+        android:text="Clear"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/clear_button"
+        android:background="@color/lightGreen"
+        android:onClick="clearMap"
+        />
 
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="100dp"
-                        android:text="Search"
-                        android:id="@+id/search_keyword_button"
-                        android:background="@color/lightGreen"
-                        android:layout_alignParentEnd="true"
-                        android:layout_weight="1"
-                        android:layout_toRightOf="@+id/keyword_search"
-                        />
-                </RelativeLayout>
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:text="Search by Geolocation"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/search_geolocation_button"
+        android:background="@color/lightGreen"
+        />
 
-                <RelativeLayout
-                    android:id="@+id/Location"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <Button
-                        android:text="Clear"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentEnd="true"
-                        android:id="@+id/clear_button"
-                        android:background="@color/lightGreen"
-                        android:onClick="clearMap"
-                        />
-
-                    <Button
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:text="Search by Geolocation"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentStart="true"
-                        android:id="@+id/search_geolocation_button"
-                        android:background="@color/lightGreen"
-                        />
-
-                    <org.osmdroid.views.MapView android:id="@+id/map"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="110dip"
-                        android:layout_marginBottom="50dip"
-                        android:enabled= "true"
-                        android:clickable = "true"
-                        />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/Address"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight = "1"
-                        android:inputType="textImeMultiLine|textPersonName"
-                        android:ems="10"
-                        android:layout_marginTop="100dip"
-                        android:layout_alignParentStart="true"
-                        android:id="@+id/address_search"
-                        android:hint="Address"
-                        />
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="150dp"
-                        android:text="Search"
-                        android:id="@+id/search_address_button"
-                        android:background="@color/lightGreen"
-                        android:layout_alignParentEnd="true"
-                        android:layout_weight="1"
-                        />
-
-                    <org.osmdroid.views.MapView android:id="@+id/AddressMap"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="210dip"
-                        android:layout_marginBottom="50dip"
-                        android:enabled= "true"
-                        android:clickable = "true"
-                        />
-
-                </RelativeLayout>
-            </FrameLayout>
-        </RelativeLayout>
-    </TabHost>
 
 </RelativeLayout>

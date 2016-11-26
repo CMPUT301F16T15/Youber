@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Parcelable;
@@ -18,10 +19,12 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
-import android.widget.TabHost;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,9 +56,9 @@ import java.util.Locale;
  * @see MapQuestRoadManager
  * @see GeoPoint
  */
-public class DriverMainActivity extends AppCompatActivity {
+public class DriverMainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
     private MapView map;
-    private MapView Amap;
 
     private int x, y;
     private static GeoPoint touchedPoint;
@@ -63,7 +66,10 @@ public class DriverMainActivity extends AppCompatActivity {
 
     private static Marker searchMarker;
     private static Polygon circle;
+
     private static double radius = 1;
+
+    private static Spinner dropdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,31 +86,15 @@ public class DriverMainActivity extends AppCompatActivity {
         map.setBuiltInZoomControls(true);
         map.setMultiTouchControls(true);
 
-        Amap = (MapView) findViewById(R.id.AddressMap);
-        Amap.setTileSource(TileSourceFactory.MAPNIK);
-        Amap.setBuiltInZoomControls(true);
-        Amap.setMultiTouchControls(true);
+        //https://developer.android.com/guide/topics/ui/controls/spinner.html
+        dropdown = (Spinner)findViewById(R.id.search_spinner);
+        String[] items = new String[]{"Search", "Keyword", "Address"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setAdapter(adapter);
+        dropdown.setOnItemSelectedListener(this);
 
         searchPoint = null;
         touchedPoint = null;
-
-        TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
-        tabHost.setup();
-
-        TabHost.TabSpec tabSpec = tabHost.newTabSpec("keywordSpec");
-        tabSpec.setContent(R.id.keyword);
-        tabSpec.setIndicator("Keyword");
-        tabHost.addTab(tabSpec);
-
-        tabSpec = tabHost.newTabSpec("geoSpec");
-        tabSpec.setContent(R.id.Location);
-        tabSpec.setIndicator("Location");
-        tabHost.addTab(tabSpec);
-
-        tabSpec = tabHost.newTabSpec("addressSpec");
-        tabSpec.setContent(R.id.Address);
-        tabSpec.setIndicator("Address");
-        tabHost.addTab(tabSpec);
 
         IMapController mapController = map.getController();
         mapController.setZoom(12);
@@ -112,25 +102,10 @@ public class DriverMainActivity extends AppCompatActivity {
         GeoPoint EdmontonGPS = new GeoPoint(53.521609, -113.530633);
         mapController.setCenter(EdmontonGPS);
 
-        IMapController mapController2 = Amap.getController();
-        mapController2.setZoom(12);
-        //map currently focuses on Lister on launch
-        mapController2.setCenter(EdmontonGPS);
-
         Touch t = new Touch();
         List<Overlay> overlayList = map.getOverlays();
         overlayList.add(t);
 
-        Button searchByKeyword = (Button) findViewById(R.id.search_keyword_button);
-        searchByKeyword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String keyword = ((EditText)findViewById(R.id.keyword_search)).getText().toString();
-                Intent intent = new Intent(DriverMainActivity.this, DriverSearchListActivity.class);
-                intent.putExtra("Keyword",keyword);
-                startActivity(intent);
-            }
-        });
 
         Button searchByGeolocation = (Button) findViewById(R.id.search_geolocation_button);
         searchByGeolocation.setOnClickListener(new View.OnClickListener() {
@@ -149,25 +124,55 @@ public class DriverMainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
-        Button searchByAddress = (Button) findViewById(R.id.search_address_button);
-        searchByAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 
-                String address = ((EditText)findViewById(R.id.address_search)).getText().toString();
-                GeoLocation geoLocation = getFromLocation(address);
-                String display = "lat: " + geoLocation.getLat() + "lon: " + geoLocation.getLon();
-                Toast t = Toast.makeText(getBaseContext(), display, Toast.LENGTH_LONG);
-                t.show();
-                //Intent intent = new Intent(DriverMainActivity.this, DriverSearchListActivity.class);
-                //intent.putExtra("Geolocation",geolocation);
-                //startActivity(intent);
-            }
-        });
+        switch (position) {
+            case 0:
+                break;
+            case 1:
+                searchKeyword();
+                break;
+            case 2:
+                searchAddress();
+                break;
 
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
+    public void searchKeyword(){
+        String keyword = ((EditText)findViewById(R.id.keyword_search)).getText().toString();
+        Intent intent = new Intent(DriverMainActivity.this, DriverSearchListActivity.class);
+        intent.putExtra("Keyword",keyword);
+        startActivity(intent);
+    }
+
+    public void searchAddress(){
+        String address = ((EditText)findViewById(R.id.keyword_search)).getText().toString();
+        if (address.isEmpty()){
+            Toast.makeText(getBaseContext(), "Please enter an Address to search", Toast.LENGTH_LONG).show();
+            dropdown.setSelection(0);
+            return;
+        }
+
+        GeoLocation geoLocation = getFromLocation(address);
+        String display = "lat: " + geoLocation.getLat() + "lon: " + geoLocation.getLon();
+        Toast t = Toast.makeText(getBaseContext(), display, Toast.LENGTH_LONG);
+        t.show();
+        //Intent intent = new Intent(DriverMainActivity.this, DriverSearchListActivity.class);
+        //intent.putExtra("Geolocation",geolocation);
+        //finish();
+        //startActivity(intent);
+    }
+
+
     @Override
     public void onStart(){
         super.onStart();
@@ -177,6 +182,7 @@ public class DriverMainActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         Setup.run(this);
+        dropdown.setSelection(0);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

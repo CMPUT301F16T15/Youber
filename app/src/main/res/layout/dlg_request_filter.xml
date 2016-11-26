@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/filter_dialog"
+    >
+
+    <TextView
+        android:text="Price:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/price_title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:paddingLeft="10dp"
+
+        />
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/min_text"
+        android:layout_below="@+id/price_title"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:layout_marginLeft="10dp"
+        android:hint="Min"
+        android:textColorHint="@color/grey"
+        />
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/max_text"
+        android:layout_toRightOf="@+id/min_text"
+        android:layout_below="@+id/price_title"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:layout_marginLeft="20dp"
+        android:hint="Max"
+        android:textColorHint="@color/grey"
+
+        />
+
+    <TextView
+        android:text="Price Per Km: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/min_text"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="25dp"
+        android:id="@+id/price_per"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:paddingLeft="10dp"
+
+        />
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:layout_below="@+id/price_per"
+        android:id="@+id/price_per_text"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:layout_marginLeft="10dp"
+        android:hint="Price"
+        android:textColorHint="@color/grey"
+        />
+</RelativeLayout>

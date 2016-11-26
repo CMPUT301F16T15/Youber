@@ -1,16 +1,25 @@
 package com.youber.cmput301f16t15.youber.gui;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.R;
@@ -20,13 +29,19 @@ import com.youber.cmput301f16t15.youber.requests.RequestCollection;
 
 import java.util.ArrayList;
 
-public class DriverSearchListActivity extends AppCompatActivity {
+public class DriverSearchListActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
 
     ListView requestListView;
     ArrayList<Request> requestArray;
     GeoLocation geoLocation;
     Double radius;
+
+    Spinner filter;
+    static double min;
+    static double max;
+    static double pricePerKm;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +62,14 @@ public class DriverSearchListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        filter = (Spinner)findViewById(R.id.filter_spinner);
+        String[] items = new String[]{"Filter", "Prices"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        filter.setAdapter(adapter);
+        filter.setOnItemSelectedListener(this);
+
     }
 
 
@@ -132,7 +155,70 @@ public class DriverSearchListActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+
+        switch (position) {
+            case 0:
+                break;
+            case 1:
+                AlertDialog.Builder filterDialog = new AlertDialog.Builder(DriverSearchListActivity.this);
+                LayoutInflater inflater = (LayoutInflater)DriverSearchListActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+                final  View layout = inflater.inflate(R.layout.dlg_request_filter, (ViewGroup)findViewById(R.id.filter_dialog));
+
+                filterDialog.setTitle("please set price filters");
+                filterDialog.setView(layout);
+                filterDialog.setPositiveButton("Filter", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        EditText minText = (EditText)layout.findViewById(R.id.min_text);
+                        if (!minText.getText().toString().isEmpty()){
+                            min = Double.parseDouble(minText.getText().toString());
+                        }
+                        else {
+                            min = Double.NaN;
+                        }
+                        EditText maxText = (EditText)layout.findViewById(R.id.max_text);
+                        if (!maxText.getText().toString().isEmpty()) {
+                            max = Double.parseDouble(maxText.getText().toString());
+                        }
+                        else {
+                            max = Double.NaN;
+                        }
+                        EditText price = (EditText)layout.findViewById(R.id.price_per_text);
+                        if (!price.getText().toString().isEmpty()) {
+                            pricePerKm = Double.parseDouble(price.getText().toString());
+                        }
+                        else {
+                            pricePerKm = Double.NaN;
+                        }
+                        String results = "min: " + min + "\n" +  "max: " + max + "\n" + "price per Km: " + pricePerKm;
+                        Toast.makeText(getBaseContext(), results, Toast.LENGTH_LONG).show();
+                        filter.setSelection(0);
+
+                    }
+                });
+                filterDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getBaseContext(), "Canceled", Toast.LENGTH_LONG).show();
+                        filter.setSelection(0);
+
+                    }
+                });
+
+                filterDialog.show();
 
 
+                break;
 
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+
+    }
 }

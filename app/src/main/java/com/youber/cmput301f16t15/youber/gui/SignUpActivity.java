@@ -92,7 +92,7 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
                     userString.setTextColor(Color.LTGRAY);
                 }
 
-                if (TextUtils.isEmpty(emailText.trim())){
+                if (TextUtils.isEmpty(emailText.trim()) || !emailText.contains("@")){
                     emailString.setTextColor(Color.RED);
                 }
                 else {
