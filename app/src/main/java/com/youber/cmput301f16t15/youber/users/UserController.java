@@ -9,6 +9,7 @@ import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.misc.Observable;
 import com.youber.cmput301f16t15.youber.requests.Request;
+import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -219,6 +220,8 @@ public class UserController {
                     user.addToDriverConfirmed(u);
                 else
                     user.removeRequestUUID(u);
+
+                RequestCollectionsController.addRequest(esRequest);
             }
         }
 
