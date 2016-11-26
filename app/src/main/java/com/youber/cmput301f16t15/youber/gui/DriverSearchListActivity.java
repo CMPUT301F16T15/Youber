@@ -1,5 +1,6 @@
 package com.youber.cmput301f16t15.youber.gui;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -36,6 +38,9 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
     Double radius;
 
     Spinner filter;
+    static double min;
+    static double max;
+    static double pricePerKm;
 
 
     @Override
@@ -166,7 +171,29 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                 filterDialog.setPositiveButton("Filter", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getBaseContext(), "Filtered", Toast.LENGTH_LONG).show();
+                        EditText minText = (EditText)layout.findViewById(R.id.min_text);
+                        if (!minText.getText().toString().isEmpty()){
+                            min = Double.parseDouble(minText.getText().toString());
+                        }
+                        else {
+                            min = Double.NaN;
+                        }
+                        EditText maxText = (EditText)layout.findViewById(R.id.max_text);
+                        if (!maxText.getText().toString().isEmpty()) {
+                            max = Double.parseDouble(maxText.getText().toString());
+                        }
+                        else {
+                            max = Double.NaN;
+                        }
+                        EditText price = (EditText)layout.findViewById(R.id.price_per_text);
+                        if (!price.getText().toString().isEmpty()) {
+                            pricePerKm = Double.parseDouble(price.getText().toString());
+                        }
+                        else {
+                            pricePerKm = Double.NaN;
+                        }
+                        String results = "min: " + min + "\n" +  "max: " + max + "\n" + "price per Km: " + pricePerKm;
+                        Toast.makeText(getBaseContext(), results, Toast.LENGTH_LONG).show();
                         filter.setSelection(0);
 
                     }
