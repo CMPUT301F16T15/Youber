@@ -107,14 +107,9 @@ public class RiderMainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onStart(){
-        super.onStart();
-        //Setup.run(this);
-    }
-    @Override
     public void onResume(){
         super.onResume();
-        Setup.run(this);
+        Setup.refresh(this);
     }
 
     @Override

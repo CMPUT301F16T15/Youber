@@ -172,16 +172,10 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
         //startActivity(intent);
     }
 
-
-    @Override
-    public void onStart(){
-        super.onStart();
-        //Setup.run(this);
-    }
     @Override
     public void onResume(){
         super.onResume();
-        Setup.run(this);
+        Setup.refresh(this);
         dropdown.setSelection(0);
     }
     @Override

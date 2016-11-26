@@ -49,10 +49,10 @@ public class LoginActivity extends AppCompatActivity implements NoticeDialogFrag
                     User user = ElasticSearchController.getUser(username.getText().toString());
 
                     if(user != null) { // able to get the unique user
-                        // TODO why do we add a command here? and listeners here
-                        UserController.observable.addListener(new Updater());
-                        AddUserCommand addUser = new AddUserCommand(user);
-                        UserController.observable.notifyListeners(addUser);
+//                        // TODO why do we add a command here? and listeners here
+//                        UserController.observable.addListener(new Updater());
+//                        AddUserCommand addUser = new AddUserCommand(user);
+//                        UserController.observable.notifyListeners(addUser);
                         UserController.saveUser(user);
 
                         Intent intent = new Intent(LoginActivity.this, UserTypeActivity.class);

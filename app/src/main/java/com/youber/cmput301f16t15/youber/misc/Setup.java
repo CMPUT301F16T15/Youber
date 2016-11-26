@@ -41,7 +41,6 @@ public class Setup {
     }
 
     public static void refresh(Context context) {
-
         User user = null;
         String username= UserController.getUser().getUsername();
 
