@@ -36,7 +36,7 @@
         android:textColor="@color/black"
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/requestTitle"
-        android:layout_marginLeft="100dp"
+        android:layout_marginLeft="80dp"
         android:paddingRight="10dp"
         android:id="@+id/spinnerLayout"
         >
