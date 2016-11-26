@@ -228,7 +228,7 @@ public class RiderMainActivity extends AppCompatActivity {
                     RequestCollectionsController.addRequest(request);
                     dlg.dismiss(); //Dismiss once everything is OK.
 
-                    if(MacroCommand.isRequestContained(request.getUUID()))
+                    if(!MacroCommand.isNetworkAvailable())
                         Toast.makeText(RiderMainActivity.this, "Currently Offline: add request queued", Toast.LENGTH_SHORT).show();
                     else
                         Toast.makeText(RiderMainActivity.this, "Successfully added request", Toast.LENGTH_SHORT).show();

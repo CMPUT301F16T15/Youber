@@ -213,6 +213,9 @@ public class UserController {
         for(UUID u : tempAcceptedUUIDs) {
             Request esRequest = ElasticSearchController.getRequest(u);
 
+            if(esRequest == null)
+                continue;
+
             String esDriver = esRequest.getDriverUsernameID();
             if(!esDriver.equals("")) {
                 // if we are the selected driver, make sure we have it in our completed (extra safe)

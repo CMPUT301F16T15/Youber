@@ -250,6 +250,6 @@ public class ElasticSearchController extends ElasticSearch{
             e.printStackTrace();
         }
 
-        throw new RuntimeException("Unable to get request from elastic search");
+        return null;
     }
 }

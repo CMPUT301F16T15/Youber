@@ -23,7 +23,8 @@ public class AddRequestCommand extends RequestCommand {
             // This is for the specific case where we were offline and add an offer as a driver
             // but this request had already gotten a selected driver (someone else)
             Request esRequest = ElasticSearchController.getRequest(request.getUUID());
-            if(!esRequest.getDriverUsernameID().isEmpty() && request.getDriverUsernameID().isEmpty()) {
+
+            if(esRequest != null && !esRequest.getDriverUsernameID().isEmpty() && request.getDriverUsernameID().isEmpty()) {
                 executionState = true;
                 return;
             }
