@@ -26,6 +26,10 @@ import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
+import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
+import com.youber.cmput301f16t15.youber.requests.RequestController;
+import com.youber.cmput301f16t15.youber.users.User;
+import com.youber.cmput301f16t15.youber.users.UserController;
 
 import java.util.ArrayList;
 
@@ -95,6 +99,8 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
             }
         }
 
+        User user = UserController.getUser();
+        requests = RequestCollectionsController.hideUserRequestInSearch(user, requests);
 
         requestArray = new ArrayList<Request>();
         requestArray.addAll(requests.values());
