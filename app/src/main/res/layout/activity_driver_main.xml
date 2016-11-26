@@ -62,7 +62,6 @@
             android:layout_toRightOf="@+id/keyword_search"
             android:background="@color/lightGreen"
             android:textColor="@color/black"
-            android:paddingRight="10dp"
             android:layout_alignParentEnd="true"
             android:id="@+id/spinner_Layout"
             >
@@ -72,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:spinnerMode="dropdown"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="8dp"
                 />
 
         </RelativeLayout>
