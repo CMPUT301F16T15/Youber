@@ -38,25 +38,12 @@
         android:hint="Keyword/Address"
         />
 
-    <!--<Button-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="100dp"-->
-        <!--android:text="Search"-->
-        <!--android:id="@+id/search_keyword_button"-->
-        <!--android:background="@color/lightGreen"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_weight="1"-->
-        <!--android:layout_toRightOf="@+id/keyword_search"-->
-        <!--/>-->
-
     <Spinner
         android:id="@+id/search_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:spinnerMode="dropdown"
         android:layout_marginTop="100dp"
-        android:text="Search by:"
         android:background="@color/lightGreen"
         android:textColor="@color/black"
         android:layout_alignParentEnd="true"

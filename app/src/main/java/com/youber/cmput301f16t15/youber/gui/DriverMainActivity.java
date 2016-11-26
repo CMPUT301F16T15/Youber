@@ -108,6 +108,7 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
         map.setBuiltInZoomControls(true);
         map.setMultiTouchControls(true);
 
+        //https://developer.android.com/guide/topics/ui/controls/spinner.html
         dropdown = (Spinner)findViewById(R.id.search_spinner);
         String[] items = new String[]{"Search", "Keyword", "Address"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);

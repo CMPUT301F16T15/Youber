@@ -29,4 +29,17 @@
         android:layout_below="@+id/requestTitle">
     </ListView>
 
+    <Spinner
+        android:id="@+id/filter_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"
+        android:background="@color/lightGreen"
+        android:textColor="@color/black"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/requestTitle"
+        android:layout_marginLeft="50dp"
+
+        />
+
 </RelativeLayout>
