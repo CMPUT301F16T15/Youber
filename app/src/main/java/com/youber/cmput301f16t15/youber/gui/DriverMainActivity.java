@@ -83,6 +83,7 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setBuiltInZoomControls(true);
         map.setMultiTouchControls(true);
+        map.setBuiltInZoomControls(false);
 
         //https://developer.android.com/guide/topics/ui/controls/spinner.html
         dropdown = (Spinner)findViewById(R.id.search_spinner);
