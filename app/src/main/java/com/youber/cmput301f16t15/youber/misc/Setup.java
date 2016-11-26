@@ -24,6 +24,8 @@ import com.youber.cmput301f16t15.youber.users.UserController;
 import java.util.HashSet;
 import java.util.UUID;
 
+import javax.crypto.Mac;
+
 /**
  * Created by Aaron Philips on 11/18/2016.
  */
@@ -31,16 +33,15 @@ import java.util.UUID;
 public class Setup {
     public static void run(Context context) {
         // good practice to call context set up everytime in a new activity to avoid leaks
-        ElasticSearchController.setupPutmap();
+        MacroCommand.setContext(context);
         UserController.setContext(context);
         RequestCollectionsController.setContext(context);
-        MacroCommand.setContext(context);
-
-        // on setup we need to pull from elastic search the user information and requests
-//        refresh(context);
     }
 
     public static void refresh(Context context) {
+        if(!MacroCommand.isNetworkAvailable()) // offline
+            return;
+
         String username = UserController.getUser().getUsername();
         User user = ElasticSearchController.getUser(username);
 

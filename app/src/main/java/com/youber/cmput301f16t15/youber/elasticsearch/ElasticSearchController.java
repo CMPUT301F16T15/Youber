@@ -1,5 +1,6 @@
 package com.youber.cmput301f16t15.youber.elasticsearch;
 
+import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.gui.LoginActivity;
 import com.youber.cmput301f16t15.youber.users.Driver;
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
@@ -62,8 +63,7 @@ public class ElasticSearchController extends ElasticSearch{
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    public static ArrayList<User> getAcceptedDrivers(Request request) throws Exception
-    {
+    public static ArrayList<User> getAcceptedDrivers(Request request) {
 
         String query =
         "{\n" +
@@ -79,11 +79,7 @@ public class ElasticSearchController extends ElasticSearch{
         try {
             ArrayList<User> users = getter.get();
             return users;
-
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -92,8 +88,7 @@ public class ElasticSearchController extends ElasticSearch{
 
 
 
-    public static ArrayList<User> getConfirmedDriver(Request request) throws Exception
-    {
+    public static ArrayList<User> getConfirmedDriver(Request request) {
 
         String query =
                 "{\n" +
@@ -109,11 +104,7 @@ public class ElasticSearchController extends ElasticSearch{
         try {
             ArrayList<User> users = getter.get();
             return users;
-
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

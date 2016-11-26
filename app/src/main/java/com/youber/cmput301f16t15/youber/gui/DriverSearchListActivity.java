@@ -69,7 +69,6 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         filter.setAdapter(adapter);
         filter.setOnItemSelectedListener(this);
-
     }
 
 
@@ -94,7 +93,6 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                 Log.i("Error", "Elastic search failed");
             }
         }
-
 
         requestArray = new ArrayList<Request>();
         requestArray.addAll(requests.values());

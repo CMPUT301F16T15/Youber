@@ -46,8 +46,6 @@ RequestListActivity extends AppCompatActivity {
     ListView requestListView;
     ArrayList<Request> requestArray;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
