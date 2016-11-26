@@ -94,8 +94,7 @@ public class UserController {
     public static void saveUser(User u) {
         user = u;
 
-        try
-        {
+        try {
             FileOutputStream fos = c.openFileOutput(FILENAME, 0);
             OutputStreamWriter writer = new OutputStreamWriter(fos);
 
@@ -104,13 +103,8 @@ public class UserController {
 
             writer.flush();
         }
-        catch (FileNotFoundException e)
-        {
-            throw new RuntimeException();
-        }
-        catch (IOException e)
-        {
-            throw new RuntimeException();
+        catch (Exception e) {
+            throw new RuntimeException("Unable to save user to file " + e.toString());
         }
     }
 

@@ -79,10 +79,10 @@ public class RiderMainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        Setup.run(this);
         setContentView(R.layout.activity_rider_main);
+        Setup.run(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -93,6 +93,7 @@ public class RiderMainActivity extends AppCompatActivity {
 
         IMapController mapController = map.getController();
         mapController.setZoom(12);
+        
         //map currently focuses on Lister on launch
         GeoPoint EdmontonGPS = new GeoPoint(53.521609, -113.530633);
         mapController.setCenter(EdmontonGPS);

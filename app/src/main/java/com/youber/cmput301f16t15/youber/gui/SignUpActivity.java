@@ -15,7 +15,9 @@ import android.widget.Toast;
 import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
 import com.youber.cmput301f16t15.youber.commands.MacroCommand;
+import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
+import com.youber.cmput301f16t15.youber.misc.Setup;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
@@ -34,21 +36,22 @@ import java.util.ArrayList;
  */
 public class SignUpActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
-    EditText username;
-    EditText email;
-    EditText phoneNum;
-    EditText dateOfBirth;
-    EditText firstName;
-    EditText lastName;
+    private EditText username;
+    private EditText email;
+    private EditText phoneNum;
+    private EditText dateOfBirth;
+    private EditText firstName;
+    private EditText lastName;
 
-    TextView userString;
-    TextView phoneNumString;
-    TextView emailString;
+    private TextView userString;
+    private TextView phoneNumString;
+    private TextView emailString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        Setup.run(this);
 
         username = (EditText) findViewById(R.id.usernameInput);
         email = (EditText) findViewById(R.id.emailInput);
@@ -74,9 +77,6 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
                 String usernameText = username.getText().toString();
                 String emailText = email.getText().toString();
                 String phoneNumText = phoneNum.getText().toString();
-                String dateOfBirthText = dateOfBirth.getText().toString();
-                String firstNameText = firstName.getText().toString();
-                String lastNameText = lastName.getText().toString();
 
                 if (TextUtils.isEmpty(phoneNumText.trim())) {
                     phoneNumString.setTextColor(Color.RED);
@@ -99,49 +99,7 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
                     emailString.setTextColor(Color.LTGRAY);
                 }
 
-                try
-                {
-                    if(TextUtils.isEmpty(phoneNumText.trim()) || TextUtils.isEmpty(usernameText.trim()) || TextUtils.isEmpty(emailText.trim())){
-                        Bundle bundle = new Bundle();
-                        bundle.putString("message", getResources().getString(R.string.validateFieldsMessage));
-                        bundle.putString(getResources().getString(R.string.positiveInput), "OK");
-
-                        DialogFragment dialog = new NoticeDialogFragment();
-                        dialog.setArguments(bundle);
-                        dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
-                        return;
-                    }
-                    else{
-                        ElasticSearchUser.getObjects getter = new ElasticSearchUser.getObjects();
-                        getter.execute(usernameText);
-                        ArrayList<User> users = getter.get();
-
-                        if (users.size()==0) { // unique user name
-                            User user = new User(usernameText, firstNameText, lastNameText, dateOfBirthText, phoneNumText, emailText);
-
-                            UserController.setContext(SignUpActivity.this);
-                            UserController.saveUser(user);
-
-                            AddUserCommand addUser = new AddUserCommand(user);
-                            MacroCommand.addCommand(addUser);
-                            finish(); // finish since we shouldn't ever get back here
-
-                            Intent intent = new Intent(SignUpActivity.this, UserTypeActivity.class);
-                            startActivity(intent);
-                        }
-                        else {
-                            Bundle bundle = new Bundle();
-                            bundle.putString(getResources().getString(R.string.message), getResources().getString(R.string.usernameExitsMessage));
-                            bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.ok));
-
-                            DialogFragment dialog = new NoticeDialogFragment();
-                            dialog.setArguments(bundle);
-                            dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                signUpUser();
             }
         });
     }
@@ -154,6 +112,58 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
 
+    }
+
+    private void signUpUser() {
+        String usernameText = username.getText().toString();
+        String emailText = email.getText().toString();
+        String phoneNumText = phoneNum.getText().toString();
+        String dateOfBirthText = dateOfBirth.getText().toString();
+        String firstNameText = firstName.getText().toString();
+        String lastNameText = lastName.getText().toString();
+
+        try
+        {
+            if(TextUtils.isEmpty(phoneNumText.trim()) ||
+                    TextUtils.isEmpty(usernameText.trim()) ||
+                    TextUtils.isEmpty(emailText.trim())) {
+                Bundle bundle = new Bundle();
+                bundle.putString("message", getString(R.string.validateFieldsMessage));
+                bundle.putString(getString(R.string.positiveInput), "OK");
+
+                DialogFragment dialog = new NoticeDialogFragment();
+                dialog.setArguments(bundle);
+                dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
+                return;
+            }
+            else{
+                User esUser = ElasticSearchController.getUser(usernameText);
+
+                if (esUser == null) { // the new username is unique and doesnt exist in Elastic search
+                    User user = new User(usernameText, firstNameText, lastNameText, dateOfBirthText, phoneNumText, emailText);
+                    UserController.saveUser(user);
+
+                    // add to commands to run and update to Elastic search
+                    AddUserCommand addUser = new AddUserCommand(user);
+                    MacroCommand.addCommand(addUser);
+                    finish(); // finish since we shouldn't ever get back here
+
+                    Intent intent = new Intent(SignUpActivity.this, UserTypeActivity.class);
+                    startActivity(intent);
+                }
+                else { // this user already exists, can't create this user
+                    Bundle bundle = new Bundle();
+                    bundle.putString(getResources().getString(R.string.message), getResources().getString(R.string.usernameExitsMessage));
+                    bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.ok));
+
+                    DialogFragment dialog = new NoticeDialogFragment();
+                    dialog.setArguments(bundle);
+                    dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

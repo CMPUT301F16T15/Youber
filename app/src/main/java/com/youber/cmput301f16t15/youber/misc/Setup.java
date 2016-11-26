@@ -10,6 +10,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
+import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
@@ -29,12 +30,21 @@ import java.util.UUID;
 
 public class Setup {
     public static void run(Context context) {
-
+        // good practice to call context set up everytime in a new activity to avoid leaks
         ElasticSearchController.setupPutmap();
         UserController.setContext(context);
         RequestCollectionsController.setContext(context);
-        User user=null;
+        MacroCommand.setContext(context);
+
+        // on setup we need to pull from elastic search the user information and requests
+//        refresh(context);
+    }
+
+    public static void refresh(Context context) {
+
+        User user = null;
         String username= UserController.getUser().getUsername();
+
         try{
             user = ElasticSearchUser.getUser(username);
         }
@@ -62,6 +72,8 @@ public class Setup {
             RequestCollectionsController.saveRequestCollections(requestCollection);
         }
     }
+
+
     //https://developer.android.com/guide/topics/ui/notifiers/notifications.html
     public static void sendRequestUpdateNotification(Context context){
         NotificationCompat.Builder mBuilder =
@@ -97,6 +109,7 @@ public class Setup {
         notification.flags=Notification.FLAG_AUTO_CANCEL;
         mNotificationManager.notify(1, notification);
     }
+
     private static boolean hasUpdated(){
        return checkUserUpdated()||checkRequestsUpdated();
     }

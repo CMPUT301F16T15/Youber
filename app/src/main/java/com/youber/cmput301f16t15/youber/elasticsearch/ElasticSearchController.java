@@ -1,5 +1,6 @@
 package com.youber.cmput301f16t15.youber.elasticsearch;
 
+import com.youber.cmput301f16t15.youber.gui.LoginActivity;
 import com.youber.cmput301f16t15.youber.users.Driver;
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.misc.Observable;
@@ -7,6 +8,7 @@ import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
 import com.youber.cmput301f16t15.youber.users.Rider;
 import com.youber.cmput301f16t15.youber.users.User;
+import com.youber.cmput301f16t15.youber.users.UserController;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -238,7 +240,7 @@ public class ElasticSearchController extends ElasticSearch{
     }
 
 
-    public static Request getRequest(UUID u) throws Exception {
+    public static Request getRequest(UUID u) {
         ElasticSearchRequest.getObjects getter = new ElasticSearchRequest.getObjects();
         getter.execute(u.toString());
 
@@ -247,6 +249,23 @@ public class ElasticSearchController extends ElasticSearch{
             if(requests.size() == 1)
                 return requests.get(0);
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static User getUser(String username) {
+        ElasticSearchUser.getObjects searchUser = new ElasticSearchUser.getObjects();
+        searchUser.execute(username);
+
+        try {
+            ArrayList<User> users = searchUser.get();
+            if(users.size() == 1)
+                return users.get(0);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
 

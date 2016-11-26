@@ -28,10 +28,12 @@ public class  DriverTest {
 //        RequestController.addRequest(request1, rider1);
 
         Driver driver1 = new Driver();
-        RequestController.linkDriverWithRequest(request1, driver1);
+//        RequestController.linkDriverWithRequest(request1, driver1);
+//
+//        Driver driver = RequestController.getDriver(request1);
+//        assertTrue(rider1.call(driver));
 
-        Driver driver = RequestController.getDriver(request1);
-        assertTrue(rider1.call(driver));
+        assertTrue(false);
     }
     //Tests US 01.05.01
     @Test
@@ -45,10 +47,13 @@ public class  DriverTest {
 //        RequestController.addRequest(request1, rider1);
 
         Driver driver1 = new Driver();
-        RequestController.linkDriverWithRequest(request1, driver1);
+//        RequestController.linkDriverWithRequest(request1, driver1);
+//
+//        Driver driver = RequestController.getDriver(request1);
+//        assertTrue(rider1.email(driver));
 
-        Driver driver = RequestController.getDriver(request1);
-        assertTrue(rider1.email(driver));
+        assertTrue(false);
+
     }
     //Tests US 05.01.01
     @Test
@@ -63,7 +68,7 @@ public class  DriverTest {
 //        RequestController.addRequest(request1, rider1);
 
         Driver driver1 = new Driver();
-        RequestController.linkDriverWithRequest(request1, driver1);
+//        RequestController.linkDriverWithRequest(request1, driver1);
 
         rider1.makePayment(request1.getUUID());
         assertEquals(request1.getCost(), driver1.getOfferPaymentFromRequest(request1.getUUID()));
@@ -79,8 +84,8 @@ public class  DriverTest {
 
         Driver driver1 = new Driver();
         Driver driver2 = new Driver();
-        RequestController.linkDriverWithRequest(request1, driver1);
-        RequestController.linkDriverWithRequest(request1, driver2);
+//        RequestController.linkDriverWithRequest(request1, driver1);
+//        RequestController.linkDriverWithRequest(request1, driver2);
 
         assertEquals(driver1.getAcceptedRequests().get(request1.getUUID()), request1);
         assertEquals(driver2.getAcceptedRequests().get(request1.getUUID()), request1);
@@ -97,8 +102,8 @@ public class  DriverTest {
 
         Driver driver1 = new Driver();
 
-        RequestController.linkDriverWithRequest(request1, driver1);
-        RequestController.linkDriverWithRequest(request2, driver1);
+//        RequestController.linkDriverWithRequest(request1, driver1);
+//        RequestController.linkDriverWithRequest(request2, driver1);
 
 //        RequestCollection driverRequests = Helper.getTotalRequestsByDriver(driver1);
 //        assertTrue(driverRequests.containsKey(request1.getUUID()));
@@ -112,9 +117,12 @@ public class  DriverTest {
         Request request1 = new Request(geoLocation1, "start", geoLocation2, "end");
 //        RequestCollection totalRequests = Helper.getTotalRequests();
         Driver driver1 = new Driver();
-        RequestController.linkDriverWithRequest(request1, driver1);
+//        RequestController.linkDriverWithRequest(request1, driver1);
 //        assertTrue(totalRequests.getByGeolocation(new GeoLocation(90.0, 90.0), 10).
 //                contains(driver1.getRequest(request1.getUUID())));
+
+        assertTrue(false);
+
     }
     
     //Tests US 04.02.01
@@ -125,9 +133,11 @@ public class  DriverTest {
         Request request1 = new Request(geoLocation1, geoLocation2, "Search Term");
 //        RequestCollection totalRequests = Helper.getTotalRequests();
         Driver driver1 = new Driver();
-        RequestController.linkDriverWithRequest(request1, driver1);
+//        RequestController.linkDriverWithRequest(request1, driver1);
 //        assertTrue(totalRequests.getByKeyword("Search Term").
 //                contains(driver1.getRequest(request1.getUUID())));
+        assertTrue(false);
+
     }
 
     //Tests US 05.04.01 
@@ -137,9 +147,11 @@ public class  DriverTest {
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
         Request request1 = new Request(geoLocation1, geoLocation2);
         Driver driver1 = new Driver();
-        RequestController.linkDriverWithRequest(request1, driver1);
+//        RequestController.linkDriverWithRequest(request1, driver1);
         RequestController.confirmRequest(request1, driver1);
         assertTrue(request1.isConfirmed());
+        assertTrue(false);
+
     }
     
     //Tests US 05.02.01
@@ -152,8 +164,8 @@ public class  DriverTest {
 
         Driver driver1 = new Driver();
 
-        RequestController.linkDriverWithRequest(request1, driver1);
-        RequestController.linkDriverWithRequest(request2, driver1);
+//        RequestController.linkDriverWithRequest(request1, driver1);
+//        RequestController.linkDriverWithRequest(request2, driver1);
         assertEquals(2, driver1.getPendingRequests().size());
     }
     
@@ -167,8 +179,8 @@ public class  DriverTest {
 
         Driver driver1 = new Driver();
 
-        RequestController.linkDriverWithRequest(request1, driver1);
-        RequestController.linkDriverWithRequest(request2, driver1);
+//        RequestController.linkDriverWithRequest(request1, driver1);
+//        RequestController.linkDriverWithRequest(request2, driver1);
         assertEquals(driver1.getPendingRequest(request1.getUUID()).getDescription(), "Search Term 1");
     }
     
@@ -182,8 +194,8 @@ public class  DriverTest {
 
         Driver driver1 = new Driver();
 
-        RequestController.linkDriverWithRequest(request1, driver1);
-        RequestController.linkDriverWithRequest(request2, driver1);
+//        RequestController.linkDriverWithRequest(request1, driver1);
+//        RequestController.linkDriverWithRequest(request2, driver1);
 
         assertEquals(driver1.getPendingRequest(request1.getUUID()).getStartLocation(), geoLocation1);
 
@@ -199,8 +211,8 @@ public class  DriverTest {
 
         Driver driver1 = new Driver();
 
-        RequestController.linkDriverWithRequest(request1, driver1);
-        RequestController.linkDriverWithRequest(request2, driver1);
+//        RequestController.linkDriverWithRequest(request1, driver1);
+//        RequestController.linkDriverWithRequest(request2, driver1);
 
         assertEquals(driver1.getPendingRequest(request1.getUUID()).getEndLocation(), geoLocation2);
 
@@ -214,16 +226,20 @@ public class  DriverTest {
             Request request1 = new Request(geoLocation1, geoLocation2, "Search Term 1");
             Driver driver1 = new Driver();
 
-            RequestController.linkDriverWithRequest(request1, driver1);
+//            RequestController.linkDriverWithRequest(request1, driver1);
 //            RequestCollection totalRequests = Helper.getTotalRequests();
 //            RequestCollection ridersAcceptedRequestsForDrivers = totalRequests.getFinalizedRequestToDriver();
 
 //            assertEquals(ridersAcceptedRequestsForDrivers.get(request1.getUUID()), request1);
+        assertTrue(false);
+
     }
     //Tests US 08.04.01
     @Test (expected = NotaDriverException.class)
     public void testGetDriverLocalAcceptedRequests()
     {
+        assertTrue(false);
+
 //        RequestCollection savedLocal = Helper.getLocalRequests();
 //        Driver currentUser = Helper.getCurrentDriver();
 
