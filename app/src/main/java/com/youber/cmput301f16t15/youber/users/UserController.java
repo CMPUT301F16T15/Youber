@@ -210,15 +210,18 @@ public class UserController {
 
         HashSet<UUID> tempAcceptedUUIDs = user.getAcceptedDriverUUIDs();
         for(UUID u : tempAcceptedUUIDs) {
-            Request esReqeust = ElasticSearchController.getRequest(u);
+            Request esRequest = ElasticSearchController.getRequest(u);
 
-            String esDriver = esReqeust.getDriverUsernameID();
-            if(!esDriver.equals(""))
+            String esDriver = esRequest.getDriverUsernameID();
+            if(!esDriver.equals("")) {
                 // if we are the selected driver, make sure we have it in our completed (extra safe)
-                if(esDriver.equals(user.getUsername()))
+                if (esDriver.equals(user.getUsername()))
                     user.addToDriverConfirmed(u);
                 else
                     user.removeRequestUUID(u);
+            }
         }
+
+        update();
     }
 }

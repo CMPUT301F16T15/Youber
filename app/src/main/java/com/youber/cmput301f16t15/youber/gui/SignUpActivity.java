@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
@@ -65,6 +66,11 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
         createNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!MacroCommand.isNetworkAvailable()) {
+                    Toast.makeText(SignUpActivity.this, "Currently offline: cannot create user", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 String usernameText = username.getText().toString();
                 String emailText = email.getText().toString();
                 String phoneNumText = phoneNum.getText().toString();

@@ -40,6 +40,12 @@ public class Setup {
         }
         catch (UserNotFoundException e){}
 
+        try {
+            UserController.cleanUpDriverList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         if(hasUpdated()){
             sendRequestUpdateNotification(context);
         }
@@ -49,13 +55,6 @@ public class Setup {
 
             AddUserCommand addUser = new AddUserCommand(user);
             UserController.observable.notifyListeners(addUser);
-
-            try {
-                UserController.cleanUpDriverList();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
             UserController.saveUser(user);
         }
         if(checkRequestsUpdated()){
