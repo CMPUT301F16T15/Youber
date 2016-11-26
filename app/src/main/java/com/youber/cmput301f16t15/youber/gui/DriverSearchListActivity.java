@@ -2,6 +2,7 @@ package com.youber.cmput301f16t15.youber.gui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -166,12 +167,15 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(getBaseContext(), "Filtered", Toast.LENGTH_LONG).show();
+                        filter.setSelection(0);
+
                     }
                 });
                 filterDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(getBaseContext(), "Canceled", Toast.LENGTH_LONG).show();
+                        filter.setSelection(0);
 
                     }
                 });
@@ -187,6 +191,7 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+
 
     }
 }
