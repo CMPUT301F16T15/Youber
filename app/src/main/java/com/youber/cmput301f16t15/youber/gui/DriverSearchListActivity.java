@@ -166,7 +166,7 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                 LayoutInflater inflater = (LayoutInflater)DriverSearchListActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
                 final  View layout = inflater.inflate(R.layout.dlg_request_filter, (ViewGroup)findViewById(R.id.filter_dialog));
 
-                filterDialog.setTitle("please set price filters");
+                filterDialog.setTitle("Please set price filters");
                 filterDialog.setView(layout);
                 filterDialog.setPositiveButton("Filter", new DialogInterface.OnClickListener() {
                     @Override

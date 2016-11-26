@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/price_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:paddingLeft="10dp"
+        android:paddingLeft="23dp"
 
         />
 
@@ -24,7 +24,7 @@
         android:layout_below="@+id/price_title"
         android:background="@color/white"
         android:textColor="@color/black"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="23dp"
         android:hint="Min"
         android:textColorHint="@color/grey"
         />
@@ -39,7 +39,7 @@
         android:layout_below="@+id/price_title"
         android:background="@color/white"
         android:textColor="@color/black"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         android:hint="Max"
         android:textColorHint="@color/grey"
 
@@ -54,7 +54,7 @@
         android:layout_marginTop="25dp"
         android:id="@+id/price_per"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:paddingLeft="10dp"
+        android:paddingLeft="23dp"
 
         />
 
@@ -67,8 +67,24 @@
         android:id="@+id/price_per_text"
         android:background="@color/white"
         android:textColor="@color/black"
-        android:layout_marginLeft="10dp"
-        android:hint="Price"
+        android:layout_marginLeft="23dp"
+        android:hint="Min $/Km"
         android:textColorHint="@color/grey"
+        />
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/max_price_per_text"
+        android:layout_toRightOf="@+id/price_per_text"
+        android:layout_below="@+id/price_per"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:layout_marginLeft="10dp"
+        android:hint="Max $/Km"
+        android:textColorHint="@color/grey"
+
         />
 </RelativeLayout>
