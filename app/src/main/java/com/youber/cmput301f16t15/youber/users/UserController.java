@@ -217,8 +217,6 @@ public class UserController {
                     user.addToDriverConfirmed(u);
                 else
                     user.removeRequestUUID(u);
-
-                RequestCollectionsController.addRequest(esRequest);
             }
         }
 

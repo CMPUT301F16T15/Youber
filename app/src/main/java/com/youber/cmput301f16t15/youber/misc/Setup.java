@@ -41,13 +41,11 @@ public class Setup {
     }
 
     public static void refresh(Context context) {
-        User user = null;
-        String username= UserController.getUser().getUsername();
+        String username = UserController.getUser().getUsername();
+        User user = ElasticSearchController.getUser(username);
 
-        try{
-            user = ElasticSearchUser.getUser(username);
-        }
-        catch (UserNotFoundException e){}
+        if(user == null)
+            throw new RuntimeException("Elastic search could not get the user");
 
         try {
             UserController.cleanUpDriverList();
@@ -55,9 +53,8 @@ public class Setup {
             e.printStackTrace();
         }
 
-        if(hasUpdated()){
+        if(hasUpdated())
             sendRequestUpdateNotification(context);
-        }
 
         if(checkUserUpdated()){
             UserController.observable.addListener(new Updater());
@@ -66,12 +63,12 @@ public class Setup {
             UserController.observable.notifyListeners(addUser);
             UserController.saveUser(user);
         }
+
         if(checkRequestsUpdated()){
             RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
             RequestCollectionsController.saveRequestCollections(requestCollection);
         }
     }
-
 
     //https://developer.android.com/guide/topics/ui/notifiers/notifications.html
     public static void sendRequestUpdateNotification(Context context){
