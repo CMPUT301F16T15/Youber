@@ -41,6 +41,7 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
     static double min;
     static double max;
     static double pricePerKm;
+    static double maxPricePerKmd;
 
 
     @Override
@@ -185,14 +186,22 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                         else {
                             max = Double.NaN;
                         }
-                        EditText price = (EditText)layout.findViewById(R.id.price_per_text);
-                        if (!price.getText().toString().isEmpty()) {
-                            pricePerKm = Double.parseDouble(price.getText().toString());
+                        EditText minPricePerKm = (EditText)layout.findViewById(R.id.price_per_text);
+                        if (!minPricePerKm.getText().toString().isEmpty()) {
+                            pricePerKm = Double.parseDouble(minPricePerKm.getText().toString());
                         }
                         else {
                             pricePerKm = Double.NaN;
                         }
-                        String results = "min: " + min + "\n" +  "max: " + max + "\n" + "price per Km: " + pricePerKm;
+                        EditText maxPricePerKm = (EditText)layout.findViewById(R.id.max_price_per_text);
+                        if (!maxPricePerKm.getText().toString().isEmpty()) {
+                            maxPricePerKmd = Double.parseDouble(maxPricePerKm.getText().toString());
+                        }
+                        else {
+                            maxPricePerKmd = Double.NaN;
+                        }
+                        String results = "min: " + min + "\n" +  "max: " + max + "\n" + "minPricePerKm: " + pricePerKm
+                                + "\n" + "maxPricePerKm: " + maxPricePerKmd;
                         Toast.makeText(getBaseContext(), results, Toast.LENGTH_LONG).show();
                         filter.setSelection(0);
 
