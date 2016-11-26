@@ -90,6 +90,7 @@ public class RiderMainActivity extends AppCompatActivity {
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setBuiltInZoomControls(true);
         map.setMultiTouchControls(true);
+        map.setBuiltInZoomControls(false);
 
         IMapController mapController = map.getController();
         mapController.setZoom(12);
