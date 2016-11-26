@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -44,12 +45,20 @@ RequestListActivity extends AppCompatActivity {
     ListView requestListView;
     ArrayList<Request> requestArray;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Spinner spinner = (Spinner)findViewById(R.id.filter_spinner);
+        spinner.setVisibility(View.INVISIBLE);
+
+        RelativeLayout Relativelayout = (RelativeLayout)findViewById(R.id.spinnerLayout);
+        Relativelayout.setVisibility(View.INVISIBLE);
 
         requestListView = (ListView)findViewById(R.id.requestListView);
         requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
