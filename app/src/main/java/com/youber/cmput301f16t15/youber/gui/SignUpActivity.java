@@ -33,16 +33,16 @@ import java.util.ArrayList;
  */
 public class SignUpActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
-    EditText username;
-    EditText email;
-    EditText phoneNum;
-    EditText dateOfBirth;
-    EditText firstName;
-    EditText lastName;
+    private EditText username;
+    private EditText email;
+    private EditText phoneNum;
+    private EditText dateOfBirth;
+    private EditText firstName;
+    private EditText lastName;
 
-    TextView userString;
-    TextView phoneNumString;
-    TextView emailString;
+    private TextView userString;
+    private TextView phoneNumString;
+    private TextView emailString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +62,7 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
 
         Button createNewUser = (Button) findViewById(R.id.createNewUser);
 
+        assert createNewUser != null;
         createNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +84,7 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
 
                 try
                 {
-                    if(TextUtils.isEmpty(phoneNumText.trim()) || TextUtils.isEmpty(usernameText.trim()) || TextUtils.isEmpty(emailText.trim())){
+                    if(TextUtils.isEmpty(phoneNumText.trim()) || TextUtils.isEmpty(usernameText.trim()) || TextUtils.isEmpty(emailText.trim()) || !emailText.contains("@")){
                         Bundle bundle = new Bundle();
                         bundle.putString("message", getResources().getString(R.string.validateFieldsMessage));
                         bundle.putString(getResources().getString(R.string.positiveInput), "OK");
@@ -91,7 +92,6 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
                         DialogFragment dialog = new NoticeDialogFragment();
                         dialog.setArguments(bundle);
                         dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
-                        return;
                     }
                     else{
                         ElasticSearchUser.getObjects getter = new ElasticSearchUser.getObjects();
@@ -131,7 +131,7 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
     }
 
 
-    public void changeTextColour(String text, TextView textview){
+    private void changeTextColour(String text, TextView textview){
         if (TextUtils.isEmpty(text.trim())){
             textview.setTextColor(Color.RED);
         }
@@ -150,11 +150,6 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
 
     public void onDialogNegativeClick(DialogFragment dialog) { }
 
-    
-
-    public void changeEmptyFieldsText(){
-
-    }
 
 }
 

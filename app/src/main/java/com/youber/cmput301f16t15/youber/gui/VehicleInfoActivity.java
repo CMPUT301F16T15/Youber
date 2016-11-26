@@ -21,15 +21,15 @@ import com.youber.cmput301f16t15.youber.users.UserController;
 
 public class VehicleInfoActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
-    EditText make;
-    EditText model;
-    EditText year;
-    EditText colour;
+    private EditText make;
+    private EditText model;
+    private EditText year;
+    private EditText colour;
 
-    TextView makeString;
-    TextView modelString;
-    TextView yearString;
-    TextView colourString;
+    private TextView makeString;
+    private TextView modelString;
+    private TextView yearString;
+    private TextView colourString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,7 @@ public class VehicleInfoActivity extends AppCompatActivity implements NoticeDial
 
         Button saveVehicleInfo = (Button) findViewById(R.id.saveVehicleInfoButton);
 
+        assert saveVehicleInfo != null;
         saveVehicleInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +103,7 @@ public class VehicleInfoActivity extends AppCompatActivity implements NoticeDial
 
     }
 
-    public void changeTextColour(String text, TextView textview){
+    private void changeTextColour(String text, TextView textview){
         if (TextUtils.isEmpty(text.trim())){
             textview.setTextColor(Color.RED);
         }
