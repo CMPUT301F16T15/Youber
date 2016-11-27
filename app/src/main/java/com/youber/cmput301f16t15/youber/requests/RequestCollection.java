@@ -16,6 +16,8 @@ import java.util.UUID;
  * <p>
  *     This class is used to store multiple requests in a specific collection.
  * </p>
+ *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see Request
  * @see RequestCollectionsController
  */

@@ -35,6 +35,7 @@ import java.util.concurrent.ExecutionException;
  *     riders and drivers
  * </p>
  *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see RequestCollection
  */
 

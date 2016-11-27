@@ -18,6 +18,8 @@ import com.youber.cmput301f16t15.youber.users.UserController;
 /**
  * The type User type activity.
  * Used to select either the rider or the driver based on two buttons.
+ *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  */
 public class UserTypeActivity extends AppCompatActivity {
 

@@ -18,6 +18,7 @@ import java.util.List;
  *     Handles manipulation of requests including confirmation and acceptance drivers
  * </p>
  *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see RequestCollection
  * @see com.youber.cmput301f16t15.youber.misc.Payment
  */

@@ -27,6 +27,7 @@ import io.searchbox.indices.mapping.PutMapping;
  *     Subclass of elastic search that checks the webserver for matching requests
  * </p>
  *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see ElasticSearch
  * @see ElasticSearchController
  */

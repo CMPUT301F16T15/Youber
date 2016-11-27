@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * <p>
  *     This activity is triggered when a user signs up for the first time.
  * </p>
- *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see LoginActivity
  * @see User
  */

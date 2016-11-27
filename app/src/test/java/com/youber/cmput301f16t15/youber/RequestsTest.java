@@ -22,6 +22,7 @@ import static org.junit.Assert.*;
 
 /**
  * Created by Reem on 2016-10-13.
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  */
 public class RequestsTest
 {

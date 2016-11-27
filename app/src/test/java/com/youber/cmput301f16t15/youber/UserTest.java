@@ -10,6 +10,11 @@ import org.junit.Test;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
+
+/**
+ *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
+ */
 public class UserTest
 {
     @Test

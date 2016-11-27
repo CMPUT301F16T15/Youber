@@ -32,6 +32,10 @@ import com.youber.cmput301f16t15.youber.users.UserController;
 
 import java.util.ArrayList;
 
+/**
+ *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
+ */
 public class DriverSearchListActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
 

@@ -25,7 +25,7 @@ import io.searchbox.annotations.JestId;
  * </p>
  *
  *
- *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see RiderViewRequestActivity
  * @see RequestCollection
  */

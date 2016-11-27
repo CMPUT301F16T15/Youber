@@ -32,6 +32,8 @@ import java.util.UUID;
 
 /**
  * The type Request view activity.
+ *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see Request
  */
 public class

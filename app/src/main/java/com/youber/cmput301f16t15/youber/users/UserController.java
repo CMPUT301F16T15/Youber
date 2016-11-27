@@ -27,6 +27,7 @@ import java.util.UUID;
  *     Handles user manipulation
  * </p>
  *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see User
  * @see com.youber.cmput301f16t15.youber.users.User.UserType
  */

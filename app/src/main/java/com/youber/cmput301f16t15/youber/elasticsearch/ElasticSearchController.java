@@ -16,6 +16,8 @@ import java.util.concurrent.ExecutionException;
  *     This is the controller class for our elastic search.
  * </p>
  *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
+ *
  * @see ElasticSearch
  */
 

@@ -9,6 +9,7 @@ package com.youber.cmput301f16t15.youber.misc;
  *     Will be updated later on if necessary
  * </p>
  *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see com.youber.cmput301f16t15.youber.requests.Request
  * @see GeoLocation
  */

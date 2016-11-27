@@ -50,7 +50,7 @@ import java.util.Locale;
  *     This functions similarly to the Rider class except they have Type specific options.
  * </p>
  *
- *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see com.youber.cmput301f16t15.youber.users.User
  * @see MapQuestRoadManager
  * @see GeoPoint

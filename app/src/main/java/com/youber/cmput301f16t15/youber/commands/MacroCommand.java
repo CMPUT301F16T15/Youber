@@ -21,6 +21,8 @@ import java.util.UUID;
 
 /**
  * Created by Jess on 2016-11-16.
+ *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  */
 
 public class MacroCommand {

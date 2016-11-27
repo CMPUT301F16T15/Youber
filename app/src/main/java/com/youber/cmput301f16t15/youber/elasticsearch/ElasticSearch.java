@@ -17,12 +17,16 @@ import java.util.ArrayList;
  *     in class.
  * </p>
  *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
+ *
  * @see com.youber.cmput301f16t15.youber.requests.Request
  * @see com.youber.cmput301f16t15.youber.users.User
  * @see ElasticSearchUser
  * @see ElasticSearchRequest
  * @see ElasticSearchController
  */
+
+
 
 public class ElasticSearch {
 

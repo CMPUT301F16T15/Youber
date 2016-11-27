@@ -13,6 +13,8 @@ import io.searchbox.annotations.JestId;
  *     Every user has a unique username and their contact information must be stored for contact
  *     purposes via phone call or email.
  * </p>
+ *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see com.youber.cmput301f16t15.youber.users.User.UserType
  * @see UserController
  */

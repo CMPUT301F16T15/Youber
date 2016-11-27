@@ -22,6 +22,7 @@ import static org.junit.Assert.*;
 
 /**
  * Created by Jess on 2016-11-13.
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  */
 
 public class RequestsAndroidTest { // mainly using the controller

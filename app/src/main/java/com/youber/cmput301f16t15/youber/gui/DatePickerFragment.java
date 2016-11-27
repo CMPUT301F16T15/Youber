@@ -9,7 +9,9 @@ import java.util.Calendar;
 
 /**
  * Created by Reem on 2016-11-11.
- * Dialog used to select a date
+ *
+ *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  */
 
 

@@ -26,7 +26,7 @@ import com.youber.cmput301f16t15.youber.users.UserController;
  * <p>
  *     This activity is triggered when a user edits their profile
  * </p>
- *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see LoginActivity
  * @see User
  */

@@ -25,7 +25,7 @@ import io.searchbox.core.Search;
  * <p>
  *     Subclass of elastic search that checks the webserver for matching users
  * </p>
- *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see ElasticSearchController
  * @see ElasticSearch
  */
