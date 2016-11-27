@@ -36,17 +36,17 @@
         android:textColor="@color/black"
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/requestTitle"
-        android:layout_marginLeft="80dp"
+        android:layout_marginLeft="50dp"
         android:paddingRight="10dp"
         android:id="@+id/spinnerLayout"
         >
         <Spinner
             android:id="@+id/filter_spinner"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:spinnerMode="dropdown"
             android:layout_alignParentEnd="true"
-
+            android:prompt="@string/FilterTitle"
             />
 
 

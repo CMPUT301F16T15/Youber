@@ -68,10 +68,11 @@
             <Spinner
                 android:id="@+id/search_spinner"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:spinnerMode="dropdown"
                 android:layout_alignParentEnd="true"
                 android:layout_marginRight="8dp"
+                android:prompt="@string/SearchTitle"
                 />
 
         </RelativeLayout>

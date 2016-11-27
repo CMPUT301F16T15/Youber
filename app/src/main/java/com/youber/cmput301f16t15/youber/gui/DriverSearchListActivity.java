@@ -2,6 +2,7 @@ package com.youber.cmput301f16t15.youber.gui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
@@ -43,6 +45,8 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
     static double max;
     static double pricePerKm;
     static double maxPricePerKmd;
+    static ArrayAdapter<String> adapter;
+
 
 
     @Override
@@ -67,9 +71,31 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
 
 
         filter = (Spinner)findViewById(R.id.filter_spinner);
-        String[] items = new String[]{"Filter", "Prices", "Price/Km"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                ((TextView) view).setHintTextColor(Color.WHITE);
+
+                if (position == getCount()) {
+                    ((TextView)view.findViewById(android.R.id.text1)).setText("");
+                    ((TextView)view.findViewById(android.R.id.text1)).setHint(getItem(getCount()));
+                }
+                return view;
+            }
+
+            @Override
+            public int getCount() {
+                return super.getCount()-1;
+            }
+
+        };
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.add("Prices");
+        adapter.add("Prices/Km");
+        adapter.add("Filter");
         filter.setAdapter(adapter);
+        filter.setSelection(adapter.getCount());
         filter.setOnItemSelectedListener(this);
     }
 
@@ -159,7 +185,7 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
 
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+    public void onItemSelected(final AdapterView<?> adapterView, View view, int position, long l) {
 
         AlertDialog.Builder filterDialog = null;
         LayoutInflater inflater = null;
@@ -167,8 +193,6 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
 
         switch (position) {
             case 0:
-                break;
-            case 1:
                 filterDialog = new AlertDialog.Builder(DriverSearchListActivity.this);
                 inflater = (LayoutInflater)DriverSearchListActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
                 final View layout = inflater.inflate(R.layout.dlg_request_filter_price, (ViewGroup)findViewById(R.id.filter_dialog));
@@ -195,7 +219,7 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
 
                         String results = "min: " + min + "\n" +  "max: " + max + "\n";
                         Toast.makeText(getBaseContext(), results, Toast.LENGTH_LONG).show();
-                        filter.setSelection(0);
+                        filter.setSelection(adapter.getCount());
 
                     }
                 });
@@ -203,16 +227,14 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(getBaseContext(), "Canceled", Toast.LENGTH_LONG).show();
-                        filter.setSelection(0);
+                        filter.setSelection(adapter.getCount());
 
                     }
                 });
 
                 filterDialog.show();
-
-
                 break;
-            case 2:
+            case 1:
                 filterDialog = new AlertDialog.Builder(DriverSearchListActivity.this);
                 inflater = (LayoutInflater)DriverSearchListActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
                 final View layout2 = inflater.inflate(R.layout.dlg_request_filter_price_km, (ViewGroup)findViewById(R.id.filter_dialog));
@@ -239,7 +261,7 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                         String results = "minPricePerKm: " + pricePerKm
                                 + "\n" + "maxPricePerKm: " + maxPricePerKmd;
                         Toast.makeText(getBaseContext(), results, Toast.LENGTH_LONG).show();
-                        filter.setSelection(0);
+                        filter.setSelection(adapter.getCount());
 
                     }});
 
@@ -247,12 +269,17 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(getBaseContext(), "Canceled", Toast.LENGTH_LONG).show();
-                        filter.setSelection(0);
+                        filter.setSelection(adapter.getCount());
 
                     }
                 });
 
                 filterDialog.show();
+
+
+                break;
+            case 2:
+
                 break;
         }
 

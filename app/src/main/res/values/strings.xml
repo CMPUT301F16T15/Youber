@@ -81,4 +81,8 @@
     <string name="dlg_payment">Accept</string>
     <string name="offline_login">Currently offline: cannot login</string>
 
+    <!--Spinner Titles-->
+    <string name="FilterTitle">Filter</string>
+    <string name="SearchTitle">Search</string>
+
 </resources>

@@ -71,6 +71,8 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
 
     private static Spinner dropdown;
 
+    static ArrayAdapter<String> adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,10 +90,33 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
         map.setBuiltInZoomControls(false);
 
         //https://developer.android.com/guide/topics/ui/controls/spinner.html
+        //http://stackoverflow.com/questions/867518/how-to-make-an-android-spinner-with-initial-text-select-one
         dropdown = (Spinner)findViewById(R.id.search_spinner);
-        String[] items = new String[]{"Search", "Keyword", "Address"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                ((TextView) view).setHintTextColor(Color.WHITE);
+                if (position == getCount()) {
+                    ((TextView)view.findViewById(android.R.id.text1)).setText("");
+                    ((TextView)view.findViewById(android.R.id.text1)).setHint(getItem(getCount()));
+                }
+                return view;
+            }
+
+            @Override
+            public int getCount() {
+                return super.getCount()-1;
+            }
+
+        };
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.add("Keyword");
+        adapter.add("Address");
+        adapter.add("Search");
         dropdown.setAdapter(adapter);
+        dropdown.setSelection(adapter.getCount());
         dropdown.setOnItemSelectedListener(this);
 
         searchPoint = null;
@@ -129,15 +154,14 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-
         switch (position) {
             case 0:
-                break;
-            case 1:
                 searchKeyword();
                 break;
-            case 2:
+            case 1:
                 searchAddress();
+                break;
+            case 2:
                 break;
 
         }
@@ -159,7 +183,7 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
         String address = ((EditText)findViewById(R.id.keyword_search)).getText().toString();
         if (address.isEmpty()){
             Toast.makeText(getBaseContext(), "Please enter an Address to search", Toast.LENGTH_LONG).show();
-            dropdown.setSelection(0);
+            dropdown.setSelection(adapter.getCount());
             return;
         }
 
@@ -177,7 +201,7 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
     public void onResume(){
         super.onResume();
         Setup.refresh(this);
-        dropdown.setSelection(0);
+        dropdown.setSelection(adapter.getCount());
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
