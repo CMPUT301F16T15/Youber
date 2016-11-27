@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.youber.cmput301f16t15.youber.R;
+import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
@@ -147,6 +148,7 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
         dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
     }
 
+    // payment dialog
     public Dialog promptDialog(int resource) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // Get the layout inflater
@@ -160,6 +162,9 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
                         }
                     }).setPositiveButton(R.string.dlg_payment, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
+                    if(!MacroCommand.isNetworkAvailable())
+                        Toast.makeText(DriverViewRequestActivity.this, "Currently offline: accepting payment queued", Toast.LENGTH_SHORT).show();
+
                     selectedRequest.setCompleted();
                     RequestCollectionsController.addRequest(selectedRequest);
                     dialog.dismiss();
@@ -189,7 +194,6 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
 
     public void onAcceptPaymentBnClick(View view)
     {
-
         Dialog dialog = promptDialog(R.layout.dlg_payment);
         dialog.show();
 
@@ -278,15 +282,17 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+    @Override // offering a ride
     public void onDialogPositiveClick(DialogFragment dialog) {
         // the way we update a user, update that request
+        if(!MacroCommand.isNetworkAvailable())
+            Toast.makeText(DriverViewRequestActivity.this, "Currently offline: offer queued", Toast.LENGTH_SHORT).show();
+
         selectedRequest.setAcceptedByDrivers();
         RequestCollectionsController.addRequest(selectedRequest);
         dialog.dismiss();
         moreOptionsDialog.dismiss();
         loadRequest();
-
     }
 
     @Override
@@ -295,8 +301,6 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
     }
 
     public void onPhoneNumberClick(View view) {
-
-
         Intent intent = new Intent(Intent.ACTION_CALL);
         intent.setData(Uri.parse("tel:" + rider.getPhoneNumber()));
         startActivity(intent);

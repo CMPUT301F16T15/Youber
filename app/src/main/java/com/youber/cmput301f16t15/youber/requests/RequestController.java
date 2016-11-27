@@ -81,7 +81,7 @@ public class RequestController
     }
 
     public static Double getEstimatedFare(Request request) { // this is $8 base pay and $2/km
-        Double estFare = 8.00;
+        Double estFare = 5.00;
         double dist = getDistanceOfRequest(request);
         estFare += (2)*dist;
 

@@ -217,6 +217,9 @@ public class RiderViewRequestActivity extends AppCompatActivity implements Notic
                         }}).setPositiveButton(R.string.dlg_accept, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             // update the status and username for request
+                            if(!MacroCommand.isNetworkAvailable())
+                                Toast.makeText(RiderViewRequestActivity.this, "Currently offline: driver selection queued", Toast.LENGTH_SHORT).show();
+
                             selectedRequest.setRiderSelectedDriver();
                             selectedRequest.setDriverUsernameID(driverArray.get(driverSelected).getUsername());
                             RequestCollectionsController.addRequest(selectedRequest);
@@ -236,6 +239,9 @@ public class RiderViewRequestActivity extends AppCompatActivity implements Notic
                 }
             }).setPositiveButton(R.string.dlg_payment, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            if(!MacroCommand.isNetworkAvailable())
+                                Toast.makeText(RiderViewRequestActivity.this, "Currently offline: payment queued", Toast.LENGTH_SHORT).show();
+
                             selectedRequest.setPaid();
                             RequestCollectionsController.addRequest(selectedRequest);
                             // dismiss dialog
