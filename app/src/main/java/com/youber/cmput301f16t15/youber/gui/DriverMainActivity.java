@@ -167,10 +167,10 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
         String display = "lat: " + geoLocation.getLat() + "lon: " + geoLocation.getLon();
         Toast t = Toast.makeText(getBaseContext(), display, Toast.LENGTH_LONG);
         t.show();
-        //Intent intent = new Intent(DriverMainActivity.this, DriverSearchListActivity.class);
-        //intent.putExtra("Geolocation",geolocation);
+        Intent intent = new Intent(DriverMainActivity.this, DriverSearchListActivity.class);
+        intent.putExtra("GeoLocation",(Parcelable) geoLocation);
         //finish();
-        //startActivity(intent);
+        startActivity(intent);
     }
 
     @Override

@@ -199,7 +199,7 @@ public class ElasticSearchController extends ElasticSearch{
         return requestCollection;
     }
     //TODO the following for functions "should" be elastic search filters (dataserver side searching)
-    public static RequestCollection getRequestsByKeywordByPrice(String keyword, Double minPrice, Double maxPrice ){
+    public static RequestCollection getRequestsByKeywordFilteredByPrice(String keyword, Double minPrice, Double maxPrice ){
         if(maxPrice.isNaN())maxPrice=Double.MAX_VALUE;
         if(minPrice.isNaN())minPrice=0.0;
 
