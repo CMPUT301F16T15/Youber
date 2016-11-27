@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.searchbox.client.JestResult;
+import io.searchbox.core.Delete;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Get;
 import io.searchbox.core.Index;
@@ -153,5 +154,23 @@ public class ElasticSearchUser extends ElasticSearch {
         }
     }
 
+    // ONLY TO BE USED FOR TESTING SO WE CLEAN UP
+    public static class delete extends AsyncTask<User, Void, Void> {
+        @Override
+        protected Void doInBackground(User... users) {
+            verifySettings();
 
+            for(User u : users) {
+                Delete delete = new Delete.Builder(u.getUsername()).index("youber").type("request").build();
+
+                try {
+                    DocumentResult result = getClient().execute(delete);
+                } catch (Exception e) {
+                    Log.i("Error", "Deleting user failed " + e.toString());
+                }
+            }
+
+            return null;
+        }
+    }
 }

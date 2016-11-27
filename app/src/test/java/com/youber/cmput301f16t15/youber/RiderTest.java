@@ -20,7 +20,7 @@ public class RiderTest
         GeoLocation geoLocation1 = new GeoLocation(53.623236, -113.569712);
         GeoLocation geoLocation2 = new GeoLocation(53.614820, -113.569697);
 
-        Request request1 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
 
         Rider rider1 = new Rider();
 //        TODO
@@ -56,7 +56,7 @@ public class RiderTest
         GeoLocation geoLocation1 = new GeoLocation(53.623236, -113.569712);
         GeoLocation geoLocation2 = new GeoLocation(53.614820, -113.569697);
 
-        Request request1 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
         Rider rider1 = new Rider();
         //TODO
 //        RequestController.addRequest(request1, rider1);

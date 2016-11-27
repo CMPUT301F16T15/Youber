@@ -59,7 +59,6 @@ public class Setup {
 
         if(checkUserUpdated()){
             UserController.observable.addListener(new Updater());
-
             AddUserCommand addUser = new AddUserCommand(user);
             UserController.observable.notifyListeners(addUser);
             UserController.saveUser(user);
@@ -115,12 +114,12 @@ public class Setup {
         //Wondering if this should use an overriden equals method for user
 
         User latestUser=null;
-        try{latestUser =ElasticSearchUser.getUser(UserController.getUser().getUsername());}
+        try{latestUser = ElasticSearchUser.getUser(UserController.getUser().getUsername());}
         catch (UserNotFoundException e){    //save user?
             return true;
         }
 
-        HashSet<UUID> latestAcceptedUUIDS =UserController.getUser().getCurrentUserType()== User.UserType.rider ?
+        HashSet<UUID> latestAcceptedUUIDS = UserController.getUser().getCurrentUserType()== User.UserType.rider ?
                 latestUser.getRequestUUIDs():latestUser.getAcceptedDriverUUIDs();
 
         HashSet<UUID> currentAcceptedUUIDS = UserController.getUser().getCurrentUserType()== User.UserType.rider ?

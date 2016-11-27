@@ -44,10 +44,19 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
     static double min;
     static double max;
     static double pricePerKm;
+
+    String keyword;
+
     static double maxPricePerKmd;
     static ArrayAdapter<String> adapter;
 
 
+
+    boolean keywordOption=false;
+    //boolean addressOption=false;
+    boolean geoLocationOption=false;
+
+    ArrayAdapter<Request> requestAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +80,7 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
 
 
         filter = (Spinner)findViewById(R.id.filter_spinner);
+
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item){
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -97,26 +107,23 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
         filter.setAdapter(adapter);
         filter.setSelection(adapter.getCount());
         filter.setOnItemSelectedListener(this);
-    }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         Intent intent = getIntent();
         RequestCollection requests=null;
         try{
             geoLocation=(GeoLocation) intent.getParcelableExtra("GeoLocation");
             if(geoLocation==null)throw new NullPointerException();
-            radius=intent.getDoubleExtra("Radius",2.0);
+            geoLocationOption=true;
+            radius=intent.getDoubleExtra("Radius",2000.0);
             Log.i("radius: ", Double.toString(radius));
             Log.i("radius: ", Double.toString(geoLocation.getLat()));
             Log.i("radius: ", Double.toString(geoLocation.getLon()));
-           requests = ElasticSearchController.getRequestsbyGeoLocation(geoLocation,radius);
+            requests = ElasticSearchController.getRequestsByGeoLocation(geoLocation,radius);
         } catch (Exception e){
-            String keyword=intent.getStringExtra("Keyword");
+            keyword=intent.getStringExtra("Keyword");
             try {
-                requests = ElasticSearchController.getRequestsbyKeyWord(keyword);
+                requests = ElasticSearchController.getRequestsByKeyWord(keyword);
+                keywordOption=true;
             } catch (Exception e1) {
                 Log.i("Error", "Elastic search failed");
             }
@@ -124,14 +131,13 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
 
         User user = UserController.getUser();
         requests = RequestCollectionsController.hideUserRequestInSearch(user, requests);
-        
+
         requestArray = new ArrayList<Request>();
         requestArray.addAll(requests.values());
 
-        ArrayAdapter<Request> adapter = new ArrayAdapter<Request>(this, R.layout.list_item, requestArray);
-        requestListView.setAdapter(adapter);
+        requestAdapter = new ArrayAdapter<Request>(this, R.layout.list_item, requestArray);
+        requestListView.setAdapter(requestAdapter);
     }
-
 
 
     @Override
@@ -217,10 +223,21 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                             max = Double.NaN;
                         }
 
-                        String results = "min: " + min + "\n" +  "max: " + max + "\n";
+                        String results = "min: " + min + "\n" +  "max: " + max;
                         Toast.makeText(getBaseContext(), results, Toast.LENGTH_LONG).show();
+
                         filter.setSelection(adapter.getCount());
 
+                        RequestCollection requestCollection= new RequestCollection();
+                        if(keywordOption){
+                            requestCollection = ElasticSearchController.getRequestsByKeywordFilteredByPrice(keyword, min, max);
+                        }else if(geoLocationOption){
+                            requestCollection = ElasticSearchController.getRequestsByGeoLocationFilteredByPrice(geoLocation, radius, min,max);
+                        }
+                        requestArray.clear();
+                        requestArray.addAll(requestCollection.values());
+                        requestAdapter.notifyDataSetChanged();
+                        filter.setSelection(0);
                     }
                 });
                 filterDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -238,7 +255,7 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                 filterDialog = new AlertDialog.Builder(DriverSearchListActivity.this);
                 inflater = (LayoutInflater)DriverSearchListActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
                 final View layout2 = inflater.inflate(R.layout.dlg_request_filter_price_km, (ViewGroup)findViewById(R.id.filter_dialog));
-                filterDialog.setTitle("Please set price filters");
+                filterDialog.setTitle("Please set price by km filters");
                 filterDialog.setView(layout2);
                 filterDialog.setPositiveButton("Filter", new DialogInterface.OnClickListener() {
                     @Override
@@ -261,9 +278,21 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                         String results = "minPricePerKm: " + pricePerKm
                                 + "\n" + "maxPricePerKm: " + maxPricePerKmd;
                         Toast.makeText(getBaseContext(), results, Toast.LENGTH_LONG).show();
+
                         filter.setSelection(adapter.getCount());
 
+                        RequestCollection requestCollection= new RequestCollection();
+                        if(keywordOption){
+                            requestCollection = ElasticSearchController.getRequestsByKeywordFilteredByPricePerKm(keyword, pricePerKm, maxPricePerKmd);
+                        }else if(geoLocationOption){
+                            requestCollection = ElasticSearchController.getRequestsByGeoLocationFilteredByPricePerKm(geoLocation, radius, pricePerKm,maxPricePerKmd);
+                        }
+                        requestArray.clear();
+                        requestArray.addAll(requestCollection.values());
+                        requestAdapter.notifyDataSetChanged();
+                        filter.setSelection(0);
                     }});
+
 
                 filterDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override

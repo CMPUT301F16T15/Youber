@@ -59,7 +59,7 @@ public class ElasticSearchRequest extends ElasticSearch{
      * Search parameters for our query
      * @see ElasticSearchController
      */
-    public static class getObjectsByGeolocation extends AsyncTask<String, Void, ArrayList<Request>> {
+    public static class getObjectsBySearch extends AsyncTask<String, Void, ArrayList<Request>> {
 
 
         @Override
@@ -89,7 +89,7 @@ public class ElasticSearchRequest extends ElasticSearch{
     }
     /**
      * Running the search
-     * @see getObjectsByGeolocation
+     * @see getObjectsBySearch
      */
     public static class getObjects extends AsyncTask<String, Void, ArrayList<Request>> {
 
@@ -150,9 +150,6 @@ public class ElasticSearchRequest extends ElasticSearch{
             return null;
         }
     }
-
-
-
 
     /**
      * Get request collection
