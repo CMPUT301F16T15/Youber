@@ -5,7 +5,11 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
+import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
+import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.misc.Observable;
+import com.youber.cmput301f16t15.youber.requests.Request;
+import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -15,6 +19,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.UUID;
 
 /**
  * Created by Jess on 2016-11-08.
@@ -88,8 +95,7 @@ public class UserController {
     public static void saveUser(User u) {
         user = u;
 
-        try
-        {
+        try {
             FileOutputStream fos = c.openFileOutput(FILENAME, 0);
             OutputStreamWriter writer = new OutputStreamWriter(fos);
 
@@ -98,13 +104,8 @@ public class UserController {
 
             writer.flush();
         }
-        catch (FileNotFoundException e)
-        {
-            throw new RuntimeException();
-        }
-        catch (IOException e)
-        {
-            throw new RuntimeException();
+        catch (Exception e) {
+            throw new RuntimeException("Unable to save user to file " + e.toString());
         }
     }
 
@@ -184,9 +185,43 @@ public class UserController {
         update();
     }
 
+    public static boolean isRequestContainedInAcceptedDriversUUIDS(UUID uuid) {
+        return user.getRequestUUIDs().contains(uuid);
+    }
+
+    public static void removeRequestFromAcceptedDriverUUIDS(UUID uuid) {
+        user.deleteUUIDFromAccepted(uuid);
+        update();
+    }
+
     private static void update() {
         saveUser(user);
         AddUserCommand userCommand = new AddUserCommand(user);
         observable.notifyListeners(userCommand);
+    }
+
+    public static void cleanUpDriverList() {
+        if(user.getCurrentUserType() == User.UserType.rider)
+            return;
+
+        ArrayList<UUID> uuids = new ArrayList<>(user.getAcceptedDriverUUIDs());
+
+        for(UUID u : uuids) {
+            Request esRequest = ElasticSearchController.getRequest(u);
+
+            if(esRequest == null)
+                continue;
+
+            String esDriver = esRequest.getDriverUsernameID();
+            if(!esDriver.equals("")) {
+                // if we are the selected driver, make sure we have it in our completed (extra safe)
+                if (esDriver.equals(user.getUsername()))
+                    user.addToDriverConfirmed(u);
+                else
+                    user.removeRequestUUID(u);
+            }
+        }
+
+        update();
     }
 }

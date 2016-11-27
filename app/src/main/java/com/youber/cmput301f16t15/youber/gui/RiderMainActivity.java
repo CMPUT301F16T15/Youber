@@ -79,10 +79,10 @@ public class RiderMainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_rider_main);
+        Setup.run(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -90,9 +90,11 @@ public class RiderMainActivity extends AppCompatActivity {
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setBuiltInZoomControls(true);
         map.setMultiTouchControls(true);
+        map.setBuiltInZoomControls(false);
 
         IMapController mapController = map.getController();
         mapController.setZoom(12);
+        
         //map currently focuses on Lister on launch
         GeoPoint EdmontonGPS = new GeoPoint(53.521609, -113.530633);
         mapController.setCenter(EdmontonGPS);
@@ -106,9 +108,9 @@ public class RiderMainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onStart(){
-        super.onStart();
-        Setup.run(this);
+    public void onResume(){
+        super.onResume();
+        Setup.refresh(this);
     }
 
     @Override
@@ -223,7 +225,7 @@ public class RiderMainActivity extends AppCompatActivity {
                     RequestCollectionsController.addRequest(request);
                     dlg.dismiss(); //Dismiss once everything is OK.
 
-                    if(MacroCommand.isRequestContained(request.getUUID()))
+                    if(!MacroCommand.isNetworkAvailable())
                         Toast.makeText(RiderMainActivity.this, "Currently Offline: add request queued", Toast.LENGTH_SHORT).show();
                     else
                         Toast.makeText(RiderMainActivity.this, "Successfully added request", Toast.LENGTH_SHORT).show();

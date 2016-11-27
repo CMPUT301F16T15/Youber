@@ -6,15 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:theme="@android:style/Theme.Holo"
     tools:context="com.youber.cmput301f16t15.youber.gui.DriverMainActivity">
 
 
+    <org.osmdroid.views.MapView android:id="@+id/map"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:enabled= "true"
+        android:clickable = "true"
+        />
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:id="@+id/appBar"
+        >
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -25,142 +32,78 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <TabHost
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:id="@+id/tabHost"
+        android:layout_below="@+id/appBar"
+        android:layout_marginTop="15dp"
+
         >
 
+        <EditText
+            android:layout_width="205dp"
+            android:layout_height="48dp"
+            android:inputType="textImeMultiLine|textPersonName"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:ems="10"
+            android:layout_alignParentStart="true"
+            android:id="@+id/keyword_search"
+            android:hint="Keyword/Address"
+            android:textColorHint="@color/grey"
+            android:layout_marginLeft="15dp"
+            />
+
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TabWidget
-                android:id="@android:id/tabs"
-                android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/keyword_search"
+            android:background="@color/lightGreen"
+            android:textColor="@color/black"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/spinner_Layout"
+            >
+            <Spinner
+                android:id="@+id/search_spinner"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/lightGreen"
-
+                android:spinnerMode="dropdown"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="8dp"
                 />
 
-            <FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
-
-                <RelativeLayout
-                    android:id="@+id/keyword"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:layout_width="300dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight = "1"
-                        android:inputType="textImeMultiLine|textPersonName"
-                        android:ems="10"
-                        android:layout_marginTop="100dip"
-                        android:layout_alignParentStart="true"
-                        android:id="@+id/keyword_search"
-                        android:hint="keyword"
-                        />
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="100dp"
-                        android:text="Search"
-                        android:id="@+id/search_keyword_button"
-                        android:background="@color/lightGreen"
-                        android:layout_alignParentEnd="true"
-                        android:layout_weight="1"
-                        android:layout_toRightOf="@+id/keyword_search"
-                        />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/Location"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <Button
-                        android:text="Clear"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentEnd="true"
-                        android:id="@+id/clear_button"
-                        android:background="@color/lightGreen"
-                        android:onClick="clearMap"
-                        />
-
-                    <Button
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:text="Search by Geolocation"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentStart="true"
-                        android:id="@+id/search_geolocation_button"
-                        android:background="@color/lightGreen"
-                        />
-
-                    <org.osmdroid.views.MapView android:id="@+id/map"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="110dip"
-                        android:layout_marginBottom="50dip"
-                        android:enabled= "true"
-                        android:clickable = "true"
-                        />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/Address"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight = "1"
-                        android:inputType="textImeMultiLine|textPersonName"
-                        android:ems="10"
-                        android:layout_marginTop="100dip"
-                        android:layout_alignParentStart="true"
-                        android:id="@+id/address_search"
-                        android:hint="Address"
-                        />
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="150dp"
-                        android:text="Search"
-                        android:id="@+id/search_address_button"
-                        android:background="@color/lightGreen"
-                        android:layout_alignParentEnd="true"
-                        android:layout_weight="1"
-                        />
-
-                    <org.osmdroid.views.MapView android:id="@+id/AddressMap"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="210dip"
-                        android:layout_marginBottom="50dip"
-                        android:enabled= "true"
-                        android:clickable = "true"
-                        />
-
-                </RelativeLayout>
-            </FrameLayout>
         </RelativeLayout>
-    </TabHost>
+
+    </LinearLayout>
+
+    <Button
+        android:text="Clear"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/clear_button"
+        android:background="@color/lightGreen"
+        android:textColor="@color/black"
+        android:onClick="clearMap"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        />
+
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:text="Search by Geolocation"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/search_geolocation_button"
+        android:textColor="@color/black"
+        android:background="@color/lightGreen"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="15dp"
+        />
+
 
 </RelativeLayout>

@@ -1,5 +1,7 @@
 package com.youber.cmput301f16t15.youber.elasticsearch;
 
+import com.youber.cmput301f16t15.youber.commands.MacroCommand;
+import com.youber.cmput301f16t15.youber.gui.LoginActivity;
 import com.youber.cmput301f16t15.youber.users.Driver;
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.misc.Observable;
@@ -7,6 +9,7 @@ import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
 import com.youber.cmput301f16t15.youber.users.Rider;
 import com.youber.cmput301f16t15.youber.users.User;
+import com.youber.cmput301f16t15.youber.users.UserController;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -60,8 +63,7 @@ public class ElasticSearchController extends ElasticSearch{
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    public static ArrayList<User> getAcceptedDrivers(Request request) throws Exception
-    {
+    public static ArrayList<User> getAcceptedDrivers(Request request) {
 
         String query =
         "{\n" +
@@ -77,16 +79,43 @@ public class ElasticSearchController extends ElasticSearch{
         try {
             ArrayList<User> users = getter.get();
             return users;
-
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return null;
     }
+
+
+
+    public static ArrayList<User> getConfirmedDriver(Request request) {
+
+        String query =
+                "{\n" +
+                        "    \"query\" : {\n" +
+                        "        \"match\" : {\n" +
+                        "            \"confirmedRequests\" : \""+request.getUUID().toString()+"\"\n" +
+                        "        }\n" +
+                        "    }\n" +
+                        "}";
+        ElasticSearchUser.getUserByRequestUUID getter = new ElasticSearchUser.getUserByRequestUUID();
+        getter.execute(query);
+
+        try {
+            ArrayList<User> users = getter.get();
+            return users;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+
+
+
+
 
     /**
      * Do a search for a list of requests by their location
@@ -98,30 +127,26 @@ public class ElasticSearchController extends ElasticSearch{
      */
     public static RequestCollection getRequestsbyGeoLocation(GeoLocation start, Double radiusInKm) throws Exception {
         RequestCollection requestCollection =new RequestCollection();
-        String query ="{\n" +
-                "    \"filter\" : {\n" +
-                "        \"geo_distance\" : {\n" +
-                "            \"distance\" : \""+Double.toString(radiusInKm)+"m\",\n" +
-                "            \"startLocation\" :[ "+Double.toString(start.getLat())+",\n" +
-                "            "+Double.toString(start.getLon())+"]\n" +
-                "        }\n" +
-                "    }\n" +
-                "}";
 
-    /*
         String query ="{\n" +
-                "    \"filter\" : {\n" +
-
-                "        \"bool\" : {\n" +
-                "         \"\"
-                "        \"geo_distance\" : {\n" +
-                "            \"distance\" : \""+Double.toString(radiusInKm)+"m\",\n" +
-                "            \"startLocation\" :[ "+Double.toString(start.getLat())+",\n" +
-                "            "+Double.toString(start.getLon())+"]\n" +
-                "        }\n" +
-                "    }\n" +
-                "}";
-*/
+            "     \"query\" : {\n"+
+            "      \"bool\" : {\n" +
+            "            \"should\" :\n" +
+            "            [\n" +
+            "            {\"match\" : {\"currentStatus\": \"opened\"}},\n" +
+            "            {\"match\" : {\"currentStatus\": \"acceptedByDrivers\"}}\n" +
+            "            ],\n" +
+            "               \"minimum_should_match\" : 1" +
+            "              }"+
+            "             },"+
+            "    \"filter\" : {\n" +
+            "        \"geo_distance\" : {\n" +
+            "            \"distance\" : \""+Double.toString(radiusInKm)+"m\",\n" +
+            "            \"startLocation\" :[ "+Double.toString(start.getLat())+",\n" +
+            "            "+Double.toString(start.getLon())+"]\n" +
+            "        }\n" +
+            "    }\n" +
+            "}";
 
         ElasticSearchRequest.getObjectsByGeolocation getter = new ElasticSearchRequest.getObjectsByGeolocation();
         getter.execute(query);
@@ -146,32 +171,20 @@ public class ElasticSearchController extends ElasticSearch{
      */
     public static RequestCollection getRequestsbyKeyWord(String keyword) throws Exception {
         RequestCollection requestCollection =new RequestCollection();
-        /*
-        String query =
-                "{\n" +
-                "    \"query\" : {\n" +
-                "        \"match\" : {\n" +
-                "            \"description\" : \""+keyword+"\"\n" +
 
-                "        }\n" +
-                "    }\n" +
-                "}";
-
-*/
         String query = "{\n" +
-        "    \"query\" : {\n" +
-        "        \"bool\" : {\n" +
-        "            \"must\" : { \"match\" : {\"description\" : \""+keyword+"\"}},\n" +
-        "            \"should\" :\n" +
-        "            [\n" +
-        "            {\"match\" : {\"currentStatus\": \"opened\"}},\n" +
-        "            {\"match\" : {\"currentStatus\": \"acceptedByDrivers\"}}\n" +
-        "            ]\n" +
-        "        }\n" +
-        "    }\n" +
-        "}";
-
-
+            "    \"query\" : {\n" +
+            "        \"bool\" : {\n" +
+            "            \"must\" : { \"match\" : {\"description\" : \""+keyword+"\"}},\n" +
+            "            \"should\" :\n" +
+            "            [\n" +
+            "            {\"match\" : {\"currentStatus\": \"opened\"}},\n" +
+            "            {\"match\" : {\"currentStatus\": \"acceptedByDrivers\"}}\n" +
+            "            ],\n" +
+            "               \"minimum_should_match\" : 1" +
+            "        }\n" +
+            "    }\n" +
+            "}";
 
         ElasticSearchRequest.getObjectsByGeolocation getter = new ElasticSearchRequest.getObjectsByGeolocation();
         getter.execute(query);
@@ -218,4 +231,35 @@ public class ElasticSearchController extends ElasticSearch{
     }
 
 
+    public static Request getRequest(UUID u) {
+        ElasticSearchRequest.getObjects getter = new ElasticSearchRequest.getObjects();
+        getter.execute(u.toString());
+
+        try {
+            ArrayList<Request> requests = getter.get();
+            if(requests.size() == 1)
+                return requests.get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static User getUser(String username) {
+        ElasticSearchUser.getObjects searchUser = new ElasticSearchUser.getObjects();
+        searchUser.execute(username);
+
+        try {
+            ArrayList<User> users = searchUser.get();
+            if(users.size() == 1)
+                return users.get(0);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

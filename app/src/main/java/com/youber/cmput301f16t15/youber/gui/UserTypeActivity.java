@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.youber.cmput301f16t15.youber.R;
+import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.misc.Setup;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
@@ -26,6 +27,7 @@ public class UserTypeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_type);
+        Setup.run(this);
 
         Button riderOption = (Button) findViewById(R.id.riderButton);
         Button driverOption = (Button) findViewById(R.id.driverButton);
@@ -58,10 +60,9 @@ public class UserTypeActivity extends AppCompatActivity {
 
     private void saveUserTypeRequests(User user)
     {
-        Setup.run(this);
         Log.i("Requests:" ,Integer.toString(user.getRequestUUIDs().size()));
+
         RequestCollection requestCollection = ElasticSearchRequest.getRequestCollection(user.getRequestUUIDs());
-        RequestCollectionsController.setContext(UserTypeActivity.this);
         RequestCollectionsController.saveRequestCollections(requestCollection);
     }
 }
