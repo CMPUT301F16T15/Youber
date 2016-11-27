@@ -14,6 +14,7 @@ import org.junit.Test;
  * Created by Reem on 2016-10-13.
  */
 import java.util.ArrayList;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.Assert.*;
@@ -96,4 +97,164 @@ public class UserTest
         user1.setPhoneNumber("another number Lol");
         assertEquals("another number Lol", user1.getPhoneNumber());
     }
+
+    @Test
+    public void testGetVechicleMake()
+    {
+        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
+        user1.setMake("Ford");
+        assertEquals("Ford",user1.getMake());
+    }
+
+
+
+    @Test
+    public void testSetVechicleMake()
+    {
+        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
+        user1.setMake("Ford");
+        assertEquals("Ford",user1.getMake());
+    }
+
+    @Test
+    public void testGetVechicleModel()
+    {
+        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
+        user1.setModel("Taurus");
+        assertEquals("Taurus",user1.getModel());
+
+    }
+
+    @Test
+    public void testSetVechicleModel()
+    {
+        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
+        user1.setModel("Taurus");
+        assertEquals("Taurus",user1.getModel());
+
+    }
+
+    @Test
+    public void testGetVechicleYear(){
+        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
+        user1.setYear("2003");
+        assertEquals("2003",user1.getYear());
+    }
+
+    @Test
+    public void testSetVechicleYear(){
+        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
+        user1.setYear("2003");
+        assertEquals("2003",user1.getYear());
+    }
+
+    @Test
+    public void testGetVechicleColor(){
+        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
+        user1.setColour("Beige");
+        assertEquals("Beige",user1.getColour());
+    }
+
+    @Test
+    public void testSetVechicleColor(){
+        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
+        user1.setColour("Beige");
+        assertEquals("Beige",user1.getColour());
+    }
+
+
+    @Test
+    public void testAddRequesttUUID(){
+
+        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
+        UUID uuid = UUID.randomUUID();
+        user1.addRequesttUUID(uuid);
+        assertTrue(user1.getRequestUUIDs().contains(uuid));
+    }
+
+    @Test
+    public void testGetRequestUUID(){
+        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
+        UUID uuid = UUID.randomUUID();
+        user1.addRequesttUUID(uuid);
+        assertEquals(user1.getRequestUUIDs().size(),1);
+
+    }
+
+    @Test
+    public void testGetRiderUUIDs(){
+        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
+        UUID uuid = UUID.randomUUID();
+        user1.addRequesttUUID(uuid);
+        assertEquals(user1.getRiderUUIDs().size(),1);
+    }
+
+    @Test
+    public void testGetAcceptedDriverUUIDs(){
+        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
+        user1.setCurrentUserType(User.UserType.driver);
+        UUID uuid = UUID.randomUUID();
+        user1.addRequesttUUID(uuid);
+        assertTrue(user1.getAcceptedDriverUUIDs().contains(uuid));
+    }
+
+    @Test
+    public void testGetConfirmedDriverUUIDs(){
+        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
+        user1.setCurrentUserType(User.UserType.driver);
+        UUID uuid = UUID.randomUUID();
+        user1.addToDriverConfirmed(uuid);
+        assertEquals(1, user1.getConfirmedDriverUUIDs().size());
+    }
+
+    @Test
+    public void testAddToDriverConfirmed(){
+        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
+        user1.setCurrentUserType(User.UserType.driver);
+        UUID uuid = UUID.randomUUID();
+        user1.addToDriverConfirmed(uuid);
+        assertTrue(user1.getConfirmedDriverUUIDs().contains(uuid));
+    }
+
+
+    @Test
+    public void testDeleteUUIDFromAccepted(){
+        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
+        user1.setCurrentUserType(User.UserType.driver);
+        UUID uuid = UUID.randomUUID();
+        user1.addRequesttUUID(uuid);
+        assertTrue(user1.getAcceptedDriverUUIDs().contains(uuid));
+        user1.deleteUUIDFromAccepted(uuid);
+        assertFalse(user1.getAcceptedDriverUUIDs().contains(uuid));
+
+
+    }
+
+
+    @Test
+    public void testRemoveRequestUUID(){
+        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
+        UUID uuid = UUID.randomUUID();
+        user1.addRequesttUUID(uuid);
+        assertTrue(user1.getRequestUUIDs().contains(uuid));
+        user1.removeRequestUUID(uuid);
+        assertFalse(user1.getRequestUUIDs().contains(uuid));
+    }
+
+
+    @Test
+    public void testGetCurrentUserType(){
+        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
+        assertEquals(user1.getCurrentUserType(), User.UserType.rider);
+    }
+
+
+    @Test
+    public void testSetCurrentUserType(){
+
+        User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
+        user1.setCurrentUserType(User.UserType.driver);
+        assertEquals(user1.getCurrentUserType(), User.UserType.driver);
+    }
+
 }

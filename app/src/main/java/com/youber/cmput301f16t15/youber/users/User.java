@@ -35,10 +35,6 @@ public class User implements Serializable {
     private String phoneNumber;
     private String email;
 
-    private String make;
-    private String model;
-    private String year;
-    private String colour;
 
     /**
      * The enum User type.
@@ -217,35 +213,21 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getMake() { return make; }
+    public String getMake() { return driverUserInfo.getMake(); }
 
-    public void setMake(String make){ this.make = make;}
+    public void setMake(String make){ driverUserInfo.setMake(make);}
 
-    public String getModel() { return model;}
+    public String getModel() { return driverUserInfo.getModel();}
 
-    public void setModel(String model) { this.model = model;}
+    public void setModel(String model) { driverUserInfo.setModel(model);}
 
-    public String getYear() { return year;}
+    public String getYear() { return driverUserInfo.getYear();}
 
-    public void setYear(String year) { this.year = year;}
+    public void setYear(String year) { driverUserInfo.setYear(year);}
 
-    public String getColour() {return colour;}
+    public String getColour() {return driverUserInfo.getColor();}
 
-    public void setColour(String colour){this.colour = colour;}
-
-//    public ArrayList<UUID> getRequestUUIDs() { // note this returns the relavant uuids respective to the current user type
-//        if(currentUserType == UserType.rider)
-//            return riderRequestUUIDs;
-//
-//        return driverRequestUUIDs;
-//    }
-
-    /**
-     * Gets requests.
-     *
-     * @return the requests
-     */
-
+    public void setColour(String colour){driverUserInfo.setColor(colour);}
 
 
     public HashSet<UUID> getRequestUUIDs() {
