@@ -185,14 +185,7 @@ public class UserController {
         update();
     }
 
-    public static boolean isRequestContainedInAcceptedDriversUUIDS(UUID uuid) {
-        return user.getRequestUUIDs().contains(uuid);
-    }
 
-    public static void removeRequestFromAcceptedDriverUUIDS(UUID uuid) {
-        user.deleteUUIDFromAccepted(uuid);
-        update();
-    }
 
     private static void update() {
         saveUser(user);

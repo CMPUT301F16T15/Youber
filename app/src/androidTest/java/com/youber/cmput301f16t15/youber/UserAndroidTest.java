@@ -3,6 +3,7 @@ package com.youber.cmput301f16t15.youber;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
+import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
@@ -39,7 +40,7 @@ public class UserAndroidTest {
 
 
     @Test
-    public void testGetUserByUsername() // not sure about this anymore
+    public void testGetUserByUsername()
     {
         User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
         ElasticSearchUser.add add = new ElasticSearchUser.add();
@@ -127,6 +128,62 @@ public class UserAndroidTest {
     }
 
 
+    @Test
+    public void testSetVechicleModel(){
+
+        Context appContext = InstrumentationRegistry.getTargetContext();
+
+        User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
+
+        UserController.setContext(appContext);
+        UserController.saveUser(user);
+
+        UserController.setVehicleModel("Taurus");
+        assertEquals(UserController.getUser().getModel(),"Taurus");
+    }
+
+
+    @Test
+    public void testSetVechicleMake(){
+        Context appContext = InstrumentationRegistry.getTargetContext();
+
+        User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
+
+        UserController.setContext(appContext);
+        UserController.saveUser(user);
+
+        UserController.setVehicleMake("Ford");
+        assertEquals(UserController.getUser().getMake(),"Ford");
+
+    }
+
+    @Test
+    public void testSetVechicleYear(){
+        Context appContext = InstrumentationRegistry.getTargetContext();
+
+        User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
+
+        UserController.setContext(appContext);
+        UserController.saveUser(user);
+
+        UserController.setVehicleYear("2003");
+        assertEquals(UserController.getUser().getYear(),"2003");
+    }
+
+    @Test
+    public void testSetVechicleColor(){
+        Context appContext = InstrumentationRegistry.getTargetContext();
+
+        User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
+
+        UserController.setContext(appContext);
+        UserController.saveUser(user);
+
+        UserController.setVehicleColour("Beige");
+        assertEquals(UserController.getUser().getColour(),"Beige");
+    }
+
+
 
     @Test
     public void testSetLastName()
@@ -151,7 +208,7 @@ public class UserAndroidTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
-
+        MacroCommand.setContext(appContext);
         UserController.setContext(appContext);
         UserController.saveUser(user);
 
@@ -173,7 +230,7 @@ public class UserAndroidTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
-
+        MacroCommand.setContext(appContext);
         UserController.setContext(appContext);
         UserController.saveUser(user);
 
