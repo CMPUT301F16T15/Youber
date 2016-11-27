@@ -34,13 +34,6 @@ public class RequestCollection extends HashMap<UUID,Request> implements Serializ
     }
 
     /**
-     * Driver accept.
-     */
-    public void driverAccept() {
-
-    }
-
-    /**
      * Get request by uuid request.
      *
      * @param uuid the uuid
@@ -48,49 +41,6 @@ public class RequestCollection extends HashMap<UUID,Request> implements Serializ
      */
     public Request getRequestByUUID(UUID uuid){
         return this.get(uuid);
-    }
-
-    /**
-     * Gets request status.
-     *
-     * @param uuid the uuid
-     * @return the request status
-     */
-    public boolean getRequestStatus(UUID uuid) {
-        return this.get(uuid).isComplete();
-    }
-
-    /**
-     * Gets by geolocation.
-     *
-     * @param geoLocation the geo location
-     * @param radius      the radius
-     * @return the by geolocation
-     */
-    public RequestCollection getByGeolocation(GeoLocation geoLocation, double radius) {
-        RequestCollection requestCollectionSearchedByGeoLocation = new RequestCollection();
-        // find by geolocation
-        return requestCollectionSearchedByGeoLocation;
-    }
-
-    /**
-     * Gets by keyword.
-     *
-     * @param s the s
-     * @return the by keyword
-     */
-    public RequestCollection getByKeyword(String s) {
-        return null;
-    }
-
-    /**
-     * Contains boolean.
-     *
-     * @param request the request
-     * @return the boolean
-     */
-    public boolean contains(Request request) {
-        return false;
     }
 
     /**
