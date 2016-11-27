@@ -33,7 +33,7 @@ public class RequestsTest
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(90.0, 90.0);
         // we expect this line to throw since the locations are the same
-        Request request = new Request(geoLocation1, geoLocation2);
+        Request request = new Request(geoLocation1, "", geoLocation2, "");
     }
 
     @Test
@@ -42,7 +42,7 @@ public class RequestsTest
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
 
-        Request request = new Request(geoLocation1, geoLocation2);
+        Request request = new Request(geoLocation1, "", geoLocation2, "");
         assertEquals(geoLocation1, request.getStartLocation());
     }
 
@@ -52,7 +52,7 @@ public class RequestsTest
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
 
-        Request request = new Request(geoLocation1, geoLocation2);
+        Request request = new Request(geoLocation1, "", geoLocation2, "");
         assertEquals(geoLocation2, request.getEndLocation());
     }
 
@@ -62,8 +62,8 @@ public class RequestsTest
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
 
-        Request request1 = new Request(geoLocation1, geoLocation2);
-        Request request2 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
+        Request request2 = new Request(geoLocation1, "", geoLocation2, "");
 
         boolean test = request1.equals(request2);
         assertFalse(test);
@@ -75,22 +75,19 @@ public class RequestsTest
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
 
-        Request request1 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
         assertEquals(request1.getCurrentStatus(), Request.RequestStatus.opened);
     }
 
     @Test
     public void testCloseRequest()
     {
-
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
 
-        Request request1 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
         RequestController.closeRequest(request1);
-//        assertTrue("Expected to fail until Project Part 5", request1.isClosed());
-        assertTrue(false);
-
+        assertEquals(Request.RequestStatus.completed, request1.getCurrentStatus());
     }
 
     @Test
@@ -99,7 +96,7 @@ public class RequestsTest
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
 
-        Request request1 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
         RequestController.acceptRequest(request1);
 
         assertEquals(request1.getCurrentStatus(), Request.RequestStatus.acceptedByDrivers);
@@ -111,11 +108,11 @@ public class RequestsTest
         GeoLocation geoLocation1 = new GeoLocation(53.623236, -113.569712);
         GeoLocation geoLocation2 = new GeoLocation(53.614820, -113.569697);
 
-        Request request1 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
+        Double expected = 10.231134;
 
-        Double actualDistance = 0.9358; // using http://www.movable-type.co.uk/scripts/latlong.html
-        assertEquals(actualDistance, RequestController.getDistanceOfRequest(request1));
-
+        request1.setDistance(expected);
+        assertEquals(expected, RequestController.getDistanceOfRequest(request1));
     }
 
     @Test
@@ -123,10 +120,11 @@ public class RequestsTest
     {
         GeoLocation geoLocation1 = new GeoLocation(53.623236, -113.569712);
         GeoLocation geoLocation2 = new GeoLocation(53.614820, -113.569697);
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
+        request1.setDistance(10.25);
 
-        Request request1 = new Request(geoLocation1, geoLocation2);
-        Double actualFair = 9.87;
-        // $2 per km _ $8 base fee
+        Double actualFair = 9.92;
+        // $0.48 per km _ $5 base fee
         assertEquals(actualFair, RequestController.getEstimatedFare(request1));
     }
 
@@ -136,35 +134,21 @@ public class RequestsTest
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
 
-        Request request1 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
         RequestController.completeRequest(request1);
-        assertTrue(request1.isComplete());
+        assertEquals(Request.RequestStatus.completed, request1.getCurrentStatus());
     }
-
-
-    @Test
-    public void testLocalRequestsToBeSent() //project part 5
-    {
-        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
-        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-        Request request1 = new Request(geoLocation1, geoLocation2);
-
-        Driver driver = new Driver();
-        RequestController.addDriver(request1,driver);
-    }
-
 
     @Test
     public void testRequestAcceptedByDrivers() // project part 5
     {
-        //this should really be in the other file
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
 
-        Request request1 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
         RequestController.acceptRequest(request1);//would happen on other app
 
-        assertEquals(request1.getCurrentStatus(), Request.RequestStatus.acceptedByDrivers);
+        assertEquals(Request.RequestStatus.acceptedByDrivers, request1.getCurrentStatus());
     }
 
     @Test
@@ -172,8 +156,8 @@ public class RequestsTest
     {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-        Request request1 = new Request(geoLocation1, geoLocation2);
-        Request request2 =new Request(geoLocation1,geoLocation2,request1.getUUID());
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
+        Request request2 = new Request(geoLocation1, geoLocation2,request1.getUUID());
 
         assertTrue(request1.hashCode()==request2.hashCode());
         request2.setPaid();
@@ -183,8 +167,8 @@ public class RequestsTest
     public void testRequestEquals(){
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-        Request request1 = new Request(geoLocation1, geoLocation2);
-        Request request2 =new Request(geoLocation1,geoLocation2,request1.getUUID());
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
+        Request request2 = new Request(geoLocation1,geoLocation2,request1.getUUID());
 
         assertTrue(request1.equals(request2));
         request2.setPaid();
@@ -195,15 +179,15 @@ public class RequestsTest
     {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-        Request request1 = new Request(geoLocation1, geoLocation2);
-        Request request2 =new Request(geoLocation1,geoLocation2);
-        Request request3 =new Request(geoLocation1,geoLocation2,request1.getUUID());
-        Request request4 =new Request(geoLocation1,geoLocation2,request2.getUUID());
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
+        Request request2 = new Request(geoLocation1, "", geoLocation2, "");
+        Request request3 = new Request(geoLocation1,geoLocation2,request1.getUUID());
+        Request request4 = new Request(geoLocation1,geoLocation2,request2.getUUID());
 
-        RequestCollection requestCollection1=new RequestCollection();
+        RequestCollection requestCollection1 = new RequestCollection();
         requestCollection1.add(request1);
         requestCollection1.add(request2);
-        RequestCollection requestCollection2=new RequestCollection();
+        RequestCollection requestCollection2 = new RequestCollection();
         requestCollection2.add(request3);
         requestCollection2.add(request4);
 
@@ -216,10 +200,10 @@ public class RequestsTest
     {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-        Request request1 = new Request(geoLocation1, geoLocation2);
-        Request request2 =new Request(geoLocation1,geoLocation2);
-        Request request3 =new Request(geoLocation1,geoLocation2,request1.getUUID());
-        Request request4 =new Request(geoLocation1,geoLocation2,request2.getUUID());
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
+        Request request2 = new Request(geoLocation1, "", geoLocation2, "");
+        Request request3 = new Request(geoLocation1,geoLocation2,request1.getUUID());
+        Request request4 = new Request(geoLocation1,geoLocation2,request2.getUUID());
 
         RequestCollection requestCollection1=new RequestCollection();
         requestCollection1.add(request1);
@@ -231,6 +215,26 @@ public class RequestsTest
         assertTrue(requestCollection1.equals(requestCollection2));
         request3.setPaid();
         assertFalse(requestCollection1.equals(requestCollection2));
+    }
+
+    @Test
+    public void testSetDescription() {
+        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
+        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
+        request1.setDescription("hello how are you?");
+
+        assertEquals("hello how are you?", request1.getDescription());
+    }
+
+    @Test
+    public void testGetDriver() {
+        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
+        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
+        request1.setDriverUsernameID("bemo");
+
+        assertEquals("bemo", request1.getDriverUsernameID());
     }
 }
 

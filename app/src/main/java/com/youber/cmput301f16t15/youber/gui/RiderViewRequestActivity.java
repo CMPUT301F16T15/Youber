@@ -88,6 +88,19 @@ public class RiderViewRequestActivity extends AppCompatActivity implements Notic
                 TextView phone = (TextView) dlg.findViewById(R.id.phoneNumberLink);
                 phone.setText(driverArray.get(i).getPhoneNumber());
 
+                TextView make = (TextView) dlg.findViewById(R.id.vehicleMakeLink);
+                make.setText(driverArray.get(i).getMake());
+
+                TextView model = (TextView) dlg.findViewById(R.id.vehicleModelLink);
+                model.setText(driverArray.get(i).getModel());
+
+                TextView year = (TextView) dlg.findViewById(R.id.vehicleYearLink);
+                year.setText(driverArray.get(i).getYear());
+
+                TextView colour = (TextView) dlg.findViewById(R.id.vehicleColourLink);
+                colour.setText(driverArray.get(i).getColour());
+
+
                 userType =(UserController.getUser().getCurrentUserType());
             }
         });
@@ -217,6 +230,9 @@ public class RiderViewRequestActivity extends AppCompatActivity implements Notic
                         }}).setPositiveButton(R.string.dlg_accept, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             // update the status and username for request
+                            if(!MacroCommand.isNetworkAvailable())
+                                Toast.makeText(RiderViewRequestActivity.this, "Currently offline: driver selection queued", Toast.LENGTH_SHORT).show();
+
                             selectedRequest.setRiderSelectedDriver();
                             selectedRequest.setDriverUsernameID(driverArray.get(driverSelected).getUsername());
                             RequestCollectionsController.addRequest(selectedRequest);
@@ -236,6 +252,9 @@ public class RiderViewRequestActivity extends AppCompatActivity implements Notic
                 }
             }).setPositiveButton(R.string.dlg_payment, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            if(!MacroCommand.isNetworkAvailable())
+                                Toast.makeText(RiderViewRequestActivity.this, "Currently offline: payment queued", Toast.LENGTH_SHORT).show();
+
                             selectedRequest.setPaid();
                             RequestCollectionsController.addRequest(selectedRequest);
                             // dismiss dialog

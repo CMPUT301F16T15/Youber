@@ -40,7 +40,7 @@ public class RequestController
      * @param request1 the given request
      */
     public static void completeRequest(Request request1) {
-
+        request1.setCompleted();
     }
 
     /**
@@ -81,9 +81,9 @@ public class RequestController
     }
 
     public static Double getEstimatedFare(Request request) { // this is $8 base pay and $2/km
-        Double estFare = 8.00;
+        Double estFare = 5.00;
         double dist = getDistanceOfRequest(request);
-        estFare += (2)*dist;
+        estFare += (.48)*dist;
 
         DecimalFormat df = new DecimalFormat("#.##"); // round it off to 2 decimal places
         return Double.parseDouble(df.format(estFare));

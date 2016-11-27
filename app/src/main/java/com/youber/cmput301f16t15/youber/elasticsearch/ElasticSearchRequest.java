@@ -151,9 +151,6 @@ public class ElasticSearchRequest extends ElasticSearch{
         }
     }
 
-
-
-
     /**
      * Get request collection
      *

@@ -56,18 +56,6 @@ public class Driver extends User {
     }
 
     /**
-     * Gets status of a request
-     *
-     * @param uuid the uuid
-     * @return the status
-     *
-     * @see com.youber.cmput301f16t15.youber.requests.Request.RequestStatus
-     */
-    public boolean getStatus(UUID uuid) {
-        return requestsCtrl.getRequestStatus(uuid);
-    }
-
-    /**
      * Gets offer payment from request.
      *
      * @param uuid the uuid

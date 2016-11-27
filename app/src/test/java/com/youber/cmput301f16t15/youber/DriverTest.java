@@ -130,7 +130,7 @@ public class  DriverTest {
     public void testDriverSearchOpenRequestsByKeyword() {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-        Request request1 = new Request(geoLocation1, geoLocation2, "Search Term");
+        Request request1 = new Request(geoLocation1, "start", geoLocation2, "end");
 //        RequestCollection totalRequests = Helper.getTotalRequests();
         Driver driver1 = new Driver();
 //        RequestController.linkDriverWithRequest(request1, driver1);
@@ -142,16 +142,14 @@ public class  DriverTest {
 
     //Tests US 05.04.01 
     @Test
-    public void testDriverConfirmation() {
+    public void testDriverConfirmation() { 
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-        Request request1 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
         Driver driver1 = new Driver();
 //        RequestController.linkDriverWithRequest(request1, driver1);
         RequestController.confirmRequest(request1, driver1);
-        assertTrue(request1.isConfirmed());
         assertTrue(false);
-
     }
     
     //Tests US 05.02.01
@@ -159,8 +157,8 @@ public class  DriverTest {
     public void testDriverGetPendingRequests() {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-        Request request1 = new Request(geoLocation1, geoLocation2);
-        Request request2 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1,  "", geoLocation2, "");
+        Request request2 = new Request(geoLocation1,  "", geoLocation2, "");
 
         Driver driver1 = new Driver();
 
@@ -174,8 +172,8 @@ public class  DriverTest {
     public void testDriverGetPendingRequestsDesciption() {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-        Request request1 = new Request(geoLocation1, geoLocation2, "Search Term 1");
-        Request request2 = new Request(geoLocation1, geoLocation2, "Search Term 2");
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
+        Request request2 = new Request(geoLocation1, "", geoLocation2, "");
 
         Driver driver1 = new Driver();
 
@@ -189,8 +187,8 @@ public class  DriverTest {
     public void testDriverGetPendingRequestsStartLocation() {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-        Request request1 = new Request(geoLocation1, geoLocation2, "Search Term 1");
-        Request request2 = new Request(geoLocation1, geoLocation2, "Search Term 2");
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
+        Request request2 = new Request(geoLocation1, "", geoLocation2, "");
 
         Driver driver1 = new Driver();
 
@@ -206,8 +204,8 @@ public class  DriverTest {
     public void testDriverGetPendingRequestsEndLocation() {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-        Request request1 = new Request(geoLocation1, geoLocation2, "Search Term 1");
-        Request request2 = new Request(geoLocation1, geoLocation2, "Search Term 2");
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
+        Request request2 = new Request(geoLocation1, "", geoLocation2, "");
 
         Driver driver1 = new Driver();
 
@@ -223,7 +221,7 @@ public class  DriverTest {
 
             GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
             GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-            Request request1 = new Request(geoLocation1, geoLocation2, "Search Term 1");
+            Request request1 = new Request(geoLocation1, "", geoLocation2, "");
             Driver driver1 = new Driver();
 
 //            RequestController.linkDriverWithRequest(request1, driver1);
