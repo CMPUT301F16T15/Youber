@@ -46,7 +46,9 @@ public class UserAndroidTest {
         add.execute(user);
 
         User esUser = ElasticSearchController.getUser("tina");
-        assertEquals(user, esUser);
+        assertEquals(user.getUsername(), esUser.getUsername());
+        ElasticSearchUser.delete delete = new ElasticSearchUser.delete();
+        delete.execute(user);
     }
 
     @Test
