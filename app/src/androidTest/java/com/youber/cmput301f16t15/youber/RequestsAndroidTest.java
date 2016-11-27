@@ -255,28 +255,4 @@ public class RequestsAndroidTest { // mainly using the controller
 
         cleanup();
     }
-
-    @Test
-    public void testNotifyAcceptedRequest() // project part 5
-    {
-//        init();
-//        GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
-//        GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-//        Request request = new Request(geoLocation1, "", geoLocation2, "");
-//
-//        User user = UserController.getUser();
-//        user.setCurrentUserType(User.UserType.rider);
-//        user.addRequesttUUID(request.getUUID()); // open request
-//        UserController.saveUser(user);
-//        RequestCollectionsController.addRequest(request);
-//
-//        // now change the elastic search one to accept and test if it changed!
-//        request.setAcceptedByDrivers();
-//        ElasticSearchRequest.add add = new ElasticSearchRequest.add();
-//        add.execute(request);
-
-        //okay don't know how to test notifications yet, will happen
-        Boolean notificationCheck = false;// replace with code that actually checks if notification activity is run
-        assertTrue("expected to fail", notificationCheck);
-    }
 }
