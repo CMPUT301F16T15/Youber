@@ -35,36 +35,6 @@ public class RequestController
     }
 
     /**
-     * Link driver with request.
-     *
-     * @param request1 the given request
-     * @param driver   the driver
-     */
-    public static void linkDriverWithRequest(Request request1, Driver driver) //*********************** "dont need" - Reem *****************
-    {
-
-
-    }
-
-
-    /**
-     * Gets driver.
-     *
-     * @param request1 the given request
-     * @return the driver
-     */
-    //NEEDS TO CHANGE
-    public static Driver getDriver(Request request1) {
-        if (request1.getCurrentStatus()== Request.RequestStatus.riderSelectedDriver) {
-            return request1.getDriver();//has to be elastic search controller
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-    /**
      * Complete request.
      *
      * @param request1 the given request
@@ -154,4 +124,6 @@ public class RequestController
 
         return addr;
     }
+
+
 }

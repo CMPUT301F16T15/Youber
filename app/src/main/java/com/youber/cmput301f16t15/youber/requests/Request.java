@@ -46,11 +46,16 @@ public class Request implements Serializable {
     private Double distance = 0.0;
 
     private Payment payment = new Payment(0);
-    private Driver driver;
 
-    public Driver getDriver() {
-        return driver;
+    public String getDriverUsernameID() {
+        return driverUsernameID;
     }
+
+    public void setDriverUsernameID(String driverUsernameID) {
+        this.driverUsernameID = driverUsernameID;
+    }
+
+    private String driverUsernameID = ""; // only to be filled in when this is the confirmed driver
 
     /**
      * The enum Request status.

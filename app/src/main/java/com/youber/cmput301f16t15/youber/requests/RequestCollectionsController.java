@@ -42,7 +42,6 @@ import java.util.concurrent.ExecutionException;
 public class RequestCollectionsController {
     private final static String FILENAME_rider = "rider_request_collections.sav";
     private final static String FILENAME_driver ="driver_request_collections.sav";
-    //*************************************dont place android context classes in static fields; memory leak******************************
     private static Context c;
 
     private static RequestCollection riderRequestCollection = new RequestCollection();
@@ -132,6 +131,7 @@ public class RequestCollectionsController {
     public static void saveRequestCollections( RequestCollection newRequestCollection) {
         RequestCollection requestCollection = newRequestCollection;
         User.UserType u_type = UserController.getUser().getCurrentUserType();
+
         if(u_type== User.UserType.rider){
             riderRequestCollection=newRequestCollection;
         }else{
@@ -265,6 +265,24 @@ public class RequestCollectionsController {
         }
 
         return null;
+    }
+
+
+    public static RequestCollection hideUserRequestInSearch(User user, RequestCollection allRequests)
+    {
+
+        RequestCollection requests = new RequestCollection();
+        HashSet<UUID> riderUUIDs = user.getRiderUUIDs();
+
+        Collection<Request>  searchedCollection = allRequests.values();
+        for (Request request: searchedCollection)
+        {
+            if (!riderUUIDs.contains(request.getUUID()))
+            {
+                requests.add(request);
+            }
+        }
+        return requests;
     }
 
 }

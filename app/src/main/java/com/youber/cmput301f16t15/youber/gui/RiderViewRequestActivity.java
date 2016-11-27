@@ -25,6 +25,7 @@ import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
 import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
+import com.youber.cmput301f16t15.youber.misc.Setup;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
 import com.youber.cmput301f16t15.youber.requests.RequestController;
@@ -90,8 +91,6 @@ public class RiderViewRequestActivity extends AppCompatActivity implements Notic
                 userType =(UserController.getUser().getCurrentUserType());
             }
         });
-
-
     }
 
     @Override
@@ -128,20 +127,22 @@ public class RiderViewRequestActivity extends AppCompatActivity implements Notic
     @Override
     protected void onResume() { // update the driver stuff
         super.onResume();
+        Setup.refresh(this);
 
         TextView userTitle = (TextView)findViewById(R.id.user_request_title);
         if(selectedRequest.getCurrentStatus() == Request.RequestStatus.opened)
             userTitle.setText("No drivers have selected your request");
         else {
-            if (MacroCommand.isNetworkAvailable()) {
-                try {
-                    driverArray = ElasticSearchController.getAcceptedDrivers(selectedRequest);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else
+            if(!MacroCommand.isNetworkAvailable())
                 userTitle.setText("Currently Offline cannot obtain drivers");
+            else {
+                if(selectedRequest.getCurrentStatus() == Request.RequestStatus.acceptedByDrivers)
+                    driverArray = ElasticSearchController.getAcceptedDrivers(selectedRequest);
+                else
+                    driverArray = ElasticSearchController.getConfirmedDriver(selectedRequest);
+            }
         }
+
         ArrayAdapter<User> adapter = new ArrayAdapter<User>(this, R.layout.list_item, driverArray);
         driverListView.setAdapter(adapter);
     }
@@ -197,7 +198,6 @@ public class RiderViewRequestActivity extends AppCompatActivity implements Notic
 
         TextView payment = (TextView) dialog.findViewById(R.id.payment);
         payment.setText("Make payment of "+selectedRequest.getCost().toString()+" to driver?");
-
     }
 
 
@@ -216,32 +216,20 @@ public class RiderViewRequestActivity extends AppCompatActivity implements Notic
                         public void onClick(DialogInterface dialog, int id) {
                         }}).setPositiveButton(R.string.dlg_accept, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            // update the status and username for request
                             selectedRequest.setRiderSelectedDriver();
+                            selectedRequest.setDriverUsernameID(driverArray.get(driverSelected).getUsername());
                             RequestCollectionsController.addRequest(selectedRequest);
+
                             // add it to the confirmed list for driver
-                            // might be smelly code
                             driverArray.get(driverSelected).addToDriverConfirmed(selectedRequest.getUUID());
                             AddUserCommand addUserCommand = new AddUserCommand(driverArray.get(driverSelected));
                             MacroCommand.addCommand(addUserCommand);
-
-                            for (User user: driverArray)
-                            {
-                                if (!user.equals(driverArray.get(driverSelected)))
-                                {
-                                    user.deleteUUIDFromAccepted(selectedRequest.getUUID());
-                                    AddUserCommand update = new AddUserCommand(user);
-                                    MacroCommand.addCommand(update);
-
-
-                                }
-                            }
-
                             finish();
                 }});
         }
 
-        else if (resource==R.layout.dlg_payment)
-        {
+        else if (resource==R.layout.dlg_payment) {
             builder.setView(inflater.inflate(resource, null))
                     .setNegativeButton(R.string.dlg_cancel, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
@@ -254,11 +242,8 @@ public class RiderViewRequestActivity extends AppCompatActivity implements Notic
                             dialog.dismiss();
                             finish();
                         }
-                        });
-
-
+                });
         }
-
         else{
             builder.setView(inflater.inflate(resource, null))
                     // Add action buttons
@@ -286,8 +271,11 @@ public class RiderViewRequestActivity extends AppCompatActivity implements Notic
         dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
     }
 
-    @Override
-    public void onDialogPositiveClick(DialogFragment dialog) { // add new request
+    @Override // deleting a request
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        if(!MacroCommand.isNetworkAvailable())
+            Toast.makeText(this, "Currently Offline: delete request in queue", Toast.LENGTH_SHORT);
+
         RequestCollectionsController.deleteRequest(selectedRequest);
         finish();
     }

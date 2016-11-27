@@ -74,6 +74,8 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Setup.run(this);
+
         setContentView(R.layout.activity_driver_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -171,14 +173,12 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
         //startActivity(intent);
     }
 
-
     @Override
-    public void onStart(){
-        super.onStart();
-        Setup.run(this);
+    public void onResume(){
+        super.onResume();
+        Setup.refresh(this);
         dropdown.setSelection(0);
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

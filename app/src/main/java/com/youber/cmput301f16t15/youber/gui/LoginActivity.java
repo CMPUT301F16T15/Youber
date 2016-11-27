@@ -13,12 +13,11 @@ import android.widget.Toast;
 import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
 import com.youber.cmput301f16t15.youber.commands.MacroCommand;
-import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
+import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
+import com.youber.cmput301f16t15.youber.misc.Setup;
 import com.youber.cmput301f16t15.youber.misc.Updater;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
-
-import java.util.ArrayList;
 
 /**
  * The type Login activity.
@@ -30,60 +29,35 @@ import java.util.ArrayList;
  */
 public class LoginActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
-    /**
-     * Username used to identify an app's user
-     * @see User
-     */
-    private EditText username;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Setup.run(this);
+
         Button loginButton = (Button) findViewById(R.id.loginbutton);
         Button signUpButton = (Button) findViewById(R.id.signupbutton);
-
-        MacroCommand.setContext(this);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-                if(!MacroCommand.isNetworkAvailable()) {
+                if(!MacroCommand.isNetworkAvailable())
                     Toast.makeText(LoginActivity.this, getString(R.string.offline_login), Toast.LENGTH_SHORT).show();
-                }
                 else {
-                    username = (EditText) findViewById(R.id.editText);
-                    ElasticSearchUser.getObjects searchUser = new ElasticSearchUser.getObjects();
-                    searchUser.execute(username.getText().toString());
-                    UserController.setContext(LoginActivity.this);
+                    EditText username = (EditText) findViewById(R.id.editText);
+                    User user = ElasticSearchController.getUser(username.getText().toString());
 
-                    try {
-                        ArrayList<User> users = searchUser.get();
+                    if(user != null) { // able to get the unique user
+//                        // TODO why do we add a command here? and listeners here
+                        UserController.observable.addListener(new Updater());
+                        AddUserCommand addUser = new AddUserCommand(user);
+                        UserController.observable.notifyListeners(addUser);
+                        UserController.saveUser(user);
 
-                        if (users.size() == 1) {
-                            User user = users.get(0);
-                            UserController.observable.addListener(new Updater());
-
-                            AddUserCommand addUser = new AddUserCommand(user);
-                            UserController.observable.notifyListeners(addUser);
-                            UserController.saveUser(user);
-
-                            Log.i("Works", "Found user" + user.getUsername());
-                            Intent intent = new Intent(LoginActivity.this, UserTypeActivity.class);
-                            startActivity(intent);
-                        } else {
-                            Log.i("Error", "The request for user has failed");
-                            Bundle bundle = new Bundle();
-                            bundle.putString(getResources().getString(R.string.message), getResources().getString(R.string.InvalidUsernameMessage));
-                            bundle.putString(getResources().getString(R.string.positiveInput), getResources().getString(R.string.signup));
-                            bundle.putString(getResources().getString(R.string.negativeInput), getResources().getString(R.string.ok));
-
-                            DialogFragment dialog = new NoticeDialogFragment();
-                            dialog.setArguments(bundle);
-                            dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
-                        }
-                    } catch (Exception e) {
+                        Intent intent = new Intent(LoginActivity.this, UserTypeActivity.class);
+                        startActivity(intent);
+                    } else {
                         Log.i("Error", "The request for user has failed");
                         Bundle bundle = new Bundle();
                         bundle.putString(getResources().getString(R.string.message), getResources().getString(R.string.InvalidUsernameMessage));
