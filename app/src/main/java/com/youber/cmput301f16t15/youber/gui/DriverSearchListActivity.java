@@ -1,9 +1,7 @@
 package com.youber.cmput301f16t15.youber.gui;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,7 +39,13 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
     static double min;
     static double max;
     static double pricePerKm;
+    String keyword;
 
+    boolean keywordOption=false;
+    boolean addressOption=false;
+    boolean geoLocationOption=false;
+
+    ArrayAdapter<Request> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,15 +85,17 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
         try{
             geoLocation=(GeoLocation) intent.getParcelableExtra("GeoLocation");
             if(geoLocation==null)throw new NullPointerException();
+            geoLocationOption=true;
             radius=intent.getDoubleExtra("Radius",2.0);
             Log.i("radius: ", Double.toString(radius));
             Log.i("radius: ", Double.toString(geoLocation.getLat()));
             Log.i("radius: ", Double.toString(geoLocation.getLon()));
-           requests = ElasticSearchController.getRequestsbyGeoLocation(geoLocation,radius);
+           requests = ElasticSearchController.getRequestsByGeoLocation(geoLocation,radius);
         } catch (Exception e){
             String keyword=intent.getStringExtra("Keyword");
             try {
-                requests = ElasticSearchController.getRequestsbyKeyWord(keyword);
+                requests = ElasticSearchController.getRequestsByKeyWord(keyword);
+                keywordOption=true;
             } catch (Exception e1) {
                 Log.i("Error", "Elastic search failed");
             }
@@ -99,7 +105,7 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
         requestArray = new ArrayList<Request>();
         requestArray.addAll(requests.values());
 
-        ArrayAdapter<Request> adapter = new ArrayAdapter<Request>(this, R.layout.list_item, requestArray);
+        adapter = new ArrayAdapter<Request>(this, R.layout.list_item, requestArray);
         requestListView.setAdapter(adapter);
     }
 
@@ -194,7 +200,16 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                         }
                         String results = "min: " + min + "\n" +  "max: " + max + "\n" + "price per Km: " + pricePerKm;
                         Toast.makeText(getBaseContext(), results, Toast.LENGTH_LONG).show();
+                        //
+                        if(keywordOption){
+                         //ELASTIC SEARCH FUNCTIONS
+                        }else if(addressOption){
+                         //
+                        }else if(geoLocationOption){
+                         //
+                        }
                         filter.setSelection(0);
+
 
                     }
                 });

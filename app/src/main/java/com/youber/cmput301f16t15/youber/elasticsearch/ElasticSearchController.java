@@ -1,14 +1,9 @@
 package com.youber.cmput301f16t15.youber.elasticsearch;
 
-import com.youber.cmput301f16t15.youber.gui.LoginActivity;
-import com.youber.cmput301f16t15.youber.users.Driver;
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
-import com.youber.cmput301f16t15.youber.misc.Observable;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
-import com.youber.cmput301f16t15.youber.users.Rider;
 import com.youber.cmput301f16t15.youber.users.User;
-import com.youber.cmput301f16t15.youber.users.UserController;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -134,7 +129,7 @@ public class ElasticSearchController extends ElasticSearch{
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    public static RequestCollection getRequestsbyGeoLocation(GeoLocation start, Double radiusInKm) throws Exception {
+    public static RequestCollection getRequestsByGeoLocation(GeoLocation start, Double radiusInKm) throws Exception {
         RequestCollection requestCollection =new RequestCollection();
 
         String query ="{\n" +
@@ -157,7 +152,7 @@ public class ElasticSearchController extends ElasticSearch{
             "    }\n" +
             "}";
 
-        ElasticSearchRequest.getObjectsByGeolocation getter = new ElasticSearchRequest.getObjectsByGeolocation();
+        ElasticSearchRequest.getObjectsBySearch getter = new ElasticSearchRequest.getObjectsBySearch();
         getter.execute(query);
         try {
             ArrayList<Request> requests = getter.get();
@@ -178,7 +173,7 @@ public class ElasticSearchController extends ElasticSearch{
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    public static RequestCollection getRequestsbyKeyWord(String keyword) throws Exception {
+    public static RequestCollection getRequestsByKeyWord(String keyword) throws Exception {
         RequestCollection requestCollection =new RequestCollection();
 
         String query = "{\n" +
@@ -195,7 +190,7 @@ public class ElasticSearchController extends ElasticSearch{
             "    }\n" +
             "}";
 
-        ElasticSearchRequest.getObjectsByGeolocation getter = new ElasticSearchRequest.getObjectsByGeolocation();
+        ElasticSearchRequest.getObjectsBySearch getter = new ElasticSearchRequest.getObjectsBySearch();
         getter.execute(query);
         try {
             ArrayList<Request> requests = getter.get();
@@ -208,6 +203,59 @@ public class ElasticSearchController extends ElasticSearch{
 
         return requestCollection;
     }
+    //TODO the following for functions "should" be elastic search filters (dataserver side searching)
+    public RequestCollection getRequestsByKeywordByPrice(String keyword, Double minPrice, Double maxPrice ){
+        if(maxPrice.isNaN())maxPrice=Double.MAX_VALUE;
+        if(minPrice.isNaN())minPrice=0.0;
+
+        RequestCollection totalRequests=null;
+        try{
+            totalRequests= getRequestsByKeyWord(keyword);
+        }catch (Exception e){
+
+        }
+        return totalRequests.filterByPrice(minPrice, maxPrice);
+    }
+    public RequestCollection getRequestsByKeywordFilteredByPricePerKm(String keyword, Double minPricePerKm, Double maxPricePerKm){
+        if(maxPricePerKm.isNaN())maxPricePerKm=Double.MAX_VALUE;
+        if(minPricePerKm.isNaN())minPricePerKm=0.0;
+        RequestCollection totalRequests=null;
+        try{
+            totalRequests= getRequestsByKeyWord(keyword);
+        }catch (Exception e){
+
+        }
+        return totalRequests.filterByPricePerKm(minPricePerKm, maxPricePerKm);
+    }
+    public RequestCollection getRequestsByGeoLocationFilteredByPrice(GeoLocation geoLocation, Double radius,  Double minPrice, Double maxPrice ){
+        if(maxPrice.isNaN())maxPrice=Double.MAX_VALUE;
+        if(minPrice.isNaN())minPrice=0.0;
+        RequestCollection totalRequests=null;
+        try{
+            totalRequests= getRequestsByGeoLocation(geoLocation,radius);
+        }catch (Exception e){
+
+        }
+        return totalRequests.filterByPrice(minPrice, maxPrice);
+    }
+    public RequestCollection getRequestsByGeoLocationFilteredByPricePerKm(GeoLocation geoLocation, Double radius, Double minPricePerKm, Double maxPricePerKm){
+        if(maxPricePerKm.isNaN())maxPricePerKm=Double.MAX_VALUE;
+        if(minPricePerKm.isNaN())minPricePerKm=0.0;
+        RequestCollection totalRequests=null;
+        try{
+            totalRequests= getRequestsByGeoLocation(geoLocation,radius);
+        }catch (Exception e){
+
+        }
+        return totalRequests.filterByPricePerKm(minPricePerKm, maxPricePerKm);
+    }
+
+//    public RequestCollection getRequestsByGeoLocation(,GeoLocation geoLocation, Double radius){
+//
+//    }
+//    public RequestCollection searchRequestsByKeyword(){
+//
+//    }
 
     public static User getRider(UUID uuid)
     {

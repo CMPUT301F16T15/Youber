@@ -33,12 +33,6 @@ public class RequestCollection extends HashMap<UUID,Request> implements Serializ
 //        this = new HashMap<UUID, Request>();
     }
 
-    /**
-     * Driver accept.
-     */
-    public void driverAccept() {
-
-    }
 
     /**
      * Get request by uuid request.
@@ -176,4 +170,24 @@ public class RequestCollection extends HashMap<UUID,Request> implements Serializ
         return true;
     }
 
+    public RequestCollection filterByPricePerKm(Double minPricePerKm,Double maxPricePerKm){
+        RequestCollection filteredRequestCollection=new RequestCollection();
+        for (Request request:this.values()) {
+            Double pricePerKm=request.getCost()/request.getDistance();
+            if(pricePerKm>minPricePerKm &&pricePerKm<maxPricePerKm){
+                filteredRequestCollection.put(request.getUUID(),request);
+            }
+        }
+        return filteredRequestCollection;
+    }
+    public RequestCollection filterByPrice(Double minPrice,Double maxPrice){
+        RequestCollection filteredRequestCollection=new RequestCollection();
+        for (Request request:this.values()) {
+
+            if(request.getCost()>minPrice &&request.getCost()<maxPrice){
+                filteredRequestCollection.put(request.getUUID(),request);
+            }
+        }
+        return filteredRequestCollection;
+    }
 }

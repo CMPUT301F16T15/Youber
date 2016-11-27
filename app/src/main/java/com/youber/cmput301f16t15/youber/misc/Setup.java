@@ -58,7 +58,6 @@ public class Setup {
 
         if(checkUserUpdated()){
             UserController.observable.addListener(new Updater());
-
             AddUserCommand addUser = new AddUserCommand(user);
             UserController.observable.notifyListeners(addUser);
             UserController.saveUser(user);
