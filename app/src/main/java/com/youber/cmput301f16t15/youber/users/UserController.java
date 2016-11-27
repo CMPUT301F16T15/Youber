@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.UUID;
 
@@ -199,12 +200,13 @@ public class UserController {
         observable.notifyListeners(userCommand);
     }
 
-    public static void cleanUpDriverList() throws Exception {
+    public static void cleanUpDriverList() {
         if(user.getCurrentUserType() == User.UserType.rider)
             return;
 
-        HashSet<UUID> tempAcceptedUUIDs = user.getAcceptedDriverUUIDs();
-        for(UUID u : tempAcceptedUUIDs) {
+        ArrayList<UUID> uuids = new ArrayList<>(user.getAcceptedDriverUUIDs());
+
+        for(UUID u : uuids) {
             Request esRequest = ElasticSearchController.getRequest(u);
 
             if(esRequest == null)

@@ -24,6 +24,10 @@ import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
+import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
+import com.youber.cmput301f16t15.youber.requests.RequestController;
+import com.youber.cmput301f16t15.youber.users.User;
+import com.youber.cmput301f16t15.youber.users.UserController;
 
 import java.util.ArrayList;
 
@@ -39,7 +43,11 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
     static double min;
     static double max;
     static double pricePerKm;
+
     String keyword;
+
+    static double maxPricePerKmd;
+
 
     boolean keywordOption=false;
     boolean addressOption=false;
@@ -73,7 +81,6 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         filter.setAdapter(adapter);
         filter.setOnItemSelectedListener(this);
-
     }
 
 
@@ -101,7 +108,9 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
             }
         }
 
-
+        User user = UserController.getUser();
+        requests = RequestCollectionsController.hideUserRequestInSearch(user, requests);
+        
         requestArray = new ArrayList<Request>();
         requestArray.addAll(requests.values());
 
@@ -172,7 +181,7 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                 LayoutInflater inflater = (LayoutInflater)DriverSearchListActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
                 final  View layout = inflater.inflate(R.layout.dlg_request_filter, (ViewGroup)findViewById(R.id.filter_dialog));
 
-                filterDialog.setTitle("please set price filters");
+                filterDialog.setTitle("Please set price filters");
                 filterDialog.setView(layout);
                 filterDialog.setPositiveButton("Filter", new DialogInterface.OnClickListener() {
                     @Override
@@ -191,14 +200,22 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                         else {
                             max = Double.NaN;
                         }
-                        EditText price = (EditText)layout.findViewById(R.id.price_per_text);
-                        if (!price.getText().toString().isEmpty()) {
-                            pricePerKm = Double.parseDouble(price.getText().toString());
+                        EditText minPricePerKm = (EditText)layout.findViewById(R.id.price_per_text);
+                        if (!minPricePerKm.getText().toString().isEmpty()) {
+                            pricePerKm = Double.parseDouble(minPricePerKm.getText().toString());
                         }
                         else {
                             pricePerKm = Double.NaN;
                         }
-                        String results = "min: " + min + "\n" +  "max: " + max + "\n" + "price per Km: " + pricePerKm;
+                        EditText maxPricePerKm = (EditText)layout.findViewById(R.id.max_price_per_text);
+                        if (!maxPricePerKm.getText().toString().isEmpty()) {
+                            maxPricePerKmd = Double.parseDouble(maxPricePerKm.getText().toString());
+                        }
+                        else {
+                            maxPricePerKmd = Double.NaN;
+                        }
+                        String results = "min: " + min + "\n" +  "max: " + max + "\n" + "minPricePerKm: " + pricePerKm
+                                + "\n" + "maxPricePerKm: " + maxPricePerKmd;
                         Toast.makeText(getBaseContext(), results, Toast.LENGTH_LONG).show();
                         //
                         if(keywordOption){

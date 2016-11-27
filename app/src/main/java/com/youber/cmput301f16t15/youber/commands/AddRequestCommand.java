@@ -20,6 +20,7 @@ public class AddRequestCommand extends RequestCommand {
     @Override
     public void execute() {
         try {
+            ElasticSearchController.setupPutmap();
             // This is for the specific case where we were offline and add an offer as a driver
             // but this request had already gotten a selected driver (someone else)
             Request esRequest = ElasticSearchController.getRequest(request.getUUID());
