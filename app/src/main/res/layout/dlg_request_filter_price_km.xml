@@ -2,48 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/filter_dialog"
+    android:id="@+id/filter_dialog_price_km"
     >
 
-    <TextView
-        android:text="Price:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/price_title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:paddingLeft="23dp"
 
-        />
 
-    <EditText
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/min_text"
-        android:layout_below="@+id/price_title"
-        android:background="@color/white"
-        android:textColor="@color/black"
-        android:layout_marginLeft="23dp"
-        android:hint="Min"
-        android:textColorHint="@color/grey"
-        />
 
-    <EditText
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/max_text"
-        android:layout_toRightOf="@+id/min_text"
-        android:layout_below="@+id/price_title"
-        android:background="@color/white"
-        android:textColor="@color/black"
-        android:layout_marginLeft="10dp"
-        android:hint="Max"
-        android:textColorHint="@color/grey"
-
-        />
 
     <TextView
         android:text="Price Per Km: "

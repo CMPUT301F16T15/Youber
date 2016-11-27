@@ -199,7 +199,7 @@ public class ElasticSearchController extends ElasticSearch{
         return requestCollection;
     }
     //TODO the following for functions "should" be elastic search filters (dataserver side searching)
-    public RequestCollection getRequestsByKeywordByPrice(String keyword, Double minPrice, Double maxPrice ){
+    public static RequestCollection getRequestsByKeywordByPrice(String keyword, Double minPrice, Double maxPrice ){
         if(maxPrice.isNaN())maxPrice=Double.MAX_VALUE;
         if(minPrice.isNaN())minPrice=0.0;
 
@@ -211,7 +211,7 @@ public class ElasticSearchController extends ElasticSearch{
         }
         return totalRequests.filterByPrice(minPrice, maxPrice);
     }
-    public RequestCollection getRequestsByKeywordFilteredByPricePerKm(String keyword, Double minPricePerKm, Double maxPricePerKm){
+    public static RequestCollection getRequestsByKeywordFilteredByPricePerKm(String keyword, Double minPricePerKm, Double maxPricePerKm){
         if(maxPricePerKm.isNaN())maxPricePerKm=Double.MAX_VALUE;
         if(minPricePerKm.isNaN())minPricePerKm=0.0;
         RequestCollection totalRequests=null;
@@ -222,7 +222,7 @@ public class ElasticSearchController extends ElasticSearch{
         }
         return totalRequests.filterByPricePerKm(minPricePerKm, maxPricePerKm);
     }
-    public RequestCollection getRequestsByGeoLocationFilteredByPrice(GeoLocation geoLocation, Double radius,  Double minPrice, Double maxPrice ){
+    public static RequestCollection getRequestsByGeoLocationFilteredByPrice(GeoLocation geoLocation, Double radius,  Double minPrice, Double maxPrice ){
         if(maxPrice.isNaN())maxPrice=Double.MAX_VALUE;
         if(minPrice.isNaN())minPrice=0.0;
         RequestCollection totalRequests=null;
@@ -233,7 +233,7 @@ public class ElasticSearchController extends ElasticSearch{
         }
         return totalRequests.filterByPrice(minPrice, maxPrice);
     }
-    public RequestCollection getRequestsByGeoLocationFilteredByPricePerKm(GeoLocation geoLocation, Double radius, Double minPricePerKm, Double maxPricePerKm){
+    public static RequestCollection getRequestsByGeoLocationFilteredByPricePerKm(GeoLocation geoLocation, Double radius, Double minPricePerKm, Double maxPricePerKm){
         if(maxPricePerKm.isNaN())maxPricePerKm=Double.MAX_VALUE;
         if(minPricePerKm.isNaN())minPricePerKm=0.0;
         RequestCollection totalRequests=null;

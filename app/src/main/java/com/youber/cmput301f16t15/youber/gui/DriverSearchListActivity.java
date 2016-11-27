@@ -19,13 +19,13 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
-import com.youber.cmput301f16t15.youber.requests.RequestController;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
@@ -77,7 +77,7 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
 
 
         filter = (Spinner)findViewById(R.id.filter_spinner);
-        String[] items = new String[]{"Filter", "Prices"};
+        String[] items = new String[]{"Filter", "Prices", "Price/Km"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         filter.setAdapter(adapter);
         filter.setOnItemSelectedListener(this);
@@ -173,13 +173,17 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
+        AlertDialog.Builder filterDialog = null;
+        LayoutInflater inflater = null;
+
+
         switch (position) {
             case 0:
                 break;
             case 1:
-                AlertDialog.Builder filterDialog = new AlertDialog.Builder(DriverSearchListActivity.this);
-                LayoutInflater inflater = (LayoutInflater)DriverSearchListActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
-                final  View layout = inflater.inflate(R.layout.dlg_request_filter, (ViewGroup)findViewById(R.id.filter_dialog));
+                filterDialog = new AlertDialog.Builder(DriverSearchListActivity.this);
+                inflater = (LayoutInflater)DriverSearchListActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+                final View layout = inflater.inflate(R.layout.dlg_request_filter_price, (ViewGroup)findViewById(R.id.filter_dialog));
 
                 filterDialog.setTitle("Please set price filters");
                 filterDialog.setView(layout);
@@ -200,33 +204,10 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                         else {
                             max = Double.NaN;
                         }
-                        EditText minPricePerKm = (EditText)layout.findViewById(R.id.price_per_text);
-                        if (!minPricePerKm.getText().toString().isEmpty()) {
-                            pricePerKm = Double.parseDouble(minPricePerKm.getText().toString());
-                        }
-                        else {
-                            pricePerKm = Double.NaN;
-                        }
-                        EditText maxPricePerKm = (EditText)layout.findViewById(R.id.max_price_per_text);
-                        if (!maxPricePerKm.getText().toString().isEmpty()) {
-                            maxPricePerKmd = Double.parseDouble(maxPricePerKm.getText().toString());
-                        }
-                        else {
-                            maxPricePerKmd = Double.NaN;
-                        }
-                        String results = "min: " + min + "\n" +  "max: " + max + "\n" + "minPricePerKm: " + pricePerKm
-                                + "\n" + "maxPricePerKm: " + maxPricePerKmd;
-                        Toast.makeText(getBaseContext(), results, Toast.LENGTH_LONG).show();
-                        //
-                        if(keywordOption){
-                         //ELASTIC SEARCH FUNCTIONS
-                        }else if(addressOption){
-                         //
-                        }else if(geoLocationOption){
-                         //
-                        }
-                        filter.setSelection(0);
 
+                        String results = "min: " + min + "\n" +  "max: " + max + "\n";
+                        Toast.makeText(getBaseContext(), results, Toast.LENGTH_LONG).show();
+                        filter.setSelection(0);
 
                     }
                 });
@@ -243,7 +224,58 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
 
 
                 break;
+            case 2:
+                filterDialog = new AlertDialog.Builder(DriverSearchListActivity.this);
+                inflater = (LayoutInflater)DriverSearchListActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+                final View layout2 = inflater.inflate(R.layout.dlg_request_filter_price_km, (ViewGroup)findViewById(R.id.filter_dialog));
+                filterDialog.setTitle("Please set price filters");
+                filterDialog.setView(layout2);
+                filterDialog.setPositiveButton("Filter", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        EditText minPricePerKm = (EditText)layout2.findViewById(R.id.price_per_text);
+                        if (!minPricePerKm.getText().toString().isEmpty()) {
+                            pricePerKm = Double.parseDouble(minPricePerKm.getText().toString());
+                        }
+                        else {
+                            pricePerKm = Double.NaN;
+                        }
+                        EditText maxPricePerKm = (EditText)layout2.findViewById(R.id.max_price_per_text);
+                        if (!maxPricePerKm.getText().toString().isEmpty()) {
+                            maxPricePerKmd = Double.parseDouble(maxPricePerKm.getText().toString());
+                        }
+                        else {
+                            maxPricePerKmd = Double.NaN;
+                        }
 
+                        String results = "minPricePerKm: " + pricePerKm
+                                + "\n" + "maxPricePerKm: " + maxPricePerKmd;
+                        Toast.makeText(getBaseContext(), results, Toast.LENGTH_LONG).show();
+
+                        if(keywordOption){
+                         RequestCollection requestCollection= ElasticSearchController.getRequestsByKeywordByPrice(keyword,pricePerKm,maxPricePerKmd)
+                        }else if(addressOption){
+                         //
+                        }else if(geoLocationOption){
+                         //
+                        }
+                        filter.setSelection(0);
+
+
+                    }});
+
+
+                filterDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getBaseContext(), "Canceled", Toast.LENGTH_LONG).show();
+                        filter.setSelection(0);
+
+                    }
+                });
+
+                filterDialog.show();
+                break;
         }
 
     }
