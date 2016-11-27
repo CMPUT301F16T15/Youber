@@ -1,8 +1,6 @@
 package com.youber.cmput301f16t15.youber.requests;
 
-import com.youber.cmput301f16t15.youber.users.Driver;
-import com.youber.cmput301f16t15.youber.misc.GeoLocation;
-import com.youber.cmput301f16t15.youber.users.Rider;
+
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -18,19 +16,19 @@ import java.util.UUID;
  * <p>
  *     This class is used to store multiple requests in a specific collection.
  * </p>
+ *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see Request
  * @see RequestCollectionsController
  */
 public class RequestCollection extends HashMap<UUID,Request> implements Serializable{
 
-//    private HashMap<UUID, Request> requestCollection;
 
     /**
      * Instantiates a new Request collection.
      */
     public RequestCollection()
     {
-//        this = new HashMap<UUID, Request>();
     }
 
     /**
@@ -43,36 +41,6 @@ public class RequestCollection extends HashMap<UUID,Request> implements Serializ
         return this.get(uuid);
     }
 
-    /**
-     * Gets finalized request to driver.
-     *
-     * @return the finalized request to driver
-     */
-    public RequestCollection getFinalizedRequestToDriver() {
-        return null;
-    }
-
-    /**
-     * Gets requests for riders.
-     *
-     * @param currentUser the current user
-     * @return the requests for riders
-     */
-// returning every single requests..
-    public RequestCollection getRequestsForRiders(Rider currentUser) {
-        return null;
-    }
-
-
-    /**
-     * Gets pending requests for drivers.
-     *
-     * @param currentUser the current user
-     * @return the pending requests for drivers
-     */
-    public RequestCollection getPendingRequestsForDrivers(Driver currentUser) {
-        return null;
-    }
 
     /**
      * Add.

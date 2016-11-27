@@ -1,13 +1,13 @@
 package com.youber.cmput301f16t15.youber.commands;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.requests.Request;
 
 /**
  * Created by Jess on 2016-11-16.
+ *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  */
 
 public class DeleteRequestCommand extends RequestCommand {

@@ -25,10 +25,11 @@ import com.youber.cmput301f16t15.youber.users.UserController;
 import java.util.HashSet;
 import java.util.UUID;
 
-import javax.crypto.Mac;
 
 /**
  * Created by Aaron Philips on 11/18/2016.
+ *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  */
 
 public class Setup {

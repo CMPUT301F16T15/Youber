@@ -19,6 +19,11 @@ import com.youber.cmput301f16t15.youber.misc.Updater;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
+
+/**
+ *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
+ */
 public class VehicleInfoActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
     private EditText make;

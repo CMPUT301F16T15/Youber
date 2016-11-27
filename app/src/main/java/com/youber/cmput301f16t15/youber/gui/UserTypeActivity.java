@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.youber.cmput301f16t15.youber.R;
-import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.misc.Setup;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
@@ -19,6 +18,8 @@ import com.youber.cmput301f16t15.youber.users.UserController;
 /**
  * The type User type activity.
  * Used to select either the rider or the driver based on two buttons.
+ *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  */
 public class UserTypeActivity extends AppCompatActivity {
 

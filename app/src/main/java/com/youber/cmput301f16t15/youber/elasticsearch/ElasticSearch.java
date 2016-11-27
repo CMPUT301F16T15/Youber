@@ -1,12 +1,10 @@
 package com.youber.cmput301f16t15.youber.elasticsearch;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
-import com.youber.cmput301f16t15.youber.commands.Command;
-import com.youber.cmput301f16t15.youber.misc.Listener;
+
 
 import java.util.ArrayList;
 
@@ -19,12 +17,16 @@ import java.util.ArrayList;
  *     in class.
  * </p>
  *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
+ *
  * @see com.youber.cmput301f16t15.youber.requests.Request
  * @see com.youber.cmput301f16t15.youber.users.User
  * @see ElasticSearchUser
  * @see ElasticSearchRequest
  * @see ElasticSearchController
  */
+
+
 
 public class ElasticSearch {
 

@@ -6,10 +6,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
-import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.misc.Observable;
 import com.youber.cmput301f16t15.youber.requests.Request;
-import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -20,7 +18,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.UUID;
 
 /**
@@ -30,6 +27,7 @@ import java.util.UUID;
  *     Handles user manipulation
  * </p>
  *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see User
  * @see com.youber.cmput301f16t15.youber.users.User.UserType
  */
@@ -185,14 +183,7 @@ public class UserController {
         update();
     }
 
-    public static boolean isRequestContainedInAcceptedDriversUUIDS(UUID uuid) {
-        return user.getRequestUUIDs().contains(uuid);
-    }
 
-    public static void removeRequestFromAcceptedDriverUUIDS(UUID uuid) {
-        user.deleteUUIDFromAccepted(uuid);
-        update();
-    }
 
     private static void update() {
         saveUser(user);

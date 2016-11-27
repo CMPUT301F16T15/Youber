@@ -1,10 +1,6 @@
 package com.youber.cmput301f16t15.youber.elasticsearch;
 
 
-import com.youber.cmput301f16t15.youber.commands.MacroCommand;
-import com.youber.cmput301f16t15.youber.gui.LoginActivity;
-import com.youber.cmput301f16t15.youber.users.Driver;
-
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
@@ -19,6 +15,8 @@ import java.util.concurrent.ExecutionException;
  * <p>
  *     This is the controller class for our elastic search.
  * </p>
+ *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  *
  * @see ElasticSearch
  */
@@ -245,12 +243,6 @@ public class ElasticSearchController extends ElasticSearch{
         return totalRequests.filterByPricePerKm(minPricePerKm, maxPricePerKm);
     }
 
-//    public RequestCollection getRequestsByGeoLocation(,GeoLocation geoLocation, Double radius){
-//
-//    }
-//    public RequestCollection searchRequestsByKeyword(){
-//
-//    }
 
     public static User getRider(UUID uuid)
     {

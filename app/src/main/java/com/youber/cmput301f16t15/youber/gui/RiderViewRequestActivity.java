@@ -51,6 +51,8 @@ import java.util.UUID;
 
 /**
  * @see Request
+ *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  */
 public class RiderViewRequestActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 

@@ -14,6 +14,7 @@ import java.io.Serializable;
  * <p>
  *     This class specifies locations in coordinate form for requests
  * </p>
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see RiderMainActivity
  */
 public class GeoLocation implements Serializable, Parcelable {

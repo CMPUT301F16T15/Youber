@@ -55,6 +55,7 @@ import java.util.Locale;
  *     This activity displays the requests on a map as a route.
  * </p>
  *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see org.osmdroid.bonuspack.routing.OSRMRoadManager
  */
 public class RiderMainActivity extends AppCompatActivity {

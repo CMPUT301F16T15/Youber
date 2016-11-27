@@ -1,18 +1,10 @@
 package com.youber.cmput301f16t15.youber.users;
 
-import android.widget.ArrayAdapter;
-
-import org.apache.http.protocol.RequestUserAgentHC4;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Observable;
 import java.util.UUID;
 import io.searchbox.annotations.JestId;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Reem on 2016-10-13.
@@ -21,6 +13,8 @@ import java.util.List;
  *     Every user has a unique username and their contact information must be stored for contact
  *     purposes via phone call or email.
  * </p>
+ *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see com.youber.cmput301f16t15.youber.users.User.UserType
  * @see UserController
  */
@@ -35,10 +29,6 @@ public class User implements Serializable {
     private String phoneNumber;
     private String email;
 
-    private String make;
-    private String model;
-    private String year;
-    private String colour;
 
     /**
      * The enum User type.
@@ -55,29 +45,10 @@ public class User implements Serializable {
 
     private UserType currentUserType; // to indicate whether the user is currently a rider or a driver
 
-    /**
-     * The Rider requests.
-     */
-    // hold both rider and driver requests
-    /**
-     * The Driver requests.
-     */
 
     private RiderUserInfo riderUserInfo;
     private DriverUserInfo driverUserInfo;
 
-
-
-    /*
-    private HashSet<UUID> driverUUIDs;
-    private HashSet<UUID> riderUUIDs;// depending on their userType
-    */
-
-
-
-    // is this suppose to be a list of uuids?
-//    ArrayList<UUID> riderRequestUUIDs = new ArrayList<UUID>();
-//    ArrayList<UUID> driverRequestUUIDs = new ArrayList<UUID>();
 
     /**
      * Instantiates a new User.
@@ -105,8 +76,6 @@ public class User implements Serializable {
         this.email = email;
         this.currentUserType = UserType.rider;
 
-        //riderUUIDs=new HashSet<UUID>();
-        //driverUUIDs=new HashSet<UUID>();
 
         riderUserInfo = new RiderUserInfo();
         driverUserInfo = new DriverUserInfo();
@@ -217,35 +186,21 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getMake() { return make; }
+    public String getMake() { return driverUserInfo.getMake(); }
 
-    public void setMake(String make){ this.make = make;}
+    public void setMake(String make){ driverUserInfo.setMake(make);}
 
-    public String getModel() { return model;}
+    public String getModel() { return driverUserInfo.getModel();}
 
-    public void setModel(String model) { this.model = model;}
+    public void setModel(String model) { driverUserInfo.setModel(model);}
 
-    public String getYear() { return year;}
+    public String getYear() { return driverUserInfo.getYear();}
 
-    public void setYear(String year) { this.year = year;}
+    public void setYear(String year) { driverUserInfo.setYear(year);}
 
-    public String getColour() {return colour;}
+    public String getColour() {return driverUserInfo.getColor();}
 
-    public void setColour(String colour){this.colour = colour;}
-
-//    public ArrayList<UUID> getRequestUUIDs() { // note this returns the relavant uuids respective to the current user type
-//        if(currentUserType == UserType.rider)
-//            return riderRequestUUIDs;
-//
-//        return driverRequestUUIDs;
-//    }
-
-    /**
-     * Gets requests.
-     *
-     * @return the requests
-     */
-
+    public void setColour(String colour){driverUserInfo.setColor(colour);}
 
 
     public HashSet<UUID> getRequestUUIDs() {
@@ -276,7 +231,7 @@ public class User implements Serializable {
     }
 
 
-    public void addRequesttUUID(UUID uuid){
+    public void addRequestUUID(UUID uuid){
         if(currentUserType == UserType.rider)
             riderUserInfo.getUUIDs().add(uuid);
         else

@@ -12,8 +12,7 @@ import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
 import com.youber.cmput301f16t15.youber.requests.RequestController;
-import com.youber.cmput301f16t15.youber.users.Driver;
-import com.youber.cmput301f16t15.youber.users.Rider;
+
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
@@ -23,6 +22,7 @@ import static org.junit.Assert.*;
 
 /**
  * Created by Jess on 2016-11-13.
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  */
 
 public class RequestsAndroidTest { // mainly using the controller

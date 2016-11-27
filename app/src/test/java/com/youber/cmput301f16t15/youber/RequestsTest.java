@@ -9,8 +9,6 @@ import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
 import com.youber.cmput301f16t15.youber.requests.RequestController;
-import com.youber.cmput301f16t15.youber.users.Driver;
-import com.youber.cmput301f16t15.youber.users.Rider;
 
 import org.junit.Test;
 
@@ -24,6 +22,7 @@ import static org.junit.Assert.*;
 
 /**
  * Created by Reem on 2016-10-13.
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  */
 public class RequestsTest
 {

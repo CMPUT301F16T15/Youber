@@ -25,6 +25,7 @@ import com.youber.cmput301f16t15.youber.users.UserController;
  *     This is the first activity shown when the app is opened. It contains two buttons and a textbox
  * </p>
  *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see SignUpActivity
  */
 public class LoginActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {

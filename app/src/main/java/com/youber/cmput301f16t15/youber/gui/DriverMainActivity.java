@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Parcelable;
@@ -44,7 +43,6 @@ import org.osmdroid.views.overlay.Polygon;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 /**
  * <p>
@@ -52,7 +50,7 @@ import java.util.Set;
  *     This functions similarly to the Rider class except they have Type specific options.
  * </p>
  *
- * @see com.youber.cmput301f16t15.youber.users.Rider
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see com.youber.cmput301f16t15.youber.users.User
  * @see MapQuestRoadManager
  * @see GeoPoint
