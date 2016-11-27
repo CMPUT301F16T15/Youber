@@ -81,4 +81,8 @@
     <string name="dlg_payment">Accept</string>
     <string name="offline_login">Currently offline: cannot login</string>
 
+    <string name="date_of_birth_hint">mm/dd/yyyy</string>
+    <string name="phone_num_hint">7801112222</string>
+    <string name="email_hint">example@mail.com</string>
+
 </resources>
