@@ -1,7 +1,6 @@
 package com.youber.cmput301f16t15.youber.requests;
 
 
-import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

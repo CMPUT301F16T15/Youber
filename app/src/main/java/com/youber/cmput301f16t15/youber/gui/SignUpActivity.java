@@ -16,7 +16,6 @@ import com.youber.cmput301f16t15.youber.R;
 import com.youber.cmput301f16t15.youber.commands.AddUserCommand;
 import com.youber.cmput301f16t15.youber.commands.MacroCommand;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
-import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
 import com.youber.cmput301f16t15.youber.misc.Setup;
 import com.youber.cmput301f16t15.youber.misc.Updater;
 import com.youber.cmput301f16t15.youber.users.User;

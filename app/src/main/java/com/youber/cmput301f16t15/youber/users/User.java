@@ -1,18 +1,10 @@
 package com.youber.cmput301f16t15.youber.users;
 
-import android.widget.ArrayAdapter;
-
-import org.apache.http.protocol.RequestUserAgentHC4;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Observable;
 import java.util.UUID;
 import io.searchbox.annotations.JestId;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Reem on 2016-10-13.

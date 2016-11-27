@@ -1,8 +1,5 @@
 package com.youber.cmput301f16t15.youber.commands;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.requests.Request;

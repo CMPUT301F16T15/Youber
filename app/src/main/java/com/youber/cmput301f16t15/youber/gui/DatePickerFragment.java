@@ -2,14 +2,9 @@ package com.youber.cmput301f16t15.youber.gui;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.text.format.DateFormat;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.TimePicker;
-
 import java.util.Calendar;
 
 /**
