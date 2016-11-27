@@ -3,6 +3,7 @@ package com.youber.cmput301f16t15.youber;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
+import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchController;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
 import com.youber.cmput301f16t15.youber.gui.UserTypeActivity;
@@ -30,21 +31,9 @@ public class UserAndroidTest {
     @Test
     public void testUniqueUsername() throws Exception {
         String username = "blahsajdlsfhdkjalg"; // chance of this in elastic serach is low
-        ElasticSearchUser.getObjects searchUser = new ElasticSearchUser.getObjects();
-        searchUser.execute(username);
 
-        try {
-
-            ArrayList<User> users = searchUser.get();
-
-            if(users.size() == 0)
-                assertTrue(true);
-            else
-                assertFalse("Wrong number of users found", false);
-
-        } catch (Exception e) {
-            assertFalse("Elastic search get failed", false);
-        }
+        User user = ElasticSearchController.getUser(username);
+        assertEquals("User is not unique", null, user);
     }
 
 
@@ -52,32 +41,17 @@ public class UserAndroidTest {
     @Test
     public void testGetUserByUsername() // not sure about this anymore
     {
-        // note this is not always the most reliant test since grabs from elastic search
-        // if postman is cleared, the user will not exist
+        User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
+        ElasticSearchUser.add add = new ElasticSearchUser.add();
+        add.execute(user);
 
-        String username = "b"; // right now this user exists
-        ElasticSearchUser.getObjects searchUser = new ElasticSearchUser.getObjects();
-        searchUser.execute(username);
-
-        try {
-
-            ArrayList<User> users = searchUser.get();
-
-            if(users.size() == 1)
-                assertTrue(true);
-            else
-                assertFalse("Wrong number of users found", false);
-
-        } catch (Exception e) {
-            assertFalse("Elastic search get failed", false);
-        }
+        User esUser = ElasticSearchController.getUser("tina");
+        assertEquals(user, esUser);
     }
-
 
     @Test
     public void testChangeUserType()
     {
-
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         User user = new User("tina","Tina", "Belcher", "2013","7801110000", "ughh@gmail.com");
@@ -87,7 +61,6 @@ public class UserAndroidTest {
 
         UserController.setUserType(User.UserType.rider);
         assertEquals(UserController.getUser().getCurrentUserType(), User.UserType.rider);
-
     }
 
 
@@ -185,7 +158,7 @@ public class UserAndroidTest {
         GeoLocation g1 = new GeoLocation(10,10);
         GeoLocation g2 = new GeoLocation(10.1, 10.1);
 
-        Request request =new Request(g1,g2);
+        Request request =new Request(g1, "", g2, "");
         RequestCollectionsController.setContext(appContext);
         RequestCollectionsController.addRequest(request);
 
@@ -207,13 +180,10 @@ public class UserAndroidTest {
         GeoLocation g1 = new GeoLocation(10,10);
         GeoLocation g2 = new GeoLocation(10.1, 10.1);
 
-        Request request =new Request(g1,g2);
+        Request request =new Request(g1, "", g2, "");
         RequestCollectionsController.setContext(appContext);
         RequestCollectionsController.addRequest(request);
 
         assertTrue(UserController.getUser().getRequestUUIDs().contains(request.getUUID()));
     }
-
-
-
 }

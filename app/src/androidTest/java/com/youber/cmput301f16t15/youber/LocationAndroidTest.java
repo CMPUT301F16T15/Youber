@@ -34,7 +34,7 @@ public class LocationAndroidTest {
     {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-        Request request1 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
 //        assertEquals(Helper.viewStartLocationOnMap(request1.getStartLocation()),geoLocation1);
     }
 
@@ -44,7 +44,7 @@ public class LocationAndroidTest {
     {
         GeoLocation geoLocation1 = new GeoLocation(90.0, 90.0);
         GeoLocation geoLocation2 = new GeoLocation(100.0, 100.0);
-        Request request1 = new Request(geoLocation1, geoLocation2);
+        Request request1 = new Request(geoLocation1, "", geoLocation2, "");
 //        assertEquals(Helper.viewStartLocationOnMap(request1.getEndLocation()),geoLocation2);
 
     }
