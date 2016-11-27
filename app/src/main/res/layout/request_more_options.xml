@@ -4,11 +4,22 @@
     android:id="@+id/request_more_options">
 
     <Button
-        android:id="@+id/cancel_request"
+        android:id="@+id/view_request_on_map"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
+        android:text="@string/view_request_map"
+        android:background="@color/lightGreen"
+        android:onClick="onViewRequestOnMapBtnClick" />
+
+    <Button
+        android:id="@+id/cancel_request"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/view_request_on_map"
         android:text="@string/cancel_request"
         android:background="@color/lightGreen"
         android:onClick="onCancelRequestBnClick" />
@@ -18,7 +29,8 @@
         android:id="@+id/accept_request"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/view_request_on_map"
         android:layout_centerHorizontal="true"
         android:text="OFFER RIDE"
         android:background="@color/lightGreen"
@@ -29,7 +41,8 @@
         android:id="@+id/offer_payment"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/view_request_on_map"
         android:layout_centerHorizontal="true"
         android:text="MAKE PAYMENT"
         android:background="@color/lightGreen"
@@ -41,23 +54,11 @@
         android:id="@+id/accept_payment"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/view_request_on_map"
         android:layout_centerHorizontal="true"
         android:text="ACCEPT PAYMENT"
         android:background="@color/lightGreen"
         android:onClick="onAcceptPaymentBnClick"
         android:layout_marginBottom="11dp"/>
-
-    <Button
-        android:id="@+id/view_request_on_map"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:text="@string/view_request_map"
-        android:background="@color/lightGreen"
-        android:onClick="onViewRequestOnMapBtnClick" />
-
-
-
 </RelativeLayout>

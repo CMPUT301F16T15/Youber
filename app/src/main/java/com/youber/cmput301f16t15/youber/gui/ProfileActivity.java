@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.youber.cmput301f16t15.youber.R;
+import com.youber.cmput301f16t15.youber.misc.Setup;
 import com.youber.cmput301f16t15.youber.misc.Updater;
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
@@ -167,9 +168,7 @@ public class ProfileActivity extends AppCompatActivity implements NoticeDialogFr
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_profile) {
-            Intent intent = new Intent(this, ProfileActivity.class);
-            startActivity(intent);
-
+            Setup.refresh(this);
             return true;
         }
         else if (id == R.id.action_main) {

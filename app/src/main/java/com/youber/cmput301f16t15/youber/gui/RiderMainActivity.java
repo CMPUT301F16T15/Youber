@@ -133,8 +133,7 @@ public class RiderMainActivity extends AppCompatActivity {
             return true;
         }
         else if (id == R.id.action_main) {
-            Intent intent = new Intent(this, RiderMainActivity.class);
-            startActivity(intent);
+            Setup.refresh(this);
             return true;
         }
         else if (id == R.id.action_view_requests) {

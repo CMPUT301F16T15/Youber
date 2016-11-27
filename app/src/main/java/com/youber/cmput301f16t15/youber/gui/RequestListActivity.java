@@ -146,8 +146,7 @@ RequestListActivity extends AppCompatActivity {
             return true;
         }
         else if (id == R.id.action_view_requests) {
-            Intent intent = new Intent(this, RequestListActivity.class);
-            startActivity(intent);
+            onResume(); // want to refresh
 
             return true;
         }

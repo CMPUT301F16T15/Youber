@@ -200,8 +200,6 @@ public class RiderViewRequestActivity extends AppCompatActivity implements Notic
             Button accept_pay = (Button) dialog.findViewById(R.id.accept_payment);
             accept_pay.setVisibility(View.GONE);
         }
-
-
     }
 
     public void onPayRequestBnClick(View view)

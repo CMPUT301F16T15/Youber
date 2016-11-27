@@ -44,6 +44,7 @@ import org.osmdroid.views.overlay.Polygon;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * <p>
@@ -223,8 +224,7 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
             return true;
         }
         else if (id == R.id.action_main) {
-            Intent intent = new Intent(this, DriverMainActivity.class);
-            startActivity(intent);
+            Setup.refresh(this);
             return true;
         }
         else if (id == R.id.action_view_requests) {

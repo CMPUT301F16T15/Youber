@@ -168,7 +168,6 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
         else if (id == R.id.action_view_requests) {
             Intent intent = new Intent(this, RequestListActivity.class);
             startActivity(intent);
-
             return true;
         }
         else if (id == R.id.action_switch_user)
@@ -299,7 +298,6 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(getBaseContext(), "Canceled", Toast.LENGTH_LONG).show();
                         filter.setSelection(adapter.getCount());
-
                     }
                 });
 

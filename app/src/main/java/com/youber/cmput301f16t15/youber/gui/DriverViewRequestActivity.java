@@ -70,6 +70,8 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
                 Dialog dlg = promptDialog(R.layout.dlg_user_info); //test
                 dlg.show();
 
+                hideVehicleInfoForRider(dlg);
+
                 TextView title = (TextView)dlg.findViewById(R.id.usernameInfoTitle);
                 title.setText(rider.getUsername());
 
@@ -87,52 +89,64 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
             @Override
             public void onClick(View v) {
 
-            moreOptionsDialog = promptDialog(R.layout.request_more_options);
-            moreOptionsDialog.show();
-            if (selectedRequest.getCurrentStatus().equals(Request.RequestStatus.opened)
-                    || selectedRequest.getCurrentStatus().equals(Request.RequestStatus.acceptedByDrivers)) {
-                Button cancel = (Button) moreOptionsDialog.findViewById(R.id.cancel_request);
-                cancel.setVisibility(View.GONE);
-                Button pay = (Button) moreOptionsDialog.findViewById(R.id.offer_payment);
-                pay.setVisibility(View.GONE);
-                Button accept_pay = (Button) moreOptionsDialog.findViewById(R.id.accept_payment);
-                accept_pay.setVisibility(View.GONE);
-            }
-            else if (selectedRequest.getCurrentStatus().equals(Request.RequestStatus.riderSelectedDriver))
-            {
-                Button cancel = (Button) moreOptionsDialog.findViewById(R.id.cancel_request);
-                cancel.setVisibility(View.GONE);
-                Button pay = (Button) moreOptionsDialog.findViewById(R.id.offer_payment);
-                pay.setVisibility(View.GONE);
-                Button accept = (Button) moreOptionsDialog.findViewById(R.id.accept_request);
-                accept.setVisibility(View.GONE);
-                Button accept_pay = (Button) moreOptionsDialog.findViewById(R.id.accept_payment);
-                accept_pay.setVisibility(View.GONE);
-            }
-            else if (selectedRequest.getCurrentStatus().equals(Request.RequestStatus.paid)) {
-                Button cancel = (Button) moreOptionsDialog.findViewById(R.id.cancel_request);
-                cancel.setVisibility(View.GONE);
-                Button pay = (Button) moreOptionsDialog.findViewById(R.id.offer_payment);
-                pay.setVisibility(View.GONE);
-                Button accept = (Button) moreOptionsDialog.findViewById(R.id.accept_request);
-                accept.setVisibility(View.GONE);
-            }
-            else if (selectedRequest.getCurrentStatus().equals(Request.RequestStatus.completed))
-            {
-                Button cancel = (Button) moreOptionsDialog.findViewById(R.id.cancel_request);
-                cancel.setVisibility(View.GONE);
-                Button pay = (Button) moreOptionsDialog.findViewById(R.id.offer_payment);
-                pay.setVisibility(View.GONE);
-                Button accept = (Button) moreOptionsDialog.findViewById(R.id.accept_request);
-                accept.setVisibility(View.GONE);
-                Button accept_pay = (Button) moreOptionsDialog.findViewById(R.id.accept_payment);
-                accept_pay.setVisibility(View.GONE);
-            }
+                moreOptionsDialog = promptDialog(R.layout.request_more_options);
+                moreOptionsDialog.show();
+
+                if (selectedRequest.getCurrentStatus().equals(Request.RequestStatus.opened)
+                        || selectedRequest.getCurrentStatus().equals(Request.RequestStatus.acceptedByDrivers)) {
+                    Button cancel = (Button) moreOptionsDialog.findViewById(R.id.cancel_request);
+                    cancel.setVisibility(View.GONE);
+                    Button pay = (Button) moreOptionsDialog.findViewById(R.id.offer_payment);
+                    pay.setVisibility(View.GONE);
+                    Button accept_pay = (Button) moreOptionsDialog.findViewById(R.id.accept_payment);
+                    accept_pay.setVisibility(View.GONE);
+                }
+                else if (selectedRequest.getCurrentStatus().equals(Request.RequestStatus.riderSelectedDriver))
+                {
+                    Button cancel = (Button) moreOptionsDialog.findViewById(R.id.cancel_request);
+                    cancel.setVisibility(View.GONE);
+                    Button pay = (Button) moreOptionsDialog.findViewById(R.id.offer_payment);
+                    pay.setVisibility(View.GONE);
+                    Button accept = (Button) moreOptionsDialog.findViewById(R.id.accept_request);
+                    accept.setVisibility(View.GONE);
+                    Button accept_pay = (Button) moreOptionsDialog.findViewById(R.id.accept_payment);
+                    accept_pay.setVisibility(View.GONE);
+                }
+                else if (selectedRequest.getCurrentStatus().equals(Request.RequestStatus.paid)) {
+                    Button cancel = (Button) moreOptionsDialog.findViewById(R.id.cancel_request);
+                    cancel.setVisibility(View.GONE);
+                    Button pay = (Button) moreOptionsDialog.findViewById(R.id.offer_payment);
+                    pay.setVisibility(View.GONE);
+                    Button accept = (Button) moreOptionsDialog.findViewById(R.id.accept_request);
+                    accept.setVisibility(View.GONE);
+                }
+                else if (selectedRequest.getCurrentStatus().equals(Request.RequestStatus.completed))
+                {
+                    Button cancel = (Button) moreOptionsDialog.findViewById(R.id.cancel_request);
+                    cancel.setVisibility(View.GONE);
+                    Button pay = (Button) moreOptionsDialog.findViewById(R.id.offer_payment);
+                    pay.setVisibility(View.GONE);
+                    Button accept = (Button) moreOptionsDialog.findViewById(R.id.accept_request);
+                    accept.setVisibility(View.GONE);
+                    Button accept_pay = (Button) moreOptionsDialog.findViewById(R.id.accept_payment);
+                    accept_pay.setVisibility(View.GONE);
+                }
             }
 
         });
+
     }
 
+    private void hideVehicleInfoForRider(Dialog dlg) {
+        dlg.findViewById(R.id.driverVehicleModel).setVisibility(View.GONE);
+        dlg.findViewById(R.id.driverVehicleColour).setVisibility(View.GONE);
+        dlg.findViewById(R.id.vehicleMakeLink).setVisibility(View.GONE);
+        dlg.findViewById(R.id.driverVehicleYear).setVisibility(View.GONE);
+        dlg.findViewById(R.id.vehicleColourLink).setVisibility(View.GONE);
+        dlg.findViewById(R.id.driverVehicleMake).setVisibility(View.GONE);
+        dlg.findViewById(R.id.vehicleYearLink).setVisibility(View.GONE);
+        dlg.findViewById(R.id.vehicleModelLink).setVisibility(View.GONE);
+    }
 
     public void onAcceptRequestBnClick(View view)
     {
