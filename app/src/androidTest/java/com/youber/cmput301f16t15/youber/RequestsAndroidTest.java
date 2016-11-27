@@ -12,8 +12,7 @@ import com.youber.cmput301f16t15.youber.requests.Request;
 import com.youber.cmput301f16t15.youber.requests.RequestCollection;
 import com.youber.cmput301f16t15.youber.requests.RequestCollectionsController;
 import com.youber.cmput301f16t15.youber.requests.RequestController;
-import com.youber.cmput301f16t15.youber.users.Driver;
-import com.youber.cmput301f16t15.youber.users.Rider;
+
 import com.youber.cmput301f16t15.youber.users.User;
 import com.youber.cmput301f16t15.youber.users.UserController;
 
@@ -266,7 +265,7 @@ public class RequestsAndroidTest { // mainly using the controller
 //
 //        User user = UserController.getUser();
 //        user.setCurrentUserType(User.UserType.rider);
-//        user.addRequesttUUID(request.getUUID()); // open request
+//        user.addRequestUUID(request.getUUID()); // open request
 //        UserController.saveUser(user);
 //        RequestCollectionsController.addRequest(request);
 //

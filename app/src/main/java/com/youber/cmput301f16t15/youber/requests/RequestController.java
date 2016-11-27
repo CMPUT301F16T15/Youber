@@ -5,7 +5,7 @@ import android.location.Geocoder;
 import android.util.Log;
 
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
-import com.youber.cmput301f16t15.youber.users.Driver;
+
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -23,16 +23,6 @@ import java.util.List;
  */
 public class RequestController
 {
-    /**
-     * Confirm request.
-     *
-     * @param request the request
-     * @param driver1 the driver
-     */
-    public static void confirmRequest(Request request, Driver driver1)
-    {
-        driver1.confirm(request);
-    }
 
     /**
      * Complete request.
@@ -43,14 +33,6 @@ public class RequestController
         request1.setCompleted();
     }
 
-    /**
-     * Add driver to a request
-     *
-     * @param request1 the request 1
-     * @param driver2  the driver 2
-     */
-    public static void addDriver(Request request1, Driver driver2) {
-    }
 
 
     public static  void acceptRequest(Request request){

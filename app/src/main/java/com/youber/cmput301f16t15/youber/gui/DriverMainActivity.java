@@ -52,7 +52,7 @@ import java.util.Set;
  *     This functions similarly to the Rider class except they have Type specific options.
  * </p>
  *
- * @see com.youber.cmput301f16t15.youber.users.Rider
+ *
  * @see com.youber.cmput301f16t15.youber.users.User
  * @see MapQuestRoadManager
  * @see GeoPoint

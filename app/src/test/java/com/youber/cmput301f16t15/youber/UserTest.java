@@ -1,21 +1,13 @@
 package com.youber.cmput301f16t15.youber;
 
-import android.util.Log;
-
-import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
-import com.youber.cmput301f16t15.youber.exceptions.UniqueUserNameConstaintException;
-import com.youber.cmput301f16t15.youber.gui.LoginActivity;
 import com.youber.cmput301f16t15.youber.users.User;
-import com.youber.cmput301f16t15.youber.users.UserController;
 
 import org.junit.Test;
 
 /**
  * Created by Reem on 2016-10-13.
  */
-import java.util.ArrayList;
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 
 import static org.junit.Assert.*;
 public class UserTest
@@ -168,7 +160,7 @@ public class UserTest
 
         User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
         UUID uuid = UUID.randomUUID();
-        user1.addRequesttUUID(uuid);
+        user1.addRequestUUID(uuid);
         assertTrue(user1.getRequestUUIDs().contains(uuid));
     }
 
@@ -176,7 +168,7 @@ public class UserTest
     public void testGetRequestUUID(){
         User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
         UUID uuid = UUID.randomUUID();
-        user1.addRequesttUUID(uuid);
+        user1.addRequestUUID(uuid);
         assertEquals(user1.getRequestUUIDs().size(),1);
 
     }
@@ -185,7 +177,7 @@ public class UserTest
     public void testGetRiderUUIDs(){
         User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
         UUID uuid = UUID.randomUUID();
-        user1.addRequesttUUID(uuid);
+        user1.addRequestUUID(uuid);
         assertEquals(user1.getRiderUUIDs().size(),1);
     }
 
@@ -194,7 +186,7 @@ public class UserTest
         User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
         user1.setCurrentUserType(User.UserType.driver);
         UUID uuid = UUID.randomUUID();
-        user1.addRequesttUUID(uuid);
+        user1.addRequestUUID(uuid);
         assertTrue(user1.getAcceptedDriverUUIDs().contains(uuid));
     }
 
@@ -222,7 +214,7 @@ public class UserTest
         User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
         user1.setCurrentUserType(User.UserType.driver);
         UUID uuid = UUID.randomUUID();
-        user1.addRequesttUUID(uuid);
+        user1.addRequestUUID(uuid);
         assertTrue(user1.getAcceptedDriverUUIDs().contains(uuid));
         user1.deleteUUIDFromAccepted(uuid);
         assertFalse(user1.getAcceptedDriverUUIDs().contains(uuid));
@@ -235,7 +227,7 @@ public class UserTest
     public void testRemoveRequestUUID(){
         User user1 = new User("username","First Name", "Last Name", "Date of birth","phone number", "email");
         UUID uuid = UUID.randomUUID();
-        user1.addRequesttUUID(uuid);
+        user1.addRequestUUID(uuid);
         assertTrue(user1.getRequestUUIDs().contains(uuid));
         user1.removeRequestUUID(uuid);
         assertFalse(user1.getRequestUUIDs().contains(uuid));

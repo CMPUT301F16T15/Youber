@@ -1,11 +1,11 @@
 package com.youber.cmput301f16t15.youber.requests;
 
 import com.youber.cmput301f16t15.youber.gui.RiderViewRequestActivity;
-import com.youber.cmput301f16t15.youber.users.Driver;
+
 import com.youber.cmput301f16t15.youber.misc.GeoLocation;
 import com.youber.cmput301f16t15.youber.exceptions.InvalidRequestException;
 import com.youber.cmput301f16t15.youber.misc.Payment;
-import com.youber.cmput301f16t15.youber.users.Rider;
+
 
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -24,8 +24,8 @@ import io.searchbox.annotations.JestId;
  *     The request class handles new or preexisting requests from a user.
  * </p>
  *
- * @see Rider
- * @see Driver
+ *
+ *
  * @see RiderViewRequestActivity
  * @see RequestCollection
  */
@@ -134,9 +134,6 @@ public class Request implements Serializable {
         this.payment = new Payment(payAmt);
     }
 
-    public void confirmByDriver(Driver driver) {
-        currentStatus = RequestStatus.acceptedByDrivers;
-    }
 
     /**
      * Gets description.

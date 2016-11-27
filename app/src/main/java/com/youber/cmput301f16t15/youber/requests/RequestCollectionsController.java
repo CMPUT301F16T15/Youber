@@ -23,7 +23,6 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -162,7 +161,7 @@ public class RequestCollectionsController {
         User user = UserController.getUser();
         User.UserType u_type=user.getCurrentUserType();
 
-        user.addRequesttUUID(request.getUUID());
+        user.addRequestUUID(request.getUUID());
         RequestCollection requestCollection = (u_type== User.UserType.rider)? riderRequestCollection:driverRequestCollection;
         requestCollection.add(request);
 

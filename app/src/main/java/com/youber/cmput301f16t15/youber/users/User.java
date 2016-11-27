@@ -51,29 +51,10 @@ public class User implements Serializable {
 
     private UserType currentUserType; // to indicate whether the user is currently a rider or a driver
 
-    /**
-     * The Rider requests.
-     */
-    // hold both rider and driver requests
-    /**
-     * The Driver requests.
-     */
 
     private RiderUserInfo riderUserInfo;
     private DriverUserInfo driverUserInfo;
 
-
-
-    /*
-    private HashSet<UUID> driverUUIDs;
-    private HashSet<UUID> riderUUIDs;// depending on their userType
-    */
-
-
-
-    // is this suppose to be a list of uuids?
-//    ArrayList<UUID> riderRequestUUIDs = new ArrayList<UUID>();
-//    ArrayList<UUID> driverRequestUUIDs = new ArrayList<UUID>();
 
     /**
      * Instantiates a new User.
@@ -101,8 +82,6 @@ public class User implements Serializable {
         this.email = email;
         this.currentUserType = UserType.rider;
 
-        //riderUUIDs=new HashSet<UUID>();
-        //driverUUIDs=new HashSet<UUID>();
 
         riderUserInfo = new RiderUserInfo();
         driverUserInfo = new DriverUserInfo();
@@ -258,7 +237,7 @@ public class User implements Serializable {
     }
 
 
-    public void addRequesttUUID(UUID uuid){
+    public void addRequestUUID(UUID uuid){
         if(currentUserType == UserType.rider)
             riderUserInfo.getUUIDs().add(uuid);
         else
