@@ -67,6 +67,7 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
 
         Button createNewUser = (Button) findViewById(R.id.createNewUser);
 
+        assert createNewUser != null;
         createNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,30 +80,27 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
                 String emailText = email.getText().toString();
                 String phoneNumText = phoneNum.getText().toString();
 
-                if (TextUtils.isEmpty(phoneNumText.trim())) {
-                    phoneNumString.setTextColor(Color.RED);
-                }
-                else {
-                    phoneNumString.setTextColor(Color.LTGRAY);
-                }
-
-                if (TextUtils.isEmpty(usernameText.trim())){
-                    userString.setTextColor(Color.RED);
-                }
-                else {
-                    userString.setTextColor(Color.LTGRAY);
-                }
+                changeTextColour(usernameText, userString);
+                changeTextColour(phoneNumText, phoneNumString);
+                changeTextColour(emailText, emailString);
 
                 if (TextUtils.isEmpty(emailText.trim()) || !emailText.contains("@")){
                     emailString.setTextColor(Color.RED);
                 }
-                else {
-                    emailString.setTextColor(Color.LTGRAY);
-                }
-
+                
                 signUpUser();
             }
         });
+    }
+
+
+    private void changeTextColour(String text, TextView textview){
+        if (TextUtils.isEmpty(text.trim())){
+            textview.setTextColor(Color.RED);
+        }
+        else {
+            textview.setTextColor(Color.LTGRAY);
+        }
     }
 
     // These clicks are for when the user already exits
@@ -127,7 +125,7 @@ public class SignUpActivity extends AppCompatActivity implements NoticeDialogFra
         {
             if(TextUtils.isEmpty(phoneNumText.trim()) ||
                     TextUtils.isEmpty(usernameText.trim()) ||
-                    TextUtils.isEmpty(emailText.trim())) {
+                    TextUtils.isEmpty(emailText.trim()) || !emailText.contains("@")) {
                 Bundle bundle = new Bundle();
                 bundle.putString("message", getString(R.string.validateFieldsMessage));
                 bundle.putString(getString(R.string.positiveInput), "OK");
