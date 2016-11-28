@@ -12,5 +12,5 @@ Organization: CMPUT301F16T15 <br>
 
 For more information: <br>
 Wiki: https://github.com/CMPUT301F16T15/Youber/wiki <br>
-Youber Demo Video: https://youtu.be/WIDvXNaq4d0 <br>
+Youber Demo Video: https://youtu.be/vA1zoBsaWmA <br>
 
