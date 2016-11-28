@@ -66,7 +66,7 @@ public class ElasticSearchRequest extends ElasticSearch{
         @Override
         protected ArrayList<Request> doInBackground(String... search_parameters) {
             verifySettings();
-            Search search = new Search.Builder(search_parameters[0]).addIndex("youber").addIndex("request").build();
+            Search search = new Search.Builder(search_parameters[0]).addIndex("youber").addType("request").build();
             JestResult result = null;
             ArrayList<Request> requests = new ArrayList<Request>();
             try {
@@ -78,7 +78,7 @@ public class ElasticSearchRequest extends ElasticSearch{
             if (result.isSucceeded()) {
                 List<Request> foundRequests = result.getSourceAsObjectList(Request.class);
                 requests.addAll(foundRequests);
-
+                Log.i("Works", "The search executed it work");
 
             } else {
                 Log.i("Error", "The search executed but it didnt work");
