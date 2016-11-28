@@ -94,6 +94,12 @@ public class RequestCollection extends HashMap<UUID,Request> implements Serializ
         return true;
     }
 
+    /**
+     * Filters requests by price (or price per km traveled)
+     * @param minPricePerKm
+     * @param maxPricePerKm
+     * @return RequestCollection
+     */
     public RequestCollection filterByPricePerKm(Double minPricePerKm,Double maxPricePerKm){
         RequestCollection filteredRequestCollection=new RequestCollection();
         for (Request request:this.values()) {

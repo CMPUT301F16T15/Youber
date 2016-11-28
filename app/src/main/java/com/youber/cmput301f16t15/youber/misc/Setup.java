@@ -30,6 +30,10 @@ import java.util.UUID;
  * Created by Aaron Philips on 11/18/2016.
  *
  * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
+ *
+ * Handles notifications for the app
+ * @see MacroCommand
+ * @see Updater
  */
 
 public class Setup {

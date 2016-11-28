@@ -158,6 +158,12 @@ public class RequestCollectionsController {
         }
     }
 
+    /**
+     * Adding a request to elastic search
+     * @see com.youber.cmput301f16t15.youber.commands.Command
+     * @see com.youber.cmput301f16t15.youber.elasticsearch
+     * @param request
+     */
     public static void addRequest (Request request){
         User user = UserController.getUser();
         User.UserType u_type=user.getCurrentUserType();
@@ -177,6 +183,12 @@ public class RequestCollectionsController {
         observable.notifyListeners(add);
     }
 
+    /**
+     * Deleting a request from elastic search
+     * @see com.youber.cmput301f16t15.youber.commands.Command
+     * @see com.youber.cmput301f16t15.youber.elasticsearch
+     * @param request
+     */
     public static void deleteRequest(Request request){
         User user = UserController.getUser();
         User.UserType u_type = user.getCurrentUserType();
@@ -197,7 +209,10 @@ public class RequestCollectionsController {
         observable.notifyListeners(deleteRequestCommand);
     }
 
-    //this is a little weird DRY?? maybe getRequestsByStatus(RequestStatus status) is better
+    /**
+     * Gets open requests
+     * @return request collection
+     */
     public static RequestCollection getOpenRequests() {
         RequestCollection requestsHash = getRequestCollection();
         RequestCollection openRequests = new RequestCollection();
@@ -211,6 +226,10 @@ public class RequestCollectionsController {
         return openRequests;
     }
 
+    /**
+     * Gets closed requests
+     * @return request collection
+     */
     public static RequestCollection getClosedRequests(){
         RequestCollection requestsHash = getRequestCollection();
         RequestCollection closedRequests = new RequestCollection();
@@ -224,6 +243,10 @@ public class RequestCollectionsController {
         return closedRequests;
     }
 
+    /**
+     * Gets accepted requests
+     * @return request collection
+     */
     public static RequestCollection getAcceptedRequests(){
         RequestCollection requestsHash = getRequestCollection();
         RequestCollection acceptedRequests = new RequestCollection();
@@ -237,6 +260,10 @@ public class RequestCollectionsController {
         return acceptedRequests;
     }
 
+    /**
+     * Gets paid requests
+     * @return request collection
+     */
     public static RequestCollection getPaidRequests(){
         RequestCollection requestsHash = getRequestCollection();
         RequestCollection acceptedRequests = new RequestCollection();
@@ -250,6 +277,10 @@ public class RequestCollectionsController {
         return acceptedRequests;
     }
 
+    /**
+     * Gets a specifc request based on its uuid
+     * @return request
+     */
     public static Request getRequest(UUID uuid)
     {
         ElasticSearchRequest.getObjects getter = new ElasticSearchRequest.getObjects();

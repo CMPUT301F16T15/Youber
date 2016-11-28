@@ -35,6 +35,13 @@ import java.util.ArrayList;
 /**
  *
  * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
+ *
+ * <p>
+ *     This class is the front end for searching via keyword, address or price.
+ * </p>
+ *
+ * @see DriverViewRequestActivity
+ * @see DriverMainActivity
  */
 public class DriverSearchListActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 

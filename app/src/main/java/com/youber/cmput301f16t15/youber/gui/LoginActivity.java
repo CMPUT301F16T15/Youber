@@ -82,8 +82,12 @@ public class LoginActivity extends AppCompatActivity implements NoticeDialogFrag
         });
     }
 
-    // These positive click and negative click, are for when the user tries to log in but
-    // is invalid: positive click is "Sign up", negative is "OK" does nothing
+    /**
+     * This dialog has two outcomes, OK which does nothing, and Sign Up which takes you to the
+     * SignUp Activity
+     * @see SignUpActivity
+     * @param dialog the dialog
+     */
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);

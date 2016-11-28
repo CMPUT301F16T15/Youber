@@ -42,6 +42,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ *
+ * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
+ *
+ * <p>
+ *     This class is the front end for viewing requests either by a certain criteria or all open requests
+ * </p>
+ * @see DriverSearchListActivity
+ * @see Request
+ */
+
 public class DriverViewRequestActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener{
 
     Button cancel;
@@ -49,6 +60,8 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
     User rider;
     Dialog moreOptionsDialog;
     UUID selectedRequestUUID;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,6 +237,9 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
     }
 
 
+    /**
+     * Load all requests that are needed
+     */
     public void loadRequest()
     {
         TextView status = (TextView) findViewById(R.id.driverViewStatusUpdate);
@@ -296,7 +312,12 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
         return super.onOptionsItemSelected(item);
     }
 
-    @Override // offering a ride
+    /**
+     * Offering a ride as a driver
+     *
+     * @param dialog
+     */
+    @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         // the way we update a user, update that request
         if(!MacroCommand.isNetworkAvailable())
@@ -314,12 +335,19 @@ public class DriverViewRequestActivity extends AppCompatActivity implements Noti
 
     }
 
+    /**
+     * Calling a rider via their contact info
+     *
+     */
     public void onPhoneNumberClick(View view) {
         Intent intent = new Intent(Intent.ACTION_CALL);
         intent.setData(Uri.parse("tel:" + rider.getPhoneNumber()));
         startActivity(intent);
     }
 
+    /**
+     * Sending an email to a rider via their contact info
+     */
     public void onEmailClick(View view) {
 
         Intent intent = new Intent(Intent.ACTION_SEND);

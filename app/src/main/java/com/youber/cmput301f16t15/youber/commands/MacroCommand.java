@@ -23,6 +23,10 @@ import java.util.UUID;
  * Created by Jess on 2016-11-16.
  *
  * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
+ *
+ * This class handles the commands for offline use via various save files shown below.
+ *
+ * @see RequestCommand
  */
 
 public class MacroCommand {

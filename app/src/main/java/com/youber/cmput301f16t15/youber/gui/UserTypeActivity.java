@@ -49,6 +49,12 @@ public class UserTypeActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Sets the type of user (either rider or driver)
+     * @param userType
+     * @see RiderMainActivity
+     * @see DriverMainActivity
+     */
     private void choseUserType(User.UserType userType) {
         UserController.setUserType(userType);
         saveUserTypeRequests(user);

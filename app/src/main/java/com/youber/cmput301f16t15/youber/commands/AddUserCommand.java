@@ -2,6 +2,7 @@ package com.youber.cmput301f16t15.youber.commands;
 
 
 
+import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchRequest;
 import com.youber.cmput301f16t15.youber.elasticsearch.ElasticSearchUser;
 import com.youber.cmput301f16t15.youber.users.User;
 
@@ -10,6 +11,13 @@ import com.youber.cmput301f16t15.youber.users.User;
  * Created by Jess on 2016-11-16.
  *
  * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
+ *
+ * *
+ * This class implements the command pattern to add a user to elastic search.
+ *
+ * @see DeleteRequestCommand
+ * @see ElasticSearchUser
+ * @see Command
  */
 
 public class AddUserCommand implements Command {

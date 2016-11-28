@@ -151,6 +151,13 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
         });
     }
 
+    /**
+     * Checking what we need to search by
+     * @param parent
+     * @param v
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
         switch (position) {
@@ -171,6 +178,9 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
 
     }
 
+    /**
+     * Search by keyword
+     */
     public void searchKeyword(){
         String keyword = ((EditText)findViewById(R.id.keyword_search)).getText().toString();
         Intent intent = new Intent(DriverMainActivity.this, DriverSearchListActivity.class);
@@ -178,6 +188,9 @@ public class DriverMainActivity extends AppCompatActivity implements AdapterView
         startActivity(intent);
     }
 
+    /**
+     * Search by address
+     */
     public void searchAddress(){
         String address = ((EditText)findViewById(R.id.keyword_search)).getText().toString();
         if (address.isEmpty()){

@@ -96,6 +96,11 @@ public class ElasticSearchUser extends ElasticSearch {
         }
     }
 
+    /**
+     * Returning the user if one is found. If not, throw a UserNotFoundException
+     * @param username
+     * @throws UserNotFoundException
+     */
     public static User getUser(String username) throws UserNotFoundException {
         ElasticSearchUser.getObjects getUser= new ElasticSearchUser.getObjects();
         getUser.execute(username);
@@ -120,6 +125,11 @@ public class ElasticSearchUser extends ElasticSearch {
 
     }
 
+    /**
+     * Returning the user via its unique user ID
+     * @see getObjects
+     * @return users
+     */
     public static class getUserByRequestUUID extends AsyncTask<String, Void, ArrayList<User>> {
 
 

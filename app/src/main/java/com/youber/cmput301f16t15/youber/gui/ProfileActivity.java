@@ -24,7 +24,7 @@ import com.youber.cmput301f16t15.youber.users.UserController;
  * The type Profile activity.
  *
  * <p>
- *     This activity is triggered when a user edits their profile
+ *     This activity is triggered when a user views or edits their profile
  * </p>
  * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see LoginActivity

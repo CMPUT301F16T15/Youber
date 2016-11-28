@@ -22,13 +22,10 @@ import java.util.concurrent.ExecutionException;
  */
 
 
-
-
-// NOT SURE IT WORKS YET BUT I NEED TO 
 public class ElasticSearchController extends ElasticSearch{
 
     /**
-     * Do a search for a list of requests
+     * Do a search for a list of requests, return exceptions if there are any.
      * @throws InterruptedException
      * @throws ExecutionException
      */

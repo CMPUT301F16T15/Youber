@@ -12,6 +12,10 @@ import java.util.Calendar;
  *
  *
  * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
+ *
+ * This class is an implementation of the date picker dialog
+ *
+ * @see DatePickerDialog
  */
 
 

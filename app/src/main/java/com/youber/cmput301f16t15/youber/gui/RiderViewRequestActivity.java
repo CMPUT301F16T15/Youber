@@ -50,7 +50,12 @@ import java.util.List;
 import java.util.UUID;
 
 /**
+ *
+ * <p>
+ *     This class handles viewing a list of requests as a rider
+ * </p>
  * @see Request
+ * @see RequestListActivity
  *
  * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  */

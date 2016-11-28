@@ -31,10 +31,14 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * The type Request view activity.
+ * <p>
+ *     This class handles grouping requests into a list that will be readable by a user
+ * </p>
  *
  * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
  * @see Request
+ * @see DriverViewRequestActivity
+ * @see RiderViewRequestActivity
  */
 public class
 RequestListActivity extends AppCompatActivity {

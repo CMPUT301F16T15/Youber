@@ -35,18 +35,39 @@ public class RequestController
     }
 
 
-
+    /**
+     * accept request.
+     *
+     * @param request the given request
+     */
     public static  void acceptRequest(Request request){
         request.setAcceptedByDrivers();
     }
+    /**
+     * close request.
+     *
+     * @param request the given request
+     */
     public static  void closeRequest(Request request){
         request.setCompleted();
     }
+    /**
+     * pay request.
+     *
+     * @param request the given request
+     */
     public static  void payRequest(Request request){
         request.setPaid();
     }
 
 
+    /**
+     * Set a payment amount based on a given estimate
+     * @param amt
+     * @param request
+     * @return
+     * @throws Exception
+     */
     public static boolean setPaymentAmount(String amt, Request request) throws Exception {
         try {
             Double price = Double.parseDouble(amt);
@@ -63,6 +84,11 @@ public class RequestController
         return request.getDistance();
     }
 
+    /**
+     * Simple math calculation to get an estimated fare for a given route
+     * @param request
+     * @return
+     */
     public static Double getEstimatedFare(Request request) { // this is $8 base pay and $2/km
         Double estFare = 5.00;
         double dist = getDistanceOfRequest(request);

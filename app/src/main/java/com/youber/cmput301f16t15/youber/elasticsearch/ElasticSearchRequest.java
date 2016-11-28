@@ -132,6 +132,8 @@ public class ElasticSearchRequest extends ElasticSearch{
 
     /**
      * Delete a request from the server.
+     *
+     * @see add
      */
     public static class delete extends AsyncTask<Request, Void, Void> {
         @Override
@@ -186,7 +188,7 @@ public class ElasticSearchRequest extends ElasticSearch{
     }
 
     /**
-     * Add a request to the server.
+     * Add a request to the server using putmapping
      */
     public static class addPutMap extends AsyncTask<String, Void, Void> {
 
@@ -195,13 +197,6 @@ public class ElasticSearchRequest extends ElasticSearch{
             verifySettings();
 
             for (String putmap : putmaps) {
-//                Index index = new Index.Builder(request).index("youber").type("request").build();
-//
-//                try {
-//                    DocumentResult result = getClient().execute(index);
-//                } catch (Exception e) {
-//                    Log.i("Error", "The app failed to build and and add request");
-//                }
                 PutMapping putMapping =new PutMapping.Builder(
                         "youber",
                         "request",

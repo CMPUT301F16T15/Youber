@@ -8,6 +8,13 @@ import com.youber.cmput301f16t15.youber.requests.Request;
  * Created by Jess on 2016-11-16.
  *
  * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
+ *
+ * This class implements the command pattern to add a request to elastic search.
+ *
+ * @see DeleteRequestCommand
+ * @see ElasticSearchRequest
+ * @see Command
+ * @see RequestCommand
  */
 
 public class AddRequestCommand extends RequestCommand {

@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Created by aphilips on 11/7/16.
  *
  * <p>
- *     This is the method we use to store users and requests on a specified web server as shown
+ *     This is the class we use to store users and requests on a specified web server as shown
  *     in class.
  * </p>
  *

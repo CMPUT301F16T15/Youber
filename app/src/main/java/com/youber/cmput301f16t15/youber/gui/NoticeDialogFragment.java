@@ -38,13 +38,15 @@ public class NoticeDialogFragment extends DialogFragment {
     }
 
     /**
-     * The M listener.
+     * The M listener.  Use this instance of the interface to deliver action events
      */
-// Use this instance of the interface to deliver action events
     NoticeDialogListener mListener;
 
 
-    // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
+    /**
+     * Overrides the Fragment.onAttach() method to instantiate the NoticeDialogListener
+     * @param activity
+     */
     @Override
     public void onAttach(Context activity) {
         super.onAttach(activity);

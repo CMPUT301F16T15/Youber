@@ -22,7 +22,11 @@ import com.youber.cmput301f16t15.youber.users.UserController;
 
 /**
  *
+ * This class handles inputting a vehicle description for a driver. It is only accessible
+ * by a driver and is accessed through the profile activity
  * @author Jessica Huynh, Aaron Philips, Calvin Ho, Tyler Mathieu, Reem Maarouf
+ * @see ProfileActivity
+ * @see UserTypeActivity
  */
 public class VehicleInfoActivity extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
