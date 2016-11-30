@@ -111,7 +111,7 @@ RequestListActivity extends AppCompatActivity {
                 else if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.paid))
                     view.setBackgroundColor(getResources().getColor(R.color.yellow));
                 else if (requestArray.get(position).getCurrentStatus().equals(Request.RequestStatus.completed))
-                    view.setBackgroundColor(getResources().getColor(R.color.paleGreen));
+                    view.setBackgroundColor(getResources().getColor(R.color.darkGreen));
 
                 return view;
             }

@@ -432,6 +432,11 @@ public class RiderViewRequestActivity extends AppCompatActivity implements Notic
 
             return true;
         }
+        else if (id == R.id.action_main) {
+            Intent intent = new Intent(this, RiderMainActivity.class);
+            startActivity(intent);
+            return true;
+        }
         else if (id == R.id.action_view_requests) {
             Intent intent = new Intent(this, RequestListActivity.class);
             startActivity(intent);
