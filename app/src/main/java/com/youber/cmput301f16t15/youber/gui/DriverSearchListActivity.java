@@ -206,7 +206,6 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
         AlertDialog.Builder filterDialog = null;
         LayoutInflater inflater = null;
 
-
         switch (position) {
             case 0:
                 filterDialog = new AlertDialog.Builder(DriverSearchListActivity.this);
@@ -233,8 +232,8 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                             max = Double.NaN;
                         }
 
-                        String results = "min: " + min + "\n" +  "max: " + max;
-                        Toast.makeText(getBaseContext(), results, Toast.LENGTH_LONG).show();
+//                        String results = "min: " + min + "\n" +  "max: " + max;
+//                        Toast.makeText(getBaseContext(), results, Toast.LENGTH_LONG).show();
 
                         filter.setSelection(adapter.getCount());
 
@@ -253,14 +252,14 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                 filterDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getBaseContext(), "Canceled", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getBaseContext(), "Canceled", Toast.LENGTH_LONG).show();
                         filter.setSelection(adapter.getCount());
 
                     }
                 });
 
                 filterDialog.show();
-                break;
+                return;
             case 1:
                 filterDialog = new AlertDialog.Builder(DriverSearchListActivity.this);
                 inflater = (LayoutInflater)DriverSearchListActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -285,9 +284,9 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                             maxPricePerKmd = Double.NaN;
                         }
 
-                        String results = "minPricePerKm: " + pricePerKm
-                                + "\n" + "maxPricePerKm: " + maxPricePerKmd;
-                        Toast.makeText(getBaseContext(), results, Toast.LENGTH_LONG).show();
+//                        String results = "minPricePerKm: " + pricePerKm
+//                                + "\n" + "maxPricePerKm: " + maxPricePerKmd;
+//                        Toast.makeText(getBaseContext(), results, Toast.LENGTH_LONG).show();
 
                         filter.setSelection(adapter.getCount());
 
@@ -300,14 +299,14 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                         requestArray.clear();
                         requestArray.addAll(requestCollection.values());
                         requestAdapter.notifyDataSetChanged();
-                        filter.setSelection(0);
+                        filter.setSelection(1);
                     }});
 
 
                 filterDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getBaseContext(), "Canceled", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getBaseContext(), "Canceled", Toast.LENGTH_LONG).show();
                         filter.setSelection(adapter.getCount());
                     }
                 });
@@ -315,10 +314,9 @@ public class DriverSearchListActivity extends AppCompatActivity implements Adapt
                 filterDialog.show();
 
 
-                break;
+                return;
             case 2:
-
-                break;
+                return;
         }
 
     }
